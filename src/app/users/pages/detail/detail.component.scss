@@ -1,0 +1,80 @@
+.selected-skills {
+    margin-bottom: 2em;
+  
+  
+    .skill-title-wrapper {
+      position: relative;
+      margin: 0em 0em 0.5em 0em;
+      display: inline-block;
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 4px 15px 6px;
+      color: #5A5A5A;
+      margin-right: 1em;
+  
+      border: 1px solid #C7CBDA;
+  
+      .fa {
+        position: absolute;
+        color: #F9667A;
+        top: -6px;
+        right: 0px;
+        font-size: 18px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          color: rgb(253, 78, 102);
+        }
+  
+      }
+    }
+  }
+  
+  .selected-skills-container {
+    min-height: 44px;
+  }
+  
+  
+  .userSkills-wrapper {
+    width: 70%;
+  
+    .skill-title-wrapper {
+      margin-bottom: 1em;
+      display: inline-block;
+    }
+  }
+  
+  // input with button styling
+  .input-relative-wrapper {
+    position:relative;
+  
+    .button-input-wrapper {
+      position: absolute;
+      right: 1%;
+      top: 10%;
+  
+      .blue-button {
+        padding: 4px 0px;
+        min-width: 5em;
+      }
+    }
+  }
+  
+  .form-flex-wrapper {
+    display:flex !important;
+  }
+  
+  .icon {
+    padding-right:5px;
+  }
+  
+  .grey-button {
+    margin-right: 15px;
+  }
+  
+   .custom-button {
+      min-width: 4em !important;
+   }

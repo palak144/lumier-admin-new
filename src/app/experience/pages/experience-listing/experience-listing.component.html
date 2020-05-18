@@ -1,0 +1,99 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Experience</p>
+      <!-- <p class="section-sub-heading">Categories of frames displayed on the website</p> -->
+    </div>
+
+    <div class="header-action-button">
+      <button (click)="openAddExperienceForm()" class="custom-btn theme-btn text-center block-center button-with-icon"><i
+          class="fa fa-plus icon" aria-hidden="true"></i>Add Experience</button>
+    </div>
+  </div>
+
+  <div class="tabular-data-wrapper">
+    <p-table [value]="experience" [responsive]="true" styleClass="acrylic-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Experience</th>
+          <th>Status</th>
+          <!-- <th>Actions</th> -->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+        <tr>
+          <td>{{rowIndex + 1}}</td>
+          <td>{{item.experience}}</td>
+          <td><button *ngIf="item.adminStatus==1" class="custom-btn custom-btn-small green-btn text-center button-with-icon"
+              (click)="ActiveDeactiveExperience(item)">Active</button>
+            <button *ngIf="item.adminStatus==0" class="custom-btn custom-btn-small red-btn text-center button-with-icon"
+              (click)="ActiveDeactiveExperience(item)">Deactive</button>
+          </td>
+          <!-- <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openUpdateCompanyForm(item)" class="custom-btn custom-btn-small blue-btn text-center button-with-icon edit"><i
+                class="fa fa-pencil icon" aria-hidden="true"></i>Edit</button>
+          </td> -->
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<div *ngIf="displayUpdateExperienceForm">
+  <p-dialog header="Edit Experience" modal="true" [(visible)]="displayUpdateCompanyForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeaddCompanyForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="UpdateCompanyForm" (ngSubmit)="UpdateCompany()" class="custom-form">
+        <div class="custom-form-control">
+          <span class="key">Experience</span>
+          <span class="value">
+            <input type="text" name="companyName" formControlName="companyName">
+          </span>
+          <span class="error-message" *ngIf="UpdateCompanyForm.controls.companyName.invalid && (UpdateCompanyForm.controls.companyName.dirty || UpdateCompanyForm.controls.companyName.touched) && isUpdateCompanyFormSubmitted">
+            <span *ngIf="UpdateCompanyForm.controls.companyName.errors.required || UpdateCompanyForm.controls.companyName.errors.whitespace">Company
+              name
+              is required.</span>
+          </span>
+        </div>
+
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeUpdateCompanyForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>
+
+<div *ngIf="displayAddExperienceForm">
+  <p-dialog header="Add Experience" modal="true" [(visible)]="displayAddExperienceForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeAddExperienceForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="AddExperienceForm" (ngSubmit)="AddExperience()" class="custom-form">
+        <div class="custom-form-control">
+          <span class="key">Experience</span>
+          <span class="value">
+            <input type="text" name="experience" id="experience" formControlName="experience">
+          </span>
+          <span class="error-message" *ngIf="AddExperienceForm.controls.experience.invalid && (AddExperienceForm.controls.experience.dirty || AddExperienceForm.controls.experience.touched) && isAddExperienceFormSubmitted">
+            <span *ngIf="AddExperienceForm.controls.experience.errors.required || AddExperienceForm.controls.experience.errors.whitespace">
+              Experience is required.</span>
+          </span>
+        </div>
+
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeAddExperienceForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>

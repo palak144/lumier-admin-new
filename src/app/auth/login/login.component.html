@@ -1,0 +1,39 @@
+<section class="full-height-wrapper bg-theme-grey auth-bg">
+  <div class="section-content full-height-wrapper">
+    <div class="centered-box shadow-lg">
+      <div class="box-image bg-theme-white flex-column">
+        <figure>
+          <!-- <img src="assets/img/logos/blue-tyko-logo.png" alt="Tyko Logo"> -->
+          <h1><b>Lumier 32</b></h1>
+        </figure>
+      </div>
+      <div class="box-content bg-theme-grey">
+        <div class="content">
+          <h3 class="heading font-medium color-dark-grey">ADMIN LOGIN</h3>
+          <p class="sub-heading font-medium color-light-grey">Welcome back, please login to your account.</p>
+          <!-- Login Form Start -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form custom-form">
+            <input type="email" placeholder="Email" formControlName="email">
+            <div *ngIf="loginForm.controls['email'].hasError('required') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched) && isLoginSubmitted"
+              class="error">
+              Please enter email.
+            </div>
+            <div *ngIf="loginForm.controls.email.errors?.email && isLoginSubmitted" class="error">
+              Please provide valid email id
+            </div>
+            <input type="password" placeholder="Password" formControlName="password">
+            <div *ngIf="loginForm.controls['password'].hasError('required')  && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched) && isLoginSubmitted"
+              class="error">
+              Please enter a password
+            </div>
+            <div class="action-items d-flex justify-content-end">
+              <div class="forget-password"><a href="#" class="no-style-link font-medium" routerLink="../recover-password">Forgot
+                  your password?</a></div>
+            </div>
+            <button type="submit" title="Login" class="custom-btn theme-btn text-center block-center">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

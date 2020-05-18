@@ -1,0 +1,65 @@
+.current-banner {
+  width: 70%;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 370px;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+.banner-card {
+  padding: 0 20px;
+  margin-top: 60px;
+
+  .banner-img {
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #989898;
+    margin-bottom: 0.5em;
+    transition: all 0.5s ease;
+
+    img {
+      width: 100%;
+      height: 9.7em;
+      object-fit: contain;
+      object-position: center;
+      backface-visibility: hidden;
+      opacity: 1;
+    }
+
+    &:hover {
+
+      img {
+        opacity: 0.2;
+      }
+
+      .middle {
+        opacity: 1;
+      }
+    }
+  }
+
+  .banner-card-footer {
+    display: flex;
+    justify-content: space-between;
+
+    .custom-btn {
+      height: 30px;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
