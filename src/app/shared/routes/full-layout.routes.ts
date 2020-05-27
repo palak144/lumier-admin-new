@@ -8,6 +8,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
   {
+    path: 'customer',
+    loadChildren: './customer/customer.module#CustomerModule'
+  },
+  {
     path: 'users',
     loadChildren: './users/users.module#UsersModule'
   },

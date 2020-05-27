@@ -31,7 +31,7 @@ import { TokenInterceptorService } from './shared/services/token-interceptor.ser
     DragulaModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {
