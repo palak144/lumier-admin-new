@@ -17,7 +17,7 @@ export class AddCustomerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) { debugger}
 
   ngOnInit(): void {
     

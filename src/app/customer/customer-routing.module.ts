@@ -23,7 +23,10 @@ const routes: Routes = [{
           component: CustomerListingComponent,
           data: {
             title: 'Customers'
-          }
+          }, children :[
+            {path:'', component:CustomerListingComponent},
+            {path:'new', component:AddCustomerComponent},
+          ]
         },
         {
           path: 'customer-groups',
