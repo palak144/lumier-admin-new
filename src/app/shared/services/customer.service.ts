@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
-import { ErrorHandlerService } from './error-handler.service';
-import { HttpClient } from '@angular/common/http';
 import { BaseService } from './base.service';
+import { ErrorHandlerService } from './error-handler.service';
 import { retry, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  baseUrl: string;
+
+  baseUrl:string;
   constructor(
-      private errorHandler: ErrorHandlerService,
-      private http: HttpClient,
-      private baseSevice: BaseService,
-      private router: Router
+    private baseService:BaseService,
+    private errorHandler:ErrorHandlerService,
+    private http: HttpClient
   ) {
-      this.baseUrl = this.baseSevice.baseUrl;
+    this.baseUrl = this.baseService.baseUrl;
+
   }
 
-  // get all stats
-  addCustomer() {
-      return this.http.get(this.baseUrl + 'customer').pipe(
-          retry(3),
-          catchError(this.errorHandler.handleError)
+   // get all categories
+   getAllCustomers(page) {
+
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/customer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
       );
-  }}
+  }
+  addCustomer(data){
+    debugger
+    return this.http.post(this.baseUrl + 'admin/customer',
+    {  data}).pipe(
+       retry(3),
+       catchError(this.errorHandler.handleError)
+    )
+  }
+
+}

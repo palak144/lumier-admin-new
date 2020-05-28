@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UtilityService } from '../../../shared/utility/utility.service';
+import { CustomerService } from '../../../shared/services/customer.service';
+
+interface Action {
+  name:string,
+  code:string
+}
 
 @Component({
   selector: 'app-customer-listing',
@@ -9,7 +16,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CustomerListingComponent implements OnInit {
 
   customerList:any[];
-  constructor(private router:Router, private route : ActivatedRoute) {}
+  sectionTitle:any;
+  actions:Action[];
+  actionListFromAPI:string[];
+  page:number = 1;
+  customer:any;
+
+
+  constructor(
+    private router: Router,
+    private activateRoute:ActivatedRoute,
+    private utilityService:UtilityService,
+    private customerService: CustomerService
+  ) { 
+    this.sectionTitle = this.activateRoute.snapshot.data;
+    console.log('section title::', this.sectionTitle);
+  }
+
 
   ngOnInit() {
     this.customerList = [
@@ -41,9 +64,31 @@ export class CustomerListingComponent implements OnInit {
         status: 'active'
       }
     ]
+
+    this.actionListFromAPI = ['View', 'Edit', 'Adjust Wallet','Wallet History', 'Adjust Reward Pts', 'Order History', 'Delete Customer'];
+    this.actions = this.utilityService.arrayOfStringsToArrayOfObjects(this.actionListFromAPI);
+
+    this.getAllCustomers(this.page);
   }
+
+  getAllCustomers(page) {
+    debugger
+    this.customerService.getAllCustomers(page).subscribe(
+      (success: any) => {
+        debugger
+        this.customer = success.data;
+        console.log('customer:', this.customer);
+      },
+      error => {
+        debugger
+        this.utilityService.routingAccordingToError(error);
+        this.utilityService.resetPage();
+      }
+    );
+  }
+
   onAddCustomer(){
     debugger
-    this.router.navigate(['new'],{relativeTo : this.route})
+    this.router.navigate(['../new'],{relativeTo : this.activateRoute})
   }
 }
