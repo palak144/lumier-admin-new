@@ -29,6 +29,7 @@ export class CustomerService {
         catchError(this.errorHandler.handleError)
       );
   }
+<<<<<<< HEAD
   addCustomer(data){
     debugger
     return this.http.post(this.baseUrl + 'admin/customer',
@@ -39,3 +40,18 @@ export class CustomerService {
   }
 
 }
+=======
+  
+  getAllCustomers(page, searchKey?) {
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/customer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+}
+
+   
+>>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
