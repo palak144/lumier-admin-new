@@ -25,4 +25,17 @@ export class CustomerService {
           retry(3),
           catchError(this.errorHandler.handleError)
       );
-  }}
+  }
+  
+  getAllCustomers(page, searchKey?) {
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/customer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+}
+
+   

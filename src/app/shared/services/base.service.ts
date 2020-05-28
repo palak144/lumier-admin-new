@@ -6,6 +6,12 @@ const APIEndpoint = environment.APIEndpoint;
   providedIn: 'root'
 })
 export class BaseService {
-  baseUrl = APIEndpoint;
+
+  // on production
+  // public baseUrl = APIEndpoint;
+
+  // on local
+  public baseUrl = 'http://18.141.13.208/api/v1/';
+
   constructor() { }
 }
