@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UtilityService } from '../../../shared/utility/utility.service';
-import { CustomerService } from '../../../shared/services/customer.service';
-=======
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
@@ -12,7 +6,6 @@ import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent } from 'primeng/api';
->>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
 
 interface Action {
   name:string,
@@ -27,25 +20,6 @@ interface Action {
 export class CustomerListingComponent implements OnInit {
 
   customerList:any[];
-<<<<<<< HEAD
-  sectionTitle:any;
-  actions:Action[];
-  actionListFromAPI:string[];
-  page:number = 1;
-  customer:any;
-
-
-  constructor(
-    private router: Router,
-    private activateRoute:ActivatedRoute,
-    private utilityService:UtilityService,
-    private customerService: CustomerService
-  ) { 
-    this.sectionTitle = this.activateRoute.snapshot.data;
-    console.log('section title::', this.sectionTitle);
-  }
-
-=======
   actions:Action[];
   actionListFromAPI:string[];
   page:number = 0;
@@ -62,11 +36,10 @@ export class CustomerListingComponent implements OnInit {
 
   constructor(
     private router:Router, 
-    private route : ActivatedRoute,
+    private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
     private customerService:CustomerService
     ) {}
->>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
 
   ngOnInit() {
     this.customerList = [
@@ -97,39 +70,11 @@ export class CustomerListingComponent implements OnInit {
         register: '12/01/2020',
         status: 'active'
       }
-<<<<<<< HEAD
-    ]
-=======
     ];
->>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
 
-    this.actionListFromAPI = ['View', 'Edit', 'Adjust Wallet','Wallet History', 'Adjust Reward Pts', 'Order History', 'Delete Customer'];
+    this.actionListFromAPI = ['View', 'Edit', 'Delete', 'Adjust Wallet','Wallet History', 'Adjust Reward Pts', 'Order History', 'Delete Customer'];
     this.actions = this.utilityService.arrayOfStringsToArrayOfObjects(this.actionListFromAPI);
 
-<<<<<<< HEAD
-    this.getAllCustomers(this.page);
-  }
-
-  getAllCustomers(page) {
-    debugger
-    this.customerService.getAllCustomers(page).subscribe(
-      (success: any) => {
-        debugger
-        this.customer = success.data;
-        console.log('customer:', this.customer);
-      },
-      error => {
-        debugger
-        this.utilityService.routingAccordingToError(error);
-        this.utilityService.resetPage();
-      }
-    );
-  }
-
-  onAddCustomer(){
-    debugger
-    this.router.navigate(['../new'],{relativeTo : this.activateRoute})
-=======
     this.initiateSearch();
   }
 
@@ -211,7 +156,24 @@ export class CustomerListingComponent implements OnInit {
   // }
 
   onAddCustomer(){
-    this.router.navigate(['new'],{relativeTo : this.route})
->>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
+    this.router.navigate(['../new'],{relativeTo : this.activateRoute})
   }
+
+  getDropdownValue(event, id) {
+    console.log('event target value', event.value);
+    if(event.value === 'Delete') {
+
+      console.log('delete id', id);
+      this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success: any) => {
+          console.log(success);
+          this.initiateSearch();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
+
 }

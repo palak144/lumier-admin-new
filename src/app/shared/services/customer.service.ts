@@ -19,19 +19,10 @@ export class CustomerService {
 
   }
 
-   // get all categories
-   getAllCustomers(page) {
 
-    const params = { page: page }
-    return this.http.get(this.baseUrl + 'admin/customer',
-      { params: params }).pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  }
-<<<<<<< HEAD
+
   addCustomer(data){
-    debugger
+
     return this.http.post(this.baseUrl + 'admin/customer',
     {  data}).pipe(
        retry(3),
@@ -39,9 +30,7 @@ export class CustomerService {
     )
   }
 
-}
-=======
-  
+
   getAllCustomers(page, searchKey?) {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/customer',
@@ -51,7 +40,13 @@ export class CustomerService {
       );
   }
 
+  deleteCustomer(id) {
+    return this.http.delete(this.baseUrl + 'admin/customer/' +id)
+   .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
 }
 
-   
->>>>>>> d55323642e8eee6ba2b3d7b53b78e604e8c0a335
