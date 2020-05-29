@@ -8,10 +8,10 @@ const APIEndpoint = environment.APIEndpoint;
 export class BaseService {
 
   // on production
-  public baseUrl = APIEndpoint;
+  // public baseUrl = APIEndpoint;
 
   // on local
-  // public baseUrl = 'http://18.141.13.208/api/v1/';
+  public baseUrl = 'http://18.141.13.208/api/v1/';
 
   constructor() { }
 }
