@@ -4,6 +4,7 @@ import { CustomerListingComponent } from './pages/customer-listing/customer-list
 import { AddCustomerComponent } from './pages/customer-listing/add-customer/add-customer.component';
 import { CustomerLayoutComponent } from './customer-layout/customer-layout.component';
 import { CustomerGroupComponent } from './pages/customer-group/customer-group.component';
+import { AddCustomerGroupComponent } from './pages/customer-group/add-customer-group/add-customer-group.component';
 
 const routes: Routes = [{
 
@@ -23,10 +24,16 @@ const routes: Routes = [{
           component: CustomerListingComponent,
           data: {
             title: 'Customers'
-          }, children :[
-            {path:'', component:CustomerListingComponent},
-            {path:'new', component:AddCustomerComponent},
-          ]
+          }
+        },
+        {
+          path: 'new',
+          component: AddCustomerComponent,
+          
+        },
+        {
+          path: 'newGroup',
+          component: AddCustomerGroupComponent,
         },
         {
           path: 'customer-groups',

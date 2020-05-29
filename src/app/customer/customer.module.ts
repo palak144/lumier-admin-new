@@ -7,6 +7,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { CustomerLayoutComponent } from './customer-layout/customer-layout.component';
 import { AddCustomerComponent } from './pages/customer-listing/add-customer/add-customer.component';
 import { CustomerGroupComponent } from './pages/customer-group/customer-group.component';
+import { AddCustomerGroupComponent } from './pages/customer-group/add-customer-group/add-customer-group.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { CustomerGroupComponent } from './pages/customer-group/customer-group.co
     SharedModule,
     CustomerRoutingModule
   ],
-  declarations: [CustomerListingComponent, CustomerLayoutComponent, AddCustomerComponent , CustomerGroupComponent]
+  declarations: [CustomerListingComponent, CustomerLayoutComponent, AddCustomerComponent , CustomerGroupComponent, AddCustomerGroupComponent]
 })
 export class CustomerModule {  }

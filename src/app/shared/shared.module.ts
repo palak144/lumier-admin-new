@@ -41,6 +41,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PaginatorModule } from 'primeng/paginator';
 import { TimeFormat } from './pipes/convert-time.pipe';
+import { CustomerService } from './services/customer.service';
 
 
 /** shared ,odule only for add / update frame front face image upload */
@@ -130,7 +131,8 @@ export class SharedModule {
         //FrameManagementService,
         DashboardService,
         CompaniesService,
-        UserService
+        UserService,
+        CustomerService
       ]
     };
   }
