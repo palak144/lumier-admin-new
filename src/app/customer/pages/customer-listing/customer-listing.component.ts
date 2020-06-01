@@ -124,7 +124,6 @@ export class CustomerListingComponent implements OnInit {
       }, error => {
         this.utilityService.routingAccordingToError(error);
       })
-
   }
 
 
@@ -167,13 +166,16 @@ export class CustomerListingComponent implements OnInit {
       this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
           console.log(success);
-          this.initiateSearch();
+          this.customerList = this.customerList.filter((item: any) => {
+            return id !== item.customerId
+          })
         },
         error => {
           console.log(error);
         }
       )
     }
+    
   }
   
 
