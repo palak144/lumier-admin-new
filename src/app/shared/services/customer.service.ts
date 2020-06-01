@@ -64,5 +64,13 @@ export class CustomerService {
     );
   }
 
+  deleteCustomerGroup(id) {
+    return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)
+    .pipe(
+       retry(3),
+       catchError(this.errorHandler.handleError)
+     );
+  }
+
 }
 

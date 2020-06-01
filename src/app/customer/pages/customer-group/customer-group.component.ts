@@ -27,6 +27,7 @@ export class CustomerGroupComponent implements OnInit {
   page: number = 0;
   searchKey: string;
   searchValue: string;
+  Date = new Date();
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
@@ -153,15 +154,19 @@ export class CustomerGroupComponent implements OnInit {
     this.router.navigate(['../newGroup'],{relativeTo : this.route})
   }
 
+
   getDropdownValue(event, id) {
     console.log('event target value', event.value);
     if(event.value === 'Delete') {
 
       console.log('delete id', id);
-      this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+      this.customerService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
           console.log(success);
-          this.initiateSearch();
+          this.customerList = this.customerList.filter((item: any) => {
+            return id !== item.id
+          })
+          // this.initiateSearch();
         },
         error => {
           console.log(error);

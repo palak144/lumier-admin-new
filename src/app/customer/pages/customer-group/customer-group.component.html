@@ -49,14 +49,13 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
                     <td><span class="ui-column-title">Group Name</span>{{customer.groupName}}</td>
                     <td><span class="ui-column-title">Group Email</span>{{customer.groupEmail}}</td>
-                    <td><span class="ui-column-title">Registration Date</span>{{customer.created_at}}</td>
+                    <td><span class="ui-column-title">Registration Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
                     <td>
                         <span class="ui-column-title">Status</span> {{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
                     </td>
-
                     <td>
                         <span class="ui-column-title">Action</span>
-                        <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.customerId)">
+                        <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.id)">
                         </p-dropdown>
                     </td>
                 </tr>
