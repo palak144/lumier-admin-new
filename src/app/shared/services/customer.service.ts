@@ -40,6 +40,22 @@ export class CustomerService {
       );
   }
 
+  getCustomerGroup() {
+    return this.http.get(this.baseUrl + 'admin/customerGroup').pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  getCustomerGroupParams(page?, searchKey?) {
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/customerGroup',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
   deleteCustomer(id) {
     return this.http.delete(this.baseUrl + 'admin/customer/' +id)
    .pipe(

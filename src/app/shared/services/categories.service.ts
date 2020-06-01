@@ -37,6 +37,7 @@ export class CategoriesService {
         catchError(this.errorHandler.handleError)
       );
   }
+  
   // update category
   updateCategory(data, categoryId) {
     return this.http.put(this.baseUrl + 'category/' + categoryId, data).pipe(
