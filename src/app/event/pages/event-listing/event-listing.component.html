@@ -1,0 +1,73 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Event</p>
+      <!-- <p class="section-sub-heading">Categories of frames displayed on the website</p> -->
+    </div>
+  </div>
+  <div class="tabular-data-wrapper">
+    <p-table [value]="eventList" [responsive]="true" styleClass="acrylic-table" [paginator]="true" [totalRecords]="totalCount"
+      [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [autoLayout]="true">
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+          <input [(ngModel)]="searchBar" type="text" pInputText size="50" placeholder="Search Event Name" (input)="filterGlobal($event.target.value)"
+            style="width:auto">
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Event Title</th>
+          <th>Event URL</th>
+          <th>Event DateTime</th>
+          <th>Status</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+        <tr>
+          {{item.eventURL}}
+          <td>{{rowIndex + 1}}</td>
+          <td><span class="read-more-text" (click)="readMoreDialog(item)">{{item.eventName}}</span><br>
+            <i class="fa fa-map-marker"></i>
+            <span style="margin-left:4px;">{{item.location}}</span>
+          </td>
+          <td><a href="{{item.eventUrl}}" target="_blank">{{item.eventUrl}}</a></td>
+          <td>{{item.eventDate | date: 'MMMM d, y'}} <br>
+            {{item.eventTime | convertFrom24To12Format}} - {{item.eventEndTime
+            | convertFrom24To12Format}}</td>
+          <td><button *ngIf="item.adminStatus==1" class="custom-btn custom-btn-small green-btn text-center button-with-icon"
+              (click)="ActiveDeactiveEvent(item)">Active</button>
+            <button *ngIf="item.adminStatus==0" class="custom-btn custom-btn-small red-btn text-center button-with-icon"
+              (click)="ActiveDeactiveEvent(item)">Deactive</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- description dialog starts -->
+    <p-dialog [(visible)]="readMoreFlag" [closeOnEscape]="true" blockScroll="true" [dismissableMask]="true" styleClass="prime-share-dialog prime-modal-dialog prime-event-dialog"
+      [transitionOptions]="'300ms'" styleClass="prime-event-dialog" [responsive]="true" [style]="{width: '100%', maxWidth: '500px'}"
+      [minY]="40" appendTo="body" [modal]="true" [closable]="true">
+      <p-header>
+        <div class="flex-wrapper">
+          <div class="event-image-wrapper">
+            <img src="{{profilePic}}" width="50px" height="50px">
+          </div>
+          <div class="event-title">
+            <p>{{userName}}</p>
+          </div>
+        </div>
+        <div class="event-name-text">
+          <p>{{eventName | titlecase }}</p>
+        </div>
+      </p-header>
+      <div class="dialog-content">
+        <div>
+          <span>{{desc}}</span>
+        </div>
+      </div>
+    </p-dialog>
+    <!-- description dialog ends -->
+  </div>
+</div>

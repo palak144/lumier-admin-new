@@ -1,0 +1,60 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Change Password</p>
+    </div>
+  </div>
+
+  <div class="section-bottom-spacing add-edit-form">
+    <form [formGroup]="ChangePasswordForm" (ngSubmit)="ChangePassword()" class="custom-form row">
+
+      <div class="custom-form-control  col-sm-10">
+        <span class="key">Old Password</span>
+        <span class="value">
+          <input type="password" formControlName="oldPassword" id="name">
+        </span>
+        <span class="error-message" *ngIf="ChangePasswordForm.controls.oldPassword.invalid && (ChangePasswordForm.controls.oldPassword.dirty || ChangePasswordForm.controls.oldPassword.touched) && isChangePasswordFormSubmitted">
+          <span *ngIf="ChangePasswordForm.controls.oldPassword.errors.required">Old
+            password
+            is required.</span>
+        </span>
+        <span class="error-message" *ngIf="ChangePasswordForm.controls.oldPassword.invalid && (ChangePasswordForm.controls.oldPassword.dirty || ChangePasswordForm.controls.oldPassword.touched) && isChangePasswordFormSubmitted">
+          <span *ngIf="ChangePasswordForm.controls.oldPassword.errors.pattern">
+            Old Password should be valid
+          </span>
+        </span>
+      </div>
+      <div class="custom-form-control  col-sm-10">
+        <span class="key">New Password</span>
+        <span class="value">
+          <input type="password" formControlName="newPassword" id="name">
+        </span>
+        <span class="error-message" *ngIf="ChangePasswordForm.controls.newPassword.invalid && (ChangePasswordForm.controls.newPassword.dirty || ChangePasswordForm.controls.newPassword.touched) && isChangePasswordFormSubmitted">
+          <span *ngIf="ChangePasswordForm.controls.newPassword.errors.required">New
+            password
+            is required.
+          </span>
+          <span *ngIf="ChangePasswordForm.controls.newPassword.errors.minlength">Password
+            must be 6 character long.
+          </span>
+          <span *ngIf="ChangePasswordForm.controls.newPassword.errors.pattern">
+            New Password should be valid.
+          </span>
+        </span>
+        <!-- <span class="error-message" *ngIf="ChangePasswordForm.controls.newPassword.invalid && (ChangePasswordForm.controls.newPassword.dirty || ChangePasswordForm.controls.newPassword.touched) && isChangePasswordFormSubmitted">
+          <span *ngIf="ChangePasswordForm.controls.newPassword.errors.pattern">
+            Space not allowed.
+          </span>
+        </span> -->
+      </div>
+      <div class="custom-form-control decision-box col-lg-10">
+        <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="resetForm()"><i
+            class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i class="fa fa-check icon"
+            aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+
+</div>

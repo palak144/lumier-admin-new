@@ -1,0 +1,38 @@
+<div class="row container pb-3">
+  <div class="content-header text-left">{{customerGroupTitle}}</div>
+  <p class="content-sub-header"></p>
+</div>
+<form class="form" [formGroup]="addCustomerGroupForm" (ngSubmit)="onSubmitAddCustomerGroupForm()">
+  <div class="form-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Group Name</label>
+          <input type="text" class="form-control border-primary" formControlName="name"
+            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerGroupForm && signUpControls.name.errors }">
+          <div *ngIf="isSubmittedaddCustomerGroupForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Group Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Group Email</label>
+          <input type="email" class="form-control border-primary" formControlName="email"
+            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerGroupForm && signUpControls.email.errors }">
+          <div *ngIf="isSubmittedaddCustomerGroupForm && signUpControls.email.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.email.errors.required">Group Email is required</div>
+            <div *ngIf="signUpControls.email.errors.pattern">Please enter valid email (xyz@abc.com)</div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="form-actions right">
+    <button type="button" class="btn btn-raised btn-warning mr-1"> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    </button>
+  </div>
+</form>

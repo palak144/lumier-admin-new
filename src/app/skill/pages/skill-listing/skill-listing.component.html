@@ -1,0 +1,139 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Skill</p>
+      <!-- <p class="section-sub-heading">Categories of frames displayed on the website</p> -->
+    </div>
+
+    <div class="header-action-button">
+      <button (click)="openAddSkillForm()" class="custom-btn theme-btn text-center block-center button-with-icon"><i
+          class="fa fa-plus icon" aria-hidden="true"></i>Add Skill</button>
+    </div>
+  </div>
+
+  <div class="tabular-data-wrapper">
+    <p-table #dt [value]="skill" [responsive]="true" [lazy]="true" styleClass="acrylic-table" [paginator]="true" [rows]="10"
+      [totalRecords]="totalCount" (onLazyLoad)="loadDataLazy($event)">
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+          <input [(ngModel)]="searchBar" type="text" pInputText size="50" placeholder="Search Skill, Category" (input)="filterGlobal($event.target.value)"
+            style="width:auto">
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Skill Name</th>
+          <th>Category Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+        <tr>
+          <td>{{rowIndex + 1}}</td>
+          <td>{{item.skill}}</td>
+          <td>{{item.categorydata.category}}</td>
+          <td><button *ngIf="item.adminStatus==1" class="custom-btn custom-btn-small green-btn text-center button-with-icon"
+              (click)="ActiveDeactiveSkill(item)">Active</button>
+            <button *ngIf="item.adminStatus==0" class="custom-btn custom-btn-small red-btn text-center button-with-icon"
+              (click)="ActiveDeactiveSkill(item)">Deactive</button>
+          </td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openUpdateSkillForm(item)" class="custom-btn custom-btn-small blue-btn text-center button-with-icon edit"><i
+                class="fa fa-pencil icon" aria-hidden="true"></i>Edit</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<div *ngIf="displayUpdateSkillForm">
+  <p-dialog header="Edit Skill" modal="true" [(visible)]="displayUpdateSkillForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeaddUpdateSkillForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="UpdateSkillForm" (ngSubmit)="UpdateSkill()" class="custom-form">
+        <div class="custom-form-control col-lg-6 col-sm-12">
+          <span class="key">Category</span>
+          <span class="value">
+            <p-dropdown [options]="categoryArr" placeholder="Select Category" formControlName="categoryId" styleClass="full-width-dropdown">
+            </p-dropdown>
+          </span>
+          <span class="error-message" *ngIf="UpdateSkillForm.controls.categoryId.invalid && (UpdateSkillForm.controls.categoryId.dirty || UpdateSkillForm.controls.categoryId.touched) && isUpdateSkillFormSubmitted">
+            <span *ngIf="UpdateSkillForm.controls.categoryId.errors.required">Category is required.</span>
+          </span>
+        </div>
+
+        <div class="custom-form-control col-lg-6 col-sm-12">
+          <span class="key">Skill Name</span>
+          <span class="value">
+            <input type="text" name="skill" id="skill" formControlName="skill">
+          </span>
+          <span class="error-message" *ngIf="UpdateSkillForm.controls.skill.invalid && (UpdateSkillForm.controls.skill.dirty || UpdateSkillForm.controls.skill.touched) && isUpdateSkillFormSubmitted">
+            <span *ngIf="UpdateSkillForm.controls.skill.errors.required">
+              Skill
+              is required.</span>
+          </span>
+          <span class="error-message" *ngIf="UpdateSkillForm.controls.skill.invalid && (UpdateSkillForm.controls.skill.dirty || UpdateSkillForm.controls.skill.touched) && isUpdateSkillFormSubmitted">
+            <span *ngIf="UpdateSkillForm.controls.skill.errors.pattern">
+              Skill should be
+              valid.</span>
+          </span>
+        </div>
+
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeUpdateSkillForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>
+
+<div *ngIf="displayAddSkillForm">
+  <p-dialog header="Add Skill" modal="true" [(visible)]="displayAddSkillForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeAddSkillForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="AddSkillForm" (ngSubmit)="AddSkill()" class="custom-form">
+
+        <div class="custom-form-control col-lg-6 col-sm-12">
+          <span class="key">Category</span>
+          <span class="value">
+            <p-dropdown [options]="categoryArr" placeholder="Select Category" formControlName="categoryId" styleClass="full-width-dropdown">
+            </p-dropdown>
+          </span>
+          <span class="error-message" *ngIf="AddSkillForm.controls.categoryId.invalid && (AddSkillForm.controls.categoryId.dirty || AddSkillForm.controls.categoryId.touched) && isAddSkillFormSubmitted">
+            <span *ngIf="AddSkillForm.controls.categoryId.errors.required">Category is required.</span>
+          </span>
+        </div>
+        <div class="custom-form-control col-lg-6 col-sm-12">
+          <span class="key">Skill Name</span>
+          <span class="value">
+            <input type="text" name="skill" id="skill" formControlName="skill">
+          </span>
+          <span class="error-message" *ngIf="AddSkillForm.controls.skill.invalid && (AddSkillForm.controls.skill.dirty || AddSkillForm.controls.skill.touched) && isAddSkillFormSubmitted">
+            <span *ngIf="AddSkillForm.controls.skill.errors.required">Skill
+              is required.</span>
+          </span>
+          <span class="error-message" *ngIf="AddSkillForm.controls.skill.invalid && (AddSkillForm.controls.skill.dirty || AddSkillForm.controls.skill.touched) && isAddSkillFormSubmitted">
+            <span *ngIf="AddSkillForm.controls.skill.errors.pattern">Skill should be
+              valid.</span>
+          </span>
+        </div>
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeAddSkillForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>

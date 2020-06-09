@@ -1,0 +1,56 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Banner</p>
+      <p class="section-sub-heading">Banners being displayed on the website in header</p>
+    </div>
+
+    <div class="header-action-button">
+      <button (click)="openAddBannerForm()" class="custom-btn theme-btn text-center block-center button-with-icon"><i
+          class="fa fa-plus icon" aria-hidden="true"></i>Add Banner</button>
+    </div>
+  </div>
+
+
+  <div class="banners-wrapper">
+    <div class="current-banner">
+      <img [src]="currentBannerImage || 'assets/project-images/placeholder-image.png'" alt="Placeholder Image">
+    </div>
+
+    <div class="banner-cards-row row">
+      <div *ngFor="let item of bannersListing" class="banner-card col-lg-4">
+        <div class="banner-img" (click)="setCurrentBannerImage(item)">
+          <img [src]="item.banner_image || 'assets/project-images/placeholder-image.png'" alt="Placeholder Image">
+          <div class="middle">
+            <div class="text">Click to View</div>
+          </div>
+        </div>
+        <div class="banner-card-footer">
+          <button class="custom-btn theme-btn text-center button-with-icon" (click)="openAddBannerForm(item)"><i
+              class="fa fa-upload icon" aria-hidden="true"></i>Upload</button>
+
+          <button class="custom-btn red-btn text-center button-with-icon" (click)="deleteBanner(item.id)"><i
+              class="fa fa-trash-o icon" aria-hidden="true"></i>Delete</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="displayAddBannerForm">
+  <p-dialog header="Add New Banner" modal="true" [(visible)]="displayAddBannerForm" [responsive]="true"
+    [style]="{minWidth: '800px'}" (onHide)="closeAddBannerForm()" appendTo="body" maximizable="true" blockScroll="true"
+    [closeOnEscape]="false">
+    <div class="dialog-content">
+      <app-file-upload (downloadUrl)="getDownloadUrl($event)" [currentImage]="imageToEdit?.banner_image"
+        [basePathToUploadFiles]="basePathToUploadFiles">
+      </app-file-upload>
+      <div class="save-to-db">
+        <p-messages [key]="additonalMessage" [(value)]="infoMsgsInFileUpload"></p-messages>
+      </div>
+    </div>
+  </p-dialog>
+</div>

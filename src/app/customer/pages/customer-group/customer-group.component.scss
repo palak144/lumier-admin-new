@@ -1,0 +1,16 @@
+.btn[class*="btn-"] {
+    margin-left: 1rem;
+}
+.paddingSearch{
+    padding: 20px 0;
+}
+.glyphicon-cog:before {
+    content: "\e019";
+    padding-right: 10px;
+}
+.searchBtn{
+    width: 100%;
+}
+.dropdown-menu{
+    left: -70%;
+}

@@ -1,0 +1,146 @@
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Categories</p>
+      <!-- <p class="section-sub-heading">Categories of frames displayed on the website</p> -->
+    </div>
+
+    
+      <div class="header-action-button">
+        <div class="action-btn-sect">
+        <button (click)="openAddCategoryForm()" class="custom-btn theme-btn text-center block-center button-with-icon add-cate-btn"><i class="fa fa-plus icon" aria-hidden="true"></i>Add Category</button>
+        <button (click)="openImportCsvForm()" class="btn btn-raised btn-primary custom-btn button-with-icon"><i class="fa fa-upload icon" aria-hidden="true"></i>Import</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabular-data-wrapper">
+    <p-table #dt [value]="category" [lazy]="true" [responsive]="true" styleClass="acrylic-table" [paginator]="true"
+      [rows]="10" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+          <input [(ngModel)]="searchBar" type="text" pInputText size="50" placeholder="Search Category" (input)="filterGlobal($event.target.value)"
+            style="width:auto">
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Category Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowIndex="rowIndex" let-item>
+        <tr>
+          <td>{{rowIndex + 1}}</td>
+          <td>{{item.category}}</td>
+          <td><button *ngIf="item.adminStatus==1" class="custom-btn custom-btn-small green-btn text-center button-with-icon"
+              (click)="ActiveDeactiveCategory(item)">Active</button>
+            <button *ngIf="item.adminStatus==0" class="custom-btn custom-btn-small red-btn text-center button-with-icon"
+              (click)="ActiveDeactiveCategory(item)">Deactive</button>
+          </td>
+          <td class="action-buttons">
+            <span class="ui-column-title">Action</span>
+            <button (click)="openUpdateCategoryForm(item)" class="custom-btn custom-btn-small blue-btn text-center button-with-icon edit"><i
+                class="fa fa-pencil icon" aria-hidden="true"></i>Edit</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<div *ngIf="displayUpdateCategoryForm">
+  <p-dialog header="Edit Category" modal="true" [(visible)]="displayUpdateCategoryForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeaddUpdateCategoryForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="UpdateCategoryForm" (ngSubmit)="UpdateCategory()" class="custom-form">
+        <div class="custom-form-control">
+          <span class="key">Category Name</span>
+          <span class="value">
+            <input type="text" name="category" id="category" formControlName="category">
+          </span>
+          <span class="error-message" *ngIf="UpdateCategoryForm.controls.category.invalid && (UpdateCategoryForm.controls.category.dirty || UpdateCategoryForm.controls.category.touched) && isUpdateCategoryFormSubmitted">
+            <span *ngIf="UpdateCategoryForm.controls.category.errors.required">Category
+              name
+              is required.</span>
+          </span>
+          <span class="error-message" *ngIf="UpdateCategoryForm.controls.category.invalid && (UpdateCategoryForm.controls.category.dirty || UpdateCategoryForm.controls.category.touched) && isUpdateCategoryFormSubmitted">
+            <span *ngIf="UpdateCategoryForm.controls.category.errors.pattern">Category name
+              should be valid.</span>
+          </span>
+        </div>
+
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeUpdateCategoryForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>
+
+<div *ngIf="displayAddCategoryForm">
+  <p-dialog header="Add Category" modal="true" [(visible)]="displayAddCategoryForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeAddCategoryForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="AddCategoryForm" (ngSubmit)="AddCategory()" class="custom-form">
+        <div class="custom-form-control">
+          <span class="key">Category Name</span>
+          <span class="value">
+            <input type="text" name="category" id="category" formControlName="category">
+          </span>
+          <span class="error-message" *ngIf="AddCategoryForm.controls.category.invalid && (AddCategoryForm.controls.category.dirty || AddCategoryForm.controls.category.touched) && isAddCategoryFormSubmitted">
+            <span *ngIf="AddCategoryForm.controls.category.errors.required">Category
+              name
+              is required.</span>
+          </span>
+          <span class="error-message" *ngIf="AddCategoryForm.controls.category.invalid && (AddCategoryForm.controls.category.dirty || AddCategoryForm.controls.category.touched) && isAddCategoryFormSubmitted">
+            <span *ngIf="AddCategoryForm.controls.category.errors.pattern">Category
+              name
+              should be valid.</span>
+          </span>
+        </div>
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeAddCategoryForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>
+
+<div *ngIf="displayImportCsvForm">
+  <p-dialog header="Import CSV" modal="true" [(visible)]="displayImportCsvForm" [responsive]="true" [style]="{minWidth: '800px'}"
+    (onHide)="closeImportCsvForm()" appendTo="body" maximizable="true" blockScroll="true" [closeOnEscape]="false">
+    <div class="dialog-content">
+
+      <form [formGroup]="CsvImportForm" (ngSubmit)="importCsvData()" class="custom-form">
+        <div class="custom-form-control">
+          <span class="key">CSV File</span>
+          <span class="value">
+            <input type="file" name="category_file" accept=".csv" id="category_file" formControlName="category_file" (change)="fileChangeEvent($event)">
+          </span>
+          <span class="error-message" *ngIf="CsvImportForm.controls.category_file.invalid && (CsvImportForm.controls.category_file.dirty || CsvImportForm.controls.category_file.touched)">
+            <span *ngIf="CsvImportForm.controls.category_file.errors.required">CSV File is required</span>
+          </span>
+          <span class="error-message" *ngIf="filetypeerror">{{filetypeerror}}</span>
+        </div>
+        <div class="custom-form-control decision-box">
+          <button type="reset" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel" (click)="closeImportCsvForm()"><i
+              class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+          <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+              class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+        </div>
+      </form>
+    </div>
+  </p-dialog>
+</div>

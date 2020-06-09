@@ -1,0 +1,67 @@
+.read-more-text {
+    color: #3389FB !important;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+// .display-flex {
+//     display:flex;
+// }
+
+.flex-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .prime-event-dialog {
+    &.ui-dialog {
+        .ui-dialog-titlebar {
+            display:flex;
+            align-items: flex-start;
+            padding: 16px 16px 15px
+        }
+        .ui-dialog-titlebar-icon {
+            position: absolute;
+            right: 14px;
+            top:28px;
+        }
+
+        .event-name-text {
+            padding:14px 16px 5px; 
+             p {
+                color: #6f6c6c;
+             }
+        }
+
+        .event-image-wrapper {
+            padding-right: 12px;
+        }
+
+        .event-title {
+            p {
+                font-size: 16px;
+                text-transform: capitalize;
+                color: #6f6c6c;
+            }
+        }
+
+        .card-icon-wrapper {
+        text-align: center;
+        position: relative;
+        .card-image-block {
+            width: 74px;
+            height: 74px;
+            margin: 0 auto;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            .card-user-image {
+                width: 100%;
+                border-radius: inherit;
+            }
+        }
+    }
+    }
+   
+}

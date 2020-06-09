@@ -1,0 +1,47 @@
+
+.card-block{
+    background: #fff;
+    text-align: center;
+    padding: 20px;
+
+    .card-head{
+        font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 15px;
+    }
+
+    .card-info{
+        font-size: 1.2em;
+        font-weight: 400;
+    }
+}
+
+.frame-with-image-card{
+    margin: 15px 0;
+    border: 1px solid #adadad;
+    padding: 6px;
+    .frame-img{
+        margin-bottom: 1em;
+        img{
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .frame-name, .frame-info{
+        text-align: center;
+        p{
+            font-weight: 400;
+        }
+    }
+}
+.underLine{
+    text-decoration: underline;
+}
+.justify-content{
+    justify-content: space-around;
+}
+.padding-2{
+    padding: 20px;
+}

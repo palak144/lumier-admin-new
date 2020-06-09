@@ -1,0 +1,71 @@
+<div class="breadcrumb">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a [routerLink]="['/questions/listing']">Question List</a> / <span>Question Details</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+  <ng-container *ngIf="questionList?.askedquestion?.length > 0">
+    <div *ngFor="let item of questionList.askedquestion;let i = index" [attr.data-index]="i">
+      <div class="ques-detail-view">
+        <div class="question-main">
+          <span class="ques-no">Q. {{i+1}}</span>
+          <p class="question">{{item.question}}</p>
+          <span class="time ques-time">{{item.created_at | date: 'MMMM d, y'}} </span>
+        </div>
+        <div class="ans-main">
+          <span class="ques-no">Ans.</span>
+          <ng-container *ngIf="item?.answerList?.length > 0">
+            <div *ngFor="let ans of item.answerList">
+              <ng-container *ngIf="ans.userType == 2">
+                <div class="ans-inner-main">
+                  <div class="user-image">
+                    <!-- <img src="assets/img/user-image.png" alt="user image"> -->
+                    <img [src]="((questionList?.expertprofile?.profilePic !== '') && (questionList?.expertprofile?.profilePic)) ? questionList?.expertprofile?.profilePic : 'assets/img/Defultimage.svg'"
+                      alt="user image">
+                  </div>
+                  <div class="answer-outer">
+                    <h4 class="user-name">{{questionList?.expertprofile?.firstName}}
+                      {{questionList?.expertprofile?.lastName}}</h4>
+                    <p class="answer">{{ans.answer}}</p>
+                    <span class="time ques-time">{{ans.created_at | date: 'MMMM d, y'}} </span>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="ans.userType == 1">
+                <div class="ans-inner-main ans-received">
+                  <div class="user-image">
+                    <!-- <img src="assets/img/user-image.png" alt="user image"> -->
+                    <img [src]="((questionList?.professionalprofile?.profilePic !== '') && (questionList?.professionalprofile?.profilePic)) ? questionList?.professionalprofile?.profilePic : 'assets/img/Defultimage.svg'"
+                      alt="user image" />
+                  </div>
+                  <div class="answer-outer">
+                    <h4 class="user-name">{{questionList?.professionalprofile?.firstName}}
+                      {{questionList?.professionalprofile?.lastName}}</h4>
+                    <p class="answer">{{ans.answer}}</p>
+                    <span class="time ques-time">{{ans.created_at | date: 'MMMM d, y'}} </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="item?.answerList?.length == 0">
+            Answer Not Found !!
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="view-more" *ngIf="questionList?.askedquestion[questionList?.askedquestion.length-1].isNextStatus === true">
+      <a class="view-more-link" (click)="showMoreCards()">
+        view more
+        <i class="fa fa-chevron-right view-arrow-icon"></i>
+      </a>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="questionList?.askedquestion?.length == 0">
+    Question Not Found !!
+  </ng-container>
+</div>

@@ -1,0 +1,213 @@
+<!--Contact Information on the website-->
+<div class="content section-padding bg-white box-shadow section-bottom-spacing">
+
+  <div class="section-heading section-head-with-button">
+    <div class="section-title">
+      <p>Contact Information</p>
+      <p class="section-sub-heading">Contact information being displayed on the website in footer</p>
+    </div>
+
+    <div class="header-action-button">
+      <button *ngIf="!displayEditContactDetailsForm" (click)="editContactInformation()"
+        class="custom-btn theme-btn text-center block-center button-with-icon"><i class="fa fa-pencil icon"
+          aria-hidden="true"></i>Edit</button>
+
+      <button *ngIf="displayEditContactDetailsForm" (click)="closeEditContactInformation()"
+        class="custom-btn theme-btn text-center block-center button-with-icon"><i class="fa fa-times icon"
+          aria-hidden="true"></i>Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="!displayEditContactDetailsForm && contactInformationDetails" class="custom-form animated fadeIn">
+
+    <div class="custom-form-control">
+      <span class="key">Contact Description</span>
+      <span class="value">
+        <p>{{contactInformationDetails.contact_description}}</p>
+      </span>
+    </div>
+
+    <div class="custom-form-control">
+      <span class="key">Phone</span>
+      <span class="value">
+        <p>{{contactInformationDetails.phone_number}}</p>
+      </span>
+    </div>
+
+    <div class="custom-form-control">
+      <span class="key">Email</span>
+      <span class="value">
+        <p>{{contactInformationDetails.email}}</p>
+      </span>
+    </div>
+
+    <div class="custom-form-control">
+      <span class="key">Address</span>
+      <span class="value">
+        <p>{{contactInformationDetails.address}}</p>
+      </span>
+    </div>
+
+    <div class="custom-form-control">
+      <span class="key">Social Accounts</span>
+      <span class="value">
+
+        <div class="social-input">
+          <div class="social-icon">
+            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+          </div>
+          <div class="social-link">
+            <p *ngIf="contactInformationDetails.social_accounts.facebook">
+              {{contactInformationDetails.social_accounts.facebook}}</p>
+            <p *ngIf="!contactInformationDetails.social_accounts.facebook">No Link Available</p>
+          </div>
+        </div>
+
+        <div class="social-input">
+          <div class="social-icon">
+            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+          </div>
+          <div class="social-link">
+            <p *ngIf="contactInformationDetails.social_accounts.twitter">
+              {{contactInformationDetails.social_accounts.twitter}}</p>
+            <p *ngIf="!contactInformationDetails.social_accounts.twitter">No Link Available</p>
+          </div>
+        </div>
+
+        <div class="social-input">
+          <div class="social-icon">
+            <i class="fa fa-instagram" aria-hidden="true"></i>
+          </div>
+          <div class="social-link">
+            <p *ngIf="contactInformationDetails.social_accounts.instagram">
+              {{contactInformationDetails.social_accounts.instagram}}</p>
+            <p *ngIf="!contactInformationDetails.social_accounts.instagram">No Link Available</p>
+          </div>
+        </div>
+
+        <div class="social-input">
+          <div class="social-icon">
+            <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+          </div>
+          <div class="social-link">
+            <p *ngIf="contactInformationDetails.social_accounts.linkedIn">
+              {{contactInformationDetails.social_accounts.linkedIn}}</p>
+            <p *ngIf="!contactInformationDetails.social_accounts.linkedIn">No Link Available</p>
+          </div>
+        </div>
+
+      </span>
+    </div>
+
+  </div>
+
+  <div *ngIf="displayEditContactDetailsForm" class="custom-form animated fadeIn">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmitContactForm()">
+      <div class="custom-form-control">
+        <span class="key">Contact Description</span>
+        <span class="value">
+          <textarea name="description" id="description" rows="3" class="w-100"
+            formControlName="contact_description"></textarea>
+        </span>
+
+        <span class="error-message"
+          *ngIf="contactForm.controls.contact_description.invalid && (contactForm.controls.contact_description.dirty || contactForm.controls.contact_description.touched) && isContactFormSubmitted">
+          <span
+            *ngIf="contactForm.controls.contact_description.errors.required || contactForm.controls.contact_description.errors.whitespace">Contact
+            Description is required.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Phone</span>
+        <span class="value">
+          <input type="text" name="phone" id="phone" formControlName="phone_number"
+            (keypress)="utilityService.numberOnly($event)">
+        </span>
+        <span class="error-message"
+          *ngIf="contactForm.controls.phone_number.invalid && (contactForm.controls.phone_number.dirty || contactForm.controls.phone_number.touched) && isContactFormSubmitted">
+          <span *ngIf="contactForm.controls.phone_number.errors.required">Phone is required.</span>
+          <span *ngIf="contactForm.controls.phone_number.errors.pattern">Phone is invalid.</span>
+          <span *ngIf="contactForm.controls.phone_number.errors.maxlength">Phone cannot be greater than 13
+            numbers.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Email</span>
+        <span class="value">
+          <input type="email" name="email" id="email" formControlName="email">
+        </span>
+        <span class="error-message"
+          *ngIf="contactForm.controls.email.invalid && (contactForm.controls.email.dirty || contactForm.controls.email.touched) && isContactFormSubmitted">
+          <span *ngIf="contactForm.controls.email.errors.required">Email is required.</span>
+          <span *ngIf="contactForm.controls.email.errors.pattern">Email is invalid.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Address</span>
+        <span class="value">
+          <textarea name="address" id="address" rows="3" class="w-100" formControlName="address"></textarea>
+        </span>
+        <span class="error-message"
+          *ngIf="contactForm.controls.address.invalid && (contactForm.controls.address.dirty || contactForm.controls.address.touched) && isContactFormSubmitted">
+          <span
+            *ngIf="contactForm.controls.address.errors.required || contactForm.controls.address.errors.whitespace">Address
+            is required.</span>
+          <span *ngIf="contactForm.controls.address.errors.maxlength">Address cannot exceed 1000 characters.</span>
+        </span>
+      </div>
+
+      <div class="custom-form-control">
+        <span class="key">Social Accounts</span>
+        <span class="value" formGroupName="social_accounts">
+
+          <div class="social-input">
+            <div class="social-icon">
+              <i class="fa fa-facebook-official" aria-hidden="true"></i>
+            </div>
+            <div class="social-link">
+              <input type="text" placeholder="Facebook" formControlName="facebook">
+            </div>
+          </div>
+
+          <div class="social-input">
+            <div class="social-icon">
+              <i class="fa fa-twitter-square" aria-hidden="true"></i>
+            </div>
+            <div class="social-link">
+              <input type="text" placeholder="Twitter" formControlName="twitter">
+            </div>
+          </div>
+
+          <div class="social-input">
+            <div class="social-icon">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </div>
+            <div class="social-link">
+              <input type="text" placeholder="Instagram" formControlName="instagram">
+            </div>
+          </div>
+
+          <div class="social-input">
+            <div class="social-icon">
+              <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+            </div>
+            <div class="social-link">
+              <input type="text" placeholder="LinkedIn" formControlName="linkedIn">
+            </div>
+          </div>
+
+        </span>
+      </div>
+
+      <div class="custom-form-control decision-box">
+        <button type="button" title="Cancel" class="custom-btn red-btn text-center button-with-icon cancel"
+          (click)="closeEditContactInformation()"><i class="fa fa-times icon" aria-hidden="true"></i>Cancel</button>
+        <button type="submit" title="Submit" class="custom-btn green-btn text-center button-with-icon submit"><i
+            class="fa fa-check icon" aria-hidden="true"></i>Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
