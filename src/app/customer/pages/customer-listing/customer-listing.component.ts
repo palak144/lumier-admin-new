@@ -116,7 +116,6 @@ export class CustomerListingComponent implements OnInit {
       }, error => {
         this.utilityService.routingAccordingToError(error);
       })
-
   }
 
 

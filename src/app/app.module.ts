@@ -4,6 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+<<<<<<< HEAD
+=======
+import { ToastrModule } from 'ngx-toastr';
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
 import { AgmCoreModule } from '@agm/core';
 import {
   HttpClientModule,

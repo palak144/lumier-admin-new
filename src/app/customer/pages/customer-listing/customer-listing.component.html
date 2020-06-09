@@ -6,17 +6,28 @@
     <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
         <div class="position-relative has-icon-right">
             <!-- <input type="text" class="form-control round" placeholder="Search"> -->
+<<<<<<< HEAD
             <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div>
 
+=======
+            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
+            <div class="form-control-position">
+                <i class="ft-search"></i>
+            </div>
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
         </div>
     </form>
     <div class="col-8 text-right">
         <button type="button" class="btn btn-raised btn-danger">
       <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+<<<<<<< HEAD
       <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
+=======
+      <span class="d-lg-block d-none">Export</span>
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </button>
         <button type="button" class="btn btn-raised btn-danger" [routerLink]="['/customer/add-customer']">
       <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
@@ -33,6 +44,7 @@
         <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
             <ng-template pTemplate="header">
                 <tr>
+<<<<<<< HEAD
                     <th style="width:4em">S No.
                     </th>
                     <th style="width:11em;">Full Name</th>
@@ -79,6 +91,34 @@
 
                             </ul>
                         </div>
+=======
+                    <th style="width:8em">S No.
+                    </th>
+                    <th>Full Name</th>
+                    <th style="width:16em;">Email</th>
+                    <!-- <th>Mobile</th> -->
+                    <th>Clinic Name</th>
+                    <!-- <th>Registration Date</th> -->
+                    <!-- <th>Status</th> -->
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.customerId}}</td>
+                    <td><span class="ui-column-title">Full Name</span>{{customer.firstName}}</td>
+                    <td><span class="ui-column-title">Email</span>{{customer.Email}}</td>
+                    <!-- <td><span class="ui-column-title">Mobile</span>{{customer.mobile}}</td> -->
+                    <td><span class="ui-column-title">Clinic Name</span>{{customer.clinicName}}</td>
+                    <!-- <td><span class="ui-column-title">Registration Date</span>{{customer.register}}</td> -->
+                    <!-- <td>
+                        <span class="ui-column-title">Status</span> {{customer.status}}
+                    </td> -->
+                    <td>
+                        <span class="ui-column-title">Action</span>
+                        <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.customerId)">
+                        </p-dropdown>
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
                     </td>
                 </tr>
             </ng-template>

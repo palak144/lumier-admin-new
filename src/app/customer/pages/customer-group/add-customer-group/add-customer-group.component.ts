@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute , Params, Router} from '@angular/router';
 import { CustomerService } from 'app/shared/services/customer.service';
 import { Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+=======
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
 
 @Component({
   selector: 'app-add-customer-group',
@@ -15,6 +20,7 @@ export class AddCustomerGroupComponent implements OnInit {
 
   addCustomerGroupForm: FormGroup;
   editMode = false;
+<<<<<<< HEAD
   isSubmittedaddCustomerGroupForm: boolean = false;
   id: number;
   addCustomerGroupFormDetails: any;
@@ -44,6 +50,25 @@ export class AddCustomerGroupComponent implements OnInit {
       }
     )
     
+=======
+  isSubmittedaddCustomerForm : boolean = false;
+
+  constructor(
+    
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
+
+  ngOnInit(): void {
+    
+    this.addCustomerGroupForm = this.formBuilder.group({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+        name:['', Validators.required],
+    });
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
 
   }
 
@@ -51,6 +76,7 @@ export class AddCustomerGroupComponent implements OnInit {
     return this.addCustomerGroupForm.controls;
   }
 
+<<<<<<< HEAD
   onSubmitAddCustomerGroupForm() {
     
     this.isSubmittedaddCustomerGroupForm = true
@@ -135,4 +161,15 @@ this.toastr.success("Customer Group Editted Successfully")
 
 
 }
+=======
+  onSubmitAddCustomerGroupForm(){
+    debugger
+    this.isSubmittedaddCustomerForm = true
+    if (this.addCustomerGroupForm.invalid) {
+      return
+    }
+    
+    console.log(this.addCustomerGroupForm)
+  }
+>>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
 }
