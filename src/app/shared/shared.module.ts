@@ -42,10 +42,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { PaginatorModule } from 'primeng/paginator';
 import { TimeFormat } from './pipes/convert-time.pipe';
 import { CustomerService } from './services/customer.service';
-<<<<<<< HEAD
 import { ToastrModule } from 'ngx-toastr';
-=======
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
 
 
 /** shared ,odule only for add / update frame front face image upload */
@@ -80,12 +77,8 @@ import { ToastrModule } from 'ngx-toastr';
     ColorPickerModule,
     RadioButtonModule,
     PaginatorModule,
-<<<<<<< HEAD
     TimeFormat,
     ToastrModule,
-=======
-    TimeFormat
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     // FrameFrontFaceUploadComponent
   ],
   imports: [
@@ -109,13 +102,9 @@ import { ToastrModule } from 'ngx-toastr';
     QuillModule,
     ColorPickerModule,
     RadioButtonModule,
-<<<<<<< HEAD
     PaginatorModule,
     ToastrModule.forRoot(),
 
-=======
-    PaginatorModule
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
   ],
   declarations: [
     FooterComponent,

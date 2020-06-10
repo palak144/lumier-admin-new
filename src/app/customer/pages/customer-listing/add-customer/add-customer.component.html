@@ -1,5 +1,4 @@
 <div class="row container pb-3">
-<<<<<<< HEAD
   <div class="content-header text-left">{{customerTitle}}</div>
   <p class="content-sub-header"></p>
 </div>
@@ -11,22 +10,11 @@
 <form class="form" [formGroup]="addCustomerForm" (ngSubmit)="onSubmitAddCustomerForm()">
   <div class="form-body">
     <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
-=======
-  <div class="content-header text-left">Add New Customers</div>
-  <p class="content-sub-header"></p>
-</div>
-<form class="form" [formGroup]="addCustomerForm" (ngSubmit)="onSubmitAddCustomerForm()">
-  <div class="form-body">
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label>Email ID</label>
-<<<<<<< HEAD
           <input type="email" class="form-control border-primary" formControlName="email" placeholder="Email"
-=======
-          <input type="email" class="form-control border-primary" formControlName="email"
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.email.errors }">
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.email.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.email.errors.required">Email is required</div>
@@ -58,7 +46,6 @@
           <label>Title</label>
           <select formControlName="title" class="form-control border-primary"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.title.errors }">
-<<<<<<< HEAD
             <option value="" >Select Title</option>
             <option value={{title}} *ngFor="let title of titles">{{title}}
             </option>
@@ -66,12 +53,6 @@
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.title.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.title.errors.required">Title is required</div>
           </div> </div>
-=======
-            <option value="" >Title</option>
-            <option value={{title}} *ngFor="let title of titles">{{title}}
-            </option>
-          </select> </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       </div>
       <div class="col-md-4">
         <div class="form-group">
@@ -86,11 +67,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Last Name</label>
-<<<<<<< HEAD
           <input type="text" formControlName="lname" placeholder="Last Name" class="form-control border-primary"
-=======
-          <input type="text" formControlName="lname" placeholder="First Name" class="form-control border-primary"
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.lname.errors }">
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.lname.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.lname.errors.required">Last Name is required</div>
@@ -98,7 +75,6 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
     <h4 class="form-section"><i class="ft-briefcase"></i> Professional Info</h4>
     <div class="row">
       <div class="col-md-6">
@@ -111,26 +87,11 @@
         </select>
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.assignGroup.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.assignGroup.errors.required">Assign Group is required</div>
-=======
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Mobile</label>
-          <input type="number" formControlName="contactNo" placeholder="Mobile" class="form-control border-primary"
-            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.contactNo.errors }">
-          <div *ngIf="isSubmittedaddCustomerForm && signUpControls.contactNo.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.contactNo.errors.required">Telephone Number is
-              required</div>
-            <div *ngIf="signUpControls.contactNo.errors.pattern">Telephone Number must be 10
-              digits</div>
-
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-<<<<<<< HEAD
           <label>Job Title</label>
           <input type="text" formControlName="jobTitle" placeholder="Job Title"
           class="form-control border-primary"
@@ -138,22 +99,11 @@
         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.jobTitle.errors" class="invalid-feedback">
           <div *ngIf="signUpControls.jobTitle.errors.required">Job Title is required</div>
         </div>        </div>
-=======
-          <label>Website</label>
-          <input type="url" class="form-control border-primary" id="web" formControlName="web" name="web"
-            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.web.errors }">
-          <div *ngIf="isSubmittedaddCustomerForm && signUpControls.web.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.web.errors.required">Website is required</div>
-            <div *ngIf="signUpControls.web.errors.pattern">Website must be valid</div>
-          </div>
-        </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-<<<<<<< HEAD
           <label>Practice Type</label>
           <input type="text" formControlName="practiceType" placeholder="Practice Type"
             class="form-control border-primary"
@@ -188,36 +138,11 @@
               digits</div>
               <div *ngIf="signUpControls.contactNo.errors.maxLength">Mobile No. must be 10
                 digits</div>
-=======
-          <label>Assign Group</label>
-          <input type="text" formControlName="assignGroup" placeholder="Assign Group" class="form-control border-primary"
-          [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
-        <div *ngIf="isSubmittedaddCustomerForm && signUpControls.assignGroup.errors" class="invalid-feedback">
-          <div *ngIf="signUpControls.assignGroup.errors.required">Assign Group is required</div>
-        </div>        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Job Title</label>
-          <input type="url" id="userinput4" class="form-control border-primary">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Job Title</label>
-          <input type="text" formControlName="jobTitle" placeholder="Job Title" class="form-control border-primary"
-            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.jobTitle.errors }">
-          <div *ngIf="isSubmittedaddCustomerForm && signUpControls.jobTitle.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.jobTitle.errors.required">Job Title is required</div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-<<<<<<< HEAD
           <label>Website</label>
           <input type="url" class="form-control border-primary" id="web" formControlName="web" placeholder="Website"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.web.errors }">
@@ -229,58 +154,27 @@
       </div>
     </div>
     
-=======
-          <label>Clinic Name</label>
-          <input type="text" formControlName="clinicName" placeholder="Clinic Name"
-          class="form-control border-primary"
-          [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.clinicName.errors }">
-      <div *ngIf="isSubmittedaddCustomerForm && signUpControls.clinicName.errors"
-          class="invalid-feedback">
-          <div *ngIf="signUpControls.clinicName.errors.required">Clinic Name is required</div>
-      </div>        </div>
-      </div>
-    </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label>Block/ House No.</label>
           <input type="text" formControlName="blockNo" placeholder="Block/ House No."
-<<<<<<< HEAD
             class="form-control border-primary"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.blockNo.errors }">
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.blockNo.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.blockNo.errors.required">Block/ House No. is required</div>
           </div>
         </div>
-=======
-          class="form-control border-primary"
-          [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.blockNo.errors }">
-      <div *ngIf="isSubmittedaddCustomerForm && signUpControls.blockNo.errors"
-          class="invalid-feedback">
-          <div *ngIf="signUpControls.blockNo.errors.required">Block/ House No. is required</div>
-      </div>         </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label>Unit No.</label>
-<<<<<<< HEAD
           <input type="text" formControlName="unitNo" placeholder="Unit No." class="form-control border-primary"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.unitNo.errors }">
           <div *ngIf="isSubmittedaddCustomerForm && signUpControls.unitNo.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.unitNo.errors.required">Unit No. is required</div>
           </div>
         </div>
-=======
-          <input type="text" formControlName="unitNo" placeholder="Unit No."
-          class="form-control border-primary"
-          [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.unitNo.errors }">
-      <div *ngIf="isSubmittedaddCustomerForm && signUpControls.unitNo.errors"
-          class="invalid-feedback">
-          <div *ngIf="signUpControls.unitNo.errors.required">Unit No. is required</div>
-      </div>         </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       </div>
     </div>
   </div>
@@ -288,49 +182,28 @@
     <div class="col-md-6">
       <div class="form-group">
         <label>Floor No.</label>
-<<<<<<< HEAD
         <input type="text" formControlName="floorNo" placeholder="Floor No." class="form-control border-primary"
           [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.floorNo.errors }">
         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.floorNo.errors" class="invalid-feedback">
           <div *ngIf="signUpControls.floorNo.errors.required">Floor No. is required</div>
         </div>
       </div>
-=======
-        <input type="text" formControlName="floorNo" placeholder="Floor No."
-        class="form-control border-primary"
-        [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.floorNo.errors }">
-    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.floorNo.errors"
-        class="invalid-feedback">
-        <div *ngIf="signUpControls.floorNo.errors.required">Floor No. is required</div>
-    </div>       </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Street Name</label>
-<<<<<<< HEAD
         <input type="text" formControlName="streetName" placeholder="Street Name" class="form-control border-primary"
           [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.streetName.errors }">
         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.streetName.errors" class="invalid-feedback">
           <div *ngIf="signUpControls.streetName.errors.required">Street Name is required</div>
         </div>
       </div>
-=======
-        <input type="text" formControlName="streetName" placeholder="Street Name"
-        class="form-control border-primary"
-        [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.streetName.errors }">
-    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.streetName.errors"
-        class="invalid-feedback">
-        <div *ngIf="signUpControls.streetName.errors.required">Street Name is required</div>
-    </div>       </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>Building Name</label>
-<<<<<<< HEAD
         <input type="text" formControlName="buildingName" placeholder="Building Name"
           class="form-control border-primary"
           [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.buildingName.errors }">
@@ -338,42 +211,22 @@
           <div *ngIf="signUpControls.buildingName.errors.required">Building Name is required</div>
         </div>
       </div>
-=======
-        <input type="text" formControlName="BuildingName" placeholder="Building Name"
-        class="form-control border-primary"
-        [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.BuildingName.errors }">
-    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.BuildingName.errors"
-        class="invalid-feedback">
-        <div *ngIf="signUpControls.BuildingName.errors.required">Building Name is required</div>
-    </div>         </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <label>Pincode</label>
-<<<<<<< HEAD
         <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary"
           [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.pincode.errors" class="invalid-feedback">
           <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
         </div>
       </div>
-=======
-        <input type="number" formControlName="pincode" placeholder="Pincode"
-        class="form-control border-primary"
-        [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
-    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.pincode.errors"
-        class="invalid-feedback">
-        <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
-    </div>        </div>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label for="userinput3">Phone No.</label>
-<<<<<<< HEAD
         <input type="number" formControlName="phoneNo" placeholder="Phone No." class="form-control border-primary"
           [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.phoneNo.errors }">
         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.phoneNo.errors" class="invalid-feedback">
@@ -383,21 +236,6 @@
             <div *ngIf="signUpControls.phoneNo.errors.maxLength">Phone No. must be 10
               digits</div>
         </div>
-=======
-        <input type="number" formControlName="phoneNo" placeholder="Phone No."
-        class="form-control border-primary"
-        [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.phoneNo.errors }">
-    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.phoneNo.errors"
-        class="invalid-feedback">
-        <div *ngIf="signUpControls.phoneNo.errors.required">Phone No. is required</div>
-    </div>       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Image</label>
-        <input type="file" class="form-control-file underLine" formControlName="customerLogo" accept="image/*" >
-
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       </div>
     </div>
   </div>
@@ -407,13 +245,9 @@
     <button type="submit" class="btn btn-raised btn-primary"> Submit
     </button>
   </div>
-<<<<<<< HEAD
 </form>
 </div>
 </div>
 </div>
 </div>
 </div>
-=======
-</form>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc

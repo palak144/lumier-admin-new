@@ -9,12 +9,8 @@
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div> -->
-<<<<<<< HEAD
             <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn"
                 pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
-=======
-            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div>
@@ -22,7 +18,6 @@
     </form>
     <div class="col-8 text-right">
         <button type="button" class="btn btn-raised btn-danger">
-<<<<<<< HEAD
             <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
             <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
         </button>
@@ -31,15 +26,6 @@
             <span class="d-lg-block d-none" (click)="onAddCustomerGroup()">Add New</span>
         </button>
 
-=======
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <span class="d-lg-block d-none">Export</span>
-  </button>
-        <button type="button" class="btn btn-raised btn-danger" [routerLink]="['/customer/add-customer']">
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <span class="d-lg-block d-none" (click)="onAddCustomerGroup()">Add New</span>
-  </button>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
     </div>
 </div>
 <div class="customer-wrapper">
@@ -48,13 +34,9 @@
     </div>
 
     <div class="table-wrapper vehicle-wrapper">
-<<<<<<< HEAD
         <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
             [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"
             [totalRecords]="totalCount">
-=======
-        <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:8em">S No.
@@ -63,11 +45,7 @@
                     <th style="width:16em;">Group Email</th>
                     <th>Registration Date</th>
                     <th>Status</th>
-<<<<<<< HEAD
                     <th style="width:6em;">Action</th>
-=======
-                    <th>Action</th>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-customer>
@@ -75,7 +53,6 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
                     <td><span class="ui-column-title">Group Name</span>{{customer.groupName}}</td>
                     <td><span class="ui-column-title">Group Email</span>{{customer.groupEmail}}</td>
-<<<<<<< HEAD
                     <td><span class="ui-column-title">Registration
                             Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
                     <td>
@@ -99,16 +76,6 @@
 
                             </ul>
                         </div>
-=======
-                    <td><span class="ui-column-title">Registration Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
-                    <td>
-                        <span class="ui-column-title">Status</span> {{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
-                    </td>
-                    <td>
-                        <span class="ui-column-title">Action</span>
-                        <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.id)">
-                        </p-dropdown>
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
                     </td>
                 </tr>
             </ng-template>
@@ -117,10 +84,6 @@
                     <td class="text-center text-danger font-weight-600" colspan="8">No Records Found.</td>
                 </tr>
             </ng-template>
-<<<<<<< HEAD
-
-=======
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
         </p-table>
     </div>
 </div>

@@ -20,7 +20,6 @@ const routes: Routes = [{
           pathMatch: 'full'
         },
         {
-<<<<<<< HEAD
           path: 'customer-groups',
           component: CustomerGroupComponent,
           data: {
@@ -28,8 +27,6 @@ const routes: Routes = [{
           }
         },
         {
-=======
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
           path: 'customers',
           component: CustomerListingComponent,
           data: {
@@ -46,7 +43,6 @@ const routes: Routes = [{
           component: AddCustomerGroupComponent,
         },
         {
-<<<<<<< HEAD
           path: ':id',
           component: CustomerListingComponent,
           
@@ -67,14 +63,6 @@ const routes: Routes = [{
           
         },
         
-=======
-          path: 'customer-groups',
-          component: CustomerGroupComponent,
-          data: {
-            title: 'Customer Groups'
-          }
-        }
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
       ]
     }
   ]

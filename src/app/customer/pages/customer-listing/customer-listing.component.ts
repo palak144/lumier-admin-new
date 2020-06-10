@@ -58,8 +58,8 @@ export class CustomerListingComponent implements OnInit {
    this.customerService.updateCustomerStatus(statusData).subscribe(
      (success:any)=>
      {
-       debugger
-     this.getAllCustomers(this.page)
+       
+     this.ngOnInit()
 } )
     }
   ngOnInit() {
@@ -88,7 +88,7 @@ export class CustomerListingComponent implements OnInit {
   }
 
   getAllCustomers(page) {
-    debugger
+    
     this.customerService.getAllCustomers(page).subscribe(
       (success: any) => {
         this.customerList = success.data.results;
@@ -96,7 +96,7 @@ export class CustomerListingComponent implements OnInit {
         console.log('customer:', success);
       },
       error => {
-        debugger
+        
         this.utilityService.routingAccordingToError(error);
         this.utilityService.resetPage();
       }
@@ -126,6 +126,7 @@ export class CustomerListingComponent implements OnInit {
      
     this.utilityService.loaderStart();
     this.page = event.first / 10;
+    
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllCustomers(this.page);

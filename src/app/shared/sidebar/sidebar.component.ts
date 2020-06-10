@@ -17,15 +17,12 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     $.getScript('./assets/js/app-sidebar.js');
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-<<<<<<< HEAD
-=======
 
-    if (localStorage.getItem('token')) {
-      this.router.navigateByUrl(this.router.url);
-    } else {
-      this.router.navigate(['/auth/login']);
-    }
->>>>>>> ab00378f10aef9276383d015d4e0445f6789afbc
+    // if (localStorage.getItem('token')) {
+    //   this.router.navigateByUrl(this.router.url);
+    // } else {
+    //   this.router.navigate(['/auth/login']);
+    // }
   }
 
   // NGX Wizard - skip url change
