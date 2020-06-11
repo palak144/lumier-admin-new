@@ -16,12 +16,12 @@
             </div>
         </div>
     </form>
-    <div class="col-8 text-right">
-        <button type="button" class="btn btn-raised btn-danger">
+    <div class="col-8 text-right pr-0">
+        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
             <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
             <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
         </button>
-        <button type="button" class="btn btn-raised btn-danger" [routerLink]="['/customer/add-customer']">
+        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/customer/add-customer']">
             <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
             <span class="d-lg-block d-none" (click)="onAddCustomerGroup()">Add New</span>
         </button>
