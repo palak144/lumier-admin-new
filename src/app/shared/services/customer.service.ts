@@ -31,7 +31,16 @@ export class CustomerService {
   }
 
 
-  getAllCustomers(page, searchKey?) {
+  getAllCustomers(page) {
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/customer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  getAllCustomersSearch(page?, searchKey?) {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/customer',
       { params: params }).pipe(

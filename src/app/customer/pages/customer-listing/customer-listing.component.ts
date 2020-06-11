@@ -26,6 +26,7 @@ export class CustomerListingComponent implements OnInit {
   customer:any;
   totalCount: number;
 
+
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
 
@@ -87,7 +88,7 @@ export class CustomerListingComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.customerService.getAllCustomers(this.page, term
+      switchMap((term: string) => this.customerService.getAllCustomersSearch(this.page, term
       ))
     ).subscribe((success: any) => {
       this.customerList = success.data.results;
@@ -97,6 +98,7 @@ export class CustomerListingComponent implements OnInit {
       this.utilityService.routingAccordingToError(error);
     })
   }
+
 
   getAllCustomers(page) {
     this.customerService.getAllCustomers(page).subscribe(
@@ -113,7 +115,7 @@ export class CustomerListingComponent implements OnInit {
   }
 
   getAllCustomersSearch(page, searchBar) {
-    this.customerService.getAllCustomers(page, searchBar)
+    this.customerService.getAllCustomersSearch(page, searchBar)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -126,18 +128,17 @@ export class CustomerListingComponent implements OnInit {
       })
   }
 
-
-
-
-
   loadDataLazy(event: LazyLoadEvent) {
     this.utilityService.loaderStart();
+    // debugger;
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllCustomers(this.page);
+      this.utilityService.loaderStop();
     } else {
       this.getAllCustomersSearch(this.page, this.searchBar);
+      this.utilityService.loaderStop();
     }
   }
 
@@ -147,12 +148,6 @@ export class CustomerListingComponent implements OnInit {
     this.page = 0;
     this.searchTerms$.next(searchTerm);
   }
-
-
-  // clearInput() {
-  //   this.searchBar = null;
-  //   this.getAllCustomers(this.page);
-  // }
 
   onAddCustomer(){
     this.router.navigate(['../new'],{relativeTo : this.activateRoute})
@@ -175,7 +170,7 @@ export class CustomerListingComponent implements OnInit {
         }
       )
     }
-    
+
   }
   
 
