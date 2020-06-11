@@ -50,7 +50,7 @@ export class CustomerService {
         retry(3),
         catchError(this.errorHandler.handleError)
       );
-  }
+  } 
   getCustomerId(id) {
     
     return this.http.get(this.baseUrl + 'admin/getCustomerDetail/' + id).pipe(

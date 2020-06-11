@@ -23,6 +23,7 @@ export class AddCustomerComponent implements OnInit {
   assignGroupList: any;
   customerTitle: string;
 selectedAssignGroup: any;
+  password: any;
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -60,10 +61,11 @@ selectedAssignGroup: any;
     if (this.addCustomerForm.invalid) {
       return
     }
+    this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
     
     this.addCustomerFormDetails = {
       "Email": this.addCustomerForm.get('email').value,
-      "password": this.addCustomerForm.get('password').value,
+      "password": this.password,
       "firstName": this.addCustomerForm.get('fname').value,
       "lastName": this.addCustomerForm.get('lname').value,
       "title": this.addCustomerForm.get('title').value,
@@ -95,7 +97,7 @@ selectedAssignGroup: any;
           
           console.log(data)
           this.toastr.success("Customer Details Editted Successfully")
-          this.router.navigate(['../'],{relativeTo : this.activatedRoute})
+          this.router.navigate(['../../'],{relativeTo : this.activatedRoute})
 
         },
         error => {
@@ -145,10 +147,48 @@ selectedAssignGroup: any;
     let pincode = "";
     let phoneNo = "";
     let jobTitle = "";
+    
+    this.addCustomerForm = new FormGroup({
+      "email": new FormControl(email, [
+        Validators.required,
+        Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      "title": new FormControl(title, Validators.required),
+      "fname": new FormControl(fname, Validators.required),
+      "lname": new FormControl(lname, Validators.required),
+      "clinicName": new FormControl(clinicName, Validators.required),
+      "contactNo": new FormControl(contactNo, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(15),
+        Validators.pattern('^[0-9\+\-]*$')]),
+      "web": new FormControl(web, [
+        Validators.required,
+        Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      "jobTitle": new FormControl(jobTitle, Validators.required),
+      "practiceType": new FormControl(practiceType, Validators.required),
+      "assignGroup": new FormControl(assignGroup, Validators.required),
+      "blockNo": new FormControl(blockNo, Validators.required),
+      "floorNo": new FormControl(floorNo, Validators.required),
+      "unitNo": new FormControl(unitNo, Validators.required),
+      "streetName": new FormControl(streetName, Validators.required),
+      "buildingName": new FormControl(buildingName, Validators.required),
+      "pincode": new FormControl(pincode, Validators.required),
+      "phoneNo": new FormControl(phoneNo, Validators.required),
+    });
+    
+    console.log("email 3", this.addCustomerForm)
+
+    this.titles = ['Mr.', 'Miss.', 'Mrs'];
+
 
     if (this.editMode) {
-      this.customerTitle = "Edit Customer";
       
+      this.customerTitle = "Edit Customer";
+      this.addCustomerForm.addControl(
+      "password", new FormControl(password, [
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+        Validators.maxLength(20)]))
       this.customerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
           
@@ -181,45 +221,16 @@ selectedAssignGroup: any;
         }
       )
     }
-    
+    else{
+      
+      this.addCustomerForm.addControl(
+        "password", new FormControl(password, [Validators.required,
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
+    }
     console.log("email 2", email)
-    this.addCustomerForm = new FormGroup({
-      "email": new FormControl(email, [
-        Validators.required,
-        Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      "password": new FormControl(password, [Validators.required,
-      Validators.minLength(8),
-      Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
-      Validators.maxLength(20)]),
-      "title": new FormControl(title, Validators.required),
-      "fname": new FormControl(fname, Validators.required),
-      "lname": new FormControl(lname, Validators.required),
-      "clinicName": new FormControl(clinicName, Validators.required),
-      "contactNo": new FormControl(contactNo, [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(15),
-        Validators.pattern('^[0-9\+\-]*$')]),
-      "web": new FormControl(web, [
-        Validators.required,
-        Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      "jobTitle": new FormControl(jobTitle, Validators.required),
-      "practiceType": new FormControl(practiceType, Validators.required),
-      "assignGroup": new FormControl(assignGroup, Validators.required),
-      "blockNo": new FormControl(blockNo, Validators.required),
-      "floorNo": new FormControl(floorNo, Validators.required),
-      "unitNo": new FormControl(unitNo, Validators.required),
-      "streetName": new FormControl(streetName, Validators.required),
-      "buildingName": new FormControl(buildingName, Validators.required),
-      "pincode": new FormControl(pincode, Validators.required),
-      "phoneNo": new FormControl(phoneNo, Validators.required),
-    });
     
-    console.log("email 3", this.addCustomerForm)
-
-    this.titles = ['Mr.', 'Miss.', 'Mrs'];
-
-
 
   }
 }

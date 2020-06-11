@@ -26,24 +26,24 @@ export class MainDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dashboardStats();
+    // this.dashboardStats();
   }
 
-  dashboardStats() {
-    this.utilityService.loaderStart();
-    this.dashboardService.dashboard().subscribe(
-      (success: any) => {
-        this.dashboard = success.data;
-        // console.log(this.dashboard);
-        this.utilityService.resetPage();
-      },
-      error => {
-        this.utilityService.routingAccordingToError(error);
-        this.utilityService.resetPage();
-      }
-    );
+  // dashboardStats() {
+  //   this.utilityService.loaderStart();
+  //   this.dashboardService.dashboard().subscribe(
+  //     (success: any) => {
+  //       this.dashboard = success.data;
+  //       // console.log(this.dashboard);
+  //       this.utilityService.resetPage();
+  //     },
+  //     error => {
+  //       this.utilityService.routingAccordingToError(error);
+  //       this.utilityService.resetPage();
+  //     }
+  //   );
 
-  }
+  // }
 
 
 }

@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/customers',
     title: 'Customers',
-    icon: '',
+    icon: 'ft-users',
     class: 'has-sub',
     badge: '2',
     badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
