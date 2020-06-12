@@ -55,7 +55,7 @@
                     </td>
                     <td>
                         <span class="ui-column-title">Action</span>
-                        <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.id)">
+                        <p-dropdown [options]="actions" placeholder="Select action" [(ngModel)]="action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.id)">
                         </p-dropdown>
                     </td>
                 </tr>

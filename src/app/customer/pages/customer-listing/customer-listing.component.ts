@@ -5,7 +5,7 @@ import { CustomerService } from '../../../shared/services/customer.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 
 interface Action {
   name:string,
@@ -25,6 +25,7 @@ export class CustomerListingComponent implements OnInit {
   page:number = 0;
   customer:any;
   totalCount: number;
+  action:string;
 
 
   @ViewChild(Table) tableComponent: Table;
@@ -39,7 +40,8 @@ export class CustomerListingComponent implements OnInit {
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
-    private customerService:CustomerService
+    private customerService:CustomerService,
+    private confirmationService: ConfirmationService
     ) {}
 
   ngOnInit() {
@@ -158,17 +160,27 @@ export class CustomerListingComponent implements OnInit {
     if(event.value === 'Delete') {
 
       console.log('delete id', id);
-      this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
-        (success: any) => {
-          console.log(success);
-          this.customerList = this.customerList.filter((item: any) => {
-            return id !== item.customerId
-          })
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              console.log(success);
+              this.getAllCustomers(this.page);
+              // this.customerList = this.customerList.filter((item: any) => {
+              //   return id !== item.customerId
+              // })
+            },
+            error => {
+              console.log(error);
+            }
+          )
         },
-        error => {
-          console.log(error);
+        reject: () => {
+          this.action = null;
         }
-      )
+    });
+     
     }
 
   }
