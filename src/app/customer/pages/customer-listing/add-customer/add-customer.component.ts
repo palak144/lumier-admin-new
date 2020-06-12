@@ -5,6 +5,7 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { UtilityService } from '../../../../shared/utility/utility.service';
 
 @Component({
   selector: 'app-add-customer',
@@ -20,7 +21,7 @@ export class AddCustomerComponent implements OnInit {
   addCustomerFormDetails: any;
   customer: any;
   private _unsubscribe = new Subject<boolean>();
-  assignGroupList: any;
+  assignGroupList: any[] = [];
   customerTitle: string;
 selectedAssignGroup: any;
   password: any;
@@ -30,6 +31,7 @@ selectedAssignGroup: any;
     private router: Router,
     private customerService: CustomerService,
     private toastr: ToastrService,
+    private utilityService:UtilityService
 
   ) { }
 
@@ -47,9 +49,29 @@ selectedAssignGroup: any;
     
     this.customerService.getAssignGroup().subscribe((res: any) => {
       
-      this.assignGroupList = res.data.results;
-    });
+      // this.assignGroupList = res.data.results;
+      console.log('res data',res.data.results);
+      res.data.results.forEach(item => {
+        this.assignGroupList.push({
+          label: item.groupName,
+          value: item.groupName
+        })
+      });
+      console.log('assign group list', this.assignGroupList);
+
+    }); 
     this.selectedAssignGroup = [];
+  }
+
+  arrayOfStringsToArrayOfObjects(arr: any[]) {
+    const newArray = [];
+    arr.forEach(element => {
+      newArray.push({
+        label: element,
+        value: element
+      });
+    });
+    return newArray;
   }
 
   get signUpControls() {

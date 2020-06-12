@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { CustomerService } from '../../../shared/services/customer.service';
 import { UtilityService } from '../../../shared/utility/utility.service';
-import { LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';

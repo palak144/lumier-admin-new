@@ -1,0 +1,12 @@
+::ng-deep .assign-group-dropdown {
+    .ui-dropdown {
+        &.form-control {
+            padding: 0 !important;
+        }
+        .ui-inputtext {
+            color: #b5c6e2;
+            text-transform: capitalize;
+            letter-spacing: 0px;
+        }
+    }
+}
