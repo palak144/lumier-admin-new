@@ -6,7 +6,7 @@ import { ExcelServiceService } from '../../../shared/services/excel-service.serv
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 
 interface Action {
@@ -31,6 +31,7 @@ export class CustomerListingComponent implements OnInit {
   id: number;
   Date = new Date();
   status:string
+  action:string;
 
 
   @ViewChild(Table) tableComponent: Table;
@@ -49,6 +50,8 @@ export class CustomerListingComponent implements OnInit {
     private customerService:CustomerService,
     private excelService:ExcelServiceService,
     private toastr: ToastrService,
+    private confirmationService: ConfirmationService
+    ) {}
 
     ) {}
 
@@ -146,23 +149,33 @@ export class CustomerListingComponent implements OnInit {
   onAddCustomer(){
     this.router.navigate(['../new'],{relativeTo : this.activatedRoute})
   }
-  getDropDownValue(e,id:number){
-    if(e.currentTarget.firstChild.data === 'Edit'){
-      this.router.navigate(['../',id,'edit'], {relativeTo: this.activatedRoute})
-    }
-    if(e.currentTarget.firstChild.data.value === 'Delete') {	
-      console.log('delete id', id);	
-      this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(	
-        (success: any) => {	
-          console.log(success);	
-          this.customerList = this.customerList.filter((item: any) => {	
-            return id !== item.customerId	
-          })	
-        },	
-        error => {	
-          console.log(error);	
-        }	
-      )	
+
+  getDropdownValue(event, id) {
+    console.log('event target value', event.value);
+    if(event.value === 'Delete') {
+
+      console.log('delete id', id);
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              console.log(success);
+              this.getAllCustomers(this.page);
+              // this.customerList = this.customerList.filter((item: any) => {
+              //   return id !== item.customerId
+              // })
+            },
+            error => {
+              console.log(error);
+            }
+          )
+        },
+        reject: () => {
+          this.action = null;
+        }
+    });
+     
     }
   }
   exportAsXLSX():void {

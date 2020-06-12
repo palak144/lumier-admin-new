@@ -9,23 +9,21 @@
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div> -->
-            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn"
-                pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
+            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div>
         </div>
     </form>
-    <div class="col-8 text-right pr-0">
-        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-            <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-            <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
-        </button>
-        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/customer/add-customer']">
-            <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-            <span class="d-lg-block d-none" (click)="onAddCustomerGroup()">Add New</span>
-        </button>
-
+    <div class="col-8 text-right">
+        <button type="button" class="btn btn-raised btn-danger">
+    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+    <span class="d-lg-block d-none">Export</span>
+  </button>
+        <button type="button" class="btn btn-raised btn-danger" [routerLink]="['/customer/add-customer']">
+    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+    <span class="d-lg-block d-none" (click)="onAddCustomerGroup()">Add New</span>
+  </button>
     </div>
 </div>
 <div class="customer-wrapper">
@@ -34,9 +32,7 @@
     </div>
 
     <div class="table-wrapper vehicle-wrapper">
-        <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
-            [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"
-            [totalRecords]="totalCount">
+        <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:8em">S No.
@@ -45,7 +41,7 @@
                     <th style="width:16em;">Group Email</th>
                     <th>Registration Date</th>
                     <th>Status</th>
-                    <th style="width:7em;">Action</th>
+                    <th style="width:7em">Action</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-customer>
@@ -53,29 +49,14 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
                     <td><span class="ui-column-title">Group Name</span>{{customer.groupName}}</td>
                     <td><span class="ui-column-title">Group Email</span>{{customer.groupEmail}}</td>
-                    <td><span class="ui-column-title">Registration
-                            Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
+                    <td><span class="ui-column-title">Registration Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
                     <td>
-                        <span class="ui-column-title">Status</span>
-                        {{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
-                        
+                        <span class="ui-column-title">Status</span> {{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
                     </td>
-
                     <td>
                         <span class="ui-column-title">Action</span>
-                        <!-- <p-dropdown [options]="actions" placeholder="Select action" [showClear]="true"
-                            styleClass="prime-dropdown-wrapper widthMin"
-                            (onChange)="getDropdownValue($event, customer.id)">
-                        </p-dropdown> -->
-                        <div class="dropdown">
-                            <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a (click)="getDropDownValue1($event,customer.id)">Edit</a></li>
-                                <li><a (click)="getDropDownValue1($event,customer.id)">Delete</a></li>
-
-                            </ul>
-                        </div>
+                        <p-dropdown [options]="actions" placeholder="Select action" [(ngModel)]="action" [showClear]="true" styleClass="prime-dropdown-wrapper" (onChange)="getDropdownValue($event, customer.id)">
+                        </p-dropdown>
                     </td>
                 </tr>
             </ng-template>

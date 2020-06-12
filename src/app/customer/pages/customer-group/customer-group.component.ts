@@ -8,6 +8,7 @@ import { UtilityService } from '../../../shared/utility/utility.service';
 import { LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 
 interface Action {
   name: string,
@@ -27,6 +28,7 @@ export class CustomerGroupComponent implements OnInit {
   page: number = 0;
   searchKey: string;
   searchValue: string;
+  action:string;
   Date = new Date();
   selectLang : string = "English"; 
 
@@ -46,6 +48,7 @@ export class CustomerGroupComponent implements OnInit {
     private excelService:ExcelServiceService,
     private toastr: ToastrService,
 
+    private confirmationService: ConfirmationService
     ) {}
 
   ngOnInit() {
@@ -74,8 +77,8 @@ export class CustomerGroupComponent implements OnInit {
   }
 
 
-  getAllCustomers() {
-    this.customerService.getCustomerGroup().subscribe(
+  getAllCustomers(page) {
+    this.customerService.getCustomerGroup(page).subscribe(
       (success: any) => {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
@@ -117,11 +120,16 @@ export class CustomerGroupComponent implements OnInit {
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
-      this.getAllCustomers();
+      this.getAllCustomers(this.page);
+      this.utilityService.loaderStop();
+
     } else {
       this.getAllCustomersSearch(this.page, this.searchBar);
+      this.utilityService.loaderStop();
+
     }
   }
+
 
   onAddCustomerGroup(){
     this.router.navigate(['../newGroup'],{relativeTo : this.route})
@@ -132,18 +140,26 @@ export class CustomerGroupComponent implements OnInit {
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       console.log('delete id', id);
-      this.customerService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(	
-        (success: any) => {	
-          console.log(success);	
-          this.customerList = this.customerList.filter((item: any) => {	
-            return id !== item.id	
-          })	
-          // this.initiateSearch();
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.customerService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              console.log(success);
+              this.getAllCustomers(this.page);
+              // this.initiateSearch();
+            },
+            error => {
+              console.log(error);
+            }
+          )
         },
-        error => {
-          console.log(error);
+        reject: () => {
+          this.action = null;
         }
-      )
+      
+      });
+
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)

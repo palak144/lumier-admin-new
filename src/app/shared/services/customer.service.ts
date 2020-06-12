@@ -74,11 +74,14 @@ export class CustomerService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getCustomerGroup() {
-    return this.http.get(this.baseUrl + 'admin/customerGroup').pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
+
+  getCustomerGroup(page) {
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/customerGroup' ,  
+    { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
   }
 
   getCustomerGroupParams(page?, searchKey?) {
