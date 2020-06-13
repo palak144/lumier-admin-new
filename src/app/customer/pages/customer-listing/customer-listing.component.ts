@@ -21,6 +21,8 @@ interface Action {
 export class CustomerListingComponent implements OnInit {
 
   customerList:any[];
+  actions:Action[];
+  actionListFromAPI:string[];
   page:number = 0;
   customer:any;
   totalCount: number;
