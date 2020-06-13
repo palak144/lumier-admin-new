@@ -1,22 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
 import { CustomerService } from '../../../shared/services/customer.service';
-import { ExcelServiceService } from '../../../shared/services/excel-service.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
-import { ToastrService } from 'ngx-toastr';
+import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 
 interface Action {
   name:string,
   code:string
 }
-interface Status {
-  name:string,
-  code:string
-}
+
 @Component({
   selector: 'app-customer-listing',
   templateUrl: './customer-listing.component.html',
@@ -28,10 +24,10 @@ export class CustomerListingComponent implements OnInit {
   page:number = 0;
   customer:any;
   totalCount: number;
+  action:string;
   id: number;
   Date = new Date();
   status:string
-  action:string;
 
 
   @ViewChild(Table) tableComponent: Table;
@@ -41,21 +37,16 @@ export class CustomerListingComponent implements OnInit {
    searchTerms$ = new Subject<string>();
    searchBar: any;
    private _unsubscribe = new Subject<boolean>();
-  paging: number;
 
   constructor(
     private router:Router, 
-    private activatedRoute : ActivatedRoute,
+    private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
     private customerService:CustomerService,
+    private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
-    private toastr: ToastrService,
-    private confirmationService: ConfirmationService
     ) {}
-
-    ) {}
-
-    setStatus(customerId:Number,adminStatus:Number, event: LazyLoadEvent){
+    setStatus(customerId:Number,adminStatus:Number){
 
       let statusData = {customerId,adminStatus}
       
@@ -66,9 +57,10 @@ export class CustomerListingComponent implements OnInit {
      this.ngOnInit()
 } )
     }
-  ngOnInit() {
-    this.initiateSearch();
 
+  ngOnInit() {
+    
+    this.initiateSearch();
   }
 
 
@@ -93,7 +85,6 @@ export class CustomerListingComponent implements OnInit {
 
 
   getAllCustomers(page) {
-    
     this.customerService.getAllCustomers(page).subscribe(
       (success: any) => {
         this.customerList = success.data.results;
@@ -101,12 +92,10 @@ export class CustomerListingComponent implements OnInit {
         console.log('customer:', success);
       },
       error => {
-        
         this.utilityService.routingAccordingToError(error);
         this.utilityService.resetPage();
       }
     );
-    
   }
 
   getAllCustomersSearch(page, searchBar) {
@@ -124,11 +113,9 @@ export class CustomerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-     
     this.utilityService.loaderStart();
     // debugger;
     this.page = event.first / 10;
-    
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllCustomers(this.page);
@@ -147,12 +134,13 @@ export class CustomerListingComponent implements OnInit {
   }
 
   onAddCustomer(){
-    this.router.navigate(['../new'],{relativeTo : this.activatedRoute})
+    this.router.navigate(['../new'],{relativeTo : this.activateRoute})
   }
 
-  getDropdownValue(event, id) {
+  getDropDownValue(event, id) {
+    debugger
     console.log('event target value', event.value);
-    if(event.value === 'Delete') {
+    if(event.currentTarget.firstChild.data === 'Delete') {
 
       console.log('delete id', id);
       this.confirmationService.confirm({
@@ -177,8 +165,15 @@ export class CustomerListingComponent implements OnInit {
     });
      
     }
+    if(event.currentTarget.firstChild.data === 'Edit'){
+      console.log("id",id)
+      
+          this.router.navigate(['../',id,'edit'], {relativeTo: this.activateRoute})
+          
+    }
   }
   exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.customerList, 'Customers List');
+    this.excelService.exportAsExcelFile(this.customerList, 'Customer List');
   }
+
 }
