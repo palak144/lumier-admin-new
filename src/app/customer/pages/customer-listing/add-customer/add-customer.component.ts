@@ -52,9 +52,11 @@ selectedAssignGroup: any;
       // this.assignGroupList = res.data.results;
       console.log('res data',res.data.results);
       res.data.results.forEach(item => {
+        
         this.assignGroupList.push({
+          
           label: item.groupName,
-          value: item.groupName
+          value: item.id
         })
       });
       console.log('assign group list', this.assignGroupList);
@@ -180,9 +182,7 @@ selectedAssignGroup: any;
       "clinicName": new FormControl(clinicName, Validators.required),
       "contactNo": new FormControl(contactNo, [
         Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(15),
-        Validators.pattern('^[0-9\+\-]*$')]),
+        Validators.pattern('^[0-9\+\-]{10}$')]),
       "web": new FormControl(web, [
         Validators.required,
         Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
@@ -194,8 +194,10 @@ selectedAssignGroup: any;
       "unitNo": new FormControl(unitNo, Validators.required),
       "streetName": new FormControl(streetName, Validators.required),
       "buildingName": new FormControl(buildingName, Validators.required),
-      "pincode": new FormControl(pincode, Validators.required),
-      "phoneNo": new FormControl(phoneNo, Validators.required),
+      "pincode": new FormControl(pincode, [ Validators.required,
+        Validators.pattern('^[0-9\+\-]{6}$')]),
+      "phoneNo": new FormControl(phoneNo,[ Validators.required,
+        Validators.pattern('^[0-9\+\-]{10,15}$')]),
     });
     
     console.log("email 3", this.addCustomerForm)

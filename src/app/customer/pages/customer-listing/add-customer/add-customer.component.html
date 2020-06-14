@@ -140,9 +140,7 @@
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.contactNo.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.contactNo.errors.required">Mobile No is required
                                             </div>
-                                            <div *ngIf="signUpControls.contactNo.errors.minLength">Mobile No. must be 10 digits
-                                            </div>
-                                            <div *ngIf="signUpControls.contactNo.errors.maxLength">Mobile No. must be 10 digits
+                                            <div *ngIf="signUpControls.contactNo.errors.pattern">Mobile No. must be 10 digits
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +151,7 @@
                                         <input type="url" class="form-control border-primary" id="web" formControlName="web" placeholder="Website" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.web.errors }">
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.web.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.web.errors.required">Website is required</div>
-                                            <div *ngIf="signUpControls.web.errors.pattern">Website must be valid</div>
+                                            <div *ngIf="signUpControls.web.errors.pattern">Please enter valid website address(http://xyz.com)</div>
                                         </div>
                                     </div>
                                 </div>
@@ -216,6 +214,8 @@
                                     <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
                                     <div *ngIf="isSubmittedaddCustomerForm && signUpControls.pincode.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
+                                        <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
+
                                     </div>
                                 </div>
                             </div>
@@ -227,9 +227,7 @@
                                     <input type="number" formControlName="phoneNo" placeholder="Phone No." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.phoneNo.errors }">
                                     <div *ngIf="isSubmittedaddCustomerForm && signUpControls.phoneNo.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.phoneNo.errors.required">Phone No. is required</div>
-                                        <div *ngIf="signUpControls.phoneNo.errors.minLength">Phone No. must be 10 digits
-                                        </div>
-                                        <div *ngIf="signUpControls.phoneNo.errors.maxLength">Phone No. must be 10 digits
+                                        <div *ngIf="signUpControls.phoneNo.errors.pattern">Phone No. must be between 10 to 15 digits
                                         </div>
                                     </div>
                                 </div>

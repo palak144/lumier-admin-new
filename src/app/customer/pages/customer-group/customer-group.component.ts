@@ -163,7 +163,7 @@ export class CustomerGroupComponent implements OnInit {
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)
       
-          this.router.navigate(['../',id,'editGroup'], {relativeTo: this.route})
+          this.router.navigate(['../','editGroup',id], {relativeTo: this.route})
           
     }
   }

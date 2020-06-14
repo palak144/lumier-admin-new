@@ -48,7 +48,7 @@ const routes: Routes = [{
           
         },
         {
-          path: ':id/edit',
+          path: 'edit/:id',
           component: AddCustomerComponent,
           
         },
@@ -58,7 +58,7 @@ const routes: Routes = [{
           
         },
         {
-          path: ':id/editGroup',
+          path: 'editGroup/:id',
           component: AddCustomerGroupComponent,
           
         },

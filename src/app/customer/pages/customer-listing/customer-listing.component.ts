@@ -170,7 +170,7 @@ export class CustomerListingComponent implements OnInit {
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)
       
-          this.router.navigate(['../',id,'edit'], {relativeTo: this.activateRoute})
+          this.router.navigate(['../','edit',id], {relativeTo: this.activateRoute})
           
     }
   }
