@@ -91,9 +91,10 @@
                       <option value={{assignGroup.id}} *ngFor="let assignGroup of assignGroupList">
                         {{assignGroup.groupName}}
                       </option>
-                    </select> -->
+                    </select> -->   
                                         <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selectedAssignGroup" formControlName="assignGroup" filter="true" placeholder="Select Assign Group">
+                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selectedAssignGroup" formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
+                                            [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddCustomerForm && signUpControls.assignGroup.errors" class="invalid-feedback">
                                                 <div *ngIf="signUpControls.assignGroup.errors.required">Assign Group is required</div>
@@ -151,7 +152,7 @@
                                         <input type="url" class="form-control border-primary" id="web" formControlName="web" placeholder="Website" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.web.errors }">
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.web.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.web.errors.required">Website is required</div>
-                                            <div *ngIf="signUpControls.web.errors.pattern">Please enter valid website address(http://xyz.com)</div>
+                                            <div *ngIf="signUpControls.web.errors.pattern">Please enter valid website address (http://www.xyz.com)</div>
                                         </div>
                                     </div>
                                 </div>

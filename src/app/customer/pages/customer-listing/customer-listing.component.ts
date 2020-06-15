@@ -116,7 +116,6 @@ export class CustomerListingComponent implements OnInit {
 
   loadDataLazy(event: LazyLoadEvent) {
     this.utilityService.loaderStart();
-    // debugger;
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
@@ -140,7 +139,6 @@ export class CustomerListingComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
-    debugger
     console.log('event target value', event.value);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
