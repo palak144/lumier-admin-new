@@ -12,8 +12,8 @@ export const Full_ROUTES: Routes = [
     loadChildren: './customer/customer.module#CustomerModule'
   },
   {
-    path: 'users',
-    loadChildren: './users/users.module#UsersModule'
+    path: 'user-permissions',
+    loadChildren: './users-permissions/users-permissions.module#UsersPermissionsModule'
   },
   {
     path: 'companies',
