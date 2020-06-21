@@ -12,6 +12,7 @@ import { UtilityService } from '../../../../shared/utility/utility.service';
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.scss']
 })
+
 export class AddCustomerComponent implements OnInit {
   addCustomerForm: FormGroup;
   titles: string[];
@@ -23,7 +24,7 @@ export class AddCustomerComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   customerTitle: string;
-selectedAssignGroup: any;
+  selectedAssignGroup: any;
   password: any;
   constructor(
 
@@ -36,6 +37,7 @@ selectedAssignGroup: any;
   ) { }
 
   ngOnInit(): void {
+
     this.customerTitle = "Add New Customers";
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -43,7 +45,6 @@ selectedAssignGroup: any;
         this.editMode = id['id'] != null
         console.log(this.editMode)
         this.initForm()
-        
       }
     )
     
@@ -140,7 +141,6 @@ selectedAssignGroup: any;
           console.log(data)
           this.toastr.success("New Customer Added Successfully")
           this.router.navigate(['../'],{relativeTo : this.activatedRoute})
-
         },
         error => {
           this.toastr.error(error.message)
