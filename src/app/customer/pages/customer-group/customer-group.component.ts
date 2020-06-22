@@ -9,11 +9,6 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 
-interface Action {
-  name: string,
-  code: string
-}
-
 @Component({
   selector: 'app-customer-group',
   templateUrl: './customer-group.component.html',

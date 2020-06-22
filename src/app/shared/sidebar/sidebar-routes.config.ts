@@ -25,16 +25,16 @@ export const ROUTES: RouteInfo[] = [
       { path: '/customer/customer-groups', title: 'Customer Groups', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
      ]},
      {
-      path: '/user-permissions',
+      path: '/users',
       title: 'User & Permissions',
       icon: 'ft-users',
       class: 'has-sub',
-      badge: 'none',
+      badge: '2',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [
         { path: '/user-permissions/users', title: 'Users', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-        { path: '/user-permissions/permissions', title: 'Permissions', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/user-permissions/user-permissions', title: 'Permissions', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
        ]},
 
   // {

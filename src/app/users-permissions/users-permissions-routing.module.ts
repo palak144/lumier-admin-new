@@ -25,7 +25,7 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'permissions',
+          path: 'user-permissions',
           component: PermissionsComponent,
           data: {
             title: 'Permissions'
@@ -41,4 +41,4 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsersPermissionsRoutingModule { }
+export class UsersPermissionsRoutingModule {debugger }
