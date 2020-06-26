@@ -184,19 +184,18 @@ export class AddCustomerComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[0-9\+\-]{10}$')]),
       "web": new FormControl(web, [
-        Validators.required,
         Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      "jobTitle": new FormControl(jobTitle, Validators.required),
+      "jobTitle": new FormControl(jobTitle, ),
       "practiceType": new FormControl(practiceType, Validators.required),
-      "assignGroup": new FormControl(assignGroup, Validators.required),
-      "blockNo": new FormControl(blockNo, Validators.required),
-      "floorNo": new FormControl(floorNo, Validators.required),
-      "unitNo": new FormControl(unitNo, Validators.required),
-      "streetName": new FormControl(streetName, Validators.required),
-      "buildingName": new FormControl(buildingName, Validators.required),
-      "pincode": new FormControl(pincode, [ Validators.required,
+      "assignGroup": new FormControl(assignGroup,),
+      "blockNo": new FormControl(blockNo, ),
+      "floorNo": new FormControl(floorNo, ),
+      "unitNo": new FormControl(unitNo,),
+      "streetName": new FormControl(streetName,),
+      "buildingName": new FormControl(buildingName,),
+      "pincode": new FormControl(pincode, [
         Validators.pattern('^[0-9\+\-]{6}$')]),
-      "phoneNo": new FormControl(phoneNo,[ Validators.required,
+      "phoneNo": new FormControl(phoneNo,[ ,
         Validators.pattern('^[0-9\+\-]{10,15}$')]),
     });
     

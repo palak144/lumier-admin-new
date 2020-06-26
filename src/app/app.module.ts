@@ -19,6 +19,8 @@ import { ContentLayoutComponent } from './layouts/content/content-layout.compone
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+
 // import { CustomFormsModule } from 'ng5-validation';
 @NgModule({
   declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
@@ -31,6 +33,7 @@ import { TokenInterceptorService } from './shared/services/token-interceptor.ser
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularMultiSelectModule
   ],
   providers: [
     {

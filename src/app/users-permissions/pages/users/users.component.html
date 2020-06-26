@@ -13,13 +13,9 @@
         </div>
     </form>
     <div class="col-8 text-right pr-0">
-        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white export-btn">
-          <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-          <span class="d-lg-block d-none">Export</span>
-      </button>
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
           <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-          <span class="d-lg-block d-none">Add New</span>
+          <span class="d-lg-block d-none" (click)="onAddUser()">Add New</span>
       </button>
     </div>
 </div>
@@ -38,9 +34,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-user>
                 <tr>
-                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.id}}</td>
-                    <td><span class="ui-column-title">Full Name</span>{{user.fullname}}</td>
-                    <td><span class="ui-column-title">Permission Groups</span>{{user.group}}</td>
+                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.employeeId}}</td>
+                    <td><span class="ui-column-title">Full Name</span>{{user.employeeFullName}}</td>
+                    <td><span class="ui-column-title">Permission Groups</span>{{user.employeeUserName}}</td>
                     <td>
                         <span class="ui-column-title ">Status</span>
 

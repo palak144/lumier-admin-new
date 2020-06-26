@@ -21,19 +21,64 @@ export class UsersPermissionsService {
 
   }
 
-  addCustomer(data) {
-    return this.http.post(this.baseUrl + 'admin/customer', data).pipe(
+  getPermissionGroupList(){
+    return this.http.get(this.baseUrl +'admin/permissionGroupList').pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-
-  addCustomerGroup(data) {
-    
-    return this.http.post(this.baseUrl + 'admin/customerGroup', data).pipe(
+  getCountryList(){
+    return this.http.get(this.baseUrl +'admin/country').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    )
+  }
+  getMenuList(){
+    return this.http.get(this.baseUrl +'admin/getMenu').pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
+  }
+  addUser(data) {
+    
+    return this.http.post(this.baseUrl + 'admin/employee', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  
+  addPermissionGroup(data) {
+    
+    return this.http.post(this.baseUrl + 'admin/permissionGroup', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getUsersParams(page?, searchKey?) {
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/employee',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getPerGroupParams(page?, searchKey?) {
+    
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/permissionGroup',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  getPerGroup(page){
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/permissionGroup',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
   }
 
   updateCustomer(data) {
@@ -44,83 +89,45 @@ export class UsersPermissionsService {
     );
   }
 
-  getAllCustomers(page) {
-    const params = { page: page }
-    return this.http.get(this.baseUrl + 'admin/customer',
-      { params: params }).pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  }
-
-  getAllCustomersSearch(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey }
-    return this.http.get(this.baseUrl + 'admin/customer',
-      { params: params }).pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  } 
-  getCustomerId(id) {
+ 
+  getUserId(id) {
     
-    return this.http.get(this.baseUrl + 'admin/getCustomerDetail/' + id).pipe(
+    return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-  getCustomerGroupId(id) {
-    
-    return this.http.get(this.baseUrl + 'admin/getCustomerGroupDetail/' + id).pipe(
+  getPerGroupId(id){
+    return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
+  
 
   getUsersGroup(page) {
     const params = { page: page }
-    return this.http.get(this.baseUrl + 'admin/customerGroup' ,  
+    return this.http.get(this.baseUrl + 'admin/employee' ,  
     { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
 
-  getUsersParams(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey }
-    return this.http.get(this.baseUrl + 'admin/customerGroup',
-      { params: params }).pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  }
-
-  deleteCustomer(id) {
-    return this.http.delete(this.baseUrl + 'admin/customer/' + id)
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  }
-  deleteCustomerGroup(id) {	
+  deleteUser(id) {	
     return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)	
     .pipe(	
        retry(3),	
        catchError(this.errorHandler.handleError)	
      );	
   }
-  getAssignGroup() {
-    
-    return this.http.get(this.baseUrl + 'admin/getCustomerGroup')
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
+
+  deletePerGroup(id) {	
+    return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)	
+    .pipe(	
+       retry(3),	
+       catchError(this.errorHandler.handleError)	
+     );	
   }
-  updateCustomerStatus(statusData: { customerId: Number; adminStatus: Number }){
-    
-    return this.http.put(this.baseUrl + 'admin/customerStatus', statusData)
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-  }}
+ 
+}

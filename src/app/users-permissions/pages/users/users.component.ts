@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    debugger
+    
     this.initiateSearch();
   }
 
@@ -60,6 +60,7 @@ export class UsersComponent implements OnInit {
       switchMap((term: string) => this.usersPermissionsService.getUsersParams(this.page, term
       ))
     ).subscribe((success: any) => {
+      
       this.userList = success.data.results;
 
       this.totalCount = success.data.total;
@@ -73,6 +74,7 @@ export class UsersComponent implements OnInit {
   getAllUsers(page) {
     this.usersPermissionsService.getUsersGroup(page).subscribe(
       (success: any) => {
+        
         this.userList = success.data.results;
         this.totalCount = success.data.total;
         console.log('users:', success);
@@ -90,6 +92,7 @@ export class UsersComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
+        
         this.userList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -124,7 +127,8 @@ export class UsersComponent implements OnInit {
   }
 
 
-  onAddUsers(){
+  onAddUser(){
+    
     this.router.navigate(['../new'],{relativeTo : this.route})
   }
 
@@ -136,7 +140,7 @@ export class UsersComponent implements OnInit {
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
-          this.usersPermissionsService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+          this.usersPermissionsService.deleteUser(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               console.log(success);
               this.getAllUsers(this.page);
