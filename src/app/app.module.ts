@@ -23,7 +23,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 // import { CustomFormsModule } from 'ng5-validation';
 @NgModule({
-  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
+  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent,],
   imports: [
     BrowserAnimationsModule,
     StoreModule.forRoot({}),

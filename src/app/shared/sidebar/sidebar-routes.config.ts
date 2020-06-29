@@ -23,8 +23,21 @@ export const ROUTES: RouteInfo[] = [
     submenu: [
       { path: '/customer/customers', title: 'Customers', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
       { path: '/customer/customer-groups', title: 'Customer Groups', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-     ]},
+     ]}, 
      {
+      path: '/sellers',
+      title: 'Sellers',
+      icon: 'ft-users',
+      class: 'has-sub',
+      badge: '3',
+      badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
+      isExternalLink: false,
+      submenu: [
+        { path: '/seller/sellers', title: 'Seller-Listing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/seller/seller-activities', title: 'Seller Activities', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/seller/seller-payout', title: 'Seller Payout', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+       ]},
+     { 
       path: '/users',
       title: 'Employee & Permissions',
       icon: 'ft-user-check',

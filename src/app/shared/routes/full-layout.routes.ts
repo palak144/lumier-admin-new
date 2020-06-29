@@ -12,10 +12,14 @@ export const Full_ROUTES: Routes = [
     loadChildren: './customer/customer.module#CustomerModule'
   },
   {
+    path: 'seller',
+    loadChildren: './seller/seller.module#SellerModule'
+  },
+  {
     path: 'user-permissions',
     loadChildren: './users-permissions/users-permissions.module#UsersPermissionsModule'
   },
-  {
+  {     
     path: 'companies',
     loadChildren: './companies/companies.module#CompaniesModule'
   },
