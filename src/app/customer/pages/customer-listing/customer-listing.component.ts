@@ -70,8 +70,6 @@ export class CustomerListingComponent implements OnInit {
     this.searchTerms$.pipe(
       takeUntil(this._unsubscribe),
       startWith(''),
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.customerService.getAllCustomersSearch(this.page, term

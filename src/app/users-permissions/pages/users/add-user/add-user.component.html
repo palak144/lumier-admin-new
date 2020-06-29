@@ -1,0 +1,71 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+    <li>
+      <a [routerLink]="['/user-permissions/users']">Users</a>
+    </li>
+    <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+    </li>
+    <li>
+      {{userTitle}}
+    </li>
+  </ul>
+  <div class="content-header text-left pb-3">{{userTitle}}</div>
+</div>
+<form class="form" [formGroup]="addUserForm" (ngSubmit)="onSubmitUserForm()">
+  <div class="form-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Full Name</label><span class="asterick">*</span> 
+          <input type="text" class="form-control border-primary" placeholder="Full Name" formControlName="name"
+            [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.name.errors }">
+          <div *ngIf="isSubmittedAddUserForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Full Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Email</label><span class="asterick">*</span> 
+          <input type="text" class="form-control border-primary" placeholder="Email" formControlName="username"
+            [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.username.errors }">
+          <div *ngIf="isSubmittedAddUserForm && signUpControls.username.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.username.errors.required">Email is required</div>
+            <div *ngIf="signUpControls.username.errors.pattern">Please enter valid email (xyz@abc.com)</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Password</label><span class="asterick">*</span> 
+          <input type="password" class="form-control border-primary" placeholder="Password" formControlName="password"
+            [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.password.errors }">
+          <div *ngIf="isSubmittedAddUserForm && signUpControls.password.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.password.errors.required">Password is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group"> 
+          <label for="permissionGroup">Permission Groups</label><span class="asterick">*</span> 
+          <angular2-multiselect class="form-control border-primary" name="dropdown" [data]="dropdownList" formControlName="perGroups"   [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.perGroups.errors }" [(ngModel)]="selected_perGroups" [settings]="dropdownSettings" 
+            disabled>
+        </angular2-multiselect>
+        <div *ngIf="isSubmittedAddUserForm && signUpControls.perGroups.errors" class="invalid-feedback">
+          <div *ngIf="signUpControls.perGroups.errors.required">Permission Group is required</div>
+        </div>
+      </div>
+    </div>
+</div>
+  </div> 
+  <div class="form-actions right">
+    <button type="button" [routerLink]="['/user-permissions/users']" class="btn btn-raised btn-warning mr-1"> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    </button>
+  </div>
+</form>

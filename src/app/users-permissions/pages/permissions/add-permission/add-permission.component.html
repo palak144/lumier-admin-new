@@ -1,0 +1,60 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+    <li>
+      <a [routerLink]="['/user-permissions/user-permissions']">Permissions</a>
+    </li>
+    <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+    </li>
+    <li>
+      {{perGroupTitle}}
+    </li>
+  </ul>
+  <div class="content-header text-left pb-3">{{perGroupTitle}}</div>
+</div>
+<form class="form" [formGroup]="addPerGroupForm" (ngSubmit)="onSubmitPerGroupForm()">
+  <div class="form-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Permission Group Name</label>
+          <input type="text" class="form-control border-primary" formControlName="name" placeholder="Permission Group Name"
+            [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.name.errors }">
+          <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Permission Group Name is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group"> 
+          <label for="countries">Select Countries</label>
+          <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListCountry" formControlName="countries"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
+            disabled>
+        </angular2-multiselect>
+        <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.countries.errors" class="invalid-feedback">
+          <div *ngIf="signUpControls.countries.errors.required">Country is required</div>
+        </div>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group"> 
+          <label for="permissions">Select Permissions</label>
+          <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListPer" formControlName="permission"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.permission.errors }" [(ngModel)]="selected_permission" [settings]="dropdownSettingsPermission" 
+            disabled>
+        </angular2-multiselect>
+        <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.permission.errors" class="invalid-feedback">
+          <div *ngIf="signUpControls.permission.errors.required">Permission is required</div>
+        </div>
+      </div>
+    </div>
+</div>
+  </div>
+  <div class="form-actions right">
+    <button type="button" [routerLink]="['/user-permissions/user-permissions']" class="btn btn-raised btn-warning mr-1"> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    </button>
+  </div>
+</form>

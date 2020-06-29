@@ -39,14 +39,14 @@ export const ROUTES: RouteInfo[] = [
        ]},
      { 
       path: '/users',
-      title: 'User & Permissions',
+      title: 'Employee & Permissions',
       icon: 'ft-users',
       class: 'has-sub',
       badge: '2',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [
-        { path: '/user-permissions/users', title: 'Users', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/user-permissions/users', title: 'Employee', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         { path: '/user-permissions/user-permissions', title: 'Permissions', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
        ]},
 
