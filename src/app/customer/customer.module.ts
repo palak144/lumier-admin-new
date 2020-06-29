@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+ 
 import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerListingComponent } from './pages/customer-listing/customer-listing.component';
 import { SharedModule } from 'app/shared/shared.module';
@@ -11,7 +11,7 @@ import { AddCustomerGroupComponent } from './pages/customer-group/add-customer-g
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule, 
     SharedModule,
     CustomerRoutingModule
   ],

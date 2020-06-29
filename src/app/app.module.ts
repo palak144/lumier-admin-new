@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
 // import { CustomFormsModule } from 'ng5-validation';
 @NgModule({
-  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
+  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent,],
   imports: [
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
