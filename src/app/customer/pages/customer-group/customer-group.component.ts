@@ -161,7 +161,10 @@ export class CustomerGroupComponent implements OnInit {
     }
   }
 
-  exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.customerList, 'Customer Group List');
+  exportAsXLSX(id:number):void {
+    
+    (id==0)?this.excelService.exportAsExcelFile(this.customerList, 'Customer Group List'):this.excelService.exportAsExcelFile(this.customerList, 'Customer Group List')
+
+    
   }
 }

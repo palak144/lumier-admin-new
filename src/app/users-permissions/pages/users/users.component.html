@@ -6,7 +6,7 @@
     <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
         <div class="position-relative has-icon-right">
             <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" />
+            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)"/>
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div>
@@ -36,17 +36,20 @@
                 <tr>
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.employeeId}}</td>
                     <td><span class="ui-column-title">Full Name</span>{{user.employeeFullName}}</td>
-                    <td><span class="ui-column-title">Permission Groups</span>{{user.employeeUserName}}</td>
+                    <td><span class="ui-column-title">Permission Groups</span>
+                      <ng-container *ngFor="let groupName of user.PermissionGroup ">
+                            <span>{{groupName.groupName}}</span>
+                        </ng-container> </td>
                     <td>
                         <span class="ui-column-title ">Status</span>
 
                         <div class="dropdown">
-                            <a class=" dropdown-toggle" type="button" data-toggle="dropdown">{{(user.status === 1) ? 'Active' : 'Inactive'}}
+                            <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': user.adminStatus === 1 , 'badge-danger': user.adminStatus === 0 }" id="userStatusId" type="button" data-toggle="dropdown">{{(user.adminStatus === 1) ? 'Active' : 'Inactive'}}
                     </a>
-                            <!-- <ul class="dropdown-menu">
-                                <li [hidden]="customer.adminStatus == 1"><a>Active</a></li>
-                                <li [hidden]="customer.adminStatus == 0"><a>Inactive</a></li>
-                            </ul> -->
+                            <ul class="dropdown-menu">
+                                <li [hidden]="user.adminStatus == 1"><a (click)="setStatus(user.employeeId ,1, $event)">Active</a></li>
+                                <li [hidden]="user.adminStatus == 0"><a (click)="setStatus(user.employeeId ,0, $event)">Inactive</a></li>
+                            </ul>
                         </div>
                     </td>
                     <td>
@@ -58,8 +61,8 @@
 
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a>Edit</a></li>
-                                <li><a>Delete</a></li>
+                                <li><a (click)="getDropDownValue($event,user.employeeId)">Edit</a></li>
+                                <li><a (click)="getDropDownValue($event,user.employeeId)">Delete</a></li>
 
                             </ul>
                         </div>

@@ -38,7 +38,7 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+    debugger
     this.userTitle = "Add New User"
 
     this.activatedRoute.params.subscribe(
@@ -46,11 +46,12 @@ export class AddUserComponent implements OnInit {
         this.id = +id['id']
         this.editMode = id['id'] != null
         console.log(this.editMode)
-
+         debugger
         this.initForm()
       }
     )
     this.selected_perGroups = []
+
     this.usersPermissionsService.getPermissionGroupList()
 .subscribe((success:any)=>{ 
   this.dropdownList = success.data.results})
@@ -64,6 +65,8 @@ export class AddUserComponent implements OnInit {
       position: "bottom",
       maxHeight: "50px"
     };
+
+   
   }
   onItemSelect(event) {
   }
@@ -136,8 +139,9 @@ export class AddUserComponent implements OnInit {
 
 
   private initForm() {
+    debugger
     let name = "";
-    let username = "";
+    let email = "";
     let password = "";
     let perGroup = "";
 
@@ -145,16 +149,15 @@ export class AddUserComponent implements OnInit {
       this.userTitle = "Edit User"
       this.usersPermissionsService.getUserId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-
+        debugger
           this.users = success.data
           this.addUserForm.patchValue({
             "name": this.users.employeeFullName,
             "username": this.users.employeeUserName,
-            "password": this.users.employeePassword,
-            "perGroup": this.users.Employeepermission      
+            // "password": this.users.employeePassword,
           })
-          this.selected_perGroups = this.users   //need to be updated
-
+          this.selected_perGroups = this.users.PermissionGroup.groupName   //need to be updated
+debugger
         },
         error => {
 
@@ -164,7 +167,7 @@ export class AddUserComponent implements OnInit {
     }
     this.addUserForm = new FormGroup({
       "name": new FormControl(name, Validators.required),
-      "username": new FormControl('', [
+      "username": new FormControl(email, [
         Validators.required,
        ]),
       "password": new FormControl(password, [Validators.required,

@@ -58,7 +58,7 @@ const routes: Routes = [{
           
         },
         {
-          path: 'editGroup/:id',
+          path: 'editPermission/:id',
           component: AddPermissionComponent,
           
         },
