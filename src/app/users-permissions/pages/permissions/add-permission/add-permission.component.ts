@@ -51,6 +51,7 @@ export class AddPermissionComponent implements OnInit {
         this.id = +id['id']
         this.editMode = id['id'] != null
         console.log(this.editMode)
+        debugger
         this.initForm()
       })
 
@@ -62,24 +63,22 @@ export class AddPermissionComponent implements OnInit {
 
     this.usersPermissionsService.getMenuList()
     .subscribe((data:any) => {
-      
-        // this.dropdownListPer =data.data.result
-        this.dropdownListPer =  [
+      debugger
+         this.dropdownListPer =data.data.result
+        // this.dropdownListPer =  [
 
-          { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
-          { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
-          { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
-          { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
-          { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
-          { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
-          { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
-          { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
-          { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
-          { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
-        ];
-      //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
-      //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
-       })
+        //   { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
+        //   { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
+        //   { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
+        //   { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
+        //   { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
+        //   { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
+        //   { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
+        //   { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
+        //   { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
+        //   { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
+        // ];
+    })
     this.selected_permission = []
     this.dropdownSettings = {
       singleSelection: false,
@@ -117,28 +116,30 @@ export class AddPermissionComponent implements OnInit {
     return this.selectedCountryId;
   }
   multiSelectedListPermission(criteriaArray: any) {
-    
+    debugger
     this.selectedPermissionId = []
     if (criteriaArray != null){
       const idMapping = criteriaArray.reduce((acc, el, i) => {
-        acc[el.id] = i;
+        acc[el.menuId] = i;
         return acc;
       }, {});
       let root;
       criteriaArray.forEach(el => {
   // Handle the root element
-  if (el.menuId === null) {
-    root = el;
-    return;
-  }
+  // if (el.menuId === null) {
+  //   root = el;
+  //   return;
+  // }
   // Use our mapping to locate the parent element in our data array
-  const parentEl = criteriaArray[idMapping[el.menuId]];
+  const parentEl = criteriaArray[idMapping[el.id]];
   // Add our current el to its parent's `children` array
   parentEl.list = [...(parentEl.list || []), el];
 });
   }
     return this.selectedPermissionId;
-
+    //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
+      //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
+     
   }
   get signUpControls() {
     return this.addPerGroupForm.controls;
@@ -202,10 +203,11 @@ export class AddPermissionComponent implements OnInit {
     let permission = "";
 
     if (this.editMode) {
+      debugger
       this.perGroupTitle = "Edit Permission Group"
       this.usersPermissionsService.getPerGroupId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-
+          debugger
           this.permissionsData = success.data
           this.addPerGroupForm.patchValue({
             "name": this.permissionsData.employeeFullName,

@@ -40,7 +40,7 @@ export const ROUTES: RouteInfo[] = [
      { 
       path: '/users',
       title: 'Employee & Permissions',
-      icon: 'ft-users',
+      icon: 'ft-user-check',
       class: 'has-sub',
       badge: '2',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',

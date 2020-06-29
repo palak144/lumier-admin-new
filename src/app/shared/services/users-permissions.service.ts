@@ -80,7 +80,16 @@ export class UsersPermissionsService {
         catchError(this.errorHandler.handleError)
       );
   }
-
+  
+  updateUserStatus(statusData: { id: Number; adminStatus: Number }){
+    debugger
+    return this.http.put(this.baseUrl + 'admin/employee', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  //
   updateCustomer(data) {
     
     return this.http.put(this.baseUrl + 'admin/customer', data).pipe(
@@ -91,13 +100,14 @@ export class UsersPermissionsService {
 
  
   getUserId(id) {
-    
+    debugger
     return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
   getPerGroupId(id){
+    debugger
     return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -115,7 +125,8 @@ export class UsersPermissionsService {
   }
 
   deleteUser(id) {	
-    return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)	
+    debugger
+    return this.http.delete(this.baseUrl + 'admin/employee/' +id)	
     .pipe(	
        retry(3),	
        catchError(this.errorHandler.handleError)	
@@ -123,7 +134,8 @@ export class UsersPermissionsService {
   }
 
   deletePerGroup(id) {	
-    return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)	
+    debugger
+    return this.http.delete(this.baseUrl + 'admin/permissionGroup/' +id)	
     .pipe(	
        retry(3),	
        catchError(this.errorHandler.handleError)	

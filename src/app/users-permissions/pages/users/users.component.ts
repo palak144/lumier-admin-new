@@ -42,7 +42,16 @@ export class UsersComponent implements OnInit {
 
     private confirmationService: ConfirmationService
     ) {}
-
+    setStatus(id:Number,adminStatus:Number){
+debugger
+      let statusData = {id,adminStatus}   
+   this.usersPermissionsService.updateUserStatus(statusData).subscribe(
+     (success:any)=>
+     {
+     
+     this.ngOnInit()
+} )
+    }
   ngOnInit() {
     
     this.initiateSearch();
@@ -54,13 +63,12 @@ export class UsersComponent implements OnInit {
       takeUntil(this._unsubscribe),
       startWith(''),
       // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.usersPermissionsService.getUsersParams(this.page, term
       ))
     ).subscribe((success: any) => {
-      
+      debugger
       this.userList = success.data.results;
 
       this.totalCount = success.data.total;
@@ -74,7 +82,7 @@ export class UsersComponent implements OnInit {
   getAllUsers(page) {
     this.usersPermissionsService.getUsersGroup(page).subscribe(
       (success: any) => {
-        
+        debugger
         this.userList = success.data.results;
         this.totalCount = success.data.total;
         console.log('users:', success);
@@ -132,16 +140,19 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['../new'],{relativeTo : this.route})
   }
 
-  getDropDownValue1(event, id) {
+  getDropDownValue(event, id) {
+    debugger
     console.log('event target value', event.value);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       console.log('delete id', id);
+      debugger
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.usersPermissionsService.deleteUser(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
+              debugger
               console.log(success);
               this.getAllUsers(this.page);
               // this.initiateSearch();
@@ -160,8 +171,8 @@ export class UsersComponent implements OnInit {
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)
-      
-          this.router.navigate(['../','editGroup',id], {relativeTo: this.route})
+      debugger
+          this.router.navigate(['../','edit',id], {relativeTo: this.route})
           
     }
   }

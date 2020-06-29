@@ -55,7 +55,7 @@ export class CustomerListingComponent implements OnInit {
    this.customerService.updateCustomerStatus(statusData).subscribe(
      (success:any)=>
      {
-       
+     
      this.ngOnInit()
 } )
     }
@@ -170,8 +170,9 @@ export class CustomerListingComponent implements OnInit {
           
     }
   }
-  exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.customerList, 'Customer List');
+  exportAsXLSX(id:number):void {
+    (id==0)?this.excelService.exportAsExcelFile(this.customerList, 'Customer List'):this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
+
   }
 
 }

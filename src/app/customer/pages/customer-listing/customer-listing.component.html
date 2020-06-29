@@ -16,7 +16,13 @@
     <div class="col-8 text-right pr-0">
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
       <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-      <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
+      <div class="dropdown">
+        <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
+            <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
+        </ul>
+    </div>
     </button>
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/customer/add-customer']">
       <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
@@ -56,7 +62,7 @@
                         <span class="ui-column-title ">Status</span> 
                         
                         <div class="dropdown">
-                        <a class=" dropdown-toggle" type="button" data-toggle="dropdown">{{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                        <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': customer.adminStatus === 1 , 'badge-danger': customer.adminStatus === 0 }" id="customerStatusId" type="button" data-toggle="dropdown">{{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
 
                         </a>
                             <ul class="dropdown-menu">

@@ -46,7 +46,7 @@ export class PermissionsComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    
+    debugger
     this.initiateSearch();
   }
 
@@ -62,7 +62,7 @@ export class PermissionsComponent implements OnInit {
       switchMap((term: string) => this.usersPermissionsService.getPerGroupParams(this.page, term
       ))
     ).subscribe((success: any) => {
-      
+      debugger
       this.perGroupList = success.data.results;
       this.countries = success.data.results.countries
       this.totalCount = success.data.total;
@@ -134,10 +134,10 @@ export class PermissionsComponent implements OnInit {
     this.router.navigate(['../newPermission'],{relativeTo : this.route})
   }
 
-  getDropDownValue1(event, id) {
+  getDropDownValue(event, id) {
     console.log('event target value', event.value);
     if(event.currentTarget.firstChild.data === 'Delete') {
-
+debugger
       console.log('delete id', id);
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
@@ -145,6 +145,7 @@ export class PermissionsComponent implements OnInit {
           this.usersPermissionsService.deletePerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               console.log(success);
+              debugger
               this.getAllUsers(this.page);
               // this.initiateSearch();
             },
@@ -162,8 +163,8 @@ export class PermissionsComponent implements OnInit {
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)
-      
-          this.router.navigate(['../','editGroup',id], {relativeTo: this.route})
+      debugger
+          this.router.navigate(['../','editPermission',id], {relativeTo: this.route})
           
     }
   }
