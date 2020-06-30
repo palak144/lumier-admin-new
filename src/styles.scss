@@ -754,7 +754,10 @@ body .ui-chkbox .ui-chkbox-box.ui-state-active {
 .row.breadcrum-container ul li {
     display: inline-block;
 }
-
+.form-control-override {
+    font-size: 1rem !important;
+    line-height: 1.0 !important;
+}
 .asterick {
     color: red;
 }

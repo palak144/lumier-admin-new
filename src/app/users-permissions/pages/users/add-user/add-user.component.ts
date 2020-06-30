@@ -90,7 +90,7 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmitUserForm() {
-
+debugger
     this.isSubmittedAddUserForm = true
     if (this.addUserForm.invalid) {
       return
@@ -105,7 +105,7 @@ debugger
     }
     if (this.id) {
 
-      this.addUserFormDetails.id = this.id;
+      this.addUserFormDetails.employeeId = this.id;
     }
     if (this.editMode) {
 
@@ -147,16 +147,17 @@ debugger
     let name = "";
     let email = "";
     let password = "";
-    let perGroup = "";
+   this.selected_perGroups = [];
     this.addUserForm = new FormGroup({
       "name": new FormControl(name, Validators.required),
       "username": new FormControl(email, [
         Validators.required,
        ]),
     
-      "perGroups": new FormControl(perGroup, Validators.required),
+      "perGroups": new FormControl(this.selected_perGroups, Validators.required),
 
     });
+    debugger
     if (this.editMode) {
       debugger
       this.userTitle = "Edit User"
@@ -173,6 +174,7 @@ debugger
             "name": this.users.employeeFullName,
             "username": this.users.employeeUserName,
             // "password": this.users.employeePassword,
+           // "perGroups" : this.users.PermissionGroup
           })
           this.selected_perGroups = this.users.PermissionGroup  
 debugger

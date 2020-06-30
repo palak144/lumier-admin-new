@@ -52,8 +52,8 @@
       <div class="col-md-6">
         <div class="form-group"> 
           <label for="permissionGroup">Permission Groups</label><span class="asterick">*</span> 
-          <angular2-multiselect class="form-control border-primary" name="dropdown" [data]="dropdownList" formControlName="perGroups"   [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.perGroups.errors }" [(ngModel)]="selected_perGroups" [settings]="dropdownSettings" 
-            disabled>
+          <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownList" formControlName="perGroups"   [ngClass]="{ 'is-invalid': isSubmittedAddUserForm && signUpControls.perGroups.errors }" [(ngModel)]="selected_perGroups" [settings]="dropdownSettings" 
+            >
         </angular2-multiselect>
         <div *ngIf="isSubmittedAddUserForm && signUpControls.perGroups.errors" class="invalid-feedback">
           <div *ngIf="signUpControls.perGroups.errors.required">Permission Group is required</div>
