@@ -18,9 +18,9 @@
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
     <span class="d-lg-block d-none" (click)="exportAsXLSX()">Export</span>
   </button>
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/customer/add-customer']">
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/seller/add-seller']">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <span class="d-lg-block d-none" (click)="onAddCustomer()">Add New</span>
+    <span class="d-lg-block d-none" (click)="onAddSeller()">Add New</span>
   </button>
   </div>
 </div>
@@ -30,40 +30,40 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+      <p-table [value]="sellerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [totalRecords]="totalCount">
         <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
           <ng-template pTemplate="header">
               <tr>
                   <th style="width:4em">S No.</th>
                   <th>Country</th>
-                  <th style="width: 16em;">Seller Name</th>
+                  <th style="width: 12em;">Seller Name</th>
                   <th style="width: 8em;">Mobile</th> 
-                  <th>Email</th>
+                  <th style="width: 12em;">Email</th>
                   <th style="width: 8em;">pay32 SME </th> 
                   <th>Registration Date</th>
                   <th style="width: 7em;">Status</th>
                   <th style="width: 7em;">Action</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-customer >
+          <ng-template pTemplate="body" let-seller >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.sellerId}}</td>
-                  <td><span class="ui-column-title">Country</span>{{customer.country}}</td>
-                  <td><span class="ui-column-title">Seller Name</span>{{customer.sellerName}}</td>
-                  <td><span class="ui-column-title">Mobile</span>{{customer.mobileNumber}}</td>
-                  <td><span class="ui-column-title">Email</span>{{customer.Email}}</td>
-                  <td><span class="ui-column-title">pay32 SME</span>{{customer.pay32Sme}}</td>
-                  <td><span class="ui-column-title">Registration Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{seller.id}}</td>
+                  <td><span class="ui-column-title">Country</span>{{seller.country.countryName}}</td>
+                  <td><span class="ui-column-title">Seller Name</span>{{seller.sellerName}}</td>
+                  <td><span class="ui-column-title">Mobile</span>{{seller.mobileNo}}</td>
+                  <td><span class="ui-column-title">Email</span>{{seller.sellerEmail}}</td>
+                  <td><span class="ui-column-title">pay32 SME</span>{{seller.pay32Sme}}</td>
+                  <td><span class="ui-column-title">Registration Date</span>{{seller.created_at | date: 'mediumDate'}}</td>
                    <td >
                       <span class="ui-column-title ">Status</span> 
                       
                       <div class="dropdown">
-                      <a class=" dropdown-toggle" type="button" data-toggle="dropdown">{{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                      <a class=" dropdown-toggle" type="button" data-toggle="dropdown">{{(seller.adminStatus === 1) ? 'Active' : 'Inactive'}}
 
                       </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="customer.adminStatus == 1"><a (click)="setStatus(customer.customerId ,1, $event)">Active</a></li>
-                              <li [hidden]="customer.adminStatus == 0"><a (click)="setStatus(customer.customerId,0, $event)">Inactive</a></li>
+                              <li [hidden]="seller.adminStatus == 1"><a (click)="setStatus(seller.id ,1, $event)">Active</a></li>
+                              <li [hidden]="seller.adminStatus == 0"><a (click)="setStatus(seller.id,0, $event)">Inactive</a></li>
                           </ul>
                       </div>
                                             
@@ -77,9 +77,8 @@
 
                           </a>
                           <ul class="dropdown-menu" role="menu">
-                              <li><a (click)="getDropDownValue($event,customer.customerId)">Edit</a></li>
-                              <li><a (click)="getDropDownValue($event,customer.customerId)">Delete</a></li>
-
+                              <li><a (click)="getDropDownValue($event,seller.id)">Edit</a></li>
+                              <li><a (click)="getDropDownValue($event,seller.id)">Delete</a></li>
                           </ul>
                       </div>
                   </td>
