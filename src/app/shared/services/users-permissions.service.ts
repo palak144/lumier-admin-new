@@ -108,7 +108,7 @@ export class UsersPermissionsService {
   }
   getPerGroupId(id){
     debugger
-    return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
+    return this.http.get(this.baseUrl + 'admin/permissionGroup/' + id).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
