@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   selectedPerGroupId: any[];
   selected_perGroups:any
+  password: any;
 
   constructor(
     private router: Router,
@@ -89,27 +90,30 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmitUserForm() {
-
+debugger
     this.isSubmittedAddUserForm = true
     if (this.addUserForm.invalid) {
       return
     }
+    this.password = (this.addUserForm.get('password').value != "" && this.addUserForm.get('password').value != undefined) ? this.addUserForm.get('password').value : ""
+debugger
     this.addUserFormDetails = {
       "employeeFullName": this.addUserForm.get('name').value,
       "employeeUserName": this.addUserForm.get('username').value,
-      "employeePassword": this.addUserForm.get('password').value,
+      "employeePassword": this.password,
       "Employeepermission": this.multiSelectedList(this.addUserForm.get('perGroups').value)
     }
     if (this.id) {
 
-      this.addUserFormDetails.id = this.id;
+      this.addUserFormDetails.employeeId = this.id;
     }
     if (this.editMode) {
 
       this.userTitle = "Edit User"
+     
       this.usersPermissionsService.addUser(this.addUserFormDetails).subscribe(
         data => {
-
+debugger
           this.toastr.success("Employee Editted Successfully")
           console.log(data)
           this.router.navigate(['/users-permissions/users'], { relativeTo: this.activatedRoute })
@@ -143,10 +147,25 @@ export class AddUserComponent implements OnInit {
     let name = "";
     let email = "";
     let password = "";
-    let perGroup = "";
+   this.selected_perGroups = [];
+    this.addUserForm = new FormGroup({
+      "name": new FormControl(name, Validators.required),
+      "username": new FormControl(email, [
+        Validators.required,
+       ]),
+    
+      "perGroups": new FormControl(this.selected_perGroups, Validators.required),
 
+    });
+    debugger
     if (this.editMode) {
+      debugger
       this.userTitle = "Edit User"
+      this.addUserForm.addControl(
+        "password", new FormControl(password, [
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
       this.usersPermissionsService.getUserId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
         debugger
@@ -155,8 +174,9 @@ export class AddUserComponent implements OnInit {
             "name": this.users.employeeFullName,
             "username": this.users.employeeUserName,
             // "password": this.users.employeePassword,
+           // "perGroups" : this.users.PermissionGroup
           })
-          this.selected_perGroups = this.users.PermissionGroup.groupName   //need to be updated
+          this.selected_perGroups = this.users.PermissionGroup  
 debugger
         },
         error => {
@@ -165,17 +185,14 @@ debugger
       )
 
     }
-    this.addUserForm = new FormGroup({
-      "name": new FormControl(name, Validators.required),
-      "username": new FormControl(email, [
-        Validators.required,
-       ]),
-      "password": new FormControl(password, [Validators.required,
-        Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]
-        ),
-      "perGroups": new FormControl(perGroup, Validators.required),
-
-    });
+    else{
+      
+      this.addUserForm.addControl(
+        "password", new FormControl(password, [Validators.required,
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
+    }
 
 
 

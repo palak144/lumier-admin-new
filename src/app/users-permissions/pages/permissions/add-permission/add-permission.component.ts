@@ -119,23 +119,17 @@ export class AddPermissionComponent implements OnInit {
     debugger
     this.selectedPermissionId = []
     if (criteriaArray != null){
-      const idMapping = criteriaArray.reduce((acc, el, i) => {
-        acc[el.menuId] = i;
-        return acc;
-      }, {});
-      let root;
-      criteriaArray.forEach(el => {
-  // Handle the root element
-  // if (el.menuId === null) {
-  //   root = el;
-  //   return;
-  // }
-  // Use our mapping to locate the parent element in our data array
-  const parentEl = criteriaArray[idMapping[el.id]];
-  // Add our current el to its parent's `children` array
-  parentEl.list = [...(parentEl.list || []), el];
-});
+      criteriaArray.forEach(element => {
+        this.selectedPermissionId.push({
+          "menuId":element.menuId,
+          "menu":element.menuName   ,
+        "childMenu" :[{
+          "id":element.id,
+          "childMenu":element.itemName,
+        }]  });
+      });
   }
+  debugger
     return this.selectedPermissionId;
     //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
       //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
@@ -162,7 +156,7 @@ export class AddPermissionComponent implements OnInit {
     
     if (this.id) {
 
-      this.addPerGroupFormDetails.id = this.id;
+      this.addPerGroupFormDetails.groupId = this.id;
     }
     if (this.editMode) {
 
@@ -210,10 +204,10 @@ export class AddPermissionComponent implements OnInit {
           debugger
           this.permissionsData = success.data
           this.addPerGroupForm.patchValue({
-            "name": this.permissionsData.employeeFullName,
+            "name": this.permissionsData.groupName,
           })
-          this.selected_permission = this.permissionsData   //need to be updated
-          this.selected_countries = this.permissionsData   //need to be updated
+          this.selected_permission = this.permissionsData.permission
+          this.selected_countries = this.permissionsData.countries
 
         },
         error => {
