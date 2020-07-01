@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UsersPermissionsService } from 'app/shared/services/users-permissions.service';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-
+import * as _ from 'lodash'
 @Component({
   selector: 'app-add-permission',
   templateUrl: './add-permission.component.html',
@@ -119,18 +119,25 @@ export class AddPermissionComponent implements OnInit {
     debugger
     this.selectedPermissionId = []
     if (criteriaArray != null){
-      criteriaArray.forEach(element => {
-        this.selectedPermissionId.push({
-          "menuId":element.menuId,
-          "menu":element.menuName   ,
-        "childMenu" :[{
-          "id":element.id,
-          "childMenu":element.itemName,
-        }]  });
-      });
+      // criteriaArray.forEach(element => {
+      //   this.selectedPermissionId.push({
+      //     "menuId":element.menuId,
+      //     "menu":element.menuName   ,
+      //   "childMenu" :[{
+      //     "id":element.id,
+      //     "childMenu":element.itemName,
+      //   }]  });
+      // });
+      var result = _.chain(criteriaArray)
+      .groupBy("menuName")
+      .map((value,key)=>
+        ({menuName: key,childMenu:value})
+      )
+      .value();
+      debugger
   }
   debugger
-    return this.selectedPermissionId;
+    return result;
     //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
       //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
      
