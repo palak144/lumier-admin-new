@@ -16,6 +16,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './seller/seller.module#SellerModule'
   },
   {
+    path: 'catalogues',
+    loadChildren: './catalogue/catalogue.module#CatalogueModule'
+  },
+  {
     path: 'user-permissions',
     loadChildren: './users-permissions/users-permissions.module#UsersPermissionsModule'
   },

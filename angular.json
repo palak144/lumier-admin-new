@@ -41,7 +41,6 @@
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss",
               "node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
-
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -120,7 +119,6 @@
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss",
               "node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
-
             ],
             "assets": [
               "src/assets",
@@ -177,5 +175,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": "6e93e4ce-4116-43e0-b468-37daf7ec4d0f"
   }
 }
