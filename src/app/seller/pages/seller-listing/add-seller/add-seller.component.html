@@ -104,7 +104,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Photo </label><span class="asterick">*</span>
-                                    <input type="number" formControlName="contactNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.contactNo.errors }">
+                                    <input type='file'  id="imageUpload" accept="image/*" #fileInput (change)="uploadFile($event)" />
                                     <!-- <div *ngIf="isSubmittedaddCustomerForm && signUpControls.contactNo.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.contactNo.errors.required">Mobile No is required
                                         </div>
@@ -215,7 +215,7 @@
                           <div class="col-md-6">
                               <div class="form-group">
                                   <label>Address Proof</label>
-                                  <input type="text" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
+                                  <input type='file'  id="addressproof" accept="image/*" #fileInput (change)="uploadFile($event)" />
                                   <!-- <div *ngIf="isSubmittedaddCustomerForm && signUpControls.pincode.errors" class="invalid-feedback">
                                       <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
                                       <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
@@ -228,7 +228,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>ID Proof</label>
-                                <input type="text" formControlName="id" placeholder="TIN No." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.streetName.errors }">
+                                <input type='file'  id="addressproof" accept="image/*" #fileInput (change)="uploadFile($event)" />
                                 <!-- <div *ngIf="isSubmittedaddCustomerForm && signUpControls.streetName.errors" class="invalid-feedback">
                                     <div *ngIf="signUpControls.streetName.errors.required">TIN No. is required</div>
                                 </div> -->

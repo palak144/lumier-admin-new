@@ -46,6 +46,13 @@ export class SellerService {
         catchError(this.errorHandler.handleError)
       );
   }
-   
 
+  updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/seller', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
 }

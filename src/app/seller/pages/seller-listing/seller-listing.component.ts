@@ -49,16 +49,16 @@ export class SellerListingComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
     ) {}
-    setStatus(sellerId:Number,adminStatus:Number){
+    setStatus(id:Number,adminStatus:Number){
 
-      let statusData = {sellerId,adminStatus}
-      
-//    this.sellerService.updateSellerStatus(statusData).subscribe(
-//      (success:any)=>
-//      {
+      let statusData = {id,adminStatus}
+      console.log(statusData);
+   this.sellerService.updateSellerStatus(statusData).subscribe(
+     (success:any)=>
+     {
      
-      this.ngOnInit()
-// } )
+     this.ngOnInit()
+} )
     }
 
     
