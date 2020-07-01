@@ -37,6 +37,18 @@ export const ROUTES: RouteInfo[] = [
         { path: '/seller/seller-activities', title: 'Seller Activities', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         { path: '/seller/seller-payout', title: 'Seller Payout', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
        ]},
+       {
+        path: '/catalogues',
+        title: 'Cataogue',
+        icon: 'ft-users',
+        class: 'has-sub',
+        badge: '1',
+        badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
+        isExternalLink: false,
+        submenu: [
+          { path: '/catalogues/manufacturing-brand', title: 'Manufacturing Brand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        
+         ]},
      { 
       path: '/users',
       title: 'Employee & Permissions',

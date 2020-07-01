@@ -43,7 +43,9 @@
                     <td ><span class="ui-column-title">Permission</span>
                    
                         <ng-container *ngFor="let permission of user.permission ">
-                            <span>{{permission.menu}}</span>
+                            <ng-container *ngFor="let childMenu of permission.childMenu ">
+                                <span>{{childMenu.childMenu}}</span>
+                            </ng-container> 
                         </ng-container> </td>
                     <td>
                         <span class="ui-column-title">Action</span>
