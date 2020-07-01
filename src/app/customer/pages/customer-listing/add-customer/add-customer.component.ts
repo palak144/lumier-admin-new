@@ -36,7 +36,7 @@ export class AddCustomerComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
 
     this.customerTitle = "Add New Customers";
     this.activatedRoute.params.subscribe(

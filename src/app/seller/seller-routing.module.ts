@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SellerLayoutComponent } from './seller-layout/seller-layout.component';
 import { SellerListingComponent } from './pages/seller-listing/seller-listing.component';
+import { AddSellerComponent } from './pages/seller-listing/add-seller/add-seller.component';
 import { SellerActivitesComponent } from './pages/seller-activites/seller-activites.component';
 import { SellerPayoutComponent } from './pages/seller-payout/seller-payout.component';
 
 const routes: Routes = [{
 
   path: '',
-  children: [
+  children: [ 
     {
       path: '',
      component: SellerLayoutComponent,
@@ -38,7 +39,12 @@ const routes: Routes = [{
           data: {
             title: 'Seller-Payout'
           }
-        }
+        },
+        {
+          path: 'new',
+          component: AddSellerComponent,
+          
+        },
       ]
     }
   ]
