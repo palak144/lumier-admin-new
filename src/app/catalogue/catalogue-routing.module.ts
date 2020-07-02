@@ -21,7 +21,7 @@ const routes: Routes = [{
           path: 'manufacturing-brand',
           component: ManufacturingBrandComponent,
           data: {
-            title: 'Manufacturing Brand'
+            title: 'Manufacturer / Brands'
           }
         },
         {

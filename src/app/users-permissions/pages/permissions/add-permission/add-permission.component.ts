@@ -108,9 +108,8 @@ export class AddPermissionComponent implements OnInit {
     this.selectedCountryId = [];
     if (criteriaArray != null) {
       criteriaArray.forEach(element => {
-        this.selectedCountryId.push({
-          "countryId":element.id,
-          "country":element.itemName      });
+        this.selectedCountryId.push(element);
+
       });
     }
     return this.selectedCountryId;
@@ -128,7 +127,7 @@ export class AddPermissionComponent implements OnInit {
       //     "childMenu":element.itemName,
       //   }]  });
       // });
-      var result = _.chain(criteriaArray)
+      this.selectedPermissionId = _.chain(criteriaArray)
       .groupBy("menuName")
       .map((value,key)=>
         ({menuName: key,childMenu:value})
@@ -137,7 +136,7 @@ export class AddPermissionComponent implements OnInit {
       debugger
   }
   debugger
-    return result;
+    return this.selectedPermissionId;
     //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
       //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
      
@@ -173,7 +172,7 @@ export class AddPermissionComponent implements OnInit {
 
           this.toastr.success("Permission Group Editted Successfully")
           console.log(data)
-          this.router.navigate(['/users-permissions/user-permissions'], { relativeTo: this.activatedRoute })
+          this.router.navigate(['/user-permissions/user-permissions'], { relativeTo: this.activatedRoute })
         },
         error => {
           this.toastr.error(error.message)
@@ -188,7 +187,7 @@ export class AddPermissionComponent implements OnInit {
 
           console.log(data)
           this.toastr.success("Permission Group Added Successfully")
-          this.router.navigate(['/users-permissions/user-permissions'], { relativeTo: this.activatedRoute })
+          this.router.navigate(['/user-permissions/user-permissions'], { relativeTo: this.activatedRoute })
         },
         error => {
           this.toastr.error(error.message)
@@ -213,9 +212,14 @@ export class AddPermissionComponent implements OnInit {
           this.addPerGroupForm.patchValue({
             "name": this.permissionsData.groupName,
           })
-          this.selected_permission = this.permissionsData.permission
-          this.selected_countries = this.permissionsData.countries
+         this.permissionsData.permission.forEach(element => {
+            this.selected_permission.push(element.childMenu);
 
+          });
+          debugger
+          this.selected_permission = this.selected_permission[0]
+          this.selected_countries = this.permissionsData.countries
+debugger
         },
         error => {
 

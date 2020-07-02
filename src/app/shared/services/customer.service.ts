@@ -52,8 +52,9 @@ export class CustomerService {
       );
   } 
  
-  getAllCustomersSearch(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey }
+  getAllCustomersSearch(page?, searchKey? , exportAll?) {
+    debugger
+    const params = { page: page, searchKey: searchKey, exportAll: exportAll }
     return this.http.get(this.baseUrl + 'admin/customer',
       { params: params }).pipe(
         retry(3),
@@ -84,8 +85,8 @@ export class CustomerService {
       );
   }
 
-  getCustomerGroupParams(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey }
+  getCustomerGroupParams(page?, searchKey?, exportAll?) {
+    const params = { page: page, searchKey: searchKey, exportAll:exportAll }
     return this.http.get(this.baseUrl + 'admin/customerGroup',
       { params: params }).pipe(
         retry(3),

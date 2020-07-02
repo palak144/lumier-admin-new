@@ -33,6 +33,7 @@ export class CustomerGroupComponent implements OnInit {
    searchTerms$ = new Subject<string>();
    searchBar: any;
    private _unsubscribe = new Subject<boolean>();
+  exportAll: string = "false";
 
   constructor(
     private router: Router, 
@@ -83,8 +84,8 @@ export class CustomerGroupComponent implements OnInit {
     );
   }
 
-  getAllCustomersSearch(page, searchBar) {
-    this.customerService.getCustomerGroupParams(page, searchBar)
+  getAllCustomersSearch(page, searchBar, exportAll) {
+    this.customerService.getCustomerGroupParams(page, searchBar, exportAll)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -92,7 +93,12 @@ export class CustomerGroupComponent implements OnInit {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        
+        debugger
+        if(exportAll == "true"){
+          debugger
+          this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
+          this.exportAll = "false"
+        }
       }, error => {
         
         this.utilityService.routingAccordingToError(error);
@@ -116,7 +122,7 @@ export class CustomerGroupComponent implements OnInit {
       this.utilityService.loaderStop();
 
     } else {
-      this.getAllCustomersSearch(this.page, this.searchBar);
+      this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
       this.utilityService.loaderStop();
 
     }
@@ -161,10 +167,16 @@ export class CustomerGroupComponent implements OnInit {
     }
   }
 
-  exportAsXLSX(id:number):void {
-    
-    (id==0)?this.excelService.exportAsExcelFile(this.customerList, 'Customer Group List'):this.excelService.exportAsExcelFile(this.customerList, 'Customer Group List')
-
-    
-  }
+  exportAsXLSX(id:number) {
+    debugger
+    if (id==0){
+      debugger
+      this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
+    }
+    else{
+      debugger
+      this.exportAll = "true"
+     this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
+    }
+   }
 }

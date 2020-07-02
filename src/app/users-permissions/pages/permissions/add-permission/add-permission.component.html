@@ -30,7 +30,7 @@
       <div class="col-md-6">
         <div class="form-group"> 
           <label for="countries">Select Countries</label><span class="asterick">*</span> 
-          <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListCountry" formControlName="countries"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
+          <angular2-multiselect class="form-control form-control-override c-btn" name="dropdown" [data]="dropdownListCountry" formControlName="countries"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
             disabled>
         </angular2-multiselect>
         <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.countries.errors" class="invalid-feedback">
@@ -41,7 +41,7 @@
       <div class="col-md-6">
         <div class="form-group"> 
           <label for="permissions">Select Permissions</label><span class="asterick">*</span> 
-          <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListPer" formControlName="permission"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.permission.errors }" [(ngModel)]="selected_permission" [settings]="dropdownSettingsPermission" 
+          <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListPer" formControlName="permission"   [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.permission.errors }" [(ngModel)]="selected_permission" [settings]="dropdownSettingsPermission" 
             disabled>
         </angular2-multiselect>
         <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.permission.errors" class="invalid-feedback">

@@ -26,7 +26,7 @@ export class AddManufacturerBrandComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userTitle = "Add Manufacturer/Brand";
+    this.userTitle = "Add Manufacturer/ Brand";
     this.StatusListFromAPI = ['Active','Inactive'];
     this.assignGroupList = this.UtilityService.arrayOfStringsToArrayOfObjects(this.StatusListFromAPI);
     this.addUserForm = new FormGroup({

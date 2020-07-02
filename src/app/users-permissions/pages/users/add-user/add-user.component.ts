@@ -116,7 +116,7 @@ debugger
 debugger
           this.toastr.success("Employee Editted Successfully")
           console.log(data)
-          this.router.navigate(['/users-permissions/users'], { relativeTo: this.activatedRoute })
+          this.router.navigate(['/user-permissions/users'], { relativeTo: this.activatedRoute })
         },
         error => {
           this.toastr.error(error.message)

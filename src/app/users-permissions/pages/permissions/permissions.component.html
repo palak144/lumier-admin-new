@@ -37,16 +37,21 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.groupId}}</td>
                     <td ><span class="ui-column-title">Country</span>
                         <ng-container *ngFor="let country of user.countries">
-                            <span>{{country.country}}</span>         
+                            <span>{{country.itemName}}</span>         
                       </ng-container></td>
                     <td><span class="ui-column-title">Permission Group Name</span>{{user.groupName}}</td>
                     <td ><span class="ui-column-title">Permission</span>
-                   
+                        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+                            <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+                            <span class="d-lg-block d-none">View Permission</span>
+                        </button>
+
                         <ng-container *ngFor="let permission of user.permission ">
                             <ng-container *ngFor="let childMenu of permission.childMenu ">
                                 <span>{{childMenu.childMenu}}</span>
                             </ng-container> 
-                        </ng-container> </td>
+                        </ng-container> 
+                    </td>
                     <td>
                         <span class="ui-column-title">Action</span>
                         <!-- <p-dropdown class="icons" [options]="actions" [showClear]="true" styleClass="prime-dropdown-wrapper widthMin" (onChange)="getDropDownValue($event,customer.customerId)">

@@ -1,6 +1,27 @@
-
 span.ng-star-inserted {
     display: block;
+}
+.btn[class*="btn-"] {
+    margin-left: 1rem;
+}
+.paddingSearch{
+    padding: 20px 0;
+}
+p-dropdown.icons {
+    font-family: FontAwesome !important;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.widthMin {
+    min-width: 1em !important;
+}
+.searchBtn{
+    width: 100%;
+}
+.glyphicon-cog:before {
+    content: "\e019";
+    padding-right: 10px;
 }
 .colorStatus{
     color: white !important;

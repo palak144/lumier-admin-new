@@ -21,14 +21,6 @@
           >
      
         </div>
-
-        <div
-        *ngIf="(customeForm.name.invalid && (customeForm.name.dirty || customeForm.name.touched) )"
-        class="error">
-        <p class="Coustom-valid" *ngIf="(customeForm.name.hasError('required') || customeForm.name.hasError('whitespace'))">
-            Name is Required.
-        </p>
-      </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -37,41 +29,32 @@
             >
         
         </div>
-        <div
-        *ngIf="(customeForm.Supply_type.invalid && (customeForm.Supply_type.dirty || customeForm.Supply_type.touched) )"
-        class="error">
-        <p class="Coustom-valid" *ngIf="(customeForm.Supply_type.hasError('required') || customeForm.Supply_type.hasError('whitespace'))">
-          Supply Type is Required.
-        </p>
-      </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Logo</label><span class="asterick">*</span> 
+          <!-- <label>Logo</label><span class="asterick">*</span> 
           <input type='file'  id="imageUpload" accept="image/*" #fileInput (change)="uploadFile($event)" />
-         
+          -->
+          <label>Logo</label><span class="asterick">*</span> 
+          <div class="custom-file d-block">
+<input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
+<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+</div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group"> 
-          <label>Status</label>
+          <label>Status</label><span class="asterick">*</span>
                                         
            <div class="assign-group-dropdown">
           <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selectedAssignGroup" formControlName="Status" filter="true" placeholder="Select Status" [class.is-invalid]="(customeForm.Status.errors  && (customeForm.Status.dirty || customeForm.Status.touched))">
            </p-dropdown>
                                             
           </div>
-      </div>
-      <div
-      *ngIf="(customeForm.Status.invalid && (customeForm.Status.dirty || customeForm.Status.touched) )"
-      class="error">
-      <p class="Coustom-valid" *ngIf="(customeForm.Status.hasError('required') || customeForm.Status.hasError('whitespace'))">
-       Status is Required.
-      </p>
-    </div>      
+      </div>    
     </div>
 </div>
   </div> 

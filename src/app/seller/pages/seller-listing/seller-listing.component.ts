@@ -40,6 +40,7 @@ export class SellerListingComponent implements OnInit {
    searchTerms$ = new Subject<string>();
    searchBar: any;
    private _unsubscribe = new Subject<boolean>();
+  exportAll: string = "false";
 
   constructor(
     private router:Router, 
@@ -49,16 +50,16 @@ export class SellerListingComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
     ) {}
-    setStatus(sellerId:Number,adminStatus:Number){
+    setStatus(id:Number,adminStatus:Number){
 
-      let statusData = {sellerId,adminStatus}
+      let statusData = {id,adminStatus}
       
-//    this.sellerService.updateSellerStatus(statusData).subscribe(
-//      (success:any)=>
-//      {
+   this.sellerService.updateSellerStatus(statusData).subscribe(
+     (success:any)=>
+     {
      
       this.ngOnInit()
-// } )
+} )
     }
 
     
@@ -100,8 +101,8 @@ export class SellerListingComponent implements OnInit {
     );
   }
 
-  getAllSellersSearch(page, searchBar) {
-    this.sellerService.getAllSellersSearch(page, searchBar)
+  getAllSellersSearch(page, searchBar , exportAll) {
+    this.sellerService.getAllSellersSearch(page, searchBar , exportAll)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -109,6 +110,11 @@ export class SellerListingComponent implements OnInit {
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
+        if(exportAll == "true"){
+          debugger
+          this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
+          this.exportAll = "false"
+        }
       }, error => {
         this.utilityService.routingAccordingToError(error);
       })
@@ -122,7 +128,7 @@ export class SellerListingComponent implements OnInit {
       this.getAllSellers(this.page);
       this.utilityService.loaderStop();
     } else {
-      this.getAllSellersSearch(this.page, this.searchBar);
+      this.getAllSellersSearch(this.page, this.searchBar , this.exportAll);
       this.utilityService.loaderStop();
     }
   }
@@ -174,24 +180,16 @@ export class SellerListingComponent implements OnInit {
     }
   }
 
+  exportAsXLSX(id:number) {
+    debugger
+    if (id==0){
+      debugger
+      this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
+    }
+    else{
+      debugger
+      this.exportAll = "true"
+     this.getAllSellersSearch(this.page, this.searchBar,this.exportAll);
+    }
+   }
 }
-
-  // customerList:any;
-
-  // constructor() { }
-
-  // ngOnInit() {
-
-  //   this.customerList=
-  //   [
-  //     {
-  //       sellerId: '1',
-  //       country: 'India',
-  //       sellerName: 'Arihant',
-  //       mobileNumber: '9039621870',
-  //       Email:"arihant@gmail.com",
-  //       pay32Sme: 'yes',
-  //     }
-      
-  //   ]
-  // 

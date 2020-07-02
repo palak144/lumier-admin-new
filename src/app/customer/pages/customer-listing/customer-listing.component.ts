@@ -37,8 +37,9 @@ export class CustomerListingComponent implements OnInit {
 
    // Real time search
    searchTerms$ = new Subject<string>();
-   searchBar: any;
+   searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
+  exportAll: string = "false"
 
   constructor(
     private router:Router, 
@@ -72,7 +73,7 @@ export class CustomerListingComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.customerService.getAllCustomersSearch(this.page, term
+      switchMap((term: string) => this.customerService.getAllCustomersSearch(this.page, term 
       ))
     ).subscribe((success: any) => {
       this.customerList = success.data.results;
@@ -98,8 +99,8 @@ export class CustomerListingComponent implements OnInit {
     );
   }
 
-  getAllCustomersSearch(page, searchBar) {
-    this.customerService.getAllCustomersSearch(page, searchBar)
+  getAllCustomersSearch(page, searchBar  ,exportAll) {
+    this.customerService.getAllCustomersSearch(page, searchBar, exportAll)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -107,6 +108,12 @@ export class CustomerListingComponent implements OnInit {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
+        debugger
+        if(exportAll == "true"){
+          debugger
+          this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
+          this.exportAll = "false"
+        }
       }, error => {
         this.utilityService.routingAccordingToError(error);
       })
@@ -120,7 +127,7 @@ export class CustomerListingComponent implements OnInit {
       this.getAllCustomers(this.page);
       this.utilityService.loaderStop();
     } else {
-      this.getAllCustomersSearch(this.page, this.searchBar);
+      this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
       this.utilityService.loaderStop();
     }
   }
@@ -170,9 +177,17 @@ export class CustomerListingComponent implements OnInit {
           
     }
   }
-  exportAsXLSX(id:number):void {
-    (id==0)?this.excelService.exportAsExcelFile(this.customerList, 'Customer List'):this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
-
+  exportAsXLSX(id:number) {
+   debugger
+   if (id==0){
+     debugger
+     this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
+   }
+   else{
+     debugger
+     this.exportAll = "true"
+    this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
+   }
   }
 
 }

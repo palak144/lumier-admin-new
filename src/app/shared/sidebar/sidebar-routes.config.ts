@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     title: 'Customers',
     icon: 'ft-users',
     class: 'has-sub',
-    badge: '2',
+    badge: '',
     badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
     isExternalLink: false,
     submenu: [
@@ -29,7 +29,7 @@ export const ROUTES: RouteInfo[] = [
       title: 'Sellers',
       icon: 'ft-users',
       class: 'has-sub',
-      badge: '3',
+      badge: '',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [
@@ -39,14 +39,14 @@ export const ROUTES: RouteInfo[] = [
        ]},
        {
         path: '/catalogues',
-        title: 'Cataogue',
+        title: 'Catalogue',
         icon: 'ft-users',
         class: 'has-sub',
-        badge: '1',
+        badge: '',
         badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
         isExternalLink: false,
         submenu: [
-          { path: '/catalogues/manufacturing-brand', title: 'Manufacturing Brand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+          { path: '/catalogues/manufacturing-brand', title: 'Manufacturer / Brands', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         
          ]},
      { 
@@ -54,7 +54,7 @@ export const ROUTES: RouteInfo[] = [
       title: 'Employee & Permissions',
       icon: 'ft-user-check',
       class: 'has-sub',
-      badge: '2',
+      badge: '',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [

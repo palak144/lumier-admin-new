@@ -30,8 +30,8 @@ export class SellerService {
       );
   }
  
-  getAllSellersSearch(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey }
+  getAllSellersSearch(page?, searchKey?, exportAll?) {
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll}
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
         retry(3),
@@ -46,6 +46,13 @@ export class SellerService {
         catchError(this.errorHandler.handleError)
       );
   }
-   
+  updateSellerStatus(statusData: { id: Number; adminStatus: Number }){
+    debugger
+    return this.http.put(this.baseUrl + 'admin/sellerStatus', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
 
 }

@@ -11,7 +11,7 @@ export class AddSellerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.sellerTitle = "Add New Sellers";
+    // this.sellerTitle = "Add New Sellers";
   }
 
 }  
