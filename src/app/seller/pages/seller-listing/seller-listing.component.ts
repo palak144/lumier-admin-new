@@ -30,6 +30,7 @@ export class SellerListingComponent implements OnInit {
   id: number;
   Date = new Date();
   status:string
+  countries:any[];
 
 
   @ViewChild(Table) tableComponent: Table;
@@ -38,9 +39,11 @@ export class SellerListingComponent implements OnInit {
   
    // Real time search
    searchTerms$ = new Subject<string>();
-   searchBar: any;
+   searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
+   countryId: any = "";
+ 
 
   constructor(
     private router:Router, 
@@ -64,8 +67,9 @@ export class SellerListingComponent implements OnInit {
 
     
   ngOnInit() {
-    
+  
     this.initiateSearch();
+    this.getCountry();
   }
 
 
@@ -101,12 +105,14 @@ export class SellerListingComponent implements OnInit {
     );
   }
 
-  getAllSellersSearch(page, searchBar , exportAll) {
-    this.sellerService.getAllSellersSearch(page, searchBar , exportAll)
+  getAllSellersSearch(page, searchBar , exportAll, countryId) {
+    console.log(countryId);
+    this.sellerService.getAllSellersSearch(page, searchBar , exportAll , countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
+        console.log(success);
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -121,16 +127,22 @@ export class SellerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
+    console.log(event);
     this.utilityService.loaderStart();
     this.page = event.first / 10;
+    console.log( this.page);
+console.log(this.countryId);
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSellers(this.page);
       this.utilityService.loaderStop();
     } else {
-      this.getAllSellersSearch(this.page, this.searchBar , this.exportAll);
+      console.log(this.countryId);
+      this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
       this.utilityService.loaderStop();
     }
+
+    
   }
 
 
@@ -181,17 +193,48 @@ export class SellerListingComponent implements OnInit {
           
     }
   }
-
+ 
   exportAsXLSX(id:number) {
-    debugger
+   
     if (id==0){
-      debugger
+ 
       this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
     }
     else{
       debugger
       this.exportAll = "true"
-     this.getAllSellersSearch(this.page, this.searchBar,this.exportAll);
+      console.log(this.countryId);
+     this.getAllSellersSearch(this.page, this.searchBar,this.exportAll , this.countryId);
     }
    }
+    getCountry()
+  {
+    this.sellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.countries = success.data.result;
+        console.log('countries', this.countries);
+       
+    
+       
+  
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+  onChange(deviceValue) {
+    console.log(deviceValue);
+    if(deviceValue)
+{
+  this.countryId=deviceValue;
+}
+  else
+  {
+    this.countryId=""; 
+  }
+  console.log(this.countryId);
+    this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+}
 }

@@ -34,6 +34,7 @@ export class SellerService {
     );
   }
   getAllSellers(page) {
+    console.log(page);
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
@@ -50,8 +51,9 @@ export class SellerService {
       );
     
   }
-  getAllSellersSearch(page?, searchKey?, exportAll?) {
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll}
+  getAllSellersSearch(page?, searchKey?, exportAll?, countryId?) {
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    console.log(params);
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
         retry(3),
