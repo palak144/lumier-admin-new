@@ -45,7 +45,8 @@ export class AddSellerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.sellerTitle = "Add New Sellers";
+  
+   
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         console.log(id);
@@ -54,6 +55,14 @@ export class AddSellerComponent implements OnInit {
         this.sellerId=this.id;
         this.editMode = id['id'] != null
         console.log(this.editMode)
+        if(!this.id)
+        {
+          this.sellerTitle = "Add New Sellers";
+        }
+        if(this.id)
+        {
+          this.sellerTitle = "Edit  Sellers";
+        }
         // this.initForm()
         this.getSellerdetails(this.id);
   this.getCountry();
