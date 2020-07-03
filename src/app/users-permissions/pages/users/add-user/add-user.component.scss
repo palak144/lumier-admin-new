@@ -41,3 +41,11 @@ angular2-multiselect.myclass.custom-class.form-control.ng-touched.ng-dirty.ng-va
     height: 40px;
     /* width: 10px; */
 }
+angular2-multiselect.myclass.custom-class.form-control.form-control-override.border-primary.is-invalid {
+    padding: 0 !important;
+    border: none !important;
+
+}
+angular2-multiselect.myclass.custom-class.form-control.form-control-override.border-primary.ng-touched.ng-dirty.ng-valid {
+    border: none !important;
+}

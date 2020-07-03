@@ -8,6 +8,7 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-permissions',
@@ -24,6 +25,7 @@ export class PermissionsComponent implements OnInit {
   searchValue: string;
   action:string;
   Date = new Date();
+  closeResult: string;
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
@@ -33,6 +35,7 @@ export class PermissionsComponent implements OnInit {
    searchBar: any;
    private _unsubscribe = new Subject<boolean>();
   countries: any;
+  permissions: any;
 
   constructor(
     private router: Router, 
@@ -41,6 +44,7 @@ export class PermissionsComponent implements OnInit {
     private utilityService: UtilityService,
     private excelService:ExcelServiceService,
     private toastr: ToastrService,
+    private modalService: NgbModal,
 
     private confirmationService: ConfirmationService
     ) {}
@@ -170,7 +174,28 @@ debugger
   }
 
   exportAsXLSX():void {
-    
+
     this.excelService.exportAsExcelFile(this.perGroupList, 'Customer Group List');
   }
+  open(content , permission) {
+    debugger
+    this.permissions = permission
+    this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+        debugger
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
+
+// This function is used in open
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+  } else {
+      return `with: ${reason}`;
+  }
+}
 }

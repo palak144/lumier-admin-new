@@ -48,12 +48,10 @@
       <div class="col-md-6">
         <div class="form-group"> 
           <label>Status</label><span class="asterick">*</span>
-                                        
-           <div class="assign-group-dropdown">
-          <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selectedAssignGroup" formControlName="Status" filter="true" placeholder="Select Status" [class.is-invalid]="(customeForm.Status.errors  && (customeForm.Status.dirty || customeForm.Status.touched))">
-           </p-dropdown>
-                                            
-          </div>
+          <select class="form-control" id="basicSelect">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
       </div>    
     </div>
 </div>
