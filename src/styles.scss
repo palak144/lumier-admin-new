@@ -762,3 +762,27 @@ body .ui-chkbox .ui-chkbox-box.ui-state-active {
     color: red;
 }
 
+ngb-modal-window.modal.fade.show.d-block {
+    opacity: 1 !important;
+}
+div#ngb-panel-0{
+    padding-bottom: 20px !important;
+    background-color: rgb(238, 238, 238) !important;
+
+}
+div#ngb-panel-0-header {
+    padding: 10px 10px 0px 10px !important;
+}
+.btn[class*="btn-"] {
+    margin-bottom: 0 !important;
+}
+button.btn.btn-link {
+    color: white !important;
+}
+ngb-accordion [role=tabpanel]{
+    padding: 1rem 2.5rem !important;
+    padding-top: 10px !important;
+}
+div#ngb-panel-0-header {
+    background: #3A496A !important;
+}

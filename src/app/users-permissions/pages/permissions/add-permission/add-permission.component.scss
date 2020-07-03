@@ -1,7 +1,7 @@
-// .form-control-override {
-//     font-size: 1rem !important;
-//     line-height: 1.0 !important;
-// }
+.form-control-override {
+    font-size: 1rem !important;
+    line-height: 1.0 !important;
+}
 angular2-multiselect.myclass.custom-class.form-control.ng-touched.ng-dirty.ng-valid {
     padding: 0px;
     height: 32px;
@@ -41,24 +41,15 @@ angular2-multiselect.myclass.custom-class.form-control.ng-touched.ng-dirty.ng-va
     height: 40px;
     /* width: 10px; */
 }
-div.c-btn {
-    border-color: #009DA0 !important;
-    border-width: 1.25px !important;
-    display: inline-block;
-    line-height: 1.25;
-    border-radius: 3px;
-    font-size: .85rem;
-    padding: 5px 10px;
-    cursor: pointer;
-    align-items: center;
-    min-height: 38px;
-
+angular2-multiselect.myclass.custom-class.ng-untouched.ng-pristine.ng-invalid.form-control.form-control-override.border-primary.is-invalid {
+    border: none !important;
 }
-
-.selected-list .c-btn {
-    width: 100%;
-    padding: 5px 10px;
-    cursor: pointer;
-    display: flex;
-    position: relative;
+angular2-multiselect.myclass.custom-class.ng-untouched.ng-pristine.ng-valid.form-control.form-control-override.border-primary {
+    border: none !important;
+}
+angular2-multiselect.myclass.custom-class.form-control.form-control-override.border-primary.ng-touched.ng-dirty.is-invalid.ng-invalid {
+    border: none !important;
+}
+angular2-multiselect.myclass.custom-class.ng-valid.form-control.form-control-override.border-primary.ng-touched.ng-dirty {
+    border: none !important;
 }

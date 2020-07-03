@@ -16,7 +16,7 @@ export class AddUserComponent implements OnInit {
 
   dropdownSettings = {};
   perGroup = [];
-  dropdownList :any;
+  dropdownList = [];
   addUserForm: FormGroup;
   editMode = false;
   isSubmittedAddUserForm: boolean = false;
@@ -103,6 +103,7 @@ debugger
       "employeePassword": this.password,
       "Employeepermission": this.multiSelectedList(this.addUserForm.get('perGroups').value)
     }
+    debugger
     if (this.id) {
 
       this.addUserFormDetails.employeeId = this.id;
@@ -147,14 +148,14 @@ debugger
     let name = "";
     let email = "";
     let password = "";
-   this.selected_perGroups = [];
+    let perGroups = '';
     this.addUserForm = new FormGroup({
       "name": new FormControl(name, Validators.required),
       "username": new FormControl(email, [
         Validators.required,
        ]),
     
-      "perGroups": new FormControl(this.selected_perGroups, Validators.required),
+      "perGroups": new FormControl(perGroups, Validators.required),
 
     });
     debugger
@@ -164,7 +165,7 @@ debugger
       this.addUserForm.addControl(
         "password", new FormControl(password, [
           Validators.minLength(8),
-          Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
           Validators.maxLength(20)]))
       this.usersPermissionsService.getUserId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
@@ -174,7 +175,7 @@ debugger
             "name": this.users.employeeFullName,
             "username": this.users.employeeUserName,
             // "password": this.users.employeePassword,
-           // "perGroups" : this.users.PermissionGroup
+            "perGroups" : this.users.PermissionGroup
           })
           this.selected_perGroups = this.users.PermissionGroup  
 debugger
@@ -190,7 +191,7 @@ debugger
       this.addUserForm.addControl(
         "password", new FormControl(password, [Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
           Validators.maxLength(20)]))
     }
 

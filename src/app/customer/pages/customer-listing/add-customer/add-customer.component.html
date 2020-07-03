@@ -36,11 +36,8 @@
                                         <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.password.errors }">
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.password.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.password.errors.required">Password is required</div>
-                                            <div *ngIf="signUpControls.password.errors.minLength">Password must be atleast 8 characters
-                                            </div>
-                                            <div *ngIf="signUpControls.password.errors.pattern">Password does not meet the password policy requirements</div>
-                                            <div *ngIf="signUpControls.password.errors.maxLength">Password must be atmost 20 characters
-                                            </div>
+                                            <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
+
 
                                         </div>
                                     </div>

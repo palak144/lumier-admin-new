@@ -19,9 +19,9 @@ export class AddPermissionComponent implements OnInit {
   isSubmittedAddPerGroupForm :boolean = false;
   dropdownSettings = {};
   dropdownSettingsPermission = {};
-  country = [];
+  countries = [];
   permission = []
-  dropdownListCountry : any;
+  dropdownListCountry = [];
   dropdownListPer = [];
   editMode = false;
   id: number;
@@ -57,7 +57,7 @@ export class AddPermissionComponent implements OnInit {
 
     this.usersPermissionsService.getCountryList()
     .subscribe((data:any) => {
-      
+      debugger
         this.dropdownListCountry = data.data
     })
 
@@ -65,21 +65,9 @@ export class AddPermissionComponent implements OnInit {
     .subscribe((data:any) => {
       debugger
          this.dropdownListPer =data.data.result
-        // this.dropdownListPer =  [
-
-        //   { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
-        //   { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
-        //   { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
-        //   { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
-        //   { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
-        //   { "id": 1, "itemName": "Customers", "menuName":"customer" ,"menuId":"11"},
-        //   { "id": 2, "itemName": "Customer-Group", "menuName":"customer1","menuId":"12" },
-        //   { "id": 3, "itemName": "Permissions","menuName":"customer1" ,"menuId":"12"},
-        //   { "id": 4, "itemName": "Employees", "menuName":"customer","menuId":"11" },
-        //   { "id": 4, "itemName": "Employees", "menuName":null,"menuId":null },
-        // ];
     })
     this.selected_permission = []
+    this.selected_countries = []
     this.dropdownSettings = {
       singleSelection: false,
       selectAllText: 'Select All',
@@ -112,21 +100,13 @@ export class AddPermissionComponent implements OnInit {
 
       });
     }
+    debugger
     return this.selectedCountryId;
   }
   multiSelectedListPermission(criteriaArray: any) {
     debugger
     this.selectedPermissionId = []
     if (criteriaArray != null){
-      // criteriaArray.forEach(element => {
-      //   this.selectedPermissionId.push({
-      //     "menuId":element.menuId,
-      //     "menu":element.menuName   ,
-      //   "childMenu" :[{
-      //     "id":element.id,
-      //     "childMenu":element.itemName,
-      //   }]  });
-      // });
       this.selectedPermissionId = _.chain(criteriaArray)
       .groupBy("menuName")
       .map((value,key)=>
@@ -137,9 +117,6 @@ export class AddPermissionComponent implements OnInit {
   }
   debugger
     return this.selectedPermissionId;
-    //   {"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}
-      //   {"menuId":1,"menu":"customer","childMenu":[{"id":1,"childMenu":"Customers"},{"id":2,"childMenu":"Order Return"}]}
-     
   }
   get signUpControls() {
     return this.addPerGroupForm.controls;
@@ -155,10 +132,7 @@ export class AddPermissionComponent implements OnInit {
       "groupName": this.addPerGroupForm.get('name').value,
       "countries": this.multiSelectedListCountry(this.addPerGroupForm.get('countries').value),
       "permission": this.multiSelectedListPermission(this.addPerGroupForm.get('permission').value),
-      // "groupId":12,
-      // "countries":[{"countryId":1,"country":"malaysia"}],
-      // "permission":[{"menuId":1,"menu":"Dashboard","childMenu":[{"id":1,"childMenu":"Orders"},{"id":2,"childMenu":"Order Return"}]}]
-    }
+      }
     
     if (this.id) {
 
@@ -202,6 +176,14 @@ export class AddPermissionComponent implements OnInit {
     let countries = "";
     let permission = "";
 
+    this.addPerGroupForm = new FormGroup({
+      "name": new FormControl(name, Validators.required),
+      "countries": new FormControl(countries, Validators.required),
+      "permission": new FormControl(permission, Validators.required),
+
+    });
+    debugger
+    console.log(this.addPerGroupForm.value,"groupForm")
     if (this.editMode) {
       debugger
       this.perGroupTitle = "Edit Permission Group"
@@ -227,12 +209,7 @@ debugger
       )
 
     }
-    this.addPerGroupForm = new FormGroup({
-      "name": new FormControl(name, Validators.required),
-      "countries": new FormControl(countries, Validators.required),
-      "permission": new FormControl(permission, Validators.required),
-
-    });
+   
 
 
 
