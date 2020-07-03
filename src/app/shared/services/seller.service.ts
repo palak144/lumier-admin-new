@@ -20,7 +20,19 @@ export class SellerService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
-
+  addSeller(data) {
+    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  updateSeller(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getAllSellers(page) {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/seller',
@@ -29,11 +41,26 @@ export class SellerService {
         catchError(this.errorHandler.handleError)
       );
   }
- 
+  getCountry()
+  {
+    return this.http.get(this.baseUrl + 'admin/getCountry')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+    
+  }
   getAllSellersSearch(page?, searchKey?, exportAll?) {
     const params = { page: page, searchKey: searchKey , exportAll: exportAll}
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getSellerdetails(id) {
+    return this.http.get(this.baseUrl + 'admin/seller/detail/' + id)
+      .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );

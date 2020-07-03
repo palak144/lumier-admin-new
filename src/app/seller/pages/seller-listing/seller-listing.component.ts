@@ -146,7 +146,9 @@ export class SellerListingComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
+    console.log(event.target.value);
     console.log('event target value', event.value);
+    console.log(event.currentTarget.firstChild.data);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       console.log('delete id', id);
@@ -174,8 +176,8 @@ export class SellerListingComponent implements OnInit {
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
       console.log("id",id)
-      
-          this.router.navigate(['../','edit',id], {relativeTo: this.activateRoute})
+      console.log(event.currentTarget.firstChild.data);
+          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
           
     }
   }
