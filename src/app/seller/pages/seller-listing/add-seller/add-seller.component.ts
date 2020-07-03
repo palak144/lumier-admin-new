@@ -70,10 +70,10 @@ export class AddSellerComponent implements OnInit {
     )
     this.addSellerForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
-      sellerName: new FormControl(null,[Validators.required]),
+      sellerName: new FormControl(null,[Validators.required,  Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
       userName: new FormControl('',[Validators.required]),
       password: new FormControl('',[Validators.required]),
-      sellerEmail : new FormControl('',[Validators.required]),
+      sellerEmail : new FormControl('',[Validators.required]) ,
       ccEmail: new FormControl(null,[Validators.required]),
       mobileNo:new FormControl(null,[Validators.required]),
       pickupAddress:new FormControl(null,[Validators.required]),
@@ -150,9 +150,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
       console.log('Fill all required fields');
     } 
   }
-  get customeForm() {
-    return this.addSellerForm.controls;
-  }
+
   getSellerdetails(id) {
     this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {

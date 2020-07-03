@@ -42,7 +42,7 @@ export class SellerListingComponent implements OnInit {
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
-   countryId: any = "";
+   countryId: any = null ;
  
 
   constructor(
@@ -86,8 +86,6 @@ export class SellerListingComponent implements OnInit {
       this.sellerList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
-    }, error => {
-      this.utilityService.routingAccordingToError(error);
     })
   } 
 
@@ -99,7 +97,7 @@ export class SellerListingComponent implements OnInit {
         console.log('seller:', success);
       },
       error => {
-        this.utilityService.routingAccordingToError(error);
+      
         this.utilityService.resetPage();
       }
     );
@@ -121,25 +119,23 @@ export class SellerListingComponent implements OnInit {
           this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
           this.exportAll = "false"
         }
-      }, error => {
-        this.utilityService.routingAccordingToError(error);
       })
   }
 
   loadDataLazy(event: LazyLoadEvent) {
     console.log(event);
-    this.utilityService.loaderStart();
+    
     this.page = event.first / 10;
     console.log( this.page);
 console.log(this.countryId);
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSellers(this.page);
-      this.utilityService.loaderStop();
+      
     } else {
       console.log(this.countryId);
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
-      this.utilityService.loaderStop();
+    
     }
 
     
