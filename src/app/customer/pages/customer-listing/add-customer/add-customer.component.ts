@@ -24,8 +24,10 @@ export class AddCustomerComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   customerTitle: string;
-  selectedAssignGroup: any;
+  selectedAssignGroup = null;
   password: any;
+  practises: string[];
+
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -63,7 +65,6 @@ export class AddCustomerComponent implements OnInit {
       console.log('assign group list', this.assignGroupList);
 
     }); 
-    this.selectedAssignGroup = [];
   }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
@@ -143,7 +144,7 @@ export class AddCustomerComponent implements OnInit {
           this.router.navigate(['../'],{relativeTo : this.activatedRoute})
         },
         error => {
-          this.toastr.error(error.message)
+          this.toastr.error(error.error.message)
           
         });
     }
@@ -202,6 +203,7 @@ export class AddCustomerComponent implements OnInit {
     console.log("email 3", this.addCustomerForm)
 
     this.titles = ['Mr.', 'Miss.', 'Mrs'];
+    this.practises = ['Medical', 'Dental', 'Other'];
 
 
     if (this.editMode) {
@@ -214,7 +216,7 @@ export class AddCustomerComponent implements OnInit {
         Validators.maxLength(20)]))
       this.customerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-          
+          debugger
           this.customer = success.data
           this.addCustomerForm.patchValue({
             "email": this.customer.Email,
@@ -234,9 +236,10 @@ export class AddCustomerComponent implements OnInit {
             "pincode": this.customer.pincode,
             "phoneNo": this.customer.teleNumber,
             "jobTitle": this.customer.jobTitle,
+            "assignGroup": this.customer.customerGroup.groupName
           })
           
-          this.selectedAssignGroup = this.customer.customerGroup.id
+          this.selectedAssignGroup = this.customer.customerGroup.groupName
           
         },
         error => {

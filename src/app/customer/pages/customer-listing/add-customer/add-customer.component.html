@@ -113,9 +113,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Practice Type</label><span class="asterick">*</span> 
-                                        <input type="text" formControlName="practiceType" placeholder="Practice Type" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.practiceType.errors }">
-                                        <div *ngIf="isSubmittedaddCustomerForm && signUpControls.practiceType.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.practiceType.errors.required">Practice Title is required</div>
+                                        <select type="text" formControlName="practiceType" placeholder="Practice Type" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.practiceType.errors }">
+                                            <option value={{_practise}} *ngFor="let _practise of practises">{{_practise}}
+                                            </option>
+                                        </select>
+                                            <div *ngIf="isSubmittedaddCustomerForm && signUpControls.practiceType.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.practiceType.errors.required">Practice Type is required</div>
                                         </div>
                                     </div>
                                 </div>
