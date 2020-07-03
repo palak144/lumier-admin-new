@@ -18,11 +18,10 @@ interface Country {
 })
 export class AddSellerComponent implements OnInit {
   addSellerForm: FormGroup;
-  isSubmittedaddCustomerForm: boolean = false;
+  isSubmittedaddSellerForm: boolean = false;
   titles: string[];
   editMode = false;
   id: number;
-  isSubmittedaddSellerForm: boolean = false;
   addSellerFormDetails: any;
   seller: any;
   private _unsubscribe = new Subject<boolean>();
@@ -61,7 +60,7 @@ export class AddSellerComponent implements OnInit {
         }
         if(this.id)
         {
-          this.sellerTitle = "Edit  Sellers";
+          this.sellerTitle = "Edit Sellers";
         }
         // this.initForm()
         this.getSellerdetails(this.id);
@@ -94,10 +93,12 @@ export class AddSellerComponent implements OnInit {
       floorNo: new FormControl(null,[Validators.required]),
     })
   }
-
+  get signUpControls() {
+    return this.addSellerForm.controls;
+  }
   onSubmitSellerForm() {
    
-    this.isSubmittedaddCustomerForm = true
+    this.isSubmittedaddSellerForm = true
     if(this.addSellerForm.valid) {
       console.log('form valid');
       let data = this.addSellerForm.value;

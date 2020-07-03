@@ -34,8 +34,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Name</label><span class="asterick">*</span> 
-                                        <input type="text" formControlName="sellerName" class="form-control border-primary" placeholder="Name" [class.is-invalid]="(customeForm.sellerName.errors  && (customeForm.sellerName.dirty || customeForm.sellerName.touched))" >
-                                     
+                                        <input type="text" formControlName="sellerName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerName.errors }">
+                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerName.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.sellerName.errors.required">Seller Name is required</div>
+                                        </div>
                                     </div>
                              
                                 </div>
