@@ -6,14 +6,17 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service';
-
+interface Country {
+  _id:string,
+  country:string
+}
 @Component({
   selector: 'app-add-seller',
   templateUrl: './add-seller.component.html',
   styleUrls: ['./add-seller.component.scss']
 })
 export class AddSellerComponent implements OnInit {
-  addCustomerForm: FormGroup;
+  addSellerForm: FormGroup;
   titles: string[];
   editMode = false;
   id: number;
@@ -25,8 +28,11 @@ export class AddSellerComponent implements OnInit {
   sellerTitle:string;
   selectedAssignGroup: any;
   password: any;
-
-  
+  sellerDetailsData: any;
+  sellerId:any;
+  selectCountry: any;
+  countries:Country[];
+  countryValue: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,186 +46,171 @@ export class AddSellerComponent implements OnInit {
     this.sellerTitle = "Add New Sellers";
     this.activatedRoute.params.subscribe(
       (id: Params) => {
+        console.log(id);
         this.id = +id['id']
+        console.log(this.id);
+        this.sellerId=this.id;
         this.editMode = id['id'] != null
         console.log(this.editMode)
         // this.initForm()
+        this.getSellerdetails(this.id);
+  this.getCountry();
+  
+      }
+    )
+    this.addSellerForm = new FormGroup({
+    
+      sellerName: new FormControl(null,[Validators.required]),
+      userName: new FormControl('',[Validators.required]),
+      password: new FormControl('',[Validators.required]),
+      sellerEmail : new FormControl('',[Validators.required]),
+      ccEmail: new FormControl(null,[Validators.required]),
+      mobileNo:new FormControl(null,[Validators.required]),
+      pickupAddress:new FormControl(null,[Validators.required]),
+      houseNo: new FormControl(null,[Validators.required]),
+      unitNo: new FormControl(null,[Validators.required]),
+      buildingName: new FormControl(null,[Validators.required]),
+      streetName: new FormControl(null,[Validators.required]),
+      pincode: new FormControl(null,[Validators.required]),
+    
+      accHolderName: new FormControl(null,[Validators.required]),
+      accountNumber: new FormControl(null,[Validators.required]),
+      IFSCCode: new FormControl(null,[Validators.required]),
+      bankName: new FormControl(null,[Validators.required]),
+      typeofAccount: new FormControl(null,[Validators.required]),
+      commission: new FormControl(null,[Validators.required]),
+      supplyType: new FormControl(null,[Validators.required]),
+      floorNo: new FormControl(null,[Validators.required]),
+    })
+  }
+
+  onSubmitSellerForm() {
+    if(this.addSellerForm.valid) {
+      console.log('form valid');
+      let data = this.addSellerForm.value;
+      if(this.id)
+      {
+        data.id= this.id;
+      }
+     if(this.countryValue)
+     {
+data.countryId=this.countryValue;
+     }
+      if(!this.sellerId)
+      {
+        this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success:any) => {
+            console.log(success);
+            this.addSellerForm.reset();
+            this.toastr.success('success','Seller Create Successfully!');
+            this.router.navigate(['seller/sellers']);
+  
+          },
+          error => {
+            console.log(error);
+            this.toastr.error('error',error);
+          }
+        )
+      }
+     if(this.sellerId)
+     {
+      this.SellerService.updateSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success:any) => {
+          console.log(success);
+          this.addSellerForm.reset();
+          this.toastr.success('success','Seller Update Successfully!');
+          this.router.navigate(['seller/sellers']);
+
+        },
+        error => {
+          console.log(error);
+          this.toastr.error('error',error);
+        }
+      )
+     }
+    }
+  }
+  getSellerdetails(id) {
+    this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.sellerDetailsData = success.data;
+        console.log(this.sellerDetailsData);
+       
+        this.patchForm(this.sellerDetailsData);
+       
+  
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  } 
+  patchForm(item) {
+    console.log(item);
+     this.addSellerForm.controls.sellerName.patchValue(item.sellerName);
+
+   
+    this.addSellerForm.controls.userName.patchValue(item.userName);
+
+    this.addSellerForm.controls.password.patchValue(item.password);
+  
+    this.addSellerForm.controls.sellerEmail.patchValue(item.sellerEmail);
+    this.addSellerForm.controls.ccEmail.patchValue(item.ccEmail);
+    this.addSellerForm.controls.mobileNo.patchValue(item.mobileNo);
+  
+    this.addSellerForm.controls.pickupAddress.patchValue(item.pickupAddress);
+    this.addSellerForm.controls.houseNo.patchValue(item.houseNo);
+    this.addSellerForm.controls.unitNo.patchValue(item.unitNo);
+  
+    this.addSellerForm.controls.buildingName.patchValue(item.buildingName);
+    this.addSellerForm.controls.streetName.patchValue(item.streetName);
+    this.addSellerForm.controls.pincode.patchValue(item.pincode);
+  
+    this.addSellerForm.controls.accHolderName.patchValue(item.accHolderName);
+    this.addSellerForm.controls.accountNumber.patchValue(item.accountNumber);
+    this.addSellerForm.controls.IFSCCode.patchValue(item.IFSCCode);
+    this.addSellerForm.controls.bankName.patchValue(item.bankName);
+  
+    this.addSellerForm.controls.typeofAccount.patchValue(item.typeofAccount);
+    this.addSellerForm.controls.commission.patchValue(item.commission);
+    
+    this.addSellerForm.controls.supplyType.patchValue(item.supplyType);
+    this.addSellerForm.controls.floorNo.patchValue(item.floorNo);
+  }
+  getCountry()
+  {
+    this.SellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.countries = this.arrayOfStringsToArrayOfObjects(success.data.result);
+        console.log('countries', this.countries);
+       
+    
+       
+  
+      },
+      error => {
+        console.log(error);
       }
     )
   }
-
-  onSubmitAddCustomerForm() {
-    this.isSubmittedaddSellerForm = true
-    if (this.addCustomerForm.invalid) {
-      return
-    }
-    this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
-    
-    this.addSellerFormDetails = {
-      "Email": this.addCustomerForm.get('email').value,
-      "password": this.password,
-      "firstName": this.addCustomerForm.get('fname').value,
-      "lastName": this.addCustomerForm.get('lname').value,
-      "title": this.addCustomerForm.get('title').value,
-      "clinicName": this.addCustomerForm.get('clinicName').value,
-      "countryCode": '+91',
-      "houseNo": this.addCustomerForm.get('blockNo').value,
-      "floorNo": this.addCustomerForm.get('floorNo').value,
-      "unitNo": this.addCustomerForm.get('unitNo').value,
-      "streetName": this.addCustomerForm.get('streetName').value,
-      "buildingName": this.addCustomerForm.get('buildingName').value,
-      "practiceType": this.addCustomerForm.get('practiceType').value,
-      "website": this.addCustomerForm.get('web').value,
-      "pincode": this.addCustomerForm.get('pincode').value,
-      "teleNumber": this.addCustomerForm.get('phoneNo').value,
-      "mobileNumber": this.addCustomerForm.get('contactNo').value,
-      "jobTitle": this.addCustomerForm.get('jobTitle').value,
-      "customerGroupId" : this.addCustomerForm.get('assignGroup').value
-    }
-    
-    if (this.id) {
-
-      this.addSellerFormDetails.sellerId = this.id;
-    }
-
-    // if (this.editMode) {
-    //   this.sellerTitle = "Edit Customer";
-      
-    //   this.SellerService.updateSeller(this.addSellerFormDetails).subscribe(
-    //     data => {
-          
-    //       console.log(data)
-    //       this.toastr.success("Seller Details Editted Successfully")
-    //       this.router.navigate(['../../'],{relativeTo : this.activatedRoute})
-
-    //     },
-    //     error => {
-          
-    //       this.toastr.error(error.message)
-    //     });
-
-
-
-    // }
-    // else {
-      
-    //   this.customerService.addCustomer(this.addCustomerFormDetails).subscribe(
-    //     data => {
-          
-    //       console.log(data)
-    //       this.toastr.success("New Customer Added Successfully")
-    //       this.router.navigate(['../'],{relativeTo : this.activatedRoute})
-    //     },
-    //     error => {
-    //       this.toastr.error(error.message)
-          
-    //     });
-    // }
-
+  arrayOfStringsToArrayOfObjects(arr: any[]) {
+    console.log(arr);
+    const newArray = [];
+    arr.forEach(element => {
+      console.log(element);
+      newArray.push({
+        label: element.countryName,
+        value: element.id
+      });
+    });
+    return newArray;
   }
-
-  // private initForm() {
-    
-  //   let email = "";
-  //   let password = "";
-  //   let title = "";
-  //   let fname = "";
-  //   let lname = "";
-  //   let clinicName = "";
-  //   let contactNo = "";
-  //   let web = "";
-  //   let practiceType = "";
-  //   let assignGroup = "";
-  //   let blockNo = "";
-  //   let floorNo = "";
-  //   let unitNo = "";
-  //   let streetName = "";
-  //   let buildingName = "";
-  //   let pincode = "";
-  //   let phoneNo = "";
-  //   let jobTitle = "";
-    
-  //   this.addSellerForm = new FormGroup({
-  //     "email": new FormControl(email, [
-  //       Validators.required,
-  //       Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-  //     "title": new FormControl(title, Validators.required),
-  //     "fname": new FormControl(fname, Validators.required),
-  //     "lname": new FormControl(lname, Validators.required),
-  //     "clinicName": new FormControl(clinicName, Validators.required),
-  //     "contactNo": new FormControl(contactNo, [
-  //       Validators.required,
-  //       Validators.pattern('^[0-9\+\-]{10}$')]),
-  //     "web": new FormControl(web, [
-  //       Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-  //     "jobTitle": new FormControl(jobTitle, ),
-  //     "practiceType": new FormControl(practiceType, Validators.required),
-  //     "assignGroup": new FormControl(assignGroup,),
-  //     "blockNo": new FormControl(blockNo, ),
-  //     "floorNo": new FormControl(floorNo, ),
-  //     "unitNo": new FormControl(unitNo,),
-  //     "streetName": new FormControl(streetName,),
-  //     "buildingName": new FormControl(buildingName,),
-  //     "pincode": new FormControl(pincode, [
-  //       Validators.pattern('^[0-9\+\-]{6}$')]),
-  //     "phoneNo": new FormControl(phoneNo,[ ,
-  //       Validators.pattern('^[0-9\+\-]{10,15}$')]),
-  //   });
-    
-  //   console.log("email 3", this.addCustomerForm)
-
-  //   this.titles = ['Mr.', 'Miss.', 'Mrs'];
-
-
-    // if (this.editMode) {
-      
-    //   this.sellerTitle = "Edit Seller";
-    //   this.addSellerForm.addControl(
-    //   "password", new FormControl(password, [
-    //     Validators.minLength(8),
-    //     Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
-    //     Validators.maxLength(20)]))
-    //   this.sellerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
-    //     (success: any) => {
-          
-    //       this.seller = success.data
-    //       this.addCustomerForm.patchValue({
-    //         "email": this.seller.Email,
-    //         "password": this.seller.password,
-    //         "title": this.seller.title,
-    //         "fname": this.seller.firstName,
-    //         "lname": this.seller.lastName,
-    //         "clinicName": this.seller.clinicName,
-    //         "contactNo": this.seller.mobileNumber,
-    //         "web": this.customer.website,
-    //         "practiceType": this.customer.practiceType,
-    //         "blockNo": this.customer.houseNo,
-    //         "floorNo": this.customer.floorNo,
-    //         "unitNo": this.customer.unitNo,
-    //         "streetName": this.customer.streetName,
-    //         "buildingName": this.customer.buildingName,
-    //         "pincode": this.customer.pincode,
-    //         "phoneNo": this.customer.teleNumber,
-    //         "jobTitle": this.customer.jobTitle,
-    //       })
-          
-    //       this.selectedAssignGroup = this.customer.customerGroup.id
-          
-    //     },
-    //     error => {
-          
-    //     }
-    //   )
-    // }
-    // else{
-      
-    //   this.addCustomerForm.addControl(
-    //     "password", new FormControl(password, [Validators.required,
-    //       Validators.minLength(8),
-    //       Validators.pattern('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
-    //       Validators.maxLength(20)]))
-    // }
-    // console.log("email 2", email)
-    
-
+  getdropdown(event)
+  {
+console.log(event.value);
+this.countryValue=event.value;
+console.log(this.countryValue);
+  }
   }

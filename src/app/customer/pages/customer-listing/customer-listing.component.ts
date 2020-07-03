@@ -144,7 +144,9 @@ export class CustomerListingComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
+    console.log(event.target.value);
     console.log('event target value', event.value);
+    console.log(event.currentTarget.firstChild.data);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       console.log('delete id', id);

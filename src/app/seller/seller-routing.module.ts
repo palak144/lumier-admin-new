@@ -45,6 +45,11 @@ const routes: Routes = [{
           component: AddSellerComponent,
           
         },
+        {
+          path: 'edit/:id',
+          component: AddSellerComponent,
+          
+        },
       ]
     }
   ]
