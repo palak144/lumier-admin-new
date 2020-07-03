@@ -30,7 +30,7 @@ export class CustomerListingComponent implements OnInit {
   id: number;
   Date = new Date();
   status:string
-
+  countries:any[];
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;

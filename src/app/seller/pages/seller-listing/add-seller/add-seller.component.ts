@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service';
+import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
 interface Country {
   _id:string,
   country:string
@@ -17,6 +18,7 @@ interface Country {
 })
 export class AddSellerComponent implements OnInit {
   addSellerForm: FormGroup;
+  isSubmittedaddCustomerForm: boolean = false;
   titles: string[];
   editMode = false;
   id: number;
@@ -59,7 +61,7 @@ export class AddSellerComponent implements OnInit {
       }
     )
     this.addSellerForm = new FormGroup({
-    
+      countryId:new FormControl(null,[Validators.required]),
       sellerName: new FormControl(null,[Validators.required]),
       userName: new FormControl('',[Validators.required]),
       password: new FormControl('',[Validators.required]),
@@ -85,6 +87,8 @@ export class AddSellerComponent implements OnInit {
   }
 
   onSubmitSellerForm() {
+   
+    this.isSubmittedaddCustomerForm = true
     if(this.addSellerForm.valid) {
       console.log('form valid');
       let data = this.addSellerForm.value;
@@ -94,7 +98,7 @@ export class AddSellerComponent implements OnInit {
       }
      if(this.countryValue)
      {
-data.countryId=this.countryValue;
+this.addSellerForm.controls.countryId=this.countryValue;
      }
       if(!this.sellerId)
       {
@@ -129,6 +133,15 @@ data.countryId=this.countryValue;
       )
      }
     }
+    else
+    {
+      validateAllFormFields(this.addSellerForm);
+      // this.messageService.add({ severity: 'warn', summary: 'One or more fields are invalid. Please try again.' });
+      console.log('Fill all required fields');
+    } 
+  }
+  get customeForm() {
+    return this.addSellerForm.controls;
   }
   getSellerdetails(id) {
     this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -148,12 +161,13 @@ data.countryId=this.countryValue;
   } 
   patchForm(item) {
     console.log(item);
+    this.addSellerForm.controls.countryId.patchValue(item.countryId);
      this.addSellerForm.controls.sellerName.patchValue(item.sellerName);
 
    
     this.addSellerForm.controls.userName.patchValue(item.userName);
 
-    this.addSellerForm.controls.password.patchValue(item.password);
+    // this.addSellerForm.controls.password.patchValue(item.password);
   
     this.addSellerForm.controls.sellerEmail.patchValue(item.sellerEmail);
     this.addSellerForm.controls.ccEmail.patchValue(item.ccEmail);

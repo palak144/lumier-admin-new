@@ -18,10 +18,9 @@
     <div class="col-xl-4 col-lg-6 col-md-12">
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
-            <select class="form-control" id="basicSelect">
-              <option>All</option>
-              <option>Country 1</option>
-              <option>Country 2</option>
+            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+                <option value="">ALL</option>
+                <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
             </select>
         </fieldset>   
     </div>
@@ -48,7 +47,7 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="sellerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [totalRecords]="totalCount">
+      <p-table [value]="sellerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"[lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
         <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
           <ng-template pTemplate="header">
               <tr>
@@ -56,7 +55,7 @@
                   <th>Country</th>
                   <th style="width: 12em;">Seller Name</th>
                   <th style="width: 8em;">Mobile</th> 
-                  <th style="width: 10em;">Email</th>
+                  <th style="width: 16em;">Email</th>
                   <th style="width: 8em;">Pay32 SME </th> 
                   <th>Registration Date</th>
                   <th style="width: 7em;">Status</th>
