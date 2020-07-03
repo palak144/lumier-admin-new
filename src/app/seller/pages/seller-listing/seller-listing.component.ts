@@ -104,7 +104,7 @@ export class SellerListingComponent implements OnInit {
   }
 
   getAllSellersSearch(page, searchBar , exportAll, countryId) {
-    console.log(countryId);
+    console.log(searchBar);
     this.sellerService.getAllSellersSearch(page, searchBar , exportAll , countryId)
       .pipe(
         takeUntil(this._unsubscribe)
@@ -115,7 +115,7 @@ export class SellerListingComponent implements OnInit {
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
         if(exportAll == "true"){
-          debugger
+   
           this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
           this.exportAll = "false"
         }
@@ -197,7 +197,7 @@ console.log(this.countryId);
       this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
     }
     else{
-      debugger
+    
       this.exportAll = "true"
       console.log(this.countryId);
      this.getAllSellersSearch(this.page, this.searchBar,this.exportAll , this.countryId);

@@ -93,13 +93,12 @@ export class AddSellerComponent implements OnInit {
       floorNo: new FormControl(null,[Validators.required]),
     })
   }
-  get signUpControls() {
-    return this.addSellerForm.controls;
-  }
+ 
   onSubmitSellerForm() {
    
     this.isSubmittedaddSellerForm = true
-    if(this.addSellerForm.valid) {
+  
+      console.log("mayuri");
       console.log('form valid');
       let data = this.addSellerForm.value;
       if(this.id)
@@ -115,7 +114,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
             console.log(success);
-            this.addSellerForm.reset();
+         
             this.toastr.success('success','Seller Create Successfully!');
             this.router.navigate(['seller/sellers']);
   
@@ -142,15 +141,12 @@ this.addSellerForm.controls.countryId=this.countryValue;
         }
       )
      }
-    }
-    else
-    {
-      validateAllFormFields(this.addSellerForm);
-      // this.messageService.add({ severity: 'warn', summary: 'One or more fields are invalid. Please try again.' });
-      console.log('Fill all required fields');
-    } 
-  }
+ 
 
+  }
+  get signUpControls() {
+    return this.addSellerForm.controls;
+  }
   getSellerdetails(id) {
     this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
