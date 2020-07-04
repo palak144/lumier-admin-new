@@ -24,10 +24,10 @@ export class AddCustomerComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   customerTitle: string;
-  selectedAssignGroup = null;
+  selectedAssignGroup = [];
   password: any;
   practises: string[];
-
+  assignGroupValue :any
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -86,6 +86,11 @@ export class AddCustomerComponent implements OnInit {
     this.isSubmittedaddCustomerForm = true
     if (this.addCustomerForm.invalid) {
       return
+    }
+    if(this.assignGroupValue)
+    {
+      debugger
+this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
     }
     this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
     
@@ -181,9 +186,9 @@ export class AddCustomerComponent implements OnInit {
       "fname": new FormControl(fname, Validators.required),
       "lname": new FormControl(lname, Validators.required),
       "clinicName": new FormControl(clinicName, Validators.required),
-      "contactNo": new FormControl(contactNo, [
+      "contactNo": new FormControl(contactNo,[
         Validators.required,
-        Validators.pattern('^[0-9\+\-]{10}$')]),
+        Validators.pattern('^[0-9]{5,15}$')]),
       "web": new FormControl(web, [
         Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
       "jobTitle": new FormControl(jobTitle, ),
@@ -197,7 +202,7 @@ export class AddCustomerComponent implements OnInit {
       "pincode": new FormControl(pincode, [
         Validators.pattern('^[0-9\+\-]{6}$')]),
       "phoneNo": new FormControl(phoneNo,[ ,
-        Validators.pattern('^[0-9\+\-]{10,15}$')]),
+        Validators.pattern('^[0-9]{5,15}$')]),
     });
     
     console.log("email 3", this.addCustomerForm)
@@ -239,7 +244,7 @@ export class AddCustomerComponent implements OnInit {
             "assignGroup": this.customer.customerGroup.groupName
           })
           
-          this.selectedAssignGroup = this.customer.customerGroup.groupName
+          this.addCustomerForm.controls.assignGroup.patchValue(this.customer.customerGroup.groupName);
           
         },
         error => {
@@ -258,5 +263,10 @@ export class AddCustomerComponent implements OnInit {
     console.log("email 2", email)
     
 
+  }
+  getdropdown(event)
+  {
+    debugger
+this.assignGroupValue=event.value;
   }
 }

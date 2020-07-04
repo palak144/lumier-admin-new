@@ -90,7 +90,7 @@
                       </option>
                     </select> -->   
                                         <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selectedAssignGroup" formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
+                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
                                             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddCustomerForm && signUpControls.assignGroup.errors" class="invalid-feedback">
@@ -114,6 +114,7 @@
                                     <div class="form-group">
                                         <label>Practice Type</label><span class="asterick">*</span> 
                                         <select type="text" formControlName="practiceType" placeholder="Practice Type" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.practiceType.errors }">
+                                            <option value="" >Select Practice Type</option>
                                             <option value={{_practise}} *ngFor="let _practise of practises">{{_practise}}
                                             </option>
                                         </select>
@@ -141,7 +142,7 @@
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.contactNo.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.contactNo.errors.required">Mobile No is required
                                             </div>
-                                            <div *ngIf="signUpControls.contactNo.errors.pattern">Mobile No. must be 10 digits
+                                            <div *ngIf="signUpControls.contactNo.errors.pattern">Mobile No. must be between 5 to 15 digits
                                             </div>
                                         </div>
                                     </div>

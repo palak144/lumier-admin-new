@@ -60,14 +60,14 @@ export class SellerListingComponent implements OnInit {
    this.sellerService.updateSellerStatus(statusData).subscribe(
      (success:any)=>
      {
-     
+     debugger
       this.ngOnInit()
 } )
     }
 
     
   ngOnInit() {
-  
+  debugger
     this.initiateSearch();
     this.getCountry();
   }
