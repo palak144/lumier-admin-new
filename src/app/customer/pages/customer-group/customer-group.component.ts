@@ -31,7 +31,7 @@ export class CustomerGroupComponent implements OnInit {
 
    // Real time search
    searchTerms$ = new Subject<string>();
-   searchBar: any;
+   searchBar: any ="";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
 

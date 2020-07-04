@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Group Name</label>
-          <input type="text" class="form-control border-primary" formControlName="name"
+          <input type="text" class="form-control border-primary" formControlName="name" placeholder="Group Name"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerGroupForm && signUpControls.name.errors }">
           <div *ngIf="isSubmittedaddCustomerGroupForm && signUpControls.name.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.name.errors.required">Group Name is required</div>
@@ -27,7 +27,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Group Email</label>
-          <input type="email" class="form-control border-primary" formControlName="email"
+          <input type="email" class="form-control border-primary" formControlName="email" placeholder="Group Email"
             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerGroupForm && signUpControls.email.errors }">
           <div *ngIf="isSubmittedaddCustomerGroupForm && signUpControls.email.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.email.errors.required">Group Email is required</div>

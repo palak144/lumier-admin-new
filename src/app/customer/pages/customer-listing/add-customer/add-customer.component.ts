@@ -27,7 +27,7 @@ export class AddCustomerComponent implements OnInit {
   selectedAssignGroup = [];
   password: any;
   practises: string[];
-
+  assignGroupValue :any
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -86,6 +86,11 @@ export class AddCustomerComponent implements OnInit {
     this.isSubmittedaddCustomerForm = true
     if (this.addCustomerForm.invalid) {
       return
+    }
+    if(this.assignGroupValue)
+    {
+      debugger
+this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
     }
     this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
     
@@ -239,7 +244,7 @@ export class AddCustomerComponent implements OnInit {
             "assignGroup": this.customer.customerGroup.groupName
           })
           
-          this.selectedAssignGroup = this.customer.customerGroup.groupName
+          this.addCustomerForm.controls.assignGroup.patchValue(this.customer.customerGroup.groupName);
           
         },
         error => {
@@ -258,5 +263,10 @@ export class AddCustomerComponent implements OnInit {
     console.log("email 2", email)
     
 
+  }
+  getdropdown(event)
+  {
+    debugger
+this.assignGroupValue=event.value;
   }
 }

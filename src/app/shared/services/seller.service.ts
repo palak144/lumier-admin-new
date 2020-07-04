@@ -77,7 +77,7 @@ export class SellerService {
   }
 
   updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
-    
+    debugger
     return this.http.put(this.baseUrl + 'admin/seller', statusData)
       .pipe(
         retry(3),
