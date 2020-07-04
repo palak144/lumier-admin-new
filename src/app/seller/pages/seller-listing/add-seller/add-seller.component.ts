@@ -30,7 +30,7 @@ export class AddSellerComponent implements OnInit {
   selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
-  sellerId:any;
+  // sellerId:any;
   selectCountry: any;
   countries:Country[];
   countryValue: any;
@@ -50,7 +50,7 @@ export class AddSellerComponent implements OnInit {
       (id: Params) => {
         console.log(id);
         this.id = +id['id']
-        console.log(this.id);
+       
         // this.sellerId=this.id;
         this.editMode = id['id'] != null
         console.log(this.editMode)
@@ -63,7 +63,11 @@ export class AddSellerComponent implements OnInit {
           this.sellerTitle = "Edit Sellers";
         }
         // this.initForm()
-        this.getSellerdetails(this.id);
+        if(this.id)
+        {
+          this.getSellerdetails(this.id);
+        }
+       
   this.getCountry();
   
       }
