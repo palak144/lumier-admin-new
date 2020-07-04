@@ -70,10 +70,10 @@ export class AddSellerComponent implements OnInit {
     )
     this.addSellerForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
-      sellerName: new FormControl(null,[Validators.required]),
+      sellerName: new FormControl(null,[Validators.required,  Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
       userName: new FormControl('',[Validators.required]),
       password: new FormControl('',[Validators.required]),
-      sellerEmail : new FormControl('',[Validators.required]),
+      sellerEmail : new FormControl('',[Validators.required]) ,
       ccEmail: new FormControl(null,[Validators.required]),
       mobileNo:new FormControl(null,[Validators.required]),
       pickupAddress:new FormControl(null,[Validators.required]),
@@ -93,13 +93,12 @@ export class AddSellerComponent implements OnInit {
       floorNo: new FormControl(null,[Validators.required]),
     })
   }
-  get signUpControls() {
-    return this.addSellerForm.controls;
-  }
+ 
   onSubmitSellerForm() {
    
     this.isSubmittedaddSellerForm = true
-    if(this.addSellerForm.valid) {
+  
+      console.log("mayuri");
       console.log('form valid');
       let data = this.addSellerForm.value;
       if(this.id)
@@ -115,7 +114,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
             console.log(success);
-            this.addSellerForm.reset();
+         
             this.toastr.success('success','Seller Create Successfully!');
             this.router.navigate(['seller/sellers']);
   
@@ -142,15 +141,10 @@ this.addSellerForm.controls.countryId=this.countryValue;
         }
       )
      }
-    }
-    else
-    {
-      validateAllFormFields(this.addSellerForm);
-      // this.messageService.add({ severity: 'warn', summary: 'One or more fields are invalid. Please try again.' });
-      console.log('Fill all required fields');
-    } 
+ 
+
   }
-  get customeForm() {
+  get signUpControls() {
     return this.addSellerForm.controls;
   }
   getSellerdetails(id) {
