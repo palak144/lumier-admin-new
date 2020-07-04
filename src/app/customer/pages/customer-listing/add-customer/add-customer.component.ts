@@ -24,7 +24,7 @@ export class AddCustomerComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   customerTitle: string;
-  selectedAssignGroup = [];
+  selectedAssignGroup = "";
   password: any;
   practises: string[];
   assignGroupValue :any
@@ -244,7 +244,7 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
             "assignGroup": this.customer.customerGroup.groupName
           })
           
-          this.addCustomerForm.controls.assignGroup.patchValue(this.customer.customerGroup.groupName);
+          this.selectedAssignGroup = this.customer.customerGroup.groupName
           
         },
         error => {

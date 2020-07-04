@@ -93,9 +93,8 @@ export class CustomerGroupComponent implements OnInit {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        debugger
-        if(exportAll == "true"){
-          debugger
+        
+        if(exportAll == "true"){         
           this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
           this.exportAll = "false"
         }
@@ -168,13 +167,13 @@ export class CustomerGroupComponent implements OnInit {
   }
 
   exportAsXLSX(id:number) {
-    debugger
+    
     if (id==0){
-      debugger
+      
       this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
     }
     else{
-      debugger
+      
       this.exportAll = "true"
      this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
     }

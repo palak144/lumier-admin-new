@@ -32,17 +32,15 @@ export class SellerListingComponent implements OnInit {
   status:string
   countries:any[];
 
-
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
-
   
    // Real time search
    searchTerms$ = new Subject<string>();
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
-  exportAll: string = "false";
-   countryId: any = null ;
+  exportAll = "false";
+   countryId = null ;
  
 
   constructor(
@@ -60,14 +58,16 @@ export class SellerListingComponent implements OnInit {
    this.sellerService.updateSellerStatus(statusData).subscribe(
      (success:any)=>
      {
-     debugger
+     
       this.ngOnInit()
 } )
     }
 
     
   ngOnInit() {
-  debugger
+  
+  this.exportAll = "false";
+  this.countryId = null;
     this.initiateSearch();
     this.getCountry();
   }
@@ -104,6 +104,8 @@ export class SellerListingComponent implements OnInit {
   }
 
   getAllSellersSearch(page, searchBar , exportAll, countryId) {
+  
+    
     console.log(searchBar);
     this.sellerService.getAllSellersSearch(page, searchBar , exportAll , countryId)
       .pipe(

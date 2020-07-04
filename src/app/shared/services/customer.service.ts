@@ -53,7 +53,7 @@ export class CustomerService {
   } 
  
   getAllCustomersSearch(page?, searchKey? , exportAll?) {
-    debugger
+    
     const params = { page: page, searchKey: searchKey, exportAll: exportAll }
     return this.http.get(this.baseUrl + 'admin/customer',
       { params: params }).pipe(
