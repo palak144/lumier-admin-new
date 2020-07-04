@@ -30,7 +30,7 @@ export class AddSellerComponent implements OnInit {
   selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
-  sellerId:any;
+  // sellerId:any;
   selectCountry: any;
   countries:Country[];
   countryValue: any;
@@ -50,8 +50,8 @@ export class AddSellerComponent implements OnInit {
       (id: Params) => {
         console.log(id);
         this.id = +id['id']
-        console.log(this.id);
-        this.sellerId=this.id;
+       
+        // this.sellerId=this.id;
         this.editMode = id['id'] != null
         console.log(this.editMode)
         if(!this.id)
@@ -63,7 +63,11 @@ export class AddSellerComponent implements OnInit {
           this.sellerTitle = "Edit Sellers";
         }
         // this.initForm()
-        this.getSellerdetails(this.id);
+        if(this.id)
+        {
+          this.getSellerdetails(this.id);
+        }
+       
   this.getCountry();
   
       }
@@ -97,7 +101,9 @@ export class AddSellerComponent implements OnInit {
   onSubmitSellerForm() {
    
     this.isSubmittedaddSellerForm = true
-  
+    if (this.addSellerForm.invalid) {
+      return
+    }
       console.log("mayuri");
       console.log('form valid');
       let data = this.addSellerForm.value;
@@ -109,7 +115,7 @@ export class AddSellerComponent implements OnInit {
      {
 this.addSellerForm.controls.countryId=this.countryValue;
      }
-      if(!this.sellerId)
+      if(!this.id)
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
@@ -125,7 +131,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
           }
         )
       }
-     if(this.sellerId)
+     if(this.id)
      {
       this.SellerService.updateSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
