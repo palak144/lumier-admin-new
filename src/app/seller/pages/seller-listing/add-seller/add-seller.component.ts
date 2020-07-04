@@ -51,7 +51,7 @@ export class AddSellerComponent implements OnInit {
         console.log(id);
         this.id = +id['id']
         console.log(this.id);
-        this.sellerId=this.id;
+        // this.sellerId=this.id;
         this.editMode = id['id'] != null
         console.log(this.editMode)
         if(!this.id)
@@ -111,7 +111,7 @@ export class AddSellerComponent implements OnInit {
      {
 this.addSellerForm.controls.countryId=this.countryValue;
      }
-      if(!this.sellerId)
+      if(!this.id)
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
@@ -127,7 +127,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
           }
         )
       }
-     if(this.sellerId)
+     if(this.id)
      {
       this.SellerService.updateSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
