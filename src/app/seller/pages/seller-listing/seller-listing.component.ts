@@ -133,7 +133,7 @@ console.log(this.countryId);
       this.getAllSellers(this.page);
       
     } else {
-      console.log(this.countryId);
+      console.log(this.searchBar);
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
     }
