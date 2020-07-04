@@ -97,7 +97,9 @@ export class AddSellerComponent implements OnInit {
   onSubmitSellerForm() {
    
     this.isSubmittedaddSellerForm = true
-  
+    if (this.addSellerForm.invalid) {
+      return
+    }
       console.log("mayuri");
       console.log('form valid');
       let data = this.addSellerForm.value;
