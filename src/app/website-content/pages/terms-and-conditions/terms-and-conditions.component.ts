@@ -89,7 +89,6 @@ export class TermsAndConditionsComponent implements OnInit {
     this.loader.start();
     this.websiteContentService.getTermsAndConditions().subscribe(
       (success: any) => {
-        console.log(success);
         this.description = success.data;
         this.loader.stop();
         this.utilityService.scrollToTop();
@@ -106,7 +105,6 @@ export class TermsAndConditionsComponent implements OnInit {
     this.loader.start();
     this.isTermsAndConditionsSubmitted = true;
     if (this.termsAndConditonsForm.valid) {
-      console.log(this.termsAndConditonsForm.value);
       this.websiteContentService
         .updateTermsAndConditions({
           id: this.description.id,
@@ -114,7 +112,6 @@ export class TermsAndConditionsComponent implements OnInit {
         })
         .subscribe(
           success => {
-            console.log(success);
             this.getTermsAndConditions();
           },
           error => {

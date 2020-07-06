@@ -10,7 +10,6 @@
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
-
       </div>
   </form>
 </div>
@@ -19,7 +18,7 @@
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
-                <option value="">ALL</option>
+                <option value="">Filter by Country</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
             </select>
         </fieldset>   
@@ -53,10 +52,10 @@
               <tr>
                   <th style="width:4em">S. No.</th>
                   <th>Country</th>
-                  <th style="width: 12em;">Seller Name</th>
+                  <th style="width: 10em;">Seller Name</th>
                   <th style="width: 8em;">Mobile</th> 
-                  <th style="width: 16em;">Email</th>
-                  <th style="width: 8em;">Pay32 SME </th> 
+                  <th style="width: 14em;">Email</th>
+                  <th style="width: 6em;">Pay32 SME </th> 
                   <th>Registration Date</th>
                   <th style="width: 7em;">Status</th>
                   <th style="width: 5em;">Action</th>
@@ -87,8 +86,7 @@
                   </td> 
                   <td>
                        <span class="ui-column-title">Action</span>
-                      <!-- <p-dropdown class="icons" [options]="actions" [showClear]="true" styleClass="prime-dropdown-wrapper widthMin" (onChange)="getDropDownValue($event,customer.customerId)">
-                      </p-dropdown>  -->
+                   
                       <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
 

@@ -286,7 +286,6 @@ export class CategoryListingComponent implements OnInit, OnDestroy {
 
   fileChangeEvent(fileInput: any) {    
     this.csvFile = fileInput.target.files[0];
-    console.log('this.csvFile.type', this.csvFile.type);
     if (this.csvFile.type === "text/csv") {
       this.filetypestatus = 0;
       this.filetypeerror = '';      

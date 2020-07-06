@@ -22,13 +22,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Select Country</label>
+                                        <label>Select Country</label><span class="asterick">*</span>
                                            <div class="assign-group-dropdown">
                                             <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }"
                                           >
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
-                                                <div *ngIf="signUpControls.countryId.errors.required">countries is required</div>
+                                                <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
                                               
                                             </div>
                                         </div>
@@ -62,7 +62,9 @@
                                         <label>Password </label><span class="asterick">*</span>
                                         <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
                                         <div *ngIf="isSubmittedaddSellerForm && signUpControls.password.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.password.errors.required">password is required</div>
+                                            <div *ngIf="signUpControls.password.errors.required">Password is required</div>
+                                            <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
+
                                         </div>  
                                     </div>
                                 </div>
@@ -73,9 +75,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Email ID</label><span class="asterick">*</span> 
-                                        <input type="email" class="form-control border-primary" formControlName="sellerEmail" placeholder="Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
+                                        <input type="email" class="form-control border-primary" formControlName="sellerEmail" placeholder="Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerEmail.errors }" >
                                         <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerEmail.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.sellerEmail.errors.required">seller Email is required</div>
+                                            <div *ngIf="signUpControls.sellerEmail.errors.required">Email is required</div>
                                             <div *ngIf="signUpControls.sellerEmail.errors.pattern">Please enter valid email (xyz@abc.com)</div>
                                         </div> 
                                     </div>
@@ -86,6 +88,8 @@
                                         <input type="email" class="form-control border-primary" formControlName="ccEmail" placeholder="Add CC-Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.ccEmail.errors }">
                                         <div *ngIf="isSubmittedaddSellerForm && signUpControls.ccEmail.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.ccEmail.errors.required">Add CC-Email is required</div>
+                                            <div *ngIf="signUpControls.ccEmail.errors.pattern">Please enter valid email (xyz@abc.com)</div>
+
                                         </div> 
                                     </div>
                                 </div>
@@ -93,7 +97,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Photo </label><span class="asterick">*</span>
+                                        <label>Photo </label>
                                       
                                         <div class="custom-file d-block">
                               <input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
@@ -108,6 +112,8 @@
                                         <input type="number" formControlName="mobileNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.mobileNo.errors }" >
                                         <div *ngIf="isSubmittedaddSellerForm && signUpControls.mobileNo.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.mobileNo.errors.required">Mobile No. is required</div>
+                                            <div *ngIf="signUpControls.mobileNo.errors.pattern">Mobile No. must be between 5 to 15 digits
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +165,11 @@
                                 <div class="form-group">
                                     <label>Pincode</label><span class="asterick">*</span> 
                                     <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" >
-                                
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.pincode.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
+                                        <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
+
+                                    </div> 
                                 </div>
                             </div>
                         </div>
@@ -196,7 +206,7 @@
                                     <label>Acc Holder Name</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="accHolderName" placeholder="Acc Holder Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accHolderName.errors }">
                                     <div *ngIf="isSubmittedaddSellerForm && signUpControls.accHolderName.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.accHolderName.errors.required">Account  Holder Name is required</div>
+                                        <div *ngIf="signUpControls.accHolderName.errors.required">Account Holder Name is required</div>
                                     </div>
                                 </div>
                             </div>
@@ -252,7 +262,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supply Type</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.typeofAccount.errors }" >
+                                    <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.supplyType.errors }" >
                                     <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
                                     </div> 
@@ -273,7 +283,7 @@
                         <div class="form-actions right">
                             <button type="button" [routerLink]="['seller/sellers']" class="btn btn-raised btn-warning mr-1"> Back
               </button>
-                            <button type="submit" class="btn btn-raised btn-primary"> Submit
+                            <button type="submit" class="btn btn-raised btn-primary">Submit
               </button>
                         </div>
                     </form>

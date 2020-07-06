@@ -68,6 +68,8 @@ export class CustomerListingComponent implements OnInit {
 
 
   initiateSearch() {
+    
+
     this.searchTerms$.pipe(
       takeUntil(this._unsubscribe),
       startWith(''),
@@ -90,7 +92,6 @@ export class CustomerListingComponent implements OnInit {
       (success: any) => {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
-        console.log('customer:', success);
       },
       error => {
         this.utilityService.routingAccordingToError(error);
@@ -144,25 +145,16 @@ export class CustomerListingComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
-    console.log(event.target.value);
-    console.log('event target value', event.value);
-    console.log(event.currentTarget.firstChild.data);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
-      console.log('delete id', id);
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              console.log(success);
               this.getAllCustomers(this.page);
-              // this.customerList = this.customerList.filter((item: any) => {
-              //   return id !== item.customerId
-              // })
             },
             error => {
-              console.log(error);
             }
           )
         },
@@ -173,7 +165,6 @@ export class CustomerListingComponent implements OnInit {
      
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-      console.log("id",id)
       
           this.router.navigate(['../','edit',id], {relativeTo: this.activateRoute})
           

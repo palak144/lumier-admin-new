@@ -38,7 +38,6 @@ export class AddCustomerGroupComponent implements OnInit {
       (id: Params) => {
         this.id = +id['id']
         this.editMode = id['id'] != null
-        console.log(this.editMode)
         
         this.initForm()
       }
@@ -73,7 +72,6 @@ export class AddCustomerGroupComponent implements OnInit {
         data => {
 
 this.toastr.success("Customer Group Editted Successfully")
-          console.log(data)
           this.router.navigate(['/customer/customer-groups'],{relativeTo : this.activatedRoute})
         },
         error => {
@@ -89,9 +87,6 @@ this.toastr.success("Customer Group Editted Successfully")
     
     this.customerService.addCustomerGroup(this.addCustomerGroupFormDetails).subscribe(
       data => {
-
-        console.log(data)
-        console.log(this.addCustomerGroupForm)
         this.toastr.success("Customer Group Added Successfully")
         this.router.navigate(['/customer/customer-groups'],{relativeTo : this.activatedRoute})
       },

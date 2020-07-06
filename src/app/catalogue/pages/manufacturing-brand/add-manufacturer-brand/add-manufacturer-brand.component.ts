@@ -38,14 +38,12 @@ export class AddManufacturerBrandComponent implements OnInit {
   }
   onSubmitUserForm()
   {
-    console.log("mayuri");
     if(this.addUserForm.valid) {
     }
     else
     {
       validateAllFormFields(this.addUserForm);
       // this.messageService.add({ severity: 'warn', summary: 'One or more fields are invalid. Please try again.' });
-      console.log('Fill all required fields');
     }  
     }
     get customeForm() {
@@ -53,6 +51,5 @@ export class AddManufacturerBrandComponent implements OnInit {
     }
   uploadFile(event)
   {
-console.log(event);
   }
 }

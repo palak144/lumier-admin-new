@@ -29,7 +29,6 @@ export class DetailComponent implements OnInit {
     this.userService.getUserDetailByUserId({ 'userId': userId }).subscribe(
       (success: any) => {
         this.userInfo = success.data;
-        console.log(this.userInfo);
         this.utilityService.resetPage();
       },
       error => {

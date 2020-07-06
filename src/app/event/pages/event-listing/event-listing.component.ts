@@ -71,7 +71,6 @@ export class EventListingComponent implements OnInit, OnDestroy {
       switchMap((term: string) => this.EventService.getEventSearch(this.page, term
       ))
     ).subscribe((success: any) => {
-      console.log(success, 'success');
       this.eventList = success.data.results.map(eventData => eventData);
       this.totalCount = success.data.total;
       this.utilityService.resetPage();

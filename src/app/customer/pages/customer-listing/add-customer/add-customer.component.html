@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="px-3">
-                    <form class="form" [formGroup]="addCustomerForm" (ngSubmit)="onSubmitAddCustomerForm()">
+                    <form class="form" [formGroup]="addCustomerForm" (ngSubmit)="onSubmitAddCustomerForm($event)">
                         <div class="form-body">
                             <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                             <div class="row">
@@ -90,7 +90,7 @@
                       </option>
                     </select> -->   
                                         <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" (onChange)="getdropdown($event)" [(ngModel)]="" formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
+                                            <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selected_assignGroup" formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
                                             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddCustomerForm && signUpControls.assignGroup.errors" class="invalid-feedback">

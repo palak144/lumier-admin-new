@@ -45,7 +45,6 @@ export class RecoverPasswordComponent implements OnInit {
         .recoverPassword(this.recoverPasswordForm.value)
         .subscribe(
           success => {
-            console.log(success);
             this.messageService.add({
               severity: 'success',
               summary: 'Verification Link Sent!'

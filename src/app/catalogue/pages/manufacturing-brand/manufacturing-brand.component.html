@@ -40,7 +40,7 @@
   </button>
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new']">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <span class="d-lg-block d-none" (click)="onAddCustomer()">Add New</span>
+    <span class="d-lg-block d-none" >Add New</span>
   </button>
   </div>
 </div>
@@ -50,7 +50,7 @@
   </div>
 
   <div class="table-wrapper vehiclwrappere- ">
-      <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+      <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true"  [totalRecords]="totalCount">
           <ng-template pTemplate="header">
               <tr class="table-coustom-style">
                   <th >S No.
@@ -88,8 +88,7 @@
                   </td>  -->
                   <td>
                        <span class="ui-column-title">Action</span>
-                      <p-dropdown class="icons" [options]="actions" [showClear]="true" styleClass="prime-dropdown-wrapper widthMin" >
-                      </p-dropdown> 
+                  
                       <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
 

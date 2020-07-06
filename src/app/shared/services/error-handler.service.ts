@@ -11,7 +11,6 @@ export class ErrorHandlerService {
   constructor(private messageService: MessageService, private router: Router) { }
 
   handleError(error: HttpErrorResponse) {
-    console.log(error);
     let errorMessage: any;
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;

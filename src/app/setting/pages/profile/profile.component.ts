@@ -55,10 +55,6 @@ export class ProfileComponent implements OnInit {
           this.ChangePasswordForm.reset();
         },
         error => {
-
-
-          console.log(error, "error")
-
           this.utilityService.routingAccordingToError(error);
         }
       );

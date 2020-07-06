@@ -8,12 +8,13 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-permissions',
   templateUrl: './permissions.component.html',
-  styleUrls: ['./permissions.component.scss']
+  styleUrls: ['./permissions.component.scss'],
+  providers: [NgbAccordionConfig]
 })
 export class PermissionsComponent implements OnInit {
 
@@ -45,12 +46,15 @@ export class PermissionsComponent implements OnInit {
     private excelService:ExcelServiceService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-
+    private config: NgbAccordionConfig,
     private confirmationService: ConfirmationService
-    ) {}
+    ) {
+      config.closeOthers = true;
+    config.type = 'info';
+    }
 
   ngOnInit() {
-    debugger
+    
     this.initiateSearch();
   }
 
@@ -66,7 +70,7 @@ export class PermissionsComponent implements OnInit {
       switchMap((term: string) => this.usersPermissionsService.getPerGroupParams(this.page, term
       ))
     ).subscribe((success: any) => {
-      debugger
+      
       this.perGroupList = success.data.results;
       this.countries = success.data.results.countries
       this.totalCount = success.data.total;
@@ -83,7 +87,6 @@ export class PermissionsComponent implements OnInit {
         
         this.perGroupList = success.data.results;
         this.totalCount = success.data.total;
-        console.log('users:', success);
       },
       error => {
         this.utilityService.routingAccordingToError(error);
@@ -139,22 +142,18 @@ export class PermissionsComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
-    console.log('event target value', event.value);
     if(event.currentTarget.firstChild.data === 'Delete') {
-debugger
-      console.log('delete id', id);
+
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.usersPermissionsService.deletePerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              console.log(success);
-              debugger
+              
               this.getAllUsers(this.page);
               // this.initiateSearch();
             },
             error => {
-              console.log(error);
             }
           )
         },
@@ -166,8 +165,7 @@ debugger
 
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-      console.log("id",id)
-      debugger
+      
           this.router.navigate(['../','editPermission',id], {relativeTo: this.route})
           
     }
@@ -178,11 +176,11 @@ debugger
     this.excelService.exportAsExcelFile(this.perGroupList, 'Customer Group List');
   }
   open(content , permission) {
-    debugger
+    
     this.permissions = permission
     this.modalService.open(content).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
-        debugger
+        
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
   });

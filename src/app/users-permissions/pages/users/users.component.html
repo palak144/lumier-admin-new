@@ -6,7 +6,9 @@
     <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
         <div class="position-relative has-icon-right">
             <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)"/>
+            <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text"
+                class="form-control round searchBtn" pInputText placeholder="Search"
+                (input)="filterGlobal($event.target.value)" />
             <div class="form-control-position">
                 <i class="ft-search"></i>
             </div>
@@ -14,22 +16,23 @@
     </form>
     <div class="col-8 text-right pr-0">
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-          <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-          <span class="d-lg-block d-none" (click)="onAddUser()">Add New</span>
-      </button>
+            <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+            <span class="d-lg-block d-none" (click)="onAddUser()">Add New</span>
+        </button>
     </div>
 </div>
 <div class="users-wrapper">
     <div class="table-wrapper vehicle-wrapper">
-        <p-table [value]="userList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
+        <p-table [value]="userList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
+            [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>S No.
+                    <th style="width:6em">S No.
                     </th>
                     <th>Full Name</th>
                     <th>Permission Groups</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th style="width:10em">Status</th>
+                    <th style="width:6em">Action</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user>
@@ -37,25 +40,30 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.employeeId}}</td>
                     <td><span class="ui-column-title">Full Name</span>{{user.employeeFullName}}</td>
                     <td><span class="ui-column-title">Permission Groups</span>
-                      <ng-container *ngFor="let groupName of user.PermissionGroup ">
+                        <ng-container *ngFor="let groupName of user.PermissionGroup ">
                             <span>{{groupName.groupName}}</span>
-                        </ng-container> </td>
+                        </ng-container>
+                    </td>
                     <td>
                         <span class="ui-column-title ">Status</span>
 
-                        <div class="dropdown">
-                            <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': user.adminStatus === 1 , 'badge-danger': user.adminStatus === 0 }" id="userStatusId" type="button" data-toggle="dropdown">{{(user.adminStatus === 1) ? 'Active' : 'Inactive'}}
-                    </a>
+                        <div class="dropdown" style="text-align: center;">
+                            <a class="dropdown-toggle badge colorStatus"
+                                [ngClass]="{ 'badge-primary': user.adminStatus === 1 , 'badge-danger': user.adminStatus === 0 }"
+                                id="userStatusId" type="button"
+                                data-toggle="dropdown">{{(user.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                            </a>
                             <ul class="dropdown-menu">
-                                <li [hidden]="user.adminStatus == 1"><a (click)="setStatus(user.employeeId ,1, $event)">Active</a></li>
-                                <li [hidden]="user.adminStatus == 0"><a (click)="setStatus(user.employeeId ,0, $event)">Inactive</a></li>
+                                <li [hidden]="user.adminStatus == 1"><a
+                                        (click)="setStatus(user.employeeId ,1, $event)">Active</a></li>
+                                <li [hidden]="user.adminStatus == 0"><a
+                                        (click)="setStatus(user.employeeId ,0, $event)">Inactive</a></li>
                             </ul>
                         </div>
                     </td>
                     <td>
                         <span class="ui-column-title">Action</span>
-                        <!-- <p-dropdown class="icons" [options]="actions" [showClear]="true" styleClass="prime-dropdown-wrapper widthMin" (onChange)="getDropDownValue($event,customer.customerId)">
-                    </p-dropdown>  -->
+                       
                         <div class="dropdown">
                             <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
 

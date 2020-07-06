@@ -39,15 +39,13 @@ export class AddUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     this.userTitle = "Add New User"
 
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
         this.editMode = id['id'] != null
-        console.log(this.editMode)
-         debugger
         this.initForm()
       }
     )
@@ -90,20 +88,20 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmitUserForm() {
-debugger
+
     this.isSubmittedAddUserForm = true
     if (this.addUserForm.invalid) {
       return
     }
     this.password = (this.addUserForm.get('password').value != "" && this.addUserForm.get('password').value != undefined) ? this.addUserForm.get('password').value : ""
-debugger
+
     this.addUserFormDetails = {
       "employeeFullName": this.addUserForm.get('name').value,
       "employeeUserName": this.addUserForm.get('username').value,
       "employeePassword": this.password,
       "Employeepermission": this.multiSelectedList(this.addUserForm.get('perGroups').value)
     }
-    debugger
+    
     if (this.id) {
 
       this.addUserFormDetails.employeeId = this.id;
@@ -114,9 +112,8 @@ debugger
      
       this.usersPermissionsService.addUser(this.addUserFormDetails).subscribe(
         data => {
-debugger
+
           this.toastr.success("Employee Editted Successfully")
-          console.log(data)
           this.router.navigate(['/user-permissions/users'], { relativeTo: this.activatedRoute })
         },
         error => {
@@ -129,8 +126,6 @@ debugger
 
       this.usersPermissionsService.addUser(this.addUserFormDetails).subscribe(
         data => {
-
-          console.log(data)
           this.toastr.success("Employee Added Successfully")
           this.router.navigate(['/user-permissions/users'], { relativeTo: this.activatedRoute })
         },
@@ -144,7 +139,7 @@ debugger
 
 
   private initForm() {
-    debugger
+    
     let name = "";
     let email = "";
     let password = "";
@@ -158,9 +153,9 @@ debugger
       "perGroups": new FormControl(perGroups, Validators.required),
 
     });
-    debugger
+    
     if (this.editMode) {
-      debugger
+      
       this.userTitle = "Edit User"
       this.addUserForm.addControl(
         "password", new FormControl(password, [
@@ -169,7 +164,7 @@ debugger
           Validators.maxLength(20)]))
       this.usersPermissionsService.getUserId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-        debugger
+        
           this.users = success.data
           this.addUserForm.patchValue({
             "name": this.users.employeeFullName,
@@ -178,7 +173,7 @@ debugger
             "perGroups" : this.users.PermissionGroup
           })
           this.selected_perGroups = this.users.PermissionGroup  
-debugger
+
         },
         error => {
 

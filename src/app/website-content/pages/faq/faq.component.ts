@@ -116,7 +116,6 @@ export class FaqComponent implements OnInit {
       message: 'Are you sure that you want to delete?',
       accept: () => {
         this.utilityService.loaderStart();
-        console.log(itemToDelete.id);
         this.websiteContentService
           .deleteFaq(itemToDelete.id)
           .subscribe((success: any) => {

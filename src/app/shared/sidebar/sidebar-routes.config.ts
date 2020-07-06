@@ -51,14 +51,14 @@ export const ROUTES: RouteInfo[] = [
          ]},
      { 
       path: '/users',
-      title: 'Employee & Permissions',
+      title: 'User & Permission',
       icon: 'ft-user-check',
       class: 'has-sub',
       badge: '',
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [
-        { path: '/user-permissions/users', title: 'Employee', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/user-permissions/users', title: 'Users', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         { path: '/user-permissions/user-permissions', title: 'Permissions', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
        ]},
 

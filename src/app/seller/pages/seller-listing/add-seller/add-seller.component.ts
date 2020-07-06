@@ -31,7 +31,6 @@ export class AddSellerComponent implements OnInit {
   password: any;
   sellerDetailsData: any;
   // sellerId:any;
-  selectCountry: any;
   countries:Country[];
   countryValue: any;
 
@@ -48,12 +47,10 @@ export class AddSellerComponent implements OnInit {
    
     this.activatedRoute.params.subscribe(
       (id: Params) => {
-        console.log(id);
         this.id = +id['id']
        
         // this.sellerId=this.id;
         this.editMode = id['id'] != null
-        console.log(this.editMode)
         if(!this.id)
         {
           this.sellerTitle = "Add New Sellers";
@@ -62,7 +59,7 @@ export class AddSellerComponent implements OnInit {
         {
           this.sellerTitle = "Edit Sellers";
         }
-        // this.initForm()
+         this.initForm()
         if(this.id)
         {
           this.getSellerdetails(this.id);
@@ -72,40 +69,59 @@ export class AddSellerComponent implements OnInit {
   
       }
     )
+
+  }
+  public initForm(){
+    
     this.addSellerForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
-      sellerName: new FormControl(null,[Validators.required,  Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      sellerName: new FormControl(null,[Validators.required, ]),
       userName: new FormControl('',[Validators.required]),
-      password: new FormControl('',[Validators.required]),
-      sellerEmail : new FormControl('',[Validators.required]) ,
-      ccEmail: new FormControl(null,[Validators.required]),
-      mobileNo:new FormControl(null,[Validators.required]),
-      pickupAddress:new FormControl(null,[Validators.required]),
-      houseNo: new FormControl(null,[Validators.required]),
-      unitNo: new FormControl(null,[Validators.required]),
-      buildingName: new FormControl(null,[Validators.required]),
-      streetName: new FormControl(null,[Validators.required]),
-      pincode: new FormControl(null,[Validators.required]),
+      // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
+      sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
+      ccEmail: new FormControl(null,[Validators.required,  Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      mobileNo:new FormControl(null,[Validators.required, Validators.pattern('^[0-9]{5,15}$')]),
+      pickupAddress:new FormControl(null,),
+      houseNo: new FormControl(null,),
+      unitNo: new FormControl(null,),
+      buildingName: new FormControl(null,),
+      streetName: new FormControl(null,),
+      pincode: new FormControl(null,[Validators.required,Validators.pattern('^[0-9\+\-]{6}$')]),
     
       accHolderName: new FormControl(null,[Validators.required]),
       accountNumber: new FormControl(null,[Validators.required]),
       IFSCCode: new FormControl(null,[Validators.required]),
       bankName: new FormControl(null,[Validators.required]),
       typeofAccount: new FormControl(null,[Validators.required]),
-      commission: new FormControl(null,[Validators.required]),
+      commission: new FormControl(null,),
       supplyType: new FormControl(null,[Validators.required]),
-      floorNo: new FormControl(null,[Validators.required]),
+      floorNo: new FormControl(null,),
     })
+    if(this.id)
+    {
+      
+      this.addSellerForm.addControl(
+        "password", new FormControl("", [
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
+    }
+    else{
+      this.addSellerForm.addControl(
+        "password", new FormControl("", [Validators.required,
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
+    }
   }
- 
+
   onSubmitSellerForm() {
-   
     this.isSubmittedaddSellerForm = true
+    
+        
     if (this.addSellerForm.invalid) {
       return
     }
-      console.log("mayuri");
-      console.log('form valid');
       let data = this.addSellerForm.value;
       if(this.id)
       {
@@ -115,18 +131,19 @@ export class AddSellerComponent implements OnInit {
      {
 this.addSellerForm.controls.countryId=this.countryValue;
      }
+     this.password = (this.addSellerForm.get('password').value != "" && this.addSellerForm.get('password').value != undefined) ? this.addSellerForm.get('password').value : ""
+     data.password = this.password
+    debugger
       if(!this.id)
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-            console.log(success);
          
-            this.toastr.success('success','Seller Create Successfully!');
+            this.toastr.success('Seller Create Successfully!');
             this.router.navigate(['seller/sellers']);
   
           },
           error => {
-            console.log(error);
             this.toastr.error('error',error);
           }
         )
@@ -135,15 +152,13 @@ this.addSellerForm.controls.countryId=this.countryValue;
      {
       this.SellerService.updateSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
-          console.log(success);
-          this.addSellerForm.reset();
-          this.toastr.success('success','Seller Update Successfully!');
+          // this.addSellerForm.reset();
+          this.toastr.success('Seller Update Successfully!');
           this.router.navigate(['seller/sellers']);
 
         },
         error => {
-          console.log(error);
-          this.toastr.error('error',error);
+          this.toastr.error(error.error.message);
         }
       )
      }
@@ -156,21 +171,17 @@ this.addSellerForm.controls.countryId=this.countryValue;
   getSellerdetails(id) {
     this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.sellerDetailsData = success.data;
-        console.log(this.sellerDetailsData);
        
         this.patchForm(this.sellerDetailsData);
        
   
       },
       error => {
-        console.log(error);
       }
     )
   } 
   patchForm(item) {
-    console.log(item);
     this.addSellerForm.controls.countryId.patchValue(item.countryId);
      this.addSellerForm.controls.sellerName.patchValue(item.sellerName);
 
@@ -201,29 +212,27 @@ this.addSellerForm.controls.countryId=this.countryValue;
     
     this.addSellerForm.controls.supplyType.patchValue(item.supplyType);
     this.addSellerForm.controls.floorNo.patchValue(item.floorNo);
+    // this.addSellerForm.controls.password.patchValue(item.password);
+debugger
   }
+  debugger
   getCountry()
   {
     this.SellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data.result);
-        console.log('countries', this.countries);
        
     
        
   
       },
       error => {
-        console.log(error);
       }
     )
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
-    console.log(arr);
     const newArray = [];
     arr.forEach(element => {
-      console.log(element);
       newArray.push({
         label: element.countryName,
         value: element.id
@@ -233,8 +242,6 @@ this.addSellerForm.controls.countryId=this.countryValue;
   }
   getdropdown(event)
   {
-console.log(event.value);
 this.countryValue=event.value;
-console.log(this.countryValue);
   }
   }

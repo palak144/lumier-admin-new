@@ -40,7 +40,7 @@ export class SellerListingComponent implements OnInit {
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll = "false";
-   countryId = null ;
+    countryId : number = null;
  
 
   constructor(
@@ -65,9 +65,6 @@ export class SellerListingComponent implements OnInit {
 
     
   ngOnInit() {
-  
-  this.exportAll = "false";
-  this.countryId = null;
     this.initiateSearch();
     this.getCountry();
   }
@@ -79,10 +76,9 @@ export class SellerListingComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.sellerService.getAllSellersSearch(this.page, term
+      switchMap((term: string) => this.sellerService.getAllSellersSearch(this.page, term ,this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-      console.log(success.data.results)
       this.sellerList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -94,7 +90,6 @@ export class SellerListingComponent implements OnInit {
       (success: any) => {
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
-        console.log('seller:', success);
       },
       error => {
       
@@ -106,13 +101,11 @@ export class SellerListingComponent implements OnInit {
   getAllSellersSearch(page, searchBar , exportAll, countryId) {
   
     
-    console.log(searchBar);
     this.sellerService.getAllSellersSearch(page, searchBar , exportAll , countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        console.log(success);
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -125,17 +118,13 @@ export class SellerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-    console.log(event);
     
     this.page = event.first / 10;
-    console.log( this.page);
-console.log(this.countryId);
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSellers(this.page);
       
     } else {
-      console.log(this.searchBar);
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
     }
@@ -156,25 +145,19 @@ console.log(this.countryId);
   }
 
   getDropDownValue(event, id) {
-    console.log(event.target.value);
-    console.log('event target value', event.value);
-    console.log(event.currentTarget.firstChild.data);
     if(event.currentTarget.firstChild.data === 'Delete') {
 
-      console.log('delete id', id);
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.sellerService.deleteSeller(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              console.log(success);
               this.getAllSellers(this.page);
               // this.customerList = this.customerList.filter((item: any) => {
               //   return id !== item.customerId
               // })
             },
             error => {
-              console.log(error);
             }
           )
         },
@@ -185,8 +168,6 @@ console.log(this.countryId);
      
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-      console.log("id",id)
-      console.log(event.currentTarget.firstChild.data);
           this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
           
     }
@@ -201,7 +182,6 @@ console.log(this.countryId);
     else{
     
       this.exportAll = "true"
-      console.log(this.countryId);
      this.getAllSellersSearch(this.page, this.searchBar,this.exportAll , this.countryId);
     }
    }
@@ -209,30 +189,25 @@ console.log(this.countryId);
   {
     this.sellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.countries = success.data.result;
-        console.log('countries', this.countries);
        
     
        
   
       },
       error => {
-        console.log(error);
       }
     )
   }
   onChange(deviceValue) {
-    console.log(deviceValue);
     if(deviceValue)
 {
   this.countryId=deviceValue;
 }
   else
   {
-    this.countryId=""; 
   }
-  console.log(this.countryId);
+  
     this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
 }
 }

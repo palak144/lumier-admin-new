@@ -50,20 +50,19 @@ export class AddPermissionComponent implements OnInit {
       (id: Params) => {
         this.id = +id['id']
         this.editMode = id['id'] != null
-        console.log(this.editMode)
-        debugger
+        
         this.initForm()
       })
 
     this.usersPermissionsService.getCountryList()
     .subscribe((data:any) => {
-      debugger
+      
         this.dropdownListCountry = data.data
     })
 
     this.usersPermissionsService.getMenuList()
     .subscribe((data:any) => {
-      debugger
+      
          this.dropdownListPer =data.data.result
     })
     this.selected_permission = []
@@ -100,11 +99,11 @@ export class AddPermissionComponent implements OnInit {
 
       });
     }
-    debugger
+    
     return this.selectedCountryId;
   }
   multiSelectedListPermission(criteriaArray: any) {
-    debugger
+    
     this.selectedPermissionId = []
     if (criteriaArray != null){
       this.selectedPermissionId = _.chain(criteriaArray)
@@ -113,9 +112,9 @@ export class AddPermissionComponent implements OnInit {
         ({menuName: key,childMenu:value})
       )
       .value();
-      debugger
+      
   }
-  debugger
+  
     return this.selectedPermissionId;
   }
   get signUpControls() {
@@ -145,7 +144,6 @@ export class AddPermissionComponent implements OnInit {
         data => {
 
           this.toastr.success("Permission Group Editted Successfully")
-          console.log(data)
           this.router.navigate(['/user-permissions/user-permissions'], { relativeTo: this.activatedRoute })
         },
         error => {
@@ -159,7 +157,6 @@ export class AddPermissionComponent implements OnInit {
       this.usersPermissionsService.addPermissionGroup(this.addPerGroupFormDetails).subscribe(
         data => {
 
-          console.log(data)
           this.toastr.success("Permission Group Added Successfully")
           this.router.navigate(['/user-permissions/user-permissions'], { relativeTo: this.activatedRoute })
         },
@@ -182,14 +179,12 @@ export class AddPermissionComponent implements OnInit {
       "permission": new FormControl(permission, Validators.required),
 
     });
-    debugger
-    console.log(this.addPerGroupForm.value,"groupForm")
-    if (this.editMode) {
-      debugger
+        if (this.editMode) {
+      
       this.perGroupTitle = "Edit Permission Group"
       this.usersPermissionsService.getPerGroupId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-          debugger
+          
           this.permissionsData = success.data
           this.addPerGroupForm.patchValue({
             "name": this.permissionsData.groupName,
@@ -198,10 +193,10 @@ export class AddPermissionComponent implements OnInit {
             this.selected_permission.push(element.childMenu);
 
           });
-          debugger
+          
           this.selected_permission = this.selected_permission[0]
           this.selected_countries = this.permissionsData.countries
-debugger
+
         },
         error => {
 

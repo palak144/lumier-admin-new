@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
     private confirmationService: ConfirmationService
     ) {}
     setStatus(id:Number,adminStatus:Number){
-debugger
+
       let statusData = {id,adminStatus}   
    this.usersPermissionsService.updateUserStatus(statusData).subscribe(
      (success:any)=>
@@ -68,7 +68,7 @@ debugger
       switchMap((term: string) => this.usersPermissionsService.getUsersParams(this.page, term
       ))
     ).subscribe((success: any) => {
-      debugger
+      
       this.userList = success.data.results;
 
       this.totalCount = success.data.total;
@@ -82,10 +82,9 @@ debugger
   getAllUsers(page) {
     this.usersPermissionsService.getUsersGroup(page).subscribe(
       (success: any) => {
-        debugger
+        
         this.userList = success.data.results;
         this.totalCount = success.data.total;
-        console.log('users:', success);
       },
       error => {
         this.utilityService.routingAccordingToError(error);
@@ -141,24 +140,20 @@ debugger
   }
 
   getDropDownValue(event, id) {
-    debugger
-    console.log('event target value', event.value);
+    
     if(event.currentTarget.firstChild.data === 'Delete') {
 
-      console.log('delete id', id);
-      debugger
+      
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.usersPermissionsService.deleteUser(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              debugger
-              console.log(success);
+              
               this.getAllUsers(this.page);
               // this.initiateSearch();
             },
             error => {
-              console.log(error);
             }
           )
         },
@@ -170,8 +165,7 @@ debugger
 
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-      console.log("id",id)
-      debugger
+      
           this.router.navigate(['../','edit',id], {relativeTo: this.route})
           
     }

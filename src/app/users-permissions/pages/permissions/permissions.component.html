@@ -24,12 +24,12 @@
         <p-table [value]="perGroupList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>S No.
+                    <th style="width:6em">S No.
                     </th>
-                    <th>Country</th>
+                    <th style="width:16em">Country</th>
                     <th>Permission Group Name</th>
-                    <th>Permissions</th>
-                    <th>Action</th>
+                    <th style="width:16em">Permissions</th>
+                    <th style="width:6em">Action</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user>
@@ -74,7 +74,7 @@
       </button>
     </div>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let permission of permissions">
-            <ngb-panel class="p-0 " title={{permission.menuName}} >
+            <ngb-panel class="p-0" id="ngb-panel-0" title={{permission.menuName}} >
               <ng-template ngbPanelContent>
                   <div *ngFor="let childMenu of permission.childMenu">
                     <span>{{childMenu.itemName}}</span>

@@ -24,10 +24,9 @@ export class AddCustomerComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   customerTitle: string;
-  selectedAssignGroup = "";
   password: any;
   practises: string[];
-  assignGroupValue :any
+  selected_assignGroup : any 
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -45,15 +44,12 @@ export class AddCustomerComponent implements OnInit {
       (id: Params) => {
         this.id = +id['id']
         this.editMode = id['id'] != null
-        console.log(this.editMode)
         this.initForm()
       }
     )
     
     this.customerService.getAssignGroup().subscribe((res: any) => {
       
-      // this.assignGroupList = res.data.results;
-      console.log('res data',res.data.results);
       res.data.results.forEach(item => {
         
         this.assignGroupList.push({
@@ -62,9 +58,9 @@ export class AddCustomerComponent implements OnInit {
           value: item.id
         })
       });
-      console.log('assign group list', this.assignGroupList);
 
     }); 
+    this.selected_assignGroup = [];
   }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
@@ -75,6 +71,7 @@ export class AddCustomerComponent implements OnInit {
         value: element
       });
     });
+    
     return newArray;
   }
 
@@ -82,18 +79,15 @@ export class AddCustomerComponent implements OnInit {
     return this.addCustomerForm.controls;
   }
 
-  onSubmitAddCustomerForm() {
+  onSubmitAddCustomerForm( event: Event) {
+    
+    event.preventDefault();
     this.isSubmittedaddCustomerForm = true
     if (this.addCustomerForm.invalid) {
       return
     }
-    if(this.assignGroupValue)
-    {
-      debugger
-this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
-    }
     this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
-    
+    debugger
     this.addCustomerFormDetails = {
       "Email": this.addCustomerForm.get('email').value,
       "password": this.password,
@@ -113,9 +107,9 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
       "teleNumber": this.addCustomerForm.get('phoneNo').value,
       "mobileNumber": this.addCustomerForm.get('contactNo').value,
       "jobTitle": this.addCustomerForm.get('jobTitle').value,
-      "customerGroupId" : this.addCustomerForm.get('assignGroup').value
+      "customerGroupId" : this.addCustomerForm.get('assignGroup').value,
     }
-    
+    debugger
     if (this.id) {
 
       this.addCustomerFormDetails.customerId = this.id;
@@ -126,13 +120,12 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
       this.customerService.updateCustomer(this.addCustomerFormDetails).subscribe(
         data => {
           
-          console.log(data)
           this.toastr.success("Customer Details Editted Successfully")
           this.router.navigate(['../../'],{relativeTo : this.activatedRoute})
 
         },
         error => {
-          
+          debugger
           this.toastr.error(error.message)
         });
 
@@ -144,12 +137,12 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
       this.customerService.addCustomer(this.addCustomerFormDetails).subscribe(
         data => {
           
-          console.log(data)
           this.toastr.success("New Customer Added Successfully")
           this.router.navigate(['../'],{relativeTo : this.activatedRoute})
         },
         error => {
-          this.toastr.error(error.error.message)
+debugger
+          this.toastr.error(error.message)
           
         });
     }
@@ -205,7 +198,6 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
         Validators.pattern('^[0-9]{5,15}$')]),
     });
     
-    console.log("email 3", this.addCustomerForm)
 
     this.titles = ['Mr.', 'Miss.', 'Mrs'];
     this.practises = ['Medical', 'Dental', 'Other'];
@@ -221,7 +213,7 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
         Validators.maxLength(20)]))
       this.customerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-          debugger
+          
           this.customer = success.data
           this.addCustomerForm.patchValue({
             "email": this.customer.Email,
@@ -241,11 +233,10 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
             "pincode": this.customer.pincode,
             "phoneNo": this.customer.teleNumber,
             "jobTitle": this.customer.jobTitle,
-            "assignGroup": this.customer.customerGroup.groupName
           })
-          
-          this.selectedAssignGroup = this.customer.customerGroup.groupName
-          
+          debugger
+            this.selected_assignGroup = this.customer.customerGroup.id 
+               
         },
         error => {
           
@@ -260,13 +251,7 @@ this.addCustomerForm.controls.assignGroup=this.assignGroupValue;
           Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
           Validators.maxLength(20)]))
     }
-    console.log("email 2", email)
     
 
-  }
-  getdropdown(event)
-  {
-    debugger
-this.assignGroupValue=event.value;
   }
 }
