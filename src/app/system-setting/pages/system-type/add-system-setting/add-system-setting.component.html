@@ -1,0 +1,70 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+    <li>
+      <a [routerLink]="['/systemsetting/systemtype']">System/Type</a>
+    </li>
+    <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+    </li>
+    <li>
+      {{userTitle}}
+    </li>
+  </ul>
+  <div class="content-header text-left pb-3">{{userTitle}}</div>
+</div>
+<form class="form" [formGroup]="addUserForm" (ngSubmit)="onSubmitUserForm()">
+  <div class="form-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Supply Type</label><span class="asterick">*</span> 
+          <select class="form-control" id="basicSelect"  formControlName="Suuplytype" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.Suuplytype.errors }" >
+            <option>Dental</option>
+            <option>Medical</option>
+            <option>All</option>
+          </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.Suuplytype.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.Suuplytype.errors.required">Supply Type is required</div>
+          
+        </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Country</label><span class="asterick">*</span>
+          <select class="form-control" id="basicSelect"  formControlName="countryId" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }" >
+            <option>India</option>
+            <option>US</option>
+            <option>UK</option>
+          </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+          
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+  
+      <div class="col-md-6">
+        <div class="form-group"> 
+          <label>Status</label><span class="asterick">*</span>
+          <select class="form-control" id="basicSelect" formControlName="status"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.status.errors }">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.status.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.status.errors.required">Status is required</div>
+          
+        </div>
+      </div>    
+    </div>
+</div>
+  </div> 
+  <div class="form-actions right">
+    <button type="button" [routerLink]="['/systemsetting/systemtype']" class="btn btn-raised btn-warning mr-1"> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    </button>
+  </div>
+</form>
