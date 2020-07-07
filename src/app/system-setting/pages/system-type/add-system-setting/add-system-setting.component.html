@@ -16,21 +16,30 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Name</label><span class="asterick">*</span> 
-          <input type="text" class="form-control border-primary" placeholder="Name" formControlName="name" 
-          >
-     
+          <label>Supply Type</label><span class="asterick">*</span> 
+          <select class="form-control" id="basicSelect"  formControlName="name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.name.errors }" >
+            <option>Dental</option>
+            <option>Medical</option>
+            <option>All</option>
+          </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
+          
+        </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label>Country</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect"  >
+          <select class="form-control" id="basicSelect"  formControlName="countryId" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }" >
             <option>India</option>
             <option>US</option>
             <option>UK</option>
           </select>
-        
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+          
+        </div>
         </div>
       </div>
     </div>
@@ -40,10 +49,14 @@
       <div class="col-md-6">
         <div class="form-group"> 
           <label>Status</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect">
+          <select class="form-control" id="basicSelect" formControlName="status"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.status.errors }">
             <option>Active</option>
             <option>Inactive</option>
           </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.status.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.status.errors.required">Status is required</div>
+          
+        </div>
       </div>    
     </div>
 </div>

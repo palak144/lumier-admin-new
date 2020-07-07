@@ -16,6 +16,7 @@ import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid }
 export class AddSystemSettingComponent implements OnInit {
   addUserForm: FormGroup;
   userTitle: string;
+  isSubmittedaddSellerForm: boolean;
 
   constructor(
     private router: Router,
@@ -29,10 +30,20 @@ export class AddSystemSettingComponent implements OnInit {
     this.userTitle = "Add Supply Type";
     this.addUserForm = new FormGroup({
       name: new FormControl('',[Validators.required]),
-     
+      countryId: new FormControl('',[Validators.required]),
+      status: new FormControl('',[Validators.required]),
     })
+  }
+  get signUpControls() {
+    return this.addUserForm.controls;
   }
   onSubmitUserForm()
   {
+    this.isSubmittedaddSellerForm = true
+    
+        
+    if (this.addUserForm.invalid) {
+      return
+    }
   }
 }
