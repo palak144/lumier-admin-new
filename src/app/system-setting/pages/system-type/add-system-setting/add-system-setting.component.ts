@@ -29,7 +29,7 @@ export class AddSystemSettingComponent implements OnInit {
   ngOnInit() {
     this.userTitle = "Add Supply Type";
     this.addUserForm = new FormGroup({
-      name: new FormControl('',[Validators.required]),
+      Suuplytype: new FormControl('',[Validators.required]),
       countryId: new FormControl('',[Validators.required]),
       status: new FormControl('',[Validators.required]),
     })
