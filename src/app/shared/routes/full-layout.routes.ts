@@ -20,6 +20,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './catalogue/catalogue.module#CatalogueModule'
   },
   {
+    path: 'systemsetting',
+    loadChildren: './system-setting/system-setting.module#SystemSettingModule'
+  },
+  {
     path: 'user-permissions',
     loadChildren: './users-permissions/users-permissions.module#UsersPermissionsModule'
   },

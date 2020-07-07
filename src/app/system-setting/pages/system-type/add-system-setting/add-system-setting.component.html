@@ -1,0 +1,57 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+    <li>
+      <a [routerLink]="['/systemsetting/systemtype']">System/Type</a>
+    </li>
+    <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+    </li>
+    <li>
+      {{userTitle}}
+    </li>
+  </ul>
+  <div class="content-header text-left pb-3">{{userTitle}}</div>
+</div>
+<form class="form" [formGroup]="addUserForm" (ngSubmit)="onSubmitUserForm()">
+  <div class="form-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Name</label><span class="asterick">*</span> 
+          <input type="text" class="form-control border-primary" placeholder="Name" formControlName="name" 
+          >
+     
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Country</label><span class="asterick">*</span>
+          <select class="form-control" id="basicSelect"  >
+            <option>India</option>
+            <option>US</option>
+            <option>UK</option>
+          </select>
+        
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+  
+      <div class="col-md-6">
+        <div class="form-group"> 
+          <label>Status</label><span class="asterick">*</span>
+          <select class="form-control" id="basicSelect">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+      </div>    
+    </div>
+</div>
+  </div> 
+  <div class="form-actions right">
+    <button type="button" [routerLink]="['/systemsetting/systemtype']" class="btn btn-raised btn-warning mr-1"> Back
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    </button>
+  </div>
+</form>
