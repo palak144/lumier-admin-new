@@ -6,7 +6,8 @@
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
+          <input   type="text" class="form-control round searchBtn" pInputText placeholder="Search"  />
+          <!-- [(ngModel)]="searchBar" -->
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -20,12 +21,11 @@
     <div class="col-xl-4 col-lg-6 col-md-12">
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
-            <select class="form-control" id="basicSelect">
-              <option>All</option>
-              <option>Country 1</option>
-              <option>Country 2</option>
+            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+                 <option value=null>All</option>
+                <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
             </select>
-        </fieldset>   
+        </fieldset>    
     </div>
   <div class="col-8 text-right">
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
@@ -33,8 +33,8 @@
     <div class="dropdown">
       <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
       <ul class="dropdown-menu" role="menu">
-          <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
-          <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
+          <li><a  >Current Data</a></li>
+          <li><a  >All Data</a></li>
       </ul>
   </div>
   </button>
@@ -50,8 +50,8 @@
   </div>
 
   <div class="table-wrapper vehiclwrappere- ">
-      <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true"  [totalRecords]="totalCount">
-          <ng-template pTemplate="header">
+    <p-table [value]="brandList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"[lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
+        <ng-template pTemplate="header">
               <tr class="table-coustom-style">
                   <th >S No.
                   </th>
@@ -64,17 +64,17 @@
                   <th >Action</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-customer >
+          <ng-template pTemplate="body" let-brand >
               <tr>
-                  <!-- <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.customerId}}</td>
-                  <td><span class="ui-column-title">Full Name</span>{{customer.firstName}} {{customer.lastName}}</td>
-                  <td><span class="ui-column-title">Email</span>{{customer.Email}}</td>
-                  <td><span class="ui-column-title">Mobile</span>{{customer.mobileNumber}}</td>
-                  <td><span class="ui-column-title">Clinic Name</span>{{customer.clinicName}}</td>
-                  <td><span class="ui-column-title">Registration Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.brandId}}</td>
+                  <td><span class="ui-column-title">Full Name</span>{{brand.firstName}} {{brand.lastName}}</td>
+                  <td><span class="ui-column-title">Supply Type</span>{{brand.brandId}}</td>
+                  <td><span class="ui-column-title">Country</span>{{customer.mobileNumber}}</td>
+                  <td><span class="ui-column-title">Wallet Discount</span>{{customer.clinicName}}</td>
+                  <td><span class="ui-column-title">Sort</span>{{customer.created_at | date: 'mediumDate'}}</td>
                    <td >
                       <span class="ui-column-title ">Status</span> 
-                      
+<!--                       
                       <div class="dropdown">
                       <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': customer.adminStatus === 1 , 'badge-danger': customer.adminStatus === 0 }" id="customerStatusId" type="button" data-toggle="dropdown">{{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
 
@@ -83,12 +83,12 @@
                               <li [hidden]="customer.adminStatus == 1"><a (click)="setStatus(customer.customerId ,1, $event)">Active</a></li>
                               <li [hidden]="customer.adminStatus == 0"><a (click)="setStatus(customer.customerId,0, $event)">Inactive</a></li>
                           </ul>
-                      </div>
+                      </div> -->
                                             
-                  </td>  -->
+                  </td> 
                   <td>
                        <span class="ui-column-title">Action</span>
-                  
+<!--                   
                       <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
 
@@ -98,7 +98,7 @@
                               <li><a>Delete</a></li>
 
                           </ul>
-                      </div>
+                      </div> -->
                   </td>
               </tr>
           </ng-template>

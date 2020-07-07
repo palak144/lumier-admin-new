@@ -118,13 +118,19 @@ export class SellerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-    
+    debugger
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSellers(this.page);
       
-    } else {
+    } 
+    else if(!this.countryId){
+debugger
+this.getAllSellers(this.page);
+
+    }
+    else {
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
     }

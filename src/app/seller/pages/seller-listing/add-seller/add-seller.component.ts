@@ -133,7 +133,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
      }
      this.password = (this.addSellerForm.get('password').value != "" && this.addSellerForm.get('password').value != undefined) ? this.addSellerForm.get('password').value : ""
      data.password = this.password
-    debugger
+    
       if(!this.id)
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -213,9 +213,9 @@ this.addSellerForm.controls.countryId=this.countryValue;
     this.addSellerForm.controls.supplyType.patchValue(item.supplyType);
     this.addSellerForm.controls.floorNo.patchValue(item.floorNo);
     // this.addSellerForm.controls.password.patchValue(item.password);
-debugger
+
   }
-  debugger
+  
   getCountry()
   {
     this.SellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(

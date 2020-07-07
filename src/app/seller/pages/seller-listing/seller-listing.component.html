@@ -18,7 +18,7 @@
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
-                <option value="">Filter by Country</option>
+                 <option value=null>All</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
             </select>
         </fieldset>   
@@ -46,7 +46,7 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="sellerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"[lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+      <p-table [value]="sellerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"[lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
         <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
           <ng-template pTemplate="header">
               <tr>
