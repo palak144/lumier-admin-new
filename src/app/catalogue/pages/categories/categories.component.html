@@ -1,0 +1,107 @@
+<div class="row container">
+  <div class="content-header text-left">Categories</div>
+  <p class="content-sub-header"></p> 
+</div>
+<div class="row paddingSearch">
+  <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
+      <div class="position-relative has-icon-right">
+          <!-- <input type="text" class="form-control round" placeholder="Search"> -->
+          <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
+          <div class="form-control-position">
+              <i class="ft-search"></i>
+          </div>
+
+      </div>
+  </form>
+</div>
+<div class="row">
+    <div class="col-xl-4 col-lg-6 col-md-12">
+        <fieldset class="form-group">
+            <label for="basicSelect">Country</label>
+            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+                <option value="">ALL</option>
+                <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
+            </select>
+        </fieldset>   
+    </div>
+  <div class="col-8 text-right">
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+    <div class="dropdown">
+      <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
+      <ul class="dropdown-menu" role="menu">
+          <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
+          <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
+      </ul>
+  </div>
+  </button>
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+    <span class="d-lg-block d-none" (click)="onAddCategories()">Add New</span>
+  </button>
+  </div>
+</div>
+<div class="customer-wrapper">
+  <div class="heading-wrapper">
+
+  </div>
+
+  <div class="table-wrapper vehicle-wrapper">
+      <p-table [value]="categoriesList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [totalRecords]="totalCount">
+        <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+          <ng-template pTemplate="header">
+              <tr>
+                  <th style="width:8em">S. No.</th>
+                  <th style="width: 14em;">Supply Type</th>
+                  <th style="width: 12em;">Child No.</th>
+                  <th style="width: 12em;">Name</th> 
+                  <th style="width: 13em;">Country</th>
+                  <th style="width: 8em;">Status</th> 
+                  <th style="width: 8em;">Action</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-seller >
+              <tr>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{sellerList.id}}</td>
+                  <td><span class="ui-column-title">Supply Type</span>{{sellerList.supplyType}}</td>
+                  <td><span class="ui-column-title">Child No.</span>{{sellerList.child}}</td>
+                  <td><span class="ui-column-title">Name</span>{{sellerList.name}}</td>
+                  <td><span class="ui-column-title">Country</span>{{sellerList.country}}</td>
+                  <td >
+                      <span class="ui-column-title ">Status</span> 
+                      
+                      <div class="dropdown">
+                      <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': seller.adminStatus === 1 , 'badge-danger': seller.adminStatus === 0 }" id="customerStatusId" type="button" data-toggle="dropdown">{{(seller.adminStatus === 1) ? 'Active' : 'Inactive'}}
+
+                      </a>
+                          <ul class="dropdown-menu">
+                              <li [hidden]="seller.adminStatus == 1"><a (click)="setStatus(seller.id ,1, $event)">Active</a></li>
+                              <li [hidden]="seller.adminStatus == 0"><a (click)="setStatus(seller.id,0, $event)">Inactive</a></li>
+                          </ul>
+                      </div>
+                                            
+                  </td> 
+                  <td>
+                       <span class="ui-column-title">Action</span>
+                      <!-- <p-dropdown class="icons" [options]="actions" [showClear]="true" styleClass="prime-dropdown-wrapper widthMin" (onChange)="getDropDownValue($event,customer.customerId)">
+                      </p-dropdown>  -->
+                      <div class="dropdown">
+                          <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+
+                          </a>
+                          <ul class="dropdown-menu" role="menu">
+                              <li><a (click)="getDropDownValue($event,seller.id)" >Edit</a></li>
+                              <li><a (click)="getDropDownValue($event,seller.id)">Delete</a></li>
+                          </ul>
+                      </div>
+                  </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td class="text-center text-danger font-weight-600" colspan="9">No Records Found.</td>
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+</div>

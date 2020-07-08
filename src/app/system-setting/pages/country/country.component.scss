@@ -1,0 +1,33 @@
+.btn[class*="btn-"] {
+    margin-left: 1rem;
+}
+.paddingSearch{
+    padding: 20px 0;
+}
+p-dropdown.icons {
+    font-family: FontAwesome !important;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.widthMin {
+    min-width: 1em !important;
+}
+.searchBtn{
+    width: 100%;
+}
+.glyphicon-cog:before {
+    content: "\e019";
+    padding-right: 10px;
+}
+.dropdown-menu{
+    left: -80px;
+    margin: 0.550rem 0 0;
+
+}
+.colorStatus{
+    color: white !important;
+}
+.country-add {
+    margin-bottom: 30px;
+}

@@ -8,7 +8,7 @@ import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } f
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 
-interface Action {
+interface Action { 
   name:string, 
   code:string
 }
