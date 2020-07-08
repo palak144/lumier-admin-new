@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Action {
   name:string, 
@@ -47,6 +48,7 @@ export class SellerListingComponent implements OnInit {
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
+    private commonService:CommonServiceService,
     private sellerService:SellerService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
@@ -193,7 +195,7 @@ this.getAllSellers(this.page);
    }
     getCountry()
   {
-    this.sellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = success.data.result;
        

@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service';
 import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 interface Country {
   _id:string,
   country:string
@@ -39,7 +40,7 @@ export class AddSellerComponent implements OnInit {
     private router: Router,
     private SellerService: SellerService,
     private toastr: ToastrService,
-    private utilityService:UtilityService
+    private commonService:CommonServiceService
   ) { }
 
   ngOnInit(): void {
@@ -218,7 +219,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
   
   getCountry()
   {
-    this.SellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data.result);
        
@@ -234,7 +235,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
     const newArray = [];
     arr.forEach(element => {
       newArray.push({
-        label: element.countryName,
+        label: element.itemName,
         value: element.id
       });
     });

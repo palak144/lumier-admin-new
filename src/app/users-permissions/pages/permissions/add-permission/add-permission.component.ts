@@ -6,6 +6,7 @@ import { UsersPermissionsService } from 'app/shared/services/users-permissions.s
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash'
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 @Component({
   selector: 'app-add-permission',
   templateUrl: './add-permission.component.html',
@@ -38,7 +39,7 @@ export class AddPermissionComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private usersPermissionsService: UsersPermissionsService,
     private toastr: ToastrService,
-
+    private commonService : CommonServiceService
 
   ) { }
 
@@ -54,7 +55,7 @@ export class AddPermissionComponent implements OnInit {
         this.initForm()
       })
 
-    this.usersPermissionsService.getCountryList()
+    this.commonService.getCountry()
     .subscribe((data:any) => {
       
         this.dropdownListCountry = data.data

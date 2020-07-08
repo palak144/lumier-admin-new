@@ -41,15 +41,7 @@ export class SellerService {
         catchError(this.errorHandler.handleError)
       );
   }
-  getCountry()
-  {
-    return this.http.get(this.baseUrl + 'admin/getCountry')
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-    
-  }
+
   getAllSellersSearch(page?, searchKey?, exportAll?, countryId?) {
     
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}

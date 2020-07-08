@@ -21,7 +21,12 @@ export class ManufactureService {
 
   }
   addBrand(data) {
-    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
+      debugger
+    return this.http.post(this.baseUrl + 'admin/manufacturer' , data ,{
+      reportProgress: true,
+      observe: 'events'
+    }
+    ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -42,15 +47,6 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-  getCountry()
-  {
-    return this.http.get(this.baseUrl + 'admin/getCountry')
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-    
-  }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
     debugger
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
@@ -60,8 +56,8 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-  getBranddetails(id) {
-    return this.http.get(this.baseUrl + 'admin/manufacturer/detail/' + id)
+  getBrandDetails(id) {
+    return this.http.get(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
@@ -83,4 +79,12 @@ export class ManufactureService {
         retry(3),
         catchError(this.errorHandler.handleError)
       );
-  }}
+  }
+  public upload(formData) {
+debugger
+    return this.http.post<any>(this.baseUrl, formData, {  
+        reportProgress: true,  
+        observe: 'events'  
+      });  
+  }
+}

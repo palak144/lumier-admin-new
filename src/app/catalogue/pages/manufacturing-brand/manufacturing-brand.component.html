@@ -6,8 +6,7 @@
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input   type="text" class="form-control round searchBtn" pInputText placeholder="Search"  />
-          <!-- [(ngModel)]="searchBar" -->
+          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search" [(ngModel)]="searchBar" />
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -23,7 +22,7 @@
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
                  <option value=null>All</option>
-                <option *ngFor="let countries of countries" [value]="countries.id">{{countries.countryName}}</option> 
+                <option *ngFor="let countries of countries" [value]="countries.id">{{countries.itemName}}</option> 
             </select>
         </fieldset>    
     </div>
@@ -66,29 +65,29 @@
           </ng-template>
           <ng-template pTemplate="body" let-brand >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.brandId}}</td>
-                  <td><span class="ui-column-title">Full Name</span>{{brand.firstName}} {{brand.lastName}}</td>
-                  <td><span class="ui-column-title">Supply Type</span>{{brand.brandId}}</td>
-                  <td><span class="ui-column-title">Country</span>{{customer.mobileNumber}}</td>
-                  <td><span class="ui-column-title">Wallet Discount</span>{{customer.clinicName}}</td>
-                  <td><span class="ui-column-title">Sort</span>{{customer.created_at | date: 'mediumDate'}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                  <td><span class="ui-column-title">Full Name</span>{{brand.manufacturerName}}</td>
+                  <td><span class="ui-column-title">Supply Type</span>{{brand.supplyType.name}}</td>
+                  <td><span class="ui-column-title">Country</span>{{brand.country.countryName}}</td>
+                  <td><span class="ui-column-title">Wallet Discount</span>{{brand.walletDiscount}}</td>
+                  <td><span class="ui-column-title">Sort</span>{{brand.sort}}</td>
                    <td >
                       <span class="ui-column-title ">Status</span> 
-<!--                       
+                      
                       <div class="dropdown">
-                      <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': customer.adminStatus === 1 , 'badge-danger': customer.adminStatus === 0 }" id="customerStatusId" type="button" data-toggle="dropdown">{{(customer.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                      <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': brand.adminStatus === 1 , 'badge-danger': brand.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(brand.adminStatus === 1) ? 'Active' : 'Inactive'}}
 
                       </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="customer.adminStatus == 1"><a (click)="setStatus(customer.customerId ,1, $event)">Active</a></li>
-                              <li [hidden]="customer.adminStatus == 0"><a (click)="setStatus(customer.customerId,0, $event)">Inactive</a></li>
+                              <li [hidden]="brand.adminStatus == 1"><a (click)="setStatus(brand.id ,1, $event)">Active</a></li>
+                              <li [hidden]="brand.adminStatus == 0"><a (click)="setStatus(brand.id,0, $event)">Inactive</a></li>
                           </ul>
-                      </div> -->
+                      </div>
                                             
                   </td> 
                   <td>
                        <span class="ui-column-title">Action</span>
-<!--                   
+                  
                       <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
 
@@ -98,7 +97,7 @@
                               <li><a>Delete</a></li>
 
                           </ul>
-                      </div> -->
+                      </div>
                   </td>
               </tr>
           </ng-template>

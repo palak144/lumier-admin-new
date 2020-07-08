@@ -8,6 +8,7 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Action {
   name:string, 
@@ -51,6 +52,7 @@ export class ManufacturingBrandComponent implements OnInit {
     private manufactureService:ManufactureService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
+    private commonService : CommonServiceService
     ) {}
     setStatus(id:Number,adminStatus:Number){
 
@@ -102,7 +104,7 @@ export class ManufacturingBrandComponent implements OnInit {
   }
 
   getAllBrandsSearch(page, searchBar , exportAll, countryId) {
-  
+  debugger
     
     this.manufactureService.getAllBrandsSearch(page, searchBar , exportAll , countryId)
       .pipe(
@@ -126,6 +128,7 @@ export class ManufacturingBrandComponent implements OnInit {
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
+      debugger
       this.getAllBrands(this.page);
       
     } 
@@ -197,7 +200,7 @@ this.getAllBrands(this.page);
    }
     getCountry()
   {
-    this.manufactureService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = success.data.result;
        
