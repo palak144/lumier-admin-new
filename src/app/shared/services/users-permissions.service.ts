@@ -27,12 +27,6 @@ export class UsersPermissionsService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getCountryList(){
-    return this.http.get(this.baseUrl +'admin/country').pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    )
-  }
   getMenuList(){
     return this.http.get(this.baseUrl +'admin/getMenu').pipe(
       retry(3),

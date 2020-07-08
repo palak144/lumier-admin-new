@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Action { 
   name:string, 
@@ -47,6 +48,7 @@ export class SellerListingComponent implements OnInit {
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
+    private commonService:CommonServiceService,
     private sellerService:SellerService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
@@ -118,13 +120,19 @@ export class SellerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-    
+    debugger
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSellers(this.page);
       
-    } else {
+    } 
+    else if(!this.countryId){
+debugger
+this.getAllSellers(this.page);
+
+    }
+    else {
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
     }
@@ -187,7 +195,7 @@ export class SellerListingComponent implements OnInit {
    }
     getCountry()
   {
-    this.sellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = success.data.result;
        

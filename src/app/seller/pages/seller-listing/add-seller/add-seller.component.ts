@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service';
 import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 interface Country {
   _id:string,
   country:string
@@ -39,7 +40,7 @@ export class AddSellerComponent implements OnInit {
     private router: Router,
     private SellerService: SellerService,
     private toastr: ToastrService,
-    private utilityService:UtilityService
+    private commonService:CommonServiceService
   ) { }
 
   ngOnInit(): void {
@@ -133,7 +134,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
      }
      this.password = (this.addSellerForm.get('password').value != "" && this.addSellerForm.get('password').value != undefined) ? this.addSellerForm.get('password').value : ""
      data.password = this.password
-    debugger
+    
       if(!this.id)
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -213,12 +214,12 @@ this.addSellerForm.controls.countryId=this.countryValue;
     this.addSellerForm.controls.supplyType.patchValue(item.supplyType);
     this.addSellerForm.controls.floorNo.patchValue(item.floorNo);
     // this.addSellerForm.controls.password.patchValue(item.password);
-debugger
+
   }
-  debugger
+  
   getCountry()
   {
-    this.SellerService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data.result);
        
@@ -234,7 +235,7 @@ debugger
     const newArray = [];
     arr.forEach(element => {
       newArray.push({
-        label: element.countryName,
+        label: element.itemName,
         value: element.id
       });
     });

@@ -24,12 +24,13 @@
 <div class="users-wrapper">
     <div class="table-wrapper vehicle-wrapper">
         <p-table [value]="userList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
-            [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
+            [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:6em">S No.
                     </th>
-                    <th>Full Name</th>
+                    <th style="width:20em">Full Name</th>
                     <th>Permission Groups</th>
                     <th style="width:10em">Status</th>
                     <th style="width:6em">Action</th>

@@ -1,63 +1,91 @@
 <div class="row container breadcrum-container">
   <ul class="col-sm-12 pl-0">
-    <li>
-      <a [routerLink]="['/catalogues/manufacturing-brand']">Manufacturer/Brand</a>
-    </li>
-    <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
-    </li>
-    <li>
-      {{userTitle}}
-    </li>
+    <li> <a [routerLink]="['/catalogues/manufacturing-brand']">Manufacturer/ Brand</a>
+    </li> <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right"></li>
+    <li> {{brandTitle}}  </li>
   </ul>
-  <div class="content-header text-left pb-3">{{userTitle}}</div>
+  <div class="content-header text-left pb-3">{{brandTitle}}</div>
 </div>
-<form class="form" [formGroup]="addUserForm" (ngSubmit)="onSubmitUserForm()">
+<form class="form" [formGroup]="addBrandForm" (ngSubmit)="onSubmitBrandForm()">
   <div class="form-body">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Name</label><span class="asterick">*</span> 
-          <input type="text" class="form-control border-primary" placeholder="Name" formControlName="name" [class.is-invalid]="(customeForm.name.errors  && (customeForm.name.dirty || customeForm.name.touched))"
-          >
-     
+          <label>Name</label><span class="asterick">*</span>
+          <input type="text" class="form-control border-primary" placeholder="Name" formControlName="name"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.name.errors }">
+          <div *ngIf="isSubmittedaddBrandForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Name is required</div>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label>Supply Type</label><span class="asterick">*</span> 
-          <input type="text" class="form-control border-primary" placeholder="Supply Type" formControlName="Supply_type" [class.is-invalid]="(customeForm.Supply_type.errors  && (customeForm.Supply_type.dirty || customeForm.Supply_type.touched))"
-            >
-        
+            <label>Supply Type</label><span class="asterick">*</span> 
+            <div class="assign-group-dropdown">
+            <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control border-primary"
+            (onChange)="getdropdown1($event)" placeholder="Select Supply Type"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.supplyTypeId.errors }">
+          </p-dropdown>
+                <div *ngIf="isSubmittedaddCustomerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+            </div>
+            </div>
         </div>
-      </div>
     </div>
-
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <!-- <label>Logo</label><span class="asterick">*</span> 
-          <input type='file'  id="imageUpload" accept="image/*" #fileInput (change)="uploadFile($event)" />
-          -->
-          <label>Logo</label><span class="asterick">*</span> 
+          <label>Logo</label>
           <div class="custom-file d-block">
-<input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
-<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-</div>
+            <input type="file" #fileUpload id="fileUpload" formControlName="logo" multiple="multiple" accept="image/*"
+              (change)="onFileChanged($event)" class="custom-file-input border-primary" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div> 
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group"> 
-          <label>Status</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect">
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
-      </div>    
+        <div class="form-group">
+          <label>Select Country</label><span class="asterick">*</span>
+          <div class="assign-group-dropdown">
+            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary"
+              (onChange)="getdropdown($event)" filter="true" placeholder="Select Country"
+              [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.countryId.errors }">
+            </p-dropdown>
+            <div *ngIf="isSubmittedaddBrandForm && signUpControls.countryId.errors" class="invalid-feedback">
+              <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-  </div> 
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Wallet Discount</label><span class="asterick">*</span>
+          <input type="text" class="form-control border-primary" placeholder="Wallet Discount" formControlName="walletDiscount"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.walletDiscount.errors }">
+          <div *ngIf="isSubmittedaddBrandForm && signUpControls.walletDiscount.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.walletDiscount.errors.required">Wallet Discount is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Sort</label><span class="asterick">*</span>
+          <input type="text" class="form-control border-primary" placeholder="Sort" formControlName="sort"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.sort.errors }">
+          <div *ngIf="isSubmittedaddBrandForm && signUpControls.sort.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.sort.errors.required">Sort is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="form-actions right">
-    <button type="button" [routerLink]="['/catalogues/manufacturing-brand']" class="btn btn-raised btn-warning mr-1"> Back
+    <button type="button" [routerLink]="['/catalogues/manufacturing-brand']" class="btn btn-raised btn-warning mr-1">
+      Back
     </button>
     <button type="submit" class="btn btn-raised btn-primary"> Submit
     </button>
