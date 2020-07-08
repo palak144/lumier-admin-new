@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { retry, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SellerService {
+export class ManufactureService {
+
 
   baseUrl: string;
 
@@ -20,59 +20,71 @@ export class SellerService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
-  addSeller(data) {
-    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
+  addBrand(data) {
+      debugger
+    return this.http.post(this.baseUrl + 'admin/manufacturer' , data ,{
+      reportProgress: true,
+      observe: 'events'
+    }
+    ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-  updateSeller(data)
+  updateBrand(data)
   {
-    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
+    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-  getAllSellers(page) {
+  getAllBrands(page) {
+    debugger
     const params = { page: page }
-    return this.http.get(this.baseUrl + 'admin/seller',
+    return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
-
-  getAllSellersSearch(page?, searchKey?, exportAll?, countryId?) {
-    
+  getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
+    debugger
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
-    return this.http.get(this.baseUrl + 'admin/seller',
+    return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
-  getSellerdetails(id) {
-    return this.http.get(this.baseUrl + 'admin/seller/detail/' + id)
+  getBrandDetails(id) {
+    return this.http.get(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
 
-  deleteSeller(id) {
-    return this.http.delete(this.baseUrl + 'admin/seller/' + id)
+  deleteBrand(id) {
+    return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
 
-  updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
+  updateBrandStatus(statusData: {id: Number; adminStatus: Number }){
     
-    return this.http.put(this.baseUrl + 'admin/seller', statusData)
+    return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
+  }
+  public upload(formData) {
+debugger
+    return this.http.post<any>(this.baseUrl, formData, {  
+        reportProgress: true,  
+        observe: 'events'  
+      });  
   }
 }

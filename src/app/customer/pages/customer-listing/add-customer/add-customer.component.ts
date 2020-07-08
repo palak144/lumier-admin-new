@@ -87,7 +87,7 @@ export class AddCustomerComponent implements OnInit {
       return
     }
     this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
-    debugger
+    
     this.addCustomerFormDetails = {
       "Email": this.addCustomerForm.get('email').value,
       "password": this.password,
@@ -109,7 +109,7 @@ export class AddCustomerComponent implements OnInit {
       "jobTitle": this.addCustomerForm.get('jobTitle').value,
       "customerGroupId" : this.addCustomerForm.get('assignGroup').value,
     }
-    debugger
+    
     if (this.id) {
 
       this.addCustomerFormDetails.customerId = this.id;
@@ -125,7 +125,7 @@ export class AddCustomerComponent implements OnInit {
 
         },
         error => {
-          debugger
+          
           this.toastr.error(error.message)
         });
 
@@ -141,7 +141,7 @@ export class AddCustomerComponent implements OnInit {
           this.router.navigate(['../'],{relativeTo : this.activatedRoute})
         },
         error => {
-debugger
+
           this.toastr.error(error.message)
           
         });
@@ -234,7 +234,7 @@ debugger
             "phoneNo": this.customer.teleNumber,
             "jobTitle": this.customer.jobTitle,
           })
-          debugger
+          
             this.selected_assignGroup = this.customer.customerGroup.id 
                
         },
