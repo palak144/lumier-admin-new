@@ -17,40 +17,43 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Supply Type</label><span class="asterick">*</span> 
-          <select class="form-control" id="basicSelect"  formControlName="Suuplytype" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.Suuplytype.errors }" >
-            <option>Dental</option>
-            <option>Medical</option>
-            <option>All</option>
-          </select>
-          <div *ngIf="isSubmittedaddSellerForm && signUpControls.Suuplytype.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.Suuplytype.errors.required">Supply Type is required</div>
+          <div class="assign-group-dropdown">
+            <select class="form-control" id="basicSelect" formControlName="name"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.name.errors }">
+              <option >All</option>
+              <option>Medical</option>
+              <option>Dental</option>
+            </select>
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
           
+        </div>
         </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
+          <div class="assign-group-dropdown">
           <label>Country</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect"  formControlName="countryId" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }" >
-            <option>India</option>
-            <option>US</option>
-            <option>UK</option>
-          </select>
+          <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary"
+              (onChange)="getdropdown($event)" filter="true" placeholder="Select Country"
+              [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.countryId.errors }">
+            </p-dropdown>
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
           
         </div>
         </div>
+        </div>
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
   
       <div class="col-md-6">
         <div class="form-group"> 
           <label>Status</label><span class="asterick">*</span>
           <select class="form-control" id="basicSelect" formControlName="status"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.status.errors }">
-            <option>Active</option>
+            <option >Active</option>
             <option>Inactive</option>
           </select>
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.status.errors" class="invalid-feedback">
@@ -59,7 +62,7 @@
         </div>
       </div>    
     </div>
-</div>
+</div> -->
   </div> 
   <div class="form-actions right">
     <button type="button" [routerLink]="['/systemsetting/systemtype']" class="btn btn-raised btn-warning mr-1"> Back
