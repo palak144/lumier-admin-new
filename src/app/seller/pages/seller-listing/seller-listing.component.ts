@@ -9,7 +9,7 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
-interface Action {
+interface Action { 
   name:string, 
   code:string
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
-import { SellerService } from '../../../shared/services/seller.service';
+import { SystemSettingsService } from '../../../shared/services/system-settings.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -14,13 +14,18 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
   styleUrls: ['./system-type.component.scss']
 })
 export class SystemTypeComponent implements OnInit {
+  
+  
+  page:number = 0;
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
+  supplyList:any[];
+  totalCount: any;
   constructor(
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
-    private sellerService:SellerService,
+    private SupplyTypeService:SupplyTypeService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
   ) { }
@@ -30,5 +35,20 @@ export class SystemTypeComponent implements OnInit {
   loadDataLazy(event)
   {
 console.log(event);
+ this.page = event.first / 10;
+ this.getAllSupplyType(this.page );
+  }
+  getAllSupplyType(page) {
+    this.SupplyTypeService.getAllSupplyType(page).subscribe(
+      (success: any) => {
+        console.log(success);
+        this.supplyList = success.data.results;
+        this.totalCount = success.data.total;
+      },
+      error => {
+      
+        this.utilityService.resetPage();
+      }
+    );
   }
 }

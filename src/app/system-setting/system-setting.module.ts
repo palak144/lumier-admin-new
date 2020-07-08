@@ -5,6 +5,8 @@ import { SystemSettingRoutingModule } from './system-setting-routing.module';
 import { SystemLayoutComponent } from '../system-setting/system-layout/system-layout.component';
 import { SystemTypeComponent } from './pages/system-type/system-type.component';
 import { AddSystemSettingComponent } from './pages/system-type/add-system-setting/add-system-setting.component';
+import { CountryComponent } from './pages/country/country.component';
+import { AddCountryComponent } from './pages/country/add-country/add-country.component';
 
 
 @NgModule({
@@ -15,6 +17,6 @@ import { AddSystemSettingComponent } from './pages/system-type/add-system-settin
  
   ],
 // tslint:disable-next-line: max-line-length
-  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent,]
+  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent, CountryComponent, AddCountryComponent,]
 })
 export class SystemSettingModule { }
