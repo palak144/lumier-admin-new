@@ -47,6 +47,7 @@ export const ROUTES: RouteInfo[] = [
         isExternalLink: false,
         submenu: [
           { path: '/catalogues/manufacturing-brand', title: 'Manufacturer / Brands', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+          { path: '/catalogues/categories', title: 'Categories', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         
          ]},
          {
@@ -59,6 +60,7 @@ export const ROUTES: RouteInfo[] = [
           isExternalLink: false,
           submenu: [
             { path: '/systemsetting/systemtype', title: 'System Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/country', title: 'Country', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           
            ]},
      { 

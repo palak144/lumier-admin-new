@@ -1,0 +1,172 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+      <li>
+          <a [routerLink]="['catalogues/categories']">Categories</a>
+      </li>
+      <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+      </li>
+      <li>
+        {{categoryTitle}}
+      </li>
+  </ul>
+  <div class="content-header text-left">Add New Categories</div>
+</div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3">
+                  <form class="form" [formGroup]="addCategoriesForm" (ngSubmit)="onSubmitCategoriesForm($event)">
+                      <div class="form-body">
+                          <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
+                      
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Select Country</label><span class="asterick">*</span>
+                                        <div class="assign-group-dropdown">
+                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.countryId.errors }"
+                                        >
+                                            </p-dropdown>
+                                            <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                                <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group"> 
+                                      <label>Status</label><span class="asterick">*</span>
+                                      <select class="form-control border-primary" id="basicSelect">
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                      </select>
+                                    </div> 
+                                  </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Name</label><span class="asterick">*</span> 
+                                      <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.fname.errors }">
+                                      <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.fname.errors" class="invalid-feedback">
+                                          <div *ngIf="signUpControls.fname.errors.required">Name is required</div>
+                                      </div>   
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Icon</label>
+                                      <div class="custom-file d-block">
+                                        <input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Filters Title</label>
+                                        <input type="text" class="form-control border-primary" formControlName="filterTitle" placeholder="Filters Title">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label>Filters Details</label>
+                                    <input type="text" class="form-control border-primary" formControlName="filterDetail" placeholder="Filters Details">
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Type</label><span class="asterick">*</span> 
+                                        <input type="text" formControlName="type" class="form-control border-primary" placeholder="Type" [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.type.errors }">
+                                        <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.type.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.type.errors.required">Type is required</div>
+                                        </div>   
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label>Category</label>
+                                    <input type="text" class="form-control border-primary" formControlName="category" placeholder="Category">
+                                 
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Image </label><span class="asterick">*</span>
+                                      
+                                        <div class="custom-file d-block">
+                                          <input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
+                                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Sort </label>
+                                        <input type="text" formControlName="sort" placeholder="Sort" class="form-control border-primary">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Meta Title</label>
+                                        <input type="text" class="form-control border-primary" formControlName="metaTitle" placeholder="Meta Title">
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Meta Description</label>
+                                        <input type="text" formControlName="metaDescription" placeholder="Meta Description" class="form-control border-primary" >
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Meta Keyword</label>
+                                        <input type="text" class="form-control border-primary" formControlName="metaKeyword" placeholder="Meta Keyword">
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Static Meta Tag</label>
+                                        <input type="text" formControlName="staticmetaTag" placeholder="Static Meta Tag" class="form-control border-primary" >
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Description</label>
+                                      <ckeditor class="border-primary" formControlName="weWishToPartnerWith" (change)="editorValidation(3)"></ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+                          
+
+                        
+                      </div>
+                      <div class="form-actions right">
+                          <button type="button" [routerLink]="['catalogues/categories']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                          <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
