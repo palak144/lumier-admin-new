@@ -35,7 +35,7 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="customerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+      <p-table [value]="supplyList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
           <ng-template pTemplate="header">
               <tr>
                   <th >S No.
@@ -48,12 +48,12 @@
                   <th>Edit</th>
               </tr>
           </ng-template>
-          <!-- <ng-template pTemplate="body" let-customer >
+          <ng-template pTemplate="body" let-customer >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.customerId}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
                  
-                  <td><span class="ui-column-title">Country</span>{{customer.Email}}</td>
-                  <td><span class="ui-column-title">Supply Type</span>{{customer.mobileNumber}}</td>
+                  <td><span class="ui-column-title">Country</span>{{customer.country.countryName}}</td>
+                  <td><span class="ui-column-title">Supply Type</span>{{customer.name}}</td>
                  
                    <td >
                       <span class="ui-column-title ">Status</span> 
@@ -63,8 +63,8 @@
 
                       </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="customer.adminStatus == 1"><a (click)="setStatus(customer.customerId ,1, $event)">Active</a></li>
-                              <li [hidden]="customer.adminStatus == 0"><a (click)="setStatus(customer.customerId,0, $event)">Inactive</a></li>
+                              <li [hidden]="customer.adminStatus == 1"><a (click)="setStatus(customer.id ,1, $event)">Active</a></li>
+                              <li [hidden]="customer.adminStatus == 0"><a (click)="setStatus(customer.id,0, $event)">Inactive</a></li>
                           </ul>
                       </div>
                                             
@@ -77,14 +77,14 @@
 
                           </a>
                           <ul class="dropdown-menu" role="menu">
-                              <li><a (click)="getDropDownValue($event,customer.customerId)">Edit</a></li>
-                              <li><a (click)="getDropDownValue($event,customer.customerId)">Delete</a></li>
+                              <li><a (click)="getDropDownValue($event,customer.id)">Edit</a></li>
+                              <li><a (click)="getDropDownValue($event,customer.id)">Delete</a></li>
 
                           </ul> 
                       </div>
                   </td>
               </tr>
-          </ng-template> -->
+          </ng-template>
           <ng-template pTemplate="emptymessage">
               <tr>
                   <td class="text-center text-danger font-weight-600" colspan="5">No Records Found.</td>
