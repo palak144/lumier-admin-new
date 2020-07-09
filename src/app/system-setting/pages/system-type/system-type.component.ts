@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 @Component({
   selector: 'app-system-type',
   templateUrl: './system-type.component.html',
@@ -26,10 +26,13 @@ export class SystemTypeComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
  exportAll = "false";
   action: any;
+  countries:any[];
+  countryId : number = null;
   constructor(
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
+    private commonService:CommonServiceService,
     private SystemSettingsService:SystemSettingsService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
@@ -47,18 +50,23 @@ export class SystemTypeComponent implements OnInit {
   }
   ngOnInit() {
     this.initiateSearch();
+    this.getCountry();
   }
   loadDataLazy(event: LazyLoadEvent) {
-    debugger
+ 
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
       this.getAllSupplyType(this.page);
       
     } 
-
+    else if(!this.countryId){
+ console.log("mayuri");
+      this.getAllSupplyType(this.page);
+      
+          }
     else {
-      this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll);
+      this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll,this.countryId);
     
     }
 
@@ -83,7 +91,7 @@ export class SystemTypeComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.SystemSettingsService.getAllSupplysSearch(this.page, term ,this.exportAll
+      switchMap((term: string) => this.SystemSettingsService.getAllSupplysSearch(this.page, term ,this.exportAll,this.countryId
       ))
     ).subscribe((success: any) => {
       this.supplyList = success.data.results;
@@ -91,10 +99,10 @@ export class SystemTypeComponent implements OnInit {
       this.utilityService.resetPage();
     })
   } 
-  getAllSupplysSearch(page, searchBar , exportAll) {
+  getAllSupplysSearch(page, searchBar , exportAll ,countryId ) {
   
     
-    this.SystemSettingsService.getAllSupplysSearch(page, searchBar , exportAll)
+    this.SystemSettingsService.getAllSupplysSearch(page, searchBar , exportAll ,countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -152,7 +160,32 @@ export class SystemTypeComponent implements OnInit {
     else{
     
       this.exportAll = "true"
-     this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll);
+     this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
     }
    }
+
+   onChange(deviceValue) {
+     console.log(deviceValue);
+     if(deviceValue)
+ {
+   this.countryId=deviceValue;
+ }
+   else
+   {
+   }
+   
+     this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+ }
+ getCountry()
+ {
+   this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+     (success:any) => {
+       console.log(success);
+       this.countries = success.data;
+  console.log( this.countries);
+     },
+     error => {
+     }
+   )
+ }
 }

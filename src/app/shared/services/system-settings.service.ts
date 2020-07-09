@@ -39,9 +39,9 @@ export class SystemSettingsService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getAllSupplysSearch(page?, searchKey?, exportAll?) {
+  getAllSupplysSearch(page?, searchKey?, exportAll?, countryId?) {
     
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll}
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/supplyType',
       { params: params }).pipe(
         retry(3),

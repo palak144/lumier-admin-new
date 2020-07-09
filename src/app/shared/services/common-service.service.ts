@@ -30,7 +30,7 @@ export class CommonServiceService {
   }
   getSupplyType()
   {
-    debugger
+  
     return this.http.get(this.baseUrl + 'admin/supplyTypeList')
       .pipe(
         retry(3),
