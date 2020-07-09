@@ -18,6 +18,13 @@ export class SystemSettingsService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
+  getSupplyTypedetails(id) {
+    return this.http.get(this.baseUrl + 'admin/supplyType/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllSupplyType(page) {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/supplyType',
@@ -26,4 +33,42 @@ export class SystemSettingsService {
         catchError(this.errorHandler.handleError)
       );
   }
+  addSupply(data) {
+    return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getAllSupplysSearch(page?, searchKey?, exportAll?, countryId?) {
+    
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    return this.http.get(this.baseUrl + 'admin/supplyType',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  deleteSupply(id) {
+    return this.http.delete(this.baseUrl + 'admin/supplyType/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/supplyType', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  updateSupply(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 }
+

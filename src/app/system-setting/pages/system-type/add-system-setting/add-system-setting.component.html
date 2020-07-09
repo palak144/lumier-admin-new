@@ -1,7 +1,7 @@
 <div class="row container breadcrum-container">
   <ul class="col-sm-12 pl-0">
     <li>
-      <a [routerLink]="['/systemsetting/systemtype']">System/Type</a>
+      <a [routerLink]="['/systemsetting/systemtype']">Supply Type</a>
     </li>
     <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
     </li>
@@ -17,40 +17,39 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Supply Type</label><span class="asterick">*</span> 
-          <select class="form-control" id="basicSelect"  formControlName="Suuplytype" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.Suuplytype.errors }" >
-            <option>Dental</option>
-            <option>Medical</option>
-            <option>All</option>
-          </select>
-          <div *ngIf="isSubmittedaddSellerForm && signUpControls.Suuplytype.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.Suuplytype.errors.required">Supply Type is required</div>
+          <input type="text" class="form-control" placeholder="Supply Type" formControlName="name"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.name.errors }">
+          <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
+            <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
           
         </div>
         </div>
-      </div>
+        </div>
+    
       <div class="col-md-6">
         <div class="form-group">
+          <div class="assign-group-dropdown">
           <label>Country</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect"  formControlName="countryId" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }" >
-            <option>India</option>
-            <option>US</option>
-            <option>UK</option>
-          </select>
+          <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary"
+              (onChange)="getdropdown($event)" filter="true" placeholder="Select Country"
+              [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.countryId.errors }">
+            </p-dropdown>
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
           
         </div>
         </div>
+        </div>
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
   
       <div class="col-md-6">
         <div class="form-group"> 
           <label>Status</label><span class="asterick">*</span>
           <select class="form-control" id="basicSelect" formControlName="status"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.status.errors }">
-            <option>Active</option>
+            <option >Active</option>
             <option>Inactive</option>
           </select>
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.status.errors" class="invalid-feedback">
@@ -59,7 +58,7 @@
         </div>
       </div>    
     </div>
-</div>
+</div> -->
   </div> 
   <div class="form-actions right">
     <button type="button" [routerLink]="['/systemsetting/systemtype']" class="btn btn-raised btn-warning mr-1"> Back

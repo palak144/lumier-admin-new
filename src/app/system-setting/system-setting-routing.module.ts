@@ -28,6 +28,11 @@ const routes: Routes = [
         
       },
       {
+        path: 'edit/:id',
+        component: AddSystemSettingComponent,
+        
+      },
+      {
         path: 'country',
         component: CountryComponent,
         data: {

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-
+import { CommonServiceService } from 'app/shared/services/common-service.service';
 @Component({
   selector: 'app-system-type',
   templateUrl: './system-type.component.html',
@@ -21,25 +21,59 @@ export class SystemTypeComponent implements OnInit {
   @ViewChild(Table) primeNGTable: Table;
   supplyList:any[];
   totalCount: any;
+  searchTerms$ = new Subject<string>();
+  searchBar: any = "";
+  private _unsubscribe = new Subject<boolean>();
+ exportAll = "false";
+  action: any;
+  countries:any[];
+  countryId : number = null;
   constructor(
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
-    private SupplyTypeService:SystemSettingsService,
+    private commonService:CommonServiceService,
+    private SystemSettingsService:SystemSettingsService,
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
   ) { }
+  setStatus(id:Number,adminStatus:Number){
 
-  ngOnInit() {
+    let statusData = {id,adminStatus}
+    
+ this.SystemSettingsService.updateSellerStatus(statusData).subscribe(
+   (success:any)=>
+   {
+   
+    this.ngOnInit()
+} )
   }
-  loadDataLazy(event)
-  {
-console.log(event);
- this.page = event.first / 10;
- this.getAllSupplyType(this.page );
+  ngOnInit() {
+    this.initiateSearch();
+    this.getCountry();
+  }
+  loadDataLazy(event: LazyLoadEvent) {
+ 
+    this.page = event.first / 10;
+    // if there is a search term present in the search bar, then paginate with the search term
+    if (!this.searchBar) {
+      this.getAllSupplyType(this.page);
+      
+    } 
+    else if(!this.countryId){
+ console.log("mayuri");
+      this.getAllSupplyType(this.page);
+      
+          }
+    else {
+      this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll,this.countryId);
+    
+    }
+
+    
   }
   getAllSupplyType(page) {
-    this.SupplyTypeService.getAllSupplyType(page).subscribe(
+    this.SystemSettingsService.getAllSupplyType(page).subscribe(
       (success: any) => {
         console.log(success);
         this.supplyList = success.data.results;
@@ -51,4 +85,107 @@ console.log(event);
       }
     );
   }
+  initiateSearch() {
+    this.searchTerms$.pipe(
+      takeUntil(this._unsubscribe),
+      startWith(''),
+      distinctUntilChanged(),
+      // switch to new search observable each time the term changes
+      switchMap((term: string) => this.SystemSettingsService.getAllSupplysSearch(this.page, term ,this.exportAll,this.countryId
+      ))
+    ).subscribe((success: any) => {
+      this.supplyList = success.data.results;
+      this.totalCount = success.data.total;
+      this.utilityService.resetPage();
+    })
+  } 
+  getAllSupplysSearch(page, searchBar , exportAll ,countryId ) {
+  
+    
+    this.SystemSettingsService.getAllSupplysSearch(page, searchBar , exportAll ,countryId)
+      .pipe(
+        takeUntil(this._unsubscribe)
+      )
+      .subscribe((success: any) => {
+        this.supplyList = success.data.results;
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
+        if(exportAll == "true"){
+   
+          this.excelService.exportAsExcelFile(this.supplyList, 'Supply List')
+          this.exportAll = "false"
+        }
+      })
+  }
+  filterGlobal(searchTerm) {
+    // indexing starts from 0 in primeng
+    this.primeNGTable.first = 0;
+    this.page = 0;
+    this.searchTerms$.next(searchTerm);
+  }
+  getDropDownValue(event, id) {
+    if(event.currentTarget.firstChild.data === 'Delete') {
+
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.SystemSettingsService.deleteSupply(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              this.getAllSupplyType(this.page);
+              // this.customerList = this.customerList.filter((item: any) => {
+              //   return id !== item.customerId
+              // })
+            },
+            error => {
+            }
+          )
+        },
+        reject: () => {
+          this.action = null;
+        }
+    });
+     
+    }
+    if(event.currentTarget.firstChild.data === 'Edit'){
+          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
+          
+    }
+  }
+  exportAsXLSX(id:number) {
+   
+    if (id==0){
+ 
+      this.excelService.exportAsExcelFile(this.supplyList, 'Seller List')
+    }
+    else{
+    
+      this.exportAll = "true"
+     this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
+    }
+   }
+
+   onChange(deviceValue) {
+     console.log(deviceValue);
+     if(deviceValue)
+ {
+   this.countryId=deviceValue;
+ }
+   else
+   {
+   }
+   
+     this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+ }
+ getCountry()
+ {
+   this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+     (success:any) => {
+       console.log(success);
+       this.countries = success.data;
+  console.log( this.countries);
+     },
+     error => {
+     }
+   )
+ }
 }
