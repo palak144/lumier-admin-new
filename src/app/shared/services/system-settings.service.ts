@@ -18,6 +18,13 @@ export class SystemSettingsService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
+  getSupplyTypedetails(id) {
+    return this.http.get(this.baseUrl + 'admin/supplyType/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllSupplyType(page) {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/supplyType',
@@ -55,6 +62,13 @@ export class SystemSettingsService {
         retry(3),
         catchError(this.errorHandler.handleError)
       );
+  }
+  updateSupply(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
   }
 }
 

@@ -17,19 +17,15 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Supply Type</label><span class="asterick">*</span> 
-          <div class="assign-group-dropdown">
-            <select class="form-control" id="basicSelect" formControlName="name"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.name.errors }">
-              <option >All</option>
-              <option>Medical</option>
-              <option>Dental</option>
-            </select>
+          <input type="text" class="form-control" placeholder="Supply Type" formControlName="name"
+            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.name.errors }">
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
           
         </div>
         </div>
         </div>
-      </div>
+    
       <div class="col-md-6">
         <div class="form-group">
           <div class="assign-group-dropdown">

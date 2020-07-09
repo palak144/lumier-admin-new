@@ -31,6 +31,7 @@ export class AddSystemSettingComponent implements OnInit {
   countryValue: any;
   supplyTypes:any[];
   supplyTypeValue: any;
+  supplyDetailsData: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -47,6 +48,10 @@ export class AddSystemSettingComponent implements OnInit {
        console.log(this.id);
         // this.sellerId=this.id;
         this.editMode = id['id'] != null
+        if(this.id)
+        {
+          this.getSupplyTypedetails(this.id);
+        }
         if(!this.id)
         {
           this.userTitle = "Add Supply Type";
@@ -59,6 +64,7 @@ export class AddSystemSettingComponent implements OnInit {
       )
       this.getCountry();
       this.getSupplyType();
+
     this.addUserForm = new FormGroup({
       name: new FormControl('',[Validators.required]),
       countryId: new FormControl('',[Validators.required]),
@@ -79,17 +85,38 @@ export class AddSystemSettingComponent implements OnInit {
     }
     console.log(this.addUserForm.value);
     let data = this.addUserForm.value;
-    this.SystemSettingsService.addSupply(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+    if(this.id)
+    {
+      data.id= this.id;
+    }
+    if(!this.id)
+    {
+      this.SystemSettingsService.addSupply(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success:any) => {
+       
+          this.toastr.success('Supply Type Create Successfully!');
+          this.router.navigate(['/systemsetting/systemtype']);
+  
+        },
+        error => {
+          this.toastr.error('error',error);
+        }
+      )
+    }
+   if(this.id)
+   {
+    this.SystemSettingsService.updateSupply(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-     
-        this.toastr.success('Supply Type Create Successfully!');
+        // this.addSellerForm.reset();
+        this.toastr.success('Supply Type Update Successfully!');
         this.router.navigate(['/systemsetting/systemtype']);
 
       },
       error => {
-        this.toastr.error('error',error);
+        this.toastr.error(error.error.message);
       }
     )
+   }
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
     const newArray = [];
@@ -135,4 +162,22 @@ this.supplyTypeValue=event.value;
       }
     )
   }
+  getSupplyTypedetails(id) {
+    this.SystemSettingsService.getSupplyTypedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        this.supplyDetailsData = success.data;
+       
+        this.patchForm(this.supplyDetailsData);
+       
+  
+      },
+      error => {
+      }
+    )
+  } 
+patchForm(item)
+{
+  this.addUserForm.controls.name.patchValue(item.name);
+  this.addUserForm.controls.countryId.patchValue(item.countryId);
+}
 }
