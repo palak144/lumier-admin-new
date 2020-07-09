@@ -63,18 +63,6 @@ export class AddCustomerComponent implements OnInit {
     this.selected_assignGroup = [];
   }
 
-  arrayOfStringsToArrayOfObjects(arr: any[]) {
-    const newArray = [];
-    arr.forEach(element => {
-      newArray.push({
-        label: element,
-        value: element
-      });
-    });
-    
-    return newArray;
-  }
-
   get signUpControls() {
     return this.addCustomerForm.controls;
   }
