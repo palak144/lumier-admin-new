@@ -38,11 +38,30 @@ export class AddNewCategoryComponent implements OnInit {
     let fname = "";
     let countryId = "";
     let type = "";
+    let filterTitle = "";
+    let filterDetail = "";
+    let category = "";
+    let sort = "";
+    let metaTitle = "";
+    let metaDescription = "";
+    let metaKeyword = "";
+    let staticmetaTag = "";
+    let description = "";
+    
   
   this.addCategoriesForm = new FormGroup({
      "fname": new FormControl(fname, Validators.required),
      "countryId": new FormControl(countryId, Validators.required),
      "type": new FormControl(type, Validators.required),
+     "filterTitle": new FormControl(type, Validators.required),
+     "filterDetail": new FormControl(type, Validators.required),
+     "category": new FormControl(type, Validators.required),
+     "sort": new FormControl(type, Validators.required),
+     "metaTitle": new FormControl(type, Validators.required),
+     "metaDescription": new FormControl(type, Validators.required),
+     "metaKeyword": new FormControl(type, Validators.required),
+     "staticmetaTag": new FormControl(type, Validators.required),
+     "description": new FormControl(type, Validators.required),
   });
 }
 }

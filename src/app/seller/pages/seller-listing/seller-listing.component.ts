@@ -155,7 +155,7 @@ this.getAllSellers(this.page);
   getDropDownValue(event, id) {
     if(event.currentTarget.firstChild.data === 'Delete') {
 
-      this.confirmationService.confirm({
+      this.confirmationService.confirm({ 
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
           this.sellerService.deleteSeller(id).pipe(takeUntil(this._unsubscribe)).subscribe(

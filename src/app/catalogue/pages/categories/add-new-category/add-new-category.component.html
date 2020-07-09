@@ -1,7 +1,7 @@
 <div class="row container breadcrum-container">
   <ul class="col-sm-12 pl-0">
       <li>
-          <a [routerLink]="['catalogues/categories']">Categories</a>
+          <a [routerLink]="['/catalogues/categories']">Categories</a>
       </li>
       <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
       </li>
@@ -25,7 +25,7 @@
                                     <div class="form-group">
                                         <label>Select Country</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.countryId.errors }"
+                                             <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.countryId.errors }"
                                         >
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.countryId.errors" class="invalid-feedback">
@@ -152,7 +152,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                       <label>Description</label>
-                                      <ckeditor class="border-primary" formControlName="weWishToPartnerWith" (change)="editorValidation(3)"></ckeditor>
+                                      <ckeditor class="border-primary" formControlName="description" (change)="editorValidation(3)"></ckeditor>
                                     </div>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class SystemSettingsService {
+export class SystemSettingsService { 
   baseUrl: string;
 
   constructor(    
@@ -18,10 +18,81 @@ export class SystemSettingsService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
+
+  addCountry(data) {
+    return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  updateCountry(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+
   getAllSupplyType(page) {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/supplyType',
       { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  getAllCountries(page) {
+    
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/countrySetting',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getCountry() 
+  {
+    return this.http.get(this.baseUrl + 'admin/countrySetting')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  getAllCountriesSearch(page?, searchKey?, exportAll?) {
+    
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll }
+    return this.http.get(this.baseUrl + 'admin/countrySetting',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  // getCountrydetails(id) {
+  //   return this.http.get(this.baseUrl + 'admin/seller/detail/' + id)
+  //     .pipe(
+  //       retry(3),
+  //       catchError(this.errorHandler.handleError)
+  //     );
+  // }
+
+  deleteSeller(id) {
+    return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  
+  updateCountryStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/countrySetting', statusData)
+      .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
