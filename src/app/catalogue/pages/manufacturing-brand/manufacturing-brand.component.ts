@@ -157,7 +157,8 @@ this.getAllBrands(this.page);
     this.router.navigate(['../new'],{relativeTo : this.activateRoute})
   }
 
-  getDropDownValue(event, id) {
+  getDropDownValue1(event, id) {
+    debugger
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       this.confirmationService.confirm({

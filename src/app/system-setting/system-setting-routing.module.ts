@@ -19,11 +19,16 @@ const routes: Routes = [
         path: 'systemtype',
         component: SystemTypeComponent,
         data: {
-          title: 'System Type'
+          title: 'Supply Type'
         }
       },
       {
         path: 'new',
+        component: AddSystemSettingComponent,
+        
+      },
+      {
+        path: 'edit/:id',
         component: AddSystemSettingComponent,
         
       },

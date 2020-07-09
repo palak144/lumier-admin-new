@@ -20,13 +20,21 @@ export class ManufactureService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
-  addBrand(data) {
+  addBrand(data ) {
       debugger
-    return this.http.post(this.baseUrl + 'admin/manufacturer' , data ,{
+      const dataForm = new FormData();
+      dataForm.append('name', data['name']);
+      dataForm.append('sort', data['sort']);
+      dataForm.append('walletDiscount', data['walletDiscount']);
+      dataForm.append('file', data['file']);
+      dataForm.append('countryId', data['countryId']);
+      dataForm.append('supplyTypeId', data['supplyTypeId']);
+     
+debugger
+    return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm , {
       reportProgress: true,
       observe: 'events'
-    }
-    ).pipe(
+    }).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -65,6 +73,7 @@ export class ManufactureService {
   }
 
   deleteBrand(id) {
+    debugger
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),

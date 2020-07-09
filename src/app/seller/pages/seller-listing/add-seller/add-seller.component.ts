@@ -54,11 +54,11 @@ export class AddSellerComponent implements OnInit {
         this.editMode = id['id'] != null
         if(!this.id)
         {
-          this.sellerTitle = "Add New Sellers";
+          this.sellerTitle = "Add New Seller";
         }
         if(this.id)
         {
-          this.sellerTitle = "Edit Sellers";
+          this.sellerTitle = "Edit Seller";
         }
          this.initForm()
         if(this.id)

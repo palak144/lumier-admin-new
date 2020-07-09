@@ -16,35 +16,35 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 })
 export class CustomerGroupComponent implements OnInit {
 
-  
-  customerList:any[];
+
+  customerList: any[];
   totalCount: number;
   page: number = 0;
   searchKey: string;
   searchValue: string;
-  action:string;
+  action: string;
   Date = new Date();
-  selectLang : string = "English"; 
+  selectLang: string = "English";
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
 
-   // Real time search
-   searchTerms$ = new Subject<string>();
-   searchBar: any ="";
-   private _unsubscribe = new Subject<boolean>();
+  // Real time search
+  searchTerms$ = new Subject<string>();
+  searchBar: any = "";
+  private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
 
   constructor(
-    private router: Router, 
-    private route : ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private customerService: CustomerService,
     private utilityService: UtilityService,
-    private excelService:ExcelServiceService,
+    private excelService: ExcelServiceService,
     private toastr: ToastrService,
 
     private confirmationService: ConfirmationService
-    ) {}
+  ) { }
 
   ngOnInit() {
     this.initiateSearch();
@@ -92,13 +92,13 @@ export class CustomerGroupComponent implements OnInit {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        
-        if(exportAll == "true"){         
+
+        if (exportAll == "true") {
           this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
           this.exportAll = "false"
         }
       }, error => {
-        
+
         this.utilityService.routingAccordingToError(error);
       })
   }
@@ -127,12 +127,12 @@ export class CustomerGroupComponent implements OnInit {
   }
 
 
-  onAddCustomerGroup(){
-    this.router.navigate(['../newGroup'],{relativeTo : this.route})
+  onAddCustomerGroup() {
+    this.router.navigate(['../newGroup'], { relativeTo: this.route })
   }
 
   getDropDownValue1(event, id) {
-    if(event.currentTarget.firstChild.data === 'Delete') {
+    if (event.currentTarget.firstChild.data === 'Delete') {
 
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
@@ -149,27 +149,27 @@ export class CustomerGroupComponent implements OnInit {
         reject: () => {
           this.action = null;
         }
-      
+
       });
 
     }
-    if(event.currentTarget.firstChild.data === 'Edit'){
-      
-          this.router.navigate(['../','editGroup',id], {relativeTo: this.route})
-          
+    if (event.currentTarget.firstChild.data === 'Edit') {
+
+      this.router.navigate(['../', 'editGroup', id], { relativeTo: this.route })
+
     }
   }
 
-  exportAsXLSX(id:number) {
-    
-    if (id==0){
-      
+  exportAsXLSX(id: number) {
+
+    if (id == 0) {
+
       this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
     }
-    else{
-      
+    else {
+
       this.exportAll = "true"
-     this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
+      this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
     }
-   }
+  }
 }

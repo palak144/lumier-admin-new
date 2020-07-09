@@ -28,11 +28,6 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'new',
-          component: AddManufacturerBrandComponent,
-          
-        },
-        {
           path: 'categories',
           component: CategoriesComponent,
           data: {
@@ -40,17 +35,36 @@ const routes: Routes = [{
           }
         },
         {
+          path: 'new',
+          component: AddManufacturerBrandComponent,
+          
+        },
+       
+        {
           path: 'new-category',
           component: AddNewCategoryComponent,
           
         },
         {
+<<<<<<< HEAD
           path: 'parent-categories',
           component: ParentCategoryComponent,
           data: {
             title: 'Parent Categories'
           }
         },
+=======
+          path: ':id',
+          component: ManufacturingBrandComponent,
+          
+        },
+        {
+          path: 'edit/:id',
+          component: AddManufacturerBrandComponent,
+          
+        },
+        
+>>>>>>> 2373d23b6d53512632c7bb9d6fd8faf5f73857e1
         
       ]
     }

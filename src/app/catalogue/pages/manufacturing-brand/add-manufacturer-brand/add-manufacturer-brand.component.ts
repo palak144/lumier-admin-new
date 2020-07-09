@@ -1,15 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Subject, of } from 'rxjs';
+import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UsersPermissionsService } from 'app/shared/services/users-permissions.service';
-import { UtilityService } from 'app/shared/services/utility.service';
-import { takeUntil, map, catchError } from 'rxjs/operators';
-import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
+import { takeUntil } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
-import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { SellerService } from 'app/shared/services/seller.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Country {
@@ -21,6 +16,7 @@ interface Country {
   templateUrl: './add-manufacturer-brand.component.html',
   styleUrls: ['./add-manufacturer-brand.component.scss']
 })
+
 export class AddManufacturerBrandComponent implements OnInit {
 
   addBrandForm: FormGroup;
@@ -31,13 +27,24 @@ export class AddManufacturerBrandComponent implements OnInit {
   brand: any;
   brandTitle: string;
   private _unsubscribe = new Subject<boolean>();
-  @ViewChild("fileUpload") fileUpload: ElementRef;files  = [];  
   countries:Country[];
   countryValue: any;
   supplyTypes:any[];
   supplyTypeValue: any;
   selectedFile: any;
-  uploadData: FormData;
+  url: any;
+  base64result: string;
+  selected_supplyType : any 
+  selected_county : any 
+  fileType: any;
+  file: any;
+  imageUrl: any;
+  companyFlagSize: boolean = false;
+  projectFlagSize: boolean = false;
+  compLogofiletype: any;
+  companyLogo: any;
+  orgLogoData: any;
+  dLogo: string;
 
   constructor(
     private router: Router,
@@ -51,6 +58,7 @@ export class AddManufacturerBrandComponent implements OnInit {
 
   ngOnInit(): void {
     this.brandTitle = "Add Manufacturer/ Brand"
+    this.dLogo = "assets/img/defaultImg.png";
 
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -62,44 +70,31 @@ export class AddManufacturerBrandComponent implements OnInit {
         this.getSupplyType();
       }
     )
-    
+    this.selected_county = [];
+    this.selected_supplyType = [];
+
 
   }
 
   get signUpControls() {
     return this.addBrandForm.controls;
   }
- onFileChanged(event) {
-   debugger
-    this.selectedFile = event.target.files[0]
-  }
-
-  onUpload() {
-    debugger
-    this.uploadData = new FormData();
-    this.uploadData.append('myFile', this.selectedFile, this.selectedFile.name);  }
 
   onSubmitBrandForm() {
-    
+    debugger
     this.isSubmittedaddBrandForm = true
     if (this.addBrandForm.invalid) {
       return
     }
-    if(this.countryValue)
-     {
-this.addBrandForm.controls.countryId=this.countryValue;
-     }
-     if(this.supplyTypeValue)
-     {
-this.addBrandForm.controls.supplyTypeId=this.supplyTypeValue;
-     }
     this.addBrandFormDetails = {
       "manufacturerName": this.addBrandForm.get('name').value,
-      "supplyTypeId":this.addBrandForm.get('supplyType').value,
-      "file": this.uploadData
+      "walletDiscount": this.addBrandForm.get('walletDiscount').value,
+      "sort": this.addBrandForm.get('sort').value,
+      "countryId": this.addBrandForm.get('countryId').value,
+      "file": this.addBrandForm.get('file').value,
+      "supplyTypeId":this.addBrandForm.get('supplyTypeId').value,
     }
     if (this.id ) {
-
       this.addBrandFormDetails.id = this.id;
     }
     if (this.editMode) {
@@ -107,21 +102,16 @@ this.addBrandForm.controls.supplyTypeId=this.supplyTypeValue;
       this.brandTitle = "Edit Manufacturer/ Brand Group"
       this.manufactureService.addBrand(this.addBrandFormDetails ).subscribe(
         data => {
-
-this.toastr.success("Customer Group Editted Successfully")
+        this.toastr.success("Customer Group Editted Successfully")
           this.router.navigate(['/customer/customer-groups'],{relativeTo : this.activatedRoute})
         },
         error => {
           this.toastr.error(error.message)
-
         });
-
-
-
     }
     else{
     
-    
+    debugger
     this.manufactureService.addBrand(this.addBrandFormDetails).subscribe(
       data => {
         debugger
@@ -156,6 +146,38 @@ this.toastr.success("Customer Group Editted Successfully")
       }
     )
   }
+
+  fileChangeEvent(fileInput : any){
+  
+    this.fileType = fileInput.target.files[0];
+    var last = this.fileType.name.substring(this.fileType.name.lastIndexOf(".") + 1, this.fileType.name.length); 
+    if(this.fileType.type == "image/jpeg" || this.fileType.type == "image/jpg" || this.fileType.type == "image/png")
+    if (this.fileType.size < 200000) {
+    {
+      this.companyFlagSize = true;
+      this.compLogofiletype = last;
+       let reader = new FileReader();
+       debugger
+        reader.readAsDataURL(this.fileType);
+        debugger
+        reader.onload = (event) => {
+          this.url = reader.result;
+          this.companyLogo = this.url;
+          this.orgLogoData = this.url.substr(this.url.indexOf(',') + 1);
+          document.getElementById('sizeValidations').style.color = 'black';
+  debugger
+        }
+        this.addBrandForm.controls['file'].setValue(this.fileType ? this.fileType.name : '');
+      }
+    }
+      else {
+        this.companyFlagSize = false;
+        debugger
+        document.getElementById('sizeValidations').style.color = '#ffae42';
+        this.addBrandForm.controls['file'].setValue(this.fileType ? '' : '');
+      }
+  }
+
   arrayOfStringsToArrayOfObjects(arr: any[]) {
     const newArray = [];
     debugger
@@ -167,46 +189,37 @@ this.toastr.success("Customer Group Editted Successfully")
     });
     return newArray;
   }
-  getdropdown(event)
-  {
-    debugger
-this.countryValue=event.value;
-  }
-  getdropdown1(event)
-  {
-    debugger
-this.supplyTypeValue=event.value;
-  }
   private initForm(){
     let name = "";
-let supplyType = "";
-let logo = "";
+let supplyTypeId = "";
+let file = "";
+let sort ="";
+let walletDiscount ="";
+
     if(this.editMode){
       this.brandTitle = "Edit Manufacturer/ Brand"
       this.manufactureService.getBrandDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
-        (success:any)=>{
-          
+        (success:any)=>{          
           this.brand=success.data
           this.addBrandForm.patchValue({
             "name" : this.brand.manufacturerName,
-            "file" : this.brand.manufacturerName,
-
+            "sort" : this.brand.sort,
+            "walletDiscount" : this.brand.walletDiscount,
         })
+        this.selected_county= "";
+        this.selected_supplyType = "";
       },
-        error=>{
-          
+        error=>{          
         }
       )
-
       }
     this.addBrandForm = new FormGroup({
       "countryId":new FormControl(null,[Validators.required]),
       "name": new FormControl( name, Validators.required),
-      "supplyTypeId": new FormControl( supplyType, Validators.required),
-      "logo": new FormControl( logo, Validators.required),
-      "sort": new FormControl( '', Validators.required),
-      "walletDiscount": new FormControl( '', Validators.required),
-
+      "supplyTypeId": new FormControl( supplyTypeId, Validators.required),
+      "file": new FormControl( file, Validators.required),
+      "sort": new FormControl( sort, ),
+      "walletDiscount": new FormControl( walletDiscount,),
     });
 
 
