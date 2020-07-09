@@ -81,6 +81,7 @@ export class SellerListingComponent implements OnInit {
       switchMap((term: string) => this.sellerService.getAllSellersSearch(this.page, term ,this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
+      
       this.sellerList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -120,7 +121,6 @@ export class SellerListingComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-    debugger
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
@@ -128,7 +128,6 @@ export class SellerListingComponent implements OnInit {
       
     } 
     else if(!this.countryId){
-debugger
 this.getAllSellers(this.page);
 
     }
@@ -197,11 +196,7 @@ this.getAllSellers(this.page);
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        this.countries = success.data.result;
-       
-    
-       
-  
+        this.countries = success.data;
       },
       error => {
       }
@@ -210,12 +205,12 @@ this.getAllSellers(this.page);
   onChange(deviceValue) {
     if(deviceValue)
 {
+  debugger
   this.countryId=deviceValue;
 }
   else
   {
   }
-  
     this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
 }
 }

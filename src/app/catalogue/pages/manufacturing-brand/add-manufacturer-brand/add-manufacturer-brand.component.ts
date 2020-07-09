@@ -39,7 +39,12 @@ export class AddManufacturerBrandComponent implements OnInit {
   fileType: any;
   file: any;
   imageUrl: any;
-
+  companyFlagSize: boolean = false;
+  projectFlagSize: boolean = false;
+  compLogofiletype: any;
+  companyLogo: any;
+  orgLogoData: any;
+  dLogo: string;
 
   constructor(
     private router: Router,
@@ -53,6 +58,7 @@ export class AddManufacturerBrandComponent implements OnInit {
 
   ngOnInit(): void {
     this.brandTitle = "Add Manufacturer/ Brand"
+    this.dLogo = "assets/img/defaultImg.png";
 
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -85,7 +91,7 @@ export class AddManufacturerBrandComponent implements OnInit {
       "walletDiscount": this.addBrandForm.get('walletDiscount').value,
       "sort": this.addBrandForm.get('sort').value,
       "countryId": this.addBrandForm.get('countryId').value,
-      "file": "",
+      "file": this.addBrandForm.get('file').value,
       "supplyTypeId":this.addBrandForm.get('supplyTypeId').value,
     }
     if (this.id ) {
@@ -94,7 +100,7 @@ export class AddManufacturerBrandComponent implements OnInit {
     if (this.editMode) {
       
       this.brandTitle = "Edit Manufacturer/ Brand Group"
-      this.manufactureService.addBrand(this.addBrandFormDetails, this.file.name ).subscribe(
+      this.manufactureService.addBrand(this.addBrandFormDetails ).subscribe(
         data => {
         this.toastr.success("Customer Group Editted Successfully")
           this.router.navigate(['/customer/customer-groups'],{relativeTo : this.activatedRoute})
@@ -106,7 +112,7 @@ export class AddManufacturerBrandComponent implements OnInit {
     else{
     
     debugger
-    this.manufactureService.addBrand(this.addBrandFormDetails  , this.file.name).subscribe(
+    this.manufactureService.addBrand(this.addBrandFormDetails).subscribe(
       data => {
         debugger
         console.log(event); 
@@ -144,19 +150,32 @@ export class AddManufacturerBrandComponent implements OnInit {
   fileChangeEvent(fileInput : any){
   
     this.fileType = fileInput.target.files[0];
+    var last = this.fileType.name.substring(this.fileType.name.lastIndexOf(".") + 1, this.fileType.name.length); 
     if(this.fileType.type == "image/jpeg" || this.fileType.type == "image/jpg" || this.fileType.type == "image/png")
+    if (this.fileType.size < 200000) {
     {
-       this.file = fileInput.target.files[0];
+      this.companyFlagSize = true;
+      this.compLogofiletype = last;
        let reader = new FileReader();
        debugger
-        reader.readAsDataURL(this.file);
+        reader.readAsDataURL(this.fileType);
         debugger
-       
+        reader.onload = (event) => {
+          this.url = reader.result;
+          this.companyLogo = this.url;
+          this.orgLogoData = this.url.substr(this.url.indexOf(',') + 1);
+          document.getElementById('sizeValidations').style.color = 'black';
+  debugger
+        }
+        this.addBrandForm.controls['file'].setValue(this.fileType ? this.fileType.name : '');
+      }
     }
-    else{
-      debugger
-    }
-  
+      else {
+        this.companyFlagSize = false;
+        debugger
+        document.getElementById('sizeValidations').style.color = '#ffae42';
+        this.addBrandForm.controls['file'].setValue(this.fileType ? '' : '');
+      }
   }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
@@ -185,7 +204,7 @@ let walletDiscount ="";
           this.addBrandForm.patchValue({
             "name" : this.brand.manufacturerName,
             "sort" : this.brand.sort,
-            "walletDscount" : this.brand.walletDscount,
+            "walletDiscount" : this.brand.walletDiscount,
         })
         this.selected_county= "";
         this.selected_supplyType = "";

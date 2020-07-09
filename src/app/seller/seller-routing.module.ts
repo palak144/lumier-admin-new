@@ -23,7 +23,7 @@ const routes: Routes = [{
           path: 'sellers',
           component: SellerListingComponent,
           data: {
-            title: 'Seller-Listing'
+            title: 'Sellers'
           }
         },
         {

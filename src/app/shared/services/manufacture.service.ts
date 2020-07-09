@@ -20,13 +20,13 @@ export class ManufactureService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
-  addBrand(data , file ) {
+  addBrand(data ) {
       debugger
       const dataForm = new FormData();
       dataForm.append('name', data['name']);
       dataForm.append('sort', data['sort']);
       dataForm.append('walletDiscount', data['walletDiscount']);
-      dataForm.append('file', file);
+      dataForm.append('file', data['file']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
      
@@ -73,6 +73,7 @@ debugger
   }
 
   deleteBrand(id) {
+    debugger
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),

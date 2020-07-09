@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'systemtype',
         component: SystemTypeComponent,
         data: {
-          title: 'System Type'
+          title: 'Supply Type'
         }
       },
       {

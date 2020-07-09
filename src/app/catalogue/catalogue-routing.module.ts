@@ -27,11 +27,6 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'new',
-          component: AddManufacturerBrandComponent,
-          
-        },
-        {
           path: 'categories',
           component: CategoriesComponent,
           data: {
@@ -39,10 +34,27 @@ const routes: Routes = [{
           }
         },
         {
+          path: 'new',
+          component: AddManufacturerBrandComponent,
+          
+        },
+       
+        {
           path: 'new-category',
           component: AddNewCategoryComponent,
           
         },
+        {
+          path: ':id',
+          component: ManufacturingBrandComponent,
+          
+        },
+        {
+          path: 'edit/:id',
+          component: AddManufacturerBrandComponent,
+          
+        },
+        
         
       ]
     }

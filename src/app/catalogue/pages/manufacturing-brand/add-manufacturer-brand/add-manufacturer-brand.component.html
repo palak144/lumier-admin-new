@@ -38,13 +38,20 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Logo</label>
-          <div class="custom-file d-block">
-            <input type="file" #inputFile formControlName="file" accept="image/*" (change)="fileChangeEvent($event)">
-          </div> 
+          <div class="row ">
+            <div class="col-md-2 form-group center">
+                <label for="file">
+                  <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+            </div>
+            <div class="col-md-10 ">
+                <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
+                <span id="sizeValidations">File size should not exceed 200kb</span>
+            </div>
+        </div>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group"> 
           <label>Select Country</label><span class="asterick">*</span>
           <div class="assign-group-dropdown">
             <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary"

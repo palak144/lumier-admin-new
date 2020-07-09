@@ -33,7 +33,7 @@ export const ROUTES: RouteInfo[] = [
       badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
       isExternalLink: false,
       submenu: [
-        { path: '/seller/sellers', title: 'Seller-Listing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+        { path: '/seller/sellers', title: 'Sellers', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         { path: '/seller/seller-activities', title: 'Seller Activities', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         { path: '/seller/seller-payout', title: 'Seller Payout', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
        ]},
@@ -59,7 +59,7 @@ export const ROUTES: RouteInfo[] = [
           badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
           isExternalLink: false,
           submenu: [
-            { path: '/systemsetting/systemtype', title: 'System Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/systemtype', title:'Supply Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/country', title: 'Country', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           
            ]},
