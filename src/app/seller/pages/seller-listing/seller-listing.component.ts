@@ -205,7 +205,7 @@ this.getAllSellers(this.page);
   onChange(deviceValue) {
     if(deviceValue)
 {
-  debugger
+
   this.countryId=deviceValue;
 }
   else
