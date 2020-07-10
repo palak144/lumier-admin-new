@@ -19,7 +19,7 @@ export class SellerService {
   ) {
     this.baseUrl = this.baseService.baseUrl;
 
-  }
+  } 
   addSeller(data) {
     return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
       retry(3),

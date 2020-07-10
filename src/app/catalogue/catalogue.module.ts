@@ -8,6 +8,7 @@ import { AddManufacturerBrandComponent } from './pages/manufacturing-brand/add-m
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { AddNewCategoryComponent } from './pages/categories/add-new-category/add-new-category.component';
 import { CKEditorModule } from 'ckeditor4-angular';
+import { ParentCategoryComponent } from './pages/parent-category/parent-category.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { CKEditorModule } from 'ckeditor4-angular';
     CatalogueRoutingModule,
     CKEditorModule
   ],
-  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent]
+  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent]
 })
 export class CatalogueModule {  }

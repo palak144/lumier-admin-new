@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
-import { SystemSettingsService } from '../../../shared/services/systemSettings.service';
+import { SystemSettingsService } from '../../../shared/services/system-settings.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -80,6 +80,7 @@ export class CountryComponent implements OnInit {
       .subscribe((success: any) => {
       
         this.countriesList = success.data.results;
+        
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
       })
@@ -91,6 +92,7 @@ export class CountryComponent implements OnInit {
         (success: any) => {
          
           this.countriesList = success.data.results;
+          
           this.totalCount = success.data.total;
         },
         error => {
@@ -122,7 +124,7 @@ export class CountryComponent implements OnInit {
     filterGlobal(searchTerm) {
       // indexing starts from 0 in primeng
       this.primeNGTable.first = 0;
-      this.page = 0;
+      this.page = 0; 
       this.searchTerms$.next(searchTerm);
     }
 
@@ -130,7 +132,36 @@ export class CountryComponent implements OnInit {
     this.router.navigate(['../new-country'],{relativeTo : this.activateRoute})
   }
 
-  getCountry()
+  getDropDownValue(event, id) {
+    if(event.currentTarget.firstChild.data === 'Delete') {
+
+      this.confirmationService.confirm({ 
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.systemSettingsService.deleteSeller(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              this.getAllCountries(this.page);
+              // this.customerList = this.customerList.filter((item: any) => {
+              //   return id !== item.customerId
+              // })
+            },
+            error => {
+            }
+          )
+        },
+        reject: () => {
+          this.action = null;
+        }
+    });
+     
+    }
+    if(event.currentTarget.firstChild.data === 'Edit'){
+          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
+          
+    }
+  }
+
+  getCountry() 
   {
     this.systemSettingsService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {

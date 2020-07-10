@@ -48,6 +48,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [
           { path: '/catalogues/manufacturing-brand', title: 'Manufacturer / Brands', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           { path: '/catalogues/categories', title: 'Categories', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+          { path: '/catalogues/parent-categories', title: 'Parent Categories', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         
          ]},
          {

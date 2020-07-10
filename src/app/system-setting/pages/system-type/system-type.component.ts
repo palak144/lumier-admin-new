@@ -32,8 +32,12 @@ export class SystemTypeComponent implements OnInit {
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
+<<<<<<< HEAD
+    private SupplyTypeService:SystemSettingsService,
+=======
     private commonService:CommonServiceService,
     private SystemSettingsService:SystemSettingsService,
+>>>>>>> 2373d23b6d53512632c7bb9d6fd8faf5f73857e1
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
   ) { }

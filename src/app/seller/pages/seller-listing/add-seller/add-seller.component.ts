@@ -9,7 +9,7 @@ import { UtilityService } from '../../../../shared/utility/utility.service';
 import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 interface Country {
-  _id:string,
+  _id:string, 
   country:string
 }
 @Component({
@@ -27,7 +27,7 @@ export class AddSellerComponent implements OnInit {
   seller: any;
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
-  sellerTitle:string;
+  sellerTitle:string; 
   selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
