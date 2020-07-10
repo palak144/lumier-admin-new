@@ -47,7 +47,7 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="supplyList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+      <p-table [value]="supplyList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
           <ng-template pTemplate="header">
               <tr>
                   <th >S No.

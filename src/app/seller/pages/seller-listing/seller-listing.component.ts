@@ -198,7 +198,7 @@ export class SellerListingComponent implements OnInit {
   onChange(deviceValue) {
     if(deviceValue)
 {
-  debugger
+
   this.countryId=deviceValue;
 }
   else
