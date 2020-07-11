@@ -6,7 +6,7 @@
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search" [(ngModel)]="searchBar" />
+          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -67,7 +67,7 @@
               <tr>
                   <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
                   <td><span class="ui-column-title">Full Name</span>{{brand.manufacturerName}}</td>
-                  <td><span class="ui-column-title">Supply Type</span></td>
+                  <td><span class="ui-column-title">Supply Type</span>{{brand.supplyType.name}}</td>
                   <td><span class="ui-column-title">Country</span></td>
                   <td><span class="ui-column-title">Wallet Discount</span>{{brand.walletDiscount}}</td>
                   <td><span class="ui-column-title">Sort</span>{{brand.sort}}</td>

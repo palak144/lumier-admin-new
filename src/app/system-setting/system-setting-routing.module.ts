@@ -16,7 +16,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'systemtype',
+        path: 'supplytype',
         component: SystemTypeComponent,
         data: {
           title: 'Supply Type'

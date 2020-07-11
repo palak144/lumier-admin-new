@@ -47,7 +47,7 @@ export class AddNewCategoryComponent implements OnInit {
     let metaKeyword = "";
     let staticmetaTag = "";
     let description = "";
-    
+     
   
   this.addCategoriesForm = new FormGroup({
      "fname": new FormControl(fname, Validators.required),

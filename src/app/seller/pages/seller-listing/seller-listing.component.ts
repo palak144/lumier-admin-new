@@ -102,13 +102,12 @@ export class SellerListingComponent implements OnInit {
   }
 
   getAllSellersSearch(page, searchBar , exportAll, countryId) {
-  
-    
     this.sellerService.getAllSellersSearch(page, searchBar , exportAll , countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
+        debugger
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -123,20 +122,14 @@ export class SellerListingComponent implements OnInit {
   loadDataLazy(event: LazyLoadEvent) {
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
-    if (!this.searchBar) {
+    if (!this.searchBar && !this.countryId)  {
+      debugger
       this.getAllSellers(this.page);
-      
     } 
-    else if(!this.countryId){
-this.getAllSellers(this.page);
-
-    }
     else {
       this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
     }
-
-    
   }
 
 
@@ -205,7 +198,7 @@ this.getAllSellers(this.page);
   onChange(deviceValue) {
     if(deviceValue)
 {
-  debugger
+
   this.countryId=deviceValue;
 }
   else

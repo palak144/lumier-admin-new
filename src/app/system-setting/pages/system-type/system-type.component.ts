@@ -163,7 +163,18 @@ export class SystemTypeComponent implements OnInit {
      this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
     }
    }
-
+  //  getCountry()
+  //  {
+  //    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+  //      (success:any) => {
+  //        console.log(success);
+  //        this.countries = success.data;
+  //   console.log( this.countries);
+  //      },
+  //      error => {
+  //      }
+  //    )
+  //  }
    onChange(deviceValue) {
      console.log(deviceValue);
      if(deviceValue)

@@ -187,7 +187,7 @@ export class AddCustomerComponent implements OnInit {
     });
     
 
-    this.titles = ['Mr.', 'Miss.', 'Mrs'];
+    this.titles = ['Dr.', 'Ms.', 'Mr', 'Prof.'];
     this.practises = ['Medical', 'Dental', 'Other'];
 
 
