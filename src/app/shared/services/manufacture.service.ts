@@ -55,10 +55,28 @@ debugger
         catchError(this.errorHandler.handleError)
       );
   }
+  getAllParentCategory(page) {
+    debugger
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
     debugger
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getAllParentCategorysSearch(page?, searchKey?, exportAll?, countryId?) {
+    debugger
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
@@ -80,7 +98,14 @@ debugger
         catchError(this.errorHandler.handleError)
       );
   }
-
+  deleteParentCategory(id) {
+    debugger
+    return this.http.delete(this.baseUrl + 'admin/parentCategory/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   updateBrandStatus(statusData: {id: Number; adminStatus: Number }){
     
     return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
