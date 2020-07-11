@@ -39,7 +39,7 @@
                                         <option value="" >Select Language</option>
                                         <option value={{language}} *ngFor="let language of languages">{{language}}
                                         </option>
-                                    </select>
+                                    </select> 
                                     <div *ngIf="isSubmittedaddCountryForm && signUpControls.language.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.language.errors.required">Languages is required</div>
                                     </div>

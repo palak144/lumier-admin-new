@@ -1,0 +1,52 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+      <li>
+          <a [routerLink]="['/catalogues/parent-categories']">Parent Categories</a>
+      </li>
+      <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+      </li>
+      <li>
+        {{parentcategoryTitle}}
+      </li>
+  </ul>
+  <div class="content-header text-left">Add New Parent Categories</div>
+</div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3">
+                  <form class="form" [formGroup]="addParentCategoriesForm" (ngSubmit)="onSubmitParentCategoriesForm($event)">
+                      <div class="form-body">
+                          <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Supply Type</label><span class="asterick">*</span> 
+                                      <input type="text" formControlName="supplytype" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.supplytype.errors }">
+                                      <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.supplytype.errors" class="invalid-feedback">
+                                          <div *ngIf="signUpControls.supplytype.errors.required">Name is required</div>
+                                      </div>   
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label>Name</label><span class="asterick">*</span> 
+                                      <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.fname.errors }">
+                                      <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.fname.errors" class="invalid-feedback">
+                                          <div *ngIf="signUpControls.fname.errors.required">Name is required</div>
+                                      </div>   
+                                  </div>
+                                </div>
+                            </div>                        
+                      </div>
+                      <div class="form-actions right">
+                          <button type="button" [routerLink]="['catalogues/parent-categories']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                          <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

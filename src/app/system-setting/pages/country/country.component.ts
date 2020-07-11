@@ -40,7 +40,7 @@ export class CountryComponent implements OnInit {
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
-  //  countryId: any = null ;
+   countryId: any = null ;
 
    constructor(
     private router:Router, 
@@ -83,7 +83,7 @@ export class CountryComponent implements OnInit {
         
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-      })
+      }) 
     } 
   
     getAllCountries(page) {
@@ -138,12 +138,12 @@ export class CountryComponent implements OnInit {
       this.confirmationService.confirm({ 
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
-          this.systemSettingsService.deleteSeller(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+          this.systemSettingsService.deleteCountry(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               this.getAllCountries(this.page);
-              // this.customerList = this.customerList.filter((item: any) => {
-              //   return id !== item.customerId
-              // })
+              this.countriesList = this.countriesList.filter((item: any) => {
+                return id !== item.countryId
+              }) 
             },
             error => {
             }
@@ -156,7 +156,7 @@ export class CountryComponent implements OnInit {
      
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
+          this.router.navigate(['../edit-country',id], {relativeTo: this.activateRoute})
           
     }
   }

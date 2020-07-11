@@ -44,6 +44,11 @@ const routes: Routes = [
         component: AddCountryComponent,
         
       },
+      {
+        path: 'edit-country/:id',
+        component: AddCountryComponent,
+        
+      },
     ]
   }
 ];
