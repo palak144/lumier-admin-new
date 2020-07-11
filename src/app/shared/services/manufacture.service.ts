@@ -23,15 +23,18 @@ export class ManufactureService {
   addBrand(data ) {
       debugger
       const dataForm = new FormData();
-      dataForm.append('manufacturerName', data['manufacturerName']);
+      dataForm.append('name', data['name']);
       dataForm.append('sort', data['sort']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-      console.log("dataform", dataForm)
-      debugger
-    return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
+     
+debugger
+    return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm , {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -53,7 +56,7 @@ export class ManufactureService {
       );
   }
   getAllParentCategory(page) {
-    debugger
+  
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
@@ -62,7 +65,7 @@ export class ManufactureService {
       );
   }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
-    debugger
+  
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
@@ -71,7 +74,7 @@ export class ManufactureService {
       );
   }
   getAllParentCategorysSearch(page?, searchKey?, exportAll?, countryId?) {
-    debugger
+
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
