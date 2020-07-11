@@ -23,18 +23,15 @@ export class ManufactureService {
   addBrand(data ) {
       debugger
       const dataForm = new FormData();
-      dataForm.append('name', data['name']);
+      dataForm.append('manufacturerName', data['manufacturerName']);
       dataForm.append('sort', data['sort']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-     
-debugger
-    return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm , {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe(
+      console.log("dataform", dataForm)
+      debugger
+    return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );

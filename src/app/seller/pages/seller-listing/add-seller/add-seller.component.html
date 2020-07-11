@@ -1,7 +1,7 @@
 <div class="row container breadcrum-container">
     <ul class="col-sm-12 pl-0">
         <li>
-            <a [routerLink]="['seller/sellers']">Seller</a>
+            <a [routerLink]="['/seller/sellers']">Seller</a>
         </li>
         <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
         </li>
@@ -65,7 +65,7 @@
                                             <div *ngIf="signUpControls.password.errors.required">Password is required</div>
                                             <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
 
-                                         </div>  
+                                        </div>  
                                     </div>
                                 </div>
                               
@@ -84,37 +84,33 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Add CC-Email </label><span class="asterick">*</span> 
+                                        <label>Add CC-Email </label> 
                                         <input type="email" class="form-control border-primary" formControlName="ccEmail" placeholder="Add CC-Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.ccEmail.errors }">
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.ccEmail.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.ccEmail.errors.required">Add CC-Email is required</div>
-                                            <div *ngIf="signUpControls.ccEmail.errors.pattern">Please enter valid email (xyz@abc.com)</div>
-
-                                        </div> 
+                                       
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Photo </label>
-                                      
-                                        <div class="custom-file d-block">
-                              <input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
-                              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                     
+                                        <label>Photo </label><span class="asterick">*</span> 
+                                        <div class="row ">
+                                            <div class="col-md-2 form-group center">
+                                                <label for="file">
+                                                  <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                            </div>
+                                            <div class="col-md-10 ">
+                                                <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
+                                                <span id="sizeValidations">File size should not exceed 200kb</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Mobile </label><span class="asterick">*</span>
+                                        <label>Mobile </label>
                                         <input type="number" formControlName="mobileNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.mobileNo.errors }" >
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.mobileNo.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.mobileNo.errors.required">Mobile No. is required</div>
-                                            <div *ngIf="signUpControls.mobileNo.errors.pattern">Mobile No. must be between 5 to 15 digits
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -163,36 +159,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Pincode</label><span class="asterick">*</span> 
+                                    <label>Pincode</label>
                                     <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" >
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.pincode.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.pincode.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
                                         <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
 
-                                    </div> 
+                                    </div>  -->
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>TIN No.</label>
-                                    <input type="text" formControlName="tin" placeholder="TIN No." class="form-control border-primary" >
-                                  
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Address Proof</label>
-                             
-                                    <div class="custom-file d-block">
-                          <input type="file" class="custom-file-input border-primary" id="inputGroupFile01">
-                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -203,51 +179,51 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Acc Holder Name</label><span class="asterick">*</span> 
+                                    <label>Acc Holder Name</label>
                                     <input type="text" formControlName="accHolderName" placeholder="Acc Holder Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accHolderName.errors }">
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.accHolderName.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accHolderName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.accHolderName.errors.required">Account Holder Name is required</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Acc No.</label><span class="asterick">*</span> 
+                                    <label>Acc No.</label>
                                     <input type="text" formControlName="accountNumber" placeholder="Account Number" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accountNumber.errors }">
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.accountNumber.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accountNumber.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.accountNumber.errors.required">Account Number is required</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>IFSC Code</label><span class="asterick">*</span> 
+                                    <label>IFSC Code</label>
                                     <input type="text" formControlName="IFSCCode" placeholder="IFSC Code" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.IFSCCode.errors }" >
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.IFSCCode.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.IFSCCode.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.IFSCCode.errors.required">IFSC Code is required</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Bank Name</label><span class="asterick">*</span> 
+                                    <label>Bank Name</label>
                                     <input type="text" formControlName="bankName" placeholder="Bank Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.bankName.errors }">
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.bankName.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.bankName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.bankName.errors.required">Bank Name is required</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Type Of Acc.</label><span class="asterick">*</span> 
+                                    <label>Type Of Acc.</label>
                                     <input type="text" formControlName="typeofAccount" placeholder="Type Of Acc." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.typeofAccount.errors }">
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.typeofAccount.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.typeofAccount.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.typeofAccount.errors.required">Type Of Acc. is required</div>
-                                    </div> 
+                                    </div>  -->
                                 </div>
                             </div>
                         </div>
@@ -261,11 +237,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Supply Type</label><span class="asterick">*</span> 
+                                    <label>Supply Type</label>
                                     <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.supplyType.errors }" >
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div> 
+                                    </div>  -->
                                 </div>
                             </div>
                         </div>
@@ -281,7 +257,7 @@
                             </div>
                         </div> -->
                         <div class="form-actions right">
-                            <button type="button" [routerLink]="['seller/sellers']" class="btn btn-raised btn-warning mr-1"> Back
+                            <button type="button" [routerLink]="['/seller/sellers']" class="btn btn-raised btn-warning mr-1"> Back
               </button>
                             <button type="submit" class="btn btn-raised btn-primary">Submit
               </button>

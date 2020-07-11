@@ -34,6 +34,13 @@ export class AddSellerComponent implements OnInit {
   // sellerId:any;
   countries:Country[];
   countryValue: any;
+  companyFlagSize: boolean;
+  compLogofiletype: any;
+  url: any;
+  companyLogo: any;
+  orgLogoData: any;
+  dLogo: string;
+  file: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -44,7 +51,8 @@ export class AddSellerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  
+    this.dLogo = "assets/img/defaultImg.png";
+
    
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -80,22 +88,23 @@ export class AddSellerComponent implements OnInit {
       userName: new FormControl('',[Validators.required]),
       // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
-      ccEmail: new FormControl(null,[Validators.required,  Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      mobileNo:new FormControl(null,[Validators.required, Validators.pattern('^[0-9]{5,15}$')]),
+      ccEmail: new FormControl(null,[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      mobileNo:new FormControl(null,[ Validators.pattern('^[0-9]{5,15}$')]),
       pickupAddress:new FormControl(null,),
       houseNo: new FormControl(null,),
       unitNo: new FormControl(null,),
       buildingName: new FormControl(null,),
       streetName: new FormControl(null,),
-      pincode: new FormControl(null,[Validators.required,Validators.pattern('^[0-9\+\-]{6}$')]),
-    
-      accHolderName: new FormControl(null,[Validators.required]),
-      accountNumber: new FormControl(null,[Validators.required]),
-      IFSCCode: new FormControl(null,[Validators.required]),
-      bankName: new FormControl(null,[Validators.required]),
-      typeofAccount: new FormControl(null,[Validators.required]),
+      file: new FormControl(''),
+      pincode: new FormControl(null,),
+
+      accHolderName: new FormControl(null,),
+      accountNumber: new FormControl(null,),
+      IFSCCode: new FormControl(null,),
+      bankName: new FormControl(null,),
+      typeofAccount: new FormControl(null,),
       commission: new FormControl(null,),
-      supplyType: new FormControl(null,[Validators.required]),
+      supplyType: new FormControl(null,),
       floorNo: new FormControl(null,),
     })
     if(this.id)
@@ -124,6 +133,7 @@ export class AddSellerComponent implements OnInit {
       return
     }
       let data = this.addSellerForm.value;
+      debugger
       if(this.id)
       {
         data.id= this.id;
@@ -139,9 +149,9 @@ this.addSellerForm.controls.countryId=this.countryValue;
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-         
+         debugger
             this.toastr.success('Seller Create Successfully!');
-            this.router.navigate(['seller/sellers']);
+            this.router.navigate(['/seller/sellers']);
   
           },
           error => {
@@ -155,7 +165,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
         (success:any) => {
           // this.addSellerForm.reset();
           this.toastr.success('Seller Update Successfully!');
-          this.router.navigate(['seller/sellers']);
+          this.router.navigate(['/seller/sellers']);
 
         },
         error => {
@@ -182,10 +192,40 @@ this.addSellerForm.controls.countryId=this.countryValue;
       }
     )
   } 
+  fileChangeEvent(fileInput : any){
+  
+    this.file = fileInput.target.files[0];
+    var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
+    if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
+    if (this.file.size < 200000) {
+    {
+      this.companyFlagSize = true;
+      this.compLogofiletype = last;
+       let reader = new FileReader();
+       debugger
+        reader.readAsDataURL(this.file);
+        debugger
+        reader.onload = (event) => {
+          this.url = reader.result;
+          this.companyLogo = this.url;
+          this.orgLogoData = this.url.substr(this.url.indexOf(',') + 1);
+          document.getElementById('sizeValidations').style.color = 'black';
+  debugger
+        }
+        this.addSellerForm.controls['file'].setValue(this.file ? this.file.name : '');
+      }
+    }
+      else {
+        this.companyFlagSize = false;
+        debugger
+        document.getElementById('sizeValidations').style.color = '#ffae42';
+        this.addSellerForm.controls['file'].setValue(this.file ? '' : '');
+      }
+  }
   patchForm(item) {
     this.addSellerForm.controls.countryId.patchValue(item.countryId);
      this.addSellerForm.controls.sellerName.patchValue(item.sellerName);
-
+     this.addSellerForm.controls.sellerName.patchValue(item.file);
    
     this.addSellerForm.controls.userName.patchValue(item.userName);
 
@@ -221,11 +261,8 @@ this.addSellerForm.controls.countryId=this.countryValue;
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        this.countries = this.arrayOfStringsToArrayOfObjects(success.data.result);
-       
-    
-       
-  
+        debugger
+        this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
       }

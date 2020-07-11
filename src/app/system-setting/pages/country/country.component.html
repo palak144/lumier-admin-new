@@ -12,22 +12,8 @@
             </div> 
         </div>
     </form>
-  </div>
-
-  <div class="row">
-    <div class="col-xl-4 col-lg-6 col-md-12"> 
-    </div>
+  
   <div class="col-8 text-right country-add">
-      <!-- <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <div class="dropdown">
-      <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
-      <ul class="dropdown-menu" role="menu">
-          <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
-          <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
-      </ul>
-  </div>
-  </button> -->
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
     <span class="d-lg-block d-none" (click)="onAddcountry()">Add New</span>
@@ -47,10 +33,10 @@
                 <tr>
                     <th style="width:10em">S. No.</th>
                     <th style="width:14em">Country Name</th>
-                    <th style="width: 16em;">Currency</th>
+                    <th style="width: 14em;">Currency</th>
                     <th style="width: 15em;">Languages</th> 
-                    <th style="width: 10em;">Status</th>
-                    <th style="width: 10em;">Edit</th>
+                    <th style="width: 9em;">Status</th>
+                    <th style="width: 6em;">Edit</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-country >

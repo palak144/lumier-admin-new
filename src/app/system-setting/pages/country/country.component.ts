@@ -40,7 +40,7 @@ export class CountryComponent implements OnInit {
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
-  //  countryId: any = null ;
+   countryId: any = null ;
 
    constructor(
     private router:Router, 
@@ -57,7 +57,7 @@ export class CountryComponent implements OnInit {
    this.systemSettingsService.updateCountryStatus(statusData).subscribe(
      (success:any)=>
      {
-     
+     debugger
       this.ngOnInit()
 } )
     }
@@ -78,19 +78,19 @@ export class CountryComponent implements OnInit {
         ))
       )
       .subscribe((success: any) => {
-      
+      debugger
         this.countriesList = success.data.results;
         
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-      })
+      }) 
     } 
   
     getAllCountries(page) {
 
       this.systemSettingsService.getAllCountries(page).subscribe(
         (success: any) => {
-         
+         debugger
           this.countriesList = success.data.results;
           
           this.totalCount = success.data.total;
@@ -109,16 +109,16 @@ export class CountryComponent implements OnInit {
         .pipe(
           takeUntil(this._unsubscribe)
         )
-        // .subscribe((success: any) => {
-        //   this.countryList = success.data.results;
-        //   this.totalCount = success.data.total;
-        //   this.utilityService.resetPage();
-        //   if(exportAll == "true"){
+        .subscribe((success: any) => {
+          this.countriesList = success.data.results;
+          this.totalCount = success.data.total;
+          this.utilityService.resetPage();
+          if(exportAll == "true"){
      
-        //     this.excelService.exportAsExcelFile(this.countryList, 'Seller List')
-        //     this.exportAll = "false"L
-        //   }
-        // })
+            this.excelService.exportAsExcelFile(this.countriesList, 'Seller List')
+            this.exportAll = "false"
+          }
+        })
     }
 
     filterGlobal(searchTerm) {
@@ -138,12 +138,13 @@ export class CountryComponent implements OnInit {
       this.confirmationService.confirm({ 
         message: 'Are you sure that you want to perform this action?',
         accept: () => {
-          this.systemSettingsService.deleteSeller(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+          this.systemSettingsService.deleteCountry(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
+              debugger
               this.getAllCountries(this.page);
-              // this.customerList = this.customerList.filter((item: any) => {
-              //   return id !== item.customerId
-              // })
+              this.countriesList = this.countriesList.filter((item: any) => {
+                return id !== item.countryId
+              }) 
             },
             error => {
             }
@@ -156,7 +157,7 @@ export class CountryComponent implements OnInit {
      
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
+          this.router.navigate(['../edit-country',id], {relativeTo: this.activateRoute})
           
     }
   }
@@ -165,11 +166,8 @@ export class CountryComponent implements OnInit {
   {
     this.systemSettingsService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
         this.countries = success.data.result;
-       
-    
-       
-  
       },
       error => {
       }

@@ -7,6 +7,7 @@ import { AddManufacturerBrandComponent } from './pages/manufacturing-brand/add-m
 import {CategoriesComponent  } from './pages/categories/categories.component';
 import { AddNewCategoryComponent } from './pages/categories/add-new-category/add-new-category.component';
 import { ParentCategoryComponent } from './pages/parent-category/parent-category.component';
+import { AddParentCategoryComponent } from './pages/parent-category/add-parent-category/add-parent-category.component';
 const routes: Routes = [{
 
   path: '',
@@ -51,6 +52,11 @@ const routes: Routes = [{
           data: {
             title: 'Parent Categories'
           }
+        },
+        {
+          path: 'new-parent-categories',
+          component: AddParentCategoryComponent,
+          
         },
         {
           path: ':id',

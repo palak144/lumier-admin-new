@@ -95,7 +95,7 @@ export class AddSystemSettingComponent implements OnInit {
         (success:any) => {
        
           this.toastr.success('Supply Type Create Successfully!');
-          this.router.navigate(['/systemsetting/systemtype']);
+          this.router.navigate(['/systemsetting/supplytype']);
   
         },
         error => {
@@ -109,7 +109,7 @@ export class AddSystemSettingComponent implements OnInit {
       (success:any) => {
         // this.addSellerForm.reset();
         this.toastr.success('Supply Type Update Successfully!');
-        this.router.navigate(['/systemsetting/systemtype']);
+        this.router.navigate(['/systemsetting/supplytype']);
 
       },
       error => {

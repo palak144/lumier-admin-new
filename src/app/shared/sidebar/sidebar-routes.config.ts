@@ -53,14 +53,14 @@ export const ROUTES: RouteInfo[] = [
          ]},
          {
           path: '/systemsetting',
-          title: 'systemsetting',
+          title: 'System Settings',
           icon: 'ft-users',
           class: 'has-sub',
           badge: '',
           badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
           isExternalLink: false,
           submenu: [
-            { path: '/systemsetting/systemtype', title:'Supply Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/supplytype', title:'Supply Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/country', title: 'Country', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           
            ]},

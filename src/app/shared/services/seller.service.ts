@@ -21,6 +21,30 @@ export class SellerService {
 
   } 
   addSeller(data) {
+    debugger
+    const dataForm = new FormData();
+      dataForm.append('IFSCCode', data['IFSCCode']);
+      dataForm.append('sort', data['accHolderName']);
+      dataForm.append('walletDiscount', data['accountNumber']);
+      dataForm.append('file', data['bankName']);
+      dataForm.append('countryId', data['buildingName']);
+      dataForm.append('supplyTypeId', data['ccEmail']);
+      dataForm.append('commission', data['commission']);
+      dataForm.append('socountryIdrt', data['countryId']);
+      dataForm.append('file', data['file']);
+      dataForm.append('floorNo', data['floorNo']);
+      dataForm.append('houseNo', data['houseNo']);
+      dataForm.append('mobileNo', data['mobileNo']);
+      dataForm.append('password', data['password']);
+      dataForm.append('pickupAddress', data['pickupAddress']);
+      dataForm.append('pincode', data['pincode']);
+      dataForm.append('sellerEmail', data['sellerEmail']);
+      dataForm.append('sellerName', data['sellerName']);
+      dataForm.append('streetName', data['streetName']);
+      dataForm.append('supplyType', data['supplyType']);
+      dataForm.append('unitNo', data['unitNo']);
+      dataForm.append('userName', data['userName']);
+      debugger
     return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -34,6 +58,7 @@ export class SellerService {
     );
   }
   getAllSellers(page) {
+    debugger
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
@@ -43,7 +68,8 @@ export class SellerService {
   }
 
   getAllSellersSearch(page?, searchKey?, exportAll?, countryId?) {
-    
+    debugger
+    (countryId == "null") ? '':page = 0
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(

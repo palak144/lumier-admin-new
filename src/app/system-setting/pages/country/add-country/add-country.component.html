@@ -1,15 +1,15 @@
 <div class="row container breadcrum-container">
-  <ul class="col-sm-12 pl-0">
-      <li>
-          <a [routerLink]="['/systemsetting/country']">Country</a>
-      </li>
-      <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
-      </li>
-      <li>
-          {{countryTitle}}
-      </li>
-  </ul> 
-  <div class="content-header text-left">{{countryTitle}}</div>
+    <ul class="col-sm-12 pl-0">
+        <li>
+            <a [routerLink]="[' /systemsetting/country']">Country</a>
+        </li>
+        <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+        </li>
+        <li>
+            {{countryTitle}}
+        </li>
+    </ul>
+    <div class="content-header text-left">{{countryTitle}}</div>
 </div>
 <div class="row ">
   <div class="col-md-12">
@@ -39,59 +39,67 @@
                                         <option value="" >Select Language</option>
                                         <option value={{language}} *ngFor="let language of languages">{{language}}
                                         </option>
-                                    </select>
+                                    </select> 
                                     <div *ngIf="isSubmittedaddCountryForm && signUpControls.language.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.language.errors.required">Languages is required</div>
                                     </div>
                                 </div>
-                                  <!-- <div class="form-group">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Languages </label><span class="asterick">*</span>
+                                        <select formControlName="language" class="form-control border-primary"
+                                            placeholder="Select Language"
+                                            [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.language.errors }">
+                                            <option value="" >Select Language</option>
+                                            <option value={{language}} *ngFor="let language of languages">{{language}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="isSubmittedaddCountryForm && signUpControls.language.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="signUpControls.language.errors.required">Languages is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group">
                                       <label>Languages</label><span class="asterick">*</span> 
                                       <input type="text" formControlName="languages" class="form-control border-primary" placeholder="Languages" [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
                                       <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors" class="invalid-feedback">
                                           <div *ngIf="signUpControls.languages.errors.required">language is required</div>
                                       </div>
                                   </div> -->
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Currency </label><span class="asterick">*</span>
-                                    <select formControlName="currency" class="form-control border-primary" placeholder="Select Currency" [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
-                                        <option value="" >Select Currency</option>
-                                        <option value={{currency}} *ngFor="let currency of currencies">{{currency}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="isSubmittedaddCountryForm && signUpControls.currency.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.currency.errors.required">Currency is required</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Currency </label><span class="asterick">*</span>
+                                        <select formControlName="currency" class="form-control border-primary"
+                                            placeholder="Select Currency"
+                                            [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
+                                            <option value="" >Select Currency</option>
+                                            <option value={{currency}} *ngFor="let currency of currencies">{{currency}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="isSubmittedaddCountryForm && signUpControls.currency.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="signUpControls.currency.errors.required">Currency is required
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                              </div>
-                              <!-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Status </label><span class="asterick">*</span>
-                                    <select formControlName="status" class="form-control border-primary" placeholder="Select Status">
-                                        <option value="" >Select Status</option>
-                                        <option value={{status}} *ngFor="let status of statuses">{{status}}
-                                        </option>
-                                    </select> -->
-                                    <!-- <div *ngIf="isSubmittedaddCountryForm && signUpControls.status.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.title.errors.required">Status is required</div>
-                                    </div> -->
-                                <!-- </div>
-                              </div>  -->
-                          </div>
-                          
-                      </div>
-                      <div class="form-actions right">
-                          <button type="button" [routerLink]="['/systemsetting/country']" class="btn btn-raised btn-warning mr-1"> Back
-            </button>
-                          <button type="submit" class="btn btn-raised btn-primary">Submit
-            </button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions right">
+                            <button type="button" [routerLink]="['/systemsetting/country']"
+                                class="btn btn-raised btn-warning mr-1"> Back
+                            </button>
+                            <button type="submit" class="btn btn-raised btn-primary">Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

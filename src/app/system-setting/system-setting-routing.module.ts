@@ -16,7 +16,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'systemtype',
+        path: 'supplytype',
         component: SystemTypeComponent,
         data: {
           title: 'Supply Type'
@@ -41,6 +41,11 @@ const routes: Routes = [
       },
       {
         path: 'new-country',
+        component: AddCountryComponent,
+        
+      },
+      {
+        path: 'edit-country/:id',
         component: AddCountryComponent,
         
       },

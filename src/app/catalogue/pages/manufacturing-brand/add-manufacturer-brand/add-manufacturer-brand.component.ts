@@ -36,7 +36,6 @@ export class AddManufacturerBrandComponent implements OnInit {
   base64result: string;
   selected_supplyType : any 
   selected_county : any 
-  fileType: any;
   file: any;
   imageUrl: any;
   companyFlagSize: boolean = false;
@@ -117,7 +116,7 @@ export class AddManufacturerBrandComponent implements OnInit {
         debugger
         console.log(event); 
         this.toastr.success("Manufacturer/ Brand Added Successfully")
-        this.router.navigate(['/catalogues/manufacturing-brand'],{relativeTo : this.activatedRoute})
+        // this.router.navigate(['/catalogues/manufacturing-brand'],{relativeTo : this.activatedRoute})
       },
       error => {
         this.toastr.error(error.message)
@@ -149,16 +148,16 @@ export class AddManufacturerBrandComponent implements OnInit {
 
   fileChangeEvent(fileInput : any){
   
-    this.fileType = fileInput.target.files[0];
-    var last = this.fileType.name.substring(this.fileType.name.lastIndexOf(".") + 1, this.fileType.name.length); 
-    if(this.fileType.type == "image/jpeg" || this.fileType.type == "image/jpg" || this.fileType.type == "image/png")
-    if (this.fileType.size < 200000) {
+    this.file = fileInput.target.files[0];
+    var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
+    if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
+    if (this.file.size < 200000) {
     {
       this.companyFlagSize = true;
       this.compLogofiletype = last;
        let reader = new FileReader();
        debugger
-        reader.readAsDataURL(this.fileType);
+        reader.readAsDataURL(this.file);
         debugger
         reader.onload = (event) => {
           this.url = reader.result;
@@ -167,14 +166,14 @@ export class AddManufacturerBrandComponent implements OnInit {
           document.getElementById('sizeValidations').style.color = 'black';
   debugger
         }
-        this.addBrandForm.controls['file'].setValue(this.fileType ? this.fileType.name : '');
+        this.addBrandForm.controls['file'].setValue(this.file ? this.file.name : '');
       }
     }
       else {
         this.companyFlagSize = false;
         debugger
         document.getElementById('sizeValidations').style.color = '#ffae42';
-        this.addBrandForm.controls['file'].setValue(this.fileType ? '' : '');
+        this.addBrandForm.controls['file'].setValue(this.file ? '' : '');
       }
   }
 

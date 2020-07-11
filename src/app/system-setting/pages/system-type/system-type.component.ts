@@ -56,7 +56,7 @@ export class SystemTypeComponent implements OnInit {
  
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
-    if (!this.searchBar) {
+    if (!this.searchBar && !this.countryId) {
       this.getAllSupplyType(this.page);
       
     } 
@@ -122,8 +122,8 @@ export class SystemTypeComponent implements OnInit {
     this.primeNGTable.first = 0;
     this.page = 0;
     this.searchTerms$.next(searchTerm);
-  }
-  getDropDownValue(event, id) {
+  } 
+  getDropDownValue(event, id) { 
     if(event.currentTarget.firstChild.data === 'Delete') {
 
       this.confirmationService.confirm({
@@ -163,18 +163,18 @@ export class SystemTypeComponent implements OnInit {
      this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
     }
    }
-   getCountry()
-   {
-     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-       (success:any) => {
-         console.log(success);
-         this.countries = success.data;
-    console.log( this.countries);
-       },
-       error => {
-       }
-     )
-   }
+  //  getCountry()
+  //  {
+  //    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+  //      (success:any) => {
+  //        console.log(success);
+  //        this.countries = success.data;
+  //   console.log( this.countries);
+  //      },
+  //      error => {
+  //      }
+  //    )
+  //  }
    onChange(deviceValue) {
      console.log(deviceValue);
      if(deviceValue)
@@ -187,5 +187,15 @@ export class SystemTypeComponent implements OnInit {
    
      this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
  }
-
+ getCountry()
+ {
+   this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+     (success:any) => {
+       console.log(success);
+       this.countries = success.data;
+     },
+     error => {
+     }
+   )
+ }
 }

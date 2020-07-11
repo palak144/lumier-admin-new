@@ -1,14 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UtilityService } from 'app/shared/utility/utility.service'; 
-import { SystemSettingsService } from '../../../shared/services/system-settings.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
-import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UtilityService } from 'app/shared/utility/utility.service';
+import { SellerService } from 'app/shared/services/seller.service';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { SystemSettingsService } from '../../../shared/services/system-settings.service';
+interface Action {
+  name:string, 
+  code:string
+}
 @Component({
   selector: 'app-parent-category',
   templateUrl: './parent-category.component.html',
@@ -39,6 +44,43 @@ export class ParentCategoryComponent implements OnInit {
     private excelService:ExcelServiceService,
   ) { }
 
+  // parentcategoriesList:any[];
+  // actions:Action[];
+  // actionListFromAPI:string[];
+  // page:number = 0;
+  // parentcategories:any;
+  // totalCount: number;
+  // action:string;
+  // id: number;
+  // status:string
+  // countries:any[];
+
+   // Real time search
+  //  searchTerms$ = new Subject<string>();
+  //  searchBar: any = "";
+  //  private _unsubscribe = new Subject<boolean>();
+  // exportAll: string = "false";
+  //  countryId: any = null ;
+
+  //  constructor(
+  //   private router:Router, 
+  //   private activateRoute : ActivatedRoute,
+  //   private utilityService:UtilityService,
+  //   // private catalogueService:CatalogueService,
+  //   private confirmationService: ConfirmationService,
+  //   private excelService:ExcelServiceService,
+  //   ) {}
+    setStatus(id:Number,adminStatus:Number){
+
+      let statusData = {id,adminStatus}
+      
+//    this.sellerService.updateSellerStatus(statusData).subscribe(
+//      (success:any)=>
+//      {
+     
+//       this.ngOnInit()
+// } )
+    }
   ngOnInit() {
     this.initiateSearch();
     this.getCountry();
@@ -181,4 +223,8 @@ this.getAllParentCategory(this.page);
     
       this.getAllParentCategorysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
   }
+  onAddParentCategories(){
+    this.router.navigate(['../new-parent-categories'],{relativeTo : this.activateRoute})
+  }
+
 }
