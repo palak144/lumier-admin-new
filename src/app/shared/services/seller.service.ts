@@ -21,7 +21,7 @@ export class SellerService {
 
   } 
   addSeller(data) {
-    debugger
+    
     const dataForm = new FormData();
       dataForm.append('IFSCCode', data['IFSCCode']);
       dataForm.append('sort', data['accHolderName']);
@@ -44,7 +44,7 @@ export class SellerService {
       dataForm.append('supplyType', data['supplyType']);
       dataForm.append('unitNo', data['unitNo']);
       dataForm.append('userName', data['userName']);
-      debugger
+      
     return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -58,7 +58,7 @@ export class SellerService {
     );
   }
   getAllSellers(page) {
-    debugger
+    
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
@@ -68,7 +68,7 @@ export class SellerService {
   }
 
   getAllSellersSearch(page?, searchKey?, exportAll?, countryId?) {
-    debugger
+    
     (countryId == "null") ? '':page = 0
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/seller',

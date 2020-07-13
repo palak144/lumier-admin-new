@@ -21,30 +21,28 @@ export class ManufactureService {
 
   }
   addBrand(data ) {
-      debugger
-      const dataForm = new FormData();
+    const dataForm = new FormData();
+
+      
+      if(data.id != null){
+        
+        dataForm.append('id', data['id']);
+      }
       dataForm.append('manufacturerName', data['manufacturerName']);
-      dataForm.append('sort', data['sort']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
+      dataForm.append('logoName', data['logoName']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
       console.log("dataform", dataForm)
-      debugger
+      
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-  updateBrand(data)
-  {
-    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
   getAllBrands(page) {
-    debugger
+    
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
@@ -53,7 +51,7 @@ export class ManufactureService {
       );
   }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
-    debugger
+    
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
@@ -70,7 +68,7 @@ export class ManufactureService {
   }
 
   deleteBrand(id) {
-    debugger
+    
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),
@@ -87,7 +85,7 @@ export class ManufactureService {
       );
   }
   public upload(formData) {
-debugger
+
     return this.http.post<any>(this.baseUrl, formData, {  
         reportProgress: true,  
         observe: 'events'  
