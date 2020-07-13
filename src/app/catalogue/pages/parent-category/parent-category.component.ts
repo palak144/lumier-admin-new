@@ -74,12 +74,12 @@ export class ParentCategoryComponent implements OnInit {
 
       let statusData = {id,adminStatus}
       
-//    this.sellerService.updateSellerStatus(statusData).subscribe(
-//      (success:any)=>
-//      {
+   this.manufactureService.updateparentCategoryStatus(statusData).subscribe(
+     (success:any)=>
+     {
      
-//       this.ngOnInit()
-// } )
+      this.ngOnInit()
+} )
     }
   ngOnInit() {
     this.initiateSearch();

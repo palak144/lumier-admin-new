@@ -46,6 +46,13 @@ debugger
       catchError(this.errorHandler.handleError)
     );
   }
+  addParentCategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getAllBrands(page) {
     debugger
     const params = { page: page }
@@ -109,6 +116,14 @@ debugger
   updateBrandStatus(statusData: {id: Number; adminStatus: Number }){
     
     return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  updateparentCategoryStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/parentCategory', statusData)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
