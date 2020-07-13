@@ -94,14 +94,20 @@ addSupply(data) {
       );
   }
 
-  deleteCountry(id) {
+  deleteSeller(id) {
     return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
 }
-
+deleteCountry(id) {
+  return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
+  .pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
+}
   deleteSupply(id) {
     return this.http.delete(this.baseUrl + 'admin/supplyType/' + id)
       .pipe(

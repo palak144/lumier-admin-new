@@ -22,8 +22,6 @@ export class ManufactureService {
   }
   addBrand(data ) {
     const dataForm = new FormData();
-
-      
       if(data.id != null){
         
         dataForm.append('id', data['id']);
@@ -37,6 +35,21 @@ export class ManufactureService {
       console.log("dataform", dataForm)
       
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
+     
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  updateBrand(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  addParentCategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -50,10 +63,29 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
+  getAllParentCategory(page) {
+  
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
     
+  
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getAllParentCategorysSearch(page?, searchKey?, exportAll?, countryId?) {
+
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
@@ -75,10 +107,25 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-
+  deleteParentCategory(id) {
+    debugger
+    return this.http.delete(this.baseUrl + 'admin/parentCategory/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   updateBrandStatus(statusData: {id: Number; adminStatus: Number }){
     
     return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  updateparentCategoryStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/parentCategory', statusData)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
