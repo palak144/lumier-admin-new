@@ -29,7 +29,9 @@ export class AddParentCategoryComponent implements OnInit {
   supplyTypeValue: any;
   selected_permission:any
   addPerGroupFormDetails: { groupName: any; countries: any[]; };
-
+  ParentcategoryData:any;
+  editMode: boolean;
+  id: number;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -40,8 +42,27 @@ export class AddParentCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.parentcategoryTitle = "Add New Parent Categories";
+    this.activatedRoute.params.subscribe(
+      (id: Params) => {
+        this.id = +id['id']
+       console.log(this.id);
+        // this.sellerId=this.id;
+        this.editMode = id['id'] != null
+        if(this.id)
+        {
+          this.getParentCategoryDetails(this.id);
+        }
+        if(!this.id)
+        {
+          this.parentcategoryTitle = "Add New Parent Categories";
+        }
+        if(this.id)
+        {
+          this.parentcategoryTitle = "Edit New Parent Categories";
+        }
+      }
+      )
+   
     this.initForm();
     this.getSupplyType();
     this.commonService.getCountry()
@@ -71,6 +92,12 @@ export class AddParentCategoryComponent implements OnInit {
     let data = this.addParentCategoriesForm.value;
     console.log(data);
     debugger
+    if(this.id)
+    {
+      data.id= this.id;
+    }
+    if(!this.id)
+    {
     this.manufactureService.addParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
   console.log(success);
@@ -83,6 +110,22 @@ export class AddParentCategoryComponent implements OnInit {
         this.toastr.error('error',error);
       }
     )
+    }
+    if(this.id)
+    {
+     this.manufactureService.updateParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+       (success:any) => {
+         // this.addSellerForm.reset();
+         this.toastr.success('Parent Category Create Successfully!');
+         this.router.navigate(['/catalogues/parent-categories']);
+ 
+ 
+       },
+       error => {
+         this.toastr.error(error.error.message);
+       }
+     )
+    }
 
   } 
 
@@ -139,4 +182,25 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   });
   return newArray;
 }
+ getParentCategoryDetails(id) {
+    this.manufactureService.getParentCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.ParentcategoryData = success.data;
+       console.log( this.ParentcategoryData);
+        this.patchForm(this.ParentcategoryData);
+       
+  
+      },
+      error => {
+      }
+    )
+  }
+  patchForm(item)
+  {
+    this.addParentCategoriesForm.controls.categoryName.patchValue(item.categoryName);
+    this.addParentCategoriesForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
+    this.addParentCategoriesForm.controls.countries.patchValue(item.countries);
+
+  }
 }
