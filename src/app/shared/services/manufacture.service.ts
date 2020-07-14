@@ -54,6 +54,13 @@ export class ManufactureService {
       catchError(this.errorHandler.handleError)
     );
   }
+  updateParentCategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getAllBrands(page) {
     
     const params = { page: page }
@@ -98,7 +105,14 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-
+  getParentCategoryDetails(id)
+  {
+    return this.http.get(this.baseUrl + 'admin/parentCategory/' + id)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   deleteBrand(id) {
     
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)

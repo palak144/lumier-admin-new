@@ -171,7 +171,7 @@ this.getAllParentCategory(this.page);
           }
         })
     }
-    getDropDownValue1(event, id) {
+    getDropDownValue(event, id) {
 
       if(event.currentTarget.firstChild.data === 'Delete') {
   

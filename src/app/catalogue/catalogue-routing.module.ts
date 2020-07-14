@@ -59,6 +59,11 @@ const routes: Routes = [{
           
         },
         {
+          path: 'edit/:id',
+          component: AddParentCategoryComponent,
+          
+        },
+        {
           path: ':id',
           component: ManufacturingBrandComponent,
           

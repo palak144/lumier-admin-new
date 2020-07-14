@@ -66,7 +66,10 @@
                   <td><span class="ui-column-title">Supply Type</span>{{category.supplyType.name}}</td>
                   
                   <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
-                  <td></td>
+                  <td ><span class="ui-column-title">Country</span>
+                    <ng-container *ngFor="let country of category.countries">
+                        <span>{{country.itemName}}</span>         
+                  </ng-container></td>
                   <td >
                       <span class="ui-column-title ">Status</span> 
                       
