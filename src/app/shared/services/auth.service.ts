@@ -41,7 +41,6 @@ export class AuthService {
   }
 
   resetPassword(data, verificationLink) {
-    // console.log(data, verificationLink);
     return this.http
       .post(this.baseUrl + 'verify/' + verificationLink, data)
       .pipe(

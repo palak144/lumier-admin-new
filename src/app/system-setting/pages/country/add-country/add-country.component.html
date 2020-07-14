@@ -1,7 +1,7 @@
 <div class="row container breadcrum-container">
     <ul class="col-sm-12 pl-0">
         <li>
-            <a [routerLink]="[' /systemsetting/country']">Country</a>
+            <a [routerLink]="['/systemsetting/country']">Country</a>
         </li>
         <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
         </li>
@@ -33,42 +33,29 @@
                               </div>
                               <div class="col-md-6">
                                   <div class="form-group">
-                                    <label>Regional Languages </label><span class="asterick">*</span>
-                                    <p-dropdown [options]="languages" formControlName="regionalLanguage" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Language"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.regionalLanguage.errors }">
+                                    <label>Language</label><span class="asterick">*</span>
+                                    <div class="assign-group-dropdown">
+                                    <p-dropdown [options]="languages" formControlName="languages" styleClass="form-control border-primary" (onChange)="getdropdown1($event)"  filter="true" placeholder="Select Language"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
                                     </p-dropdown>
-                                    <div *ngIf="isSubmittedaddCountryForm && signUpControls.regionalLanguage.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.regionalLanguage.errors.required">Language is required</div>
+                                    <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.languages.errors.required">Language is required</div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
                           </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Local Languages </label>
-                                        <select formControlName="localLanguage" class="form-control border-primary"
-                                            placeholder="Select Language"
-                                            [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.localLanguage.errors }">
-                                            <option value="" >Select Local Language</option>
-                                            <option value={{language}} *ngFor="let language of languages">{{language}}
-                                            </option>
-                                        </select>
-                                        <!-- <div *ngIf="isSubmittedaddCountryForm && signUpControls.localLanguage.errors"
-                                            class="invalid-feedback">
-                                            <div *ngIf="signUpControls.localLanguage.errors.required">Language is required
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>                          
+                            <div class="row">                         
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Currency </label><span class="asterick">*</span>
-                                        <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
+                                        <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddCountryForm && signUpControls.currency.errors"
                                             class="invalid-feedback">
                                             <div *ngIf="signUpControls.currency.errors.required">Currency is required
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>

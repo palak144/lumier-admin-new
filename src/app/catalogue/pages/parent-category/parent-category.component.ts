@@ -44,32 +44,6 @@ export class ParentCategoryComponent implements OnInit {
     private excelService:ExcelServiceService,
   ) { }
 
-  // parentcategoriesList:any[];
-  // actions:Action[];
-  // actionListFromAPI:string[];
-  // page:number = 0;
-  // parentcategories:any;
-  // totalCount: number;
-  // action:string;
-  // id: number;
-  // status:string
-  // countries:any[];
-
-   // Real time search
-  //  searchTerms$ = new Subject<string>();
-  //  searchBar: any = "";
-  //  private _unsubscribe = new Subject<boolean>();
-  // exportAll: string = "false";
-  //  countryId: any = null ;
-
-  //  constructor(
-  //   private router:Router, 
-  //   private activateRoute : ActivatedRoute,
-  //   private utilityService:UtilityService,
-  //   // private catalogueService:CatalogueService,
-  //   private confirmationService: ConfirmationService,
-  //   private excelService:ExcelServiceService,
-  //   ) {}
     setStatus(id:Number,adminStatus:Number){
 
       let statusData = {id,adminStatus}
@@ -104,16 +78,11 @@ export class ParentCategoryComponent implements OnInit {
 
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
-    if (!this.searchBar) {
+    if (!this.searchBar && !this.countryId) {
    
       this.getAllParentCategory(this.page);
       
     } 
-    else if(!this.countryId){
-
-this.getAllParentCategory(this.page);
-
-    }
     else {
       this.getAllParentCategorysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
     
@@ -131,9 +100,7 @@ this.getAllParentCategory(this.page);
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.countries = success.data;
-   console.log( this.countries);
       },
       error => {
       }
@@ -142,7 +109,6 @@ this.getAllParentCategory(this.page);
   getAllParentCategory(page) {
     this.manufactureService.getAllParentCategory(page).subscribe(
       (success: any) => {
-      console.log(success);
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
       },
@@ -160,7 +126,6 @@ this.getAllParentCategory(this.page);
           takeUntil(this._unsubscribe)
         )
         .subscribe((success: any) => {
-     console.log(success);
           this.categoriesList = success.data.results;
           this.totalCount = success.data.total;
           this.utilityService.resetPage();

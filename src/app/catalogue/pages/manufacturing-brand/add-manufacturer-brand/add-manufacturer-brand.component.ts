@@ -121,7 +121,6 @@ export class AddManufacturerBrandComponent implements OnInit {
     
     this.manufactureService.addBrand(this.addBrandFormDetails).subscribe(
       data => {
-        console.log(event); 
         this.toastr.success("Manufacturer/ Brand Added Successfully")
         this.router.navigate(['/catalogues/manufacturing-brand'],{relativeTo : this.activatedRoute})
       },

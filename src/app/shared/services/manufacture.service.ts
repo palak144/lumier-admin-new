@@ -23,7 +23,6 @@ export class ManufactureService {
   addBrand(data ) {
     const dataForm = new FormData();
       if(data.id != null){
-        
         dataForm.append('id', data['id']);
       }
       dataForm.append('manufacturerName', data['manufacturerName']);
@@ -32,7 +31,6 @@ export class ManufactureService {
       dataForm.append('logoName', data['logoName']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-      console.log("dataform", dataForm)
       
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
      

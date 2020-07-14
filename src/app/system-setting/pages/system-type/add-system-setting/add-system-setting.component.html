@@ -17,7 +17,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Supply Type</label><span class="asterick">*</span> 
-          <input type="text" class="form-control" placeholder="Supply Type" formControlName="name"
+          <input type="text" class="form-control border-primary" placeholder="Supply Type" formControlName="name"
             [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.name.errors }">
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
@@ -42,23 +42,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="row">
-  
-      <div class="col-md-6">
-        <div class="form-group"> 
-          <label>Status</label><span class="asterick">*</span>
-          <select class="form-control" id="basicSelect" formControlName="status"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.status.errors }">
-            <option >Active</option>
-            <option>Inactive</option>
-          </select>
-          <div *ngIf="isSubmittedaddSellerForm && signUpControls.status.errors" class="invalid-feedback">
-            <div *ngIf="signUpControls.status.errors.required">Status is required</div>
-          
-        </div>
-      </div>    
-    </div>
-</div> -->
   </div> 
   <div class="form-actions right">
     <button type="button" [routerLink]="['/systemsetting/supplytype']" class="btn btn-raised btn-warning mr-1"> Back

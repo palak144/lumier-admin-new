@@ -20,7 +20,6 @@ export class AddNewCategoryComponent implements OnInit {
   }
 
   onSubmitCategoriesForm(event) {
-    console.log(event,this.addCategoriesForm);
     event.preventDefault();
     this.isSubmittedaddCategoriesForm = true
     if (this.addCategoriesForm.invalid) {

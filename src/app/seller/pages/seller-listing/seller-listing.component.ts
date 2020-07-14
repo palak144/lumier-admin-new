@@ -81,7 +81,6 @@ export class SellerListingComponent implements OnInit {
       switchMap((term: string) => this.sellerService.getAllSellersSearch(this.page, term ,this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-      console.log(success);
       this.sellerList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -91,7 +90,6 @@ export class SellerListingComponent implements OnInit {
   getAllSellers(page) {
     this.sellerService.getAllSellers(page).subscribe(
       (success: any) => {
-        console.log(success);
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
       },

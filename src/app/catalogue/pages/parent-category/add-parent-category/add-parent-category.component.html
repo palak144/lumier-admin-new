@@ -9,53 +9,54 @@
         {{parentcategoryTitle}}
       </li>
   </ul>
-  <div class="content-header text-left">Add New Parent Categories</div>
+  <div class="content-header text-left">Add New Parent Category</div>
 </div>
 <div class="row ">
   <div class="col-md-12">
-      <div class="card">
+      <div class="pt-3">
           <div class="card-content">
-              <div class="px-3">
+              <div class="">
                   <form class="form" [formGroup]="addParentCategoriesForm" (ngSubmit)="onSubmitParentCategoriesForm($event)">
                       <div class="form-body">
                           <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                             <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label>Supply Type</label><span class="asterick">*</span> 
-                                      <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control border-primary"
-                                        [(ngModel)]="selected_supplyType" placeholder="Select Supply Type"
-                                        [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors }">
-                                      </p-dropdown>
-                                            <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
-                                        </div>
-                                        </div>  
-                                  </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="categoryName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors }">
+                                    <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
+                                    </div>   
                                 </div>
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label>Name</label><span class="asterick">*</span> 
-                                      <input type="text" formControlName="categoryName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors }">
-                                      <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
-                                          <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
-                                      </div>   
-                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group"> 
+                                  <label for="country">Select Countries</label><span class="asterick">*</span> 
+                                  <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListCountry" formControlName="countries" [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
+                                    disabled>
+                                </angular2-multiselect>
+                                <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.countries.errors" class="invalid-feedback">
+                                  <div *ngIf="signUpControls.countries.errors.required">Country is required</div>
                                 </div>
+                              </div>
+                              </div>
                             </div>                        
                       </div>
                       <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group"> 
-                              <label for="country">Select Countries</label><span class="asterick">*</span> 
-                              <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListCountry" formControlName="countries" [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
-                                disabled>
-                            </angular2-multiselect>
-                            <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.countries.errors" class="invalid-feedback">
-                              <div *ngIf="signUpControls.countries.errors.required">Country is required</div>
+                     
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Supply Type</label><span class="asterick">*</span> 
+                                <div class="assign-group-dropdown">
+                                  <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                  [(ngModel)]="selected_supplyType" placeholder="Select Supply Type"
+                                  [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors }">
+                                </p-dropdown>
+                                      <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                      <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+                                  </div>
+                                  </div>  
                             </div>
-                          </div>
                           </div>
                       </div>
                       <div class="form-actions right">
