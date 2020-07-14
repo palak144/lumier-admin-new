@@ -18,6 +18,21 @@ export class SystemSettingsService {
     this.baseUrl = this.baseService.baseUrl;
 
   }
+  
+  getLanguage() {
+    debugger
+    return this.http.get(this.baseUrl + 'admin/language').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCurrency() {
+    debugger
+    return this.http.get(this.baseUrl + 'admin/currency').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 
   addCountry(data) {
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
