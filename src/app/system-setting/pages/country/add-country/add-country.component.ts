@@ -47,11 +47,6 @@ export class AddCountryComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    this.currencies = ['Rupee', 'Doller', 'Pound'];
-
-    this.languages = ['Hindi', 'English'];
-    
-    // this.statuses = ['Active.', 'Inactive.'];
 
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -74,7 +69,7 @@ export class AddCountryComponent implements OnInit {
         // }
 
   this.getCountry(); 
-  
+  this.getLanguage();
       }
     )
   }
@@ -88,9 +83,9 @@ export class AddCountryComponent implements OnInit {
   
   this.addCountryForm = new FormGroup({
      "countryName": new FormControl(countryName, Validators.required),
-     "language": new FormControl(language, Validators.required),
+     "localLanguage": new FormControl(language),
+     "regionalLanguage": new FormControl(language, Validators.required),
      "currency": new FormControl(currency, Validators.required),
-    //  "status": new FormControl(status, Validators.required),
   });
 }
 onSubmitCountryForm() {
@@ -115,7 +110,6 @@ onSubmitCountryForm() {
    if(!this.id)
 
       {
-        console.log('data=========', data);
         this.systemSettingsService.addCountry(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
          
@@ -167,7 +161,6 @@ patchForm(item) {
    this.addCountryForm.controls.countryName.patchValue(item.countryName);
    this.addCountryForm.controls.languages.patchValue(item.languages);
   this.addCountryForm.controls.currency.patchValue(item.currency);
-
 }
 
 getCountry()
@@ -181,7 +174,30 @@ getCountry()
     }
   )
 }
-
+getLanguage()
+{
+  this.systemSettingsService.getLanguage().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      console.log(success);
+      debugger
+      this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+    },
+    error => {
+    }
+  )
+}
+getCurrency()
+{
+  this.systemSettingsService.getCurrency().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      console.log(success);
+      debugger
+      this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+    },
+    error => {
+    }
+  )
+}
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
   arr.forEach(element => {
@@ -192,12 +208,9 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   });
   return newArray;
 }
-
-
 getdropdown(event) 
 {
   this.countryValue = this.countries.find( item => item.value === event.value).label;
-  console.log('===',this.countryValue);
 }
 
 }

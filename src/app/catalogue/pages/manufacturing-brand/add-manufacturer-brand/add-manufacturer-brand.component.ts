@@ -85,10 +85,12 @@ export class AddManufacturerBrandComponent implements OnInit {
     if (this.addBrandForm.invalid) {
       return
     }
-    if(this.addBrandForm.get('walletDiscount').value == null){
+    if(this.addBrandForm.get('walletDiscount').value == null || this.addBrandForm.get('walletDiscount').value < 0 ){
+     
       this.wallet_discount = 0
     }
     else{
+      
       this.wallet_discount = this.addBrandForm.get('walletDiscount').value
     }
     this.addBrandFormDetails = {
