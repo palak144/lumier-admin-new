@@ -48,17 +48,8 @@ export class CategoriesComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private excelService:ExcelServiceService,
     ) {}
-    setStatus(id:Number,adminStatus:Number){
-
-      let statusData = {id,adminStatus}
-      
-//    this.sellerService.updateSellerStatus(statusData).subscribe(
-//      (success:any)=>
-//      {
-     
-//       this.ngOnInit()
-// } )
-    }
+   
+ 
 
   ngOnInit() {
   }
