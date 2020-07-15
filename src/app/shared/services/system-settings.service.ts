@@ -19,23 +19,8 @@ export class SystemSettingsService {
 
   }
 
-  getLanguage() {
-    debugger
-    return this.http.get(this.baseUrl + 'admin/language').pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-  getCurrency() {
-    debugger
-    return this.http.get(this.baseUrl + 'admin/currency').pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-
   addCountry(data) {
-    debugger
+    
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -51,7 +36,7 @@ export class SystemSettingsService {
   }
 
   getCountrydetails(id) {
-    debugger
+    
     return this.http.get(this.baseUrl + 'admin/countrySetting/' + id)
       .pipe(
         retry(3),
@@ -86,7 +71,7 @@ export class SystemSettingsService {
   }
   getCountry() 
   {
-    debugger
+    
     return this.http.get(this.baseUrl + 'admin/countrySetting')
       .pipe(
         retry(3),
@@ -95,7 +80,7 @@ export class SystemSettingsService {
   }
 
   getAllCountriesSearch(page?, searchKey?) {
-    debugger
+    
     const params = { page: page, searchKey: searchKey  }
     return this.http.get(this.baseUrl + 'admin/countrySetting', { params: params })
     .pipe(

@@ -19,22 +19,12 @@
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
-                <option value="">ALL</option>
+                <option value="null">ALL</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.itemName}}</option> 
             </select>
         </fieldset>   
     </div>
   <div class="col-8 text-right">
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <div class="dropdown">
-      <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
-      <ul class="dropdown-menu" role="menu">
-          <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
-          <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
-      </ul>
-  </div>
-  </button>
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
     <span class="d-lg-block d-none" (click)="onAddParentCategories()">Add New</span>
@@ -80,7 +70,6 @@
                               <li [hidden]="category.adminStatus == 0"><a (click)="setStatus(category.id,0, $event)">Inactive</a></li>
                           </ul>
                       </div>
-                                            
                   </td> 
                   <td>
                     <span class="ui-column-title">Action</span>

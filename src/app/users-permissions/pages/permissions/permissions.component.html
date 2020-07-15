@@ -26,8 +26,8 @@
                 <tr>
                     <th style="width:6em">S No.
                     </th>
-                    <th style="width:16em">Country</th>
                     <th>Permission Group Name</th>
+                    <th style="width:16em">Country</th>
                     <th style="width:16em">Permissions</th>
                     <th style="width:6em">Action</th>
                 </tr>
@@ -35,11 +35,11 @@
             <ng-template pTemplate="body" let-user>
                 <tr>
                     <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{user.groupId}}</td>
+                    <td><span class="ui-column-title">Permission Group Name</span>{{user.groupName}}</td>
                     <td ><span class="ui-column-title">Country</span>
                         <ng-container *ngFor="let country of user.countries">
                             <span>{{country.itemName}}</span>         
                       </ng-container></td>
-                    <td><span class="ui-column-title">Permission Group Name</span>{{user.groupName}}</td>
                     <td ><span class="ui-column-title">Permission</span>
                         <a class="text" (click)="open(content, user.permission)"><b>View Permission </b></a>
                         
