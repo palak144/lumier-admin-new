@@ -23,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import {TabMenuModule} from 'primeng/tabmenu';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { QuillModule } from 'ngx-quill';
@@ -71,6 +72,7 @@ import { ToastrModule } from 'ngx-toastr';
     NgxUiLoaderModule,
     TableModule,
     TooltipModule,
+    TabMenuModule,
     AngularEditorModule,
     SafeHtmlPipe,
     QuillModule,
@@ -98,6 +100,7 @@ import { ToastrModule } from 'ngx-toastr';
     NgxUiLoaderModule,
     TableModule,
     TooltipModule,
+    TabMenuModule,
     AngularEditorModule,
     QuillModule,
     ColorPickerModule,

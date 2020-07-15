@@ -1,0 +1,364 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+      <li>
+          <a [routerLink]="['/catalogues/combos']">Combos</a>
+      </li>
+      <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+      </li>
+      <li>
+        {{comboTitle}}
+      </li>
+  </ul>
+  <div class="content-header text-left">Add New Combo</div>
+</div>
+<div class="copy-data">
+    <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Enter Product Id</label><span class="asterick">*</span> 
+                <input type="text" formControlName="productId" class="form-control border-primary" placeholder="Enter Product Id"> 
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-raised btn-primary btn-darken-3 white copy-product">
+                <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+                <span class="d-lg-block d-none" >Copy product data</span>
+            </button>
+        </div>
+    </div>
+</form>
+  </div>
+<div class="row ">
+    <div class="col-md-12">
+        <div class="card-content">
+            <div class="">
+                <form class="form" [formGroup]="addComboForm" (ngSubmit)="onSubmitComboForm($event)">
+                    <div class="form-body">
+                        <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
+                        <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
+                    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Select Country</label><span class="asterick">*</span>
+                                    <div class="assign-group-dropdown">
+                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.countryId.errors }"
+                                    >
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddComboForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Is Sale</label>
+                                    <input type="text" formControlName="isSale" class="form-control border-primary" placeholder="Is Sale"> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.fname.errors }">
+                                    <div *ngIf="isSubmittedaddComboForm && signUpControls.fname.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.fname.errors.required">Name is required</div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>No Discount</label>
+                                    <input type="text" formControlName="noDiscount" class="form-control border-primary" placeholder="No Discount"> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Code</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="code" class="form-control border-primary" placeholder="Code" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.code.errors }">
+                                    <div *ngIf="isSubmittedaddComboForm && signUpControls.code.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.code.errors.required">Code is required</div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Related Products</label>
+                                    <input type="text" formControlName="relatedProducts" class="form-control border-primary" placeholder="Related Products"> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Price</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.price.errors }">
+                                    <div *ngIf="isSubmittedaddComboForm && signUpControls.price.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.price.errors.required">Price is required</div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Short Description</label>
+                                    <input type="text" formControlName="shortDescription" class="form-control border-primary" placeholder="Short Description"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Is Quote only?</label>
+                                    <input type="text" formControlName="isQuote" class="form-control border-primary" placeholder="Is Quote only?"> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <label>Meta Title</label>
+                                  <input type="text" formControlName="metaTitle" class="form-control border-primary" placeholder="Meta Title"> 
+                              </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Images</label>
+                                  <div class="row ">
+                                    <div class="col-md-2 form-group center">
+                                        <label for="file">
+                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                    </div>
+                                    <div class="col-md-10 ">
+                                        <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="images" class="form-control border-primary">
+                                        <span id="sizeValidations">File size should not exceed 200kb</span>
+                                    </div>
+                                </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Meta Description</label>
+                                    <input type="text" formControlName="metaDescription" class="form-control border-primary" placeholder="Meta Description"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Wallet Price</label>
+                                    <input type="text" formControlName="walletPrice" class="form-control border-primary" placeholder="Wallet Price"> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <label>Meta Keyword</label><span class="asterick">*</span> 
+                                  <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.metaKeyword.errors }">
+                                  <div *ngIf="isSubmittedaddComboForm && signUpControls.metaKeyword.errors" class="invalid-feedback">
+                                      <div *ngIf="signUpControls.metaKeyword.errors.required">Meta Keyword is required</div>
+                                  </div>   
+                              </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supply Type</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.supplyType.errors }">
+                                    <div *ngIf="isSubmittedaddComboForm && signUpControls.supplyType.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                  <label>Ribbon Text</label>
+                                  <input type="text" formControlName="ribbonText" class="form-control border-primary" placeholder="Ribbon Text"> 
+                              </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Category</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="category" class="form-control border-primary" placeholder="Category" [ngClass]="{ 'is-invalid': isSubmittedaddComboForm && signUpControls.category.errors }">
+                                    <div *ngIf="isSubmittedaddComboForm && signUpControls.category.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.price.category.required">Category is required</div>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" [routerLink]="['/catalogues/combos']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                        <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                    </div>
+                </form>
+                
+                <div class="product-page-listing">
+                    <div class="customer-wrapper">
+                        <div class="heading-wrapper">
+                        </div>
+                        <div class="table-wrapper vehiclwrappere- ">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                            <ng-template pTemplate="header">
+                                    <tr class="table-coustom-style">
+                                        <th style="width:8em">S. No.</th>
+                                        <th style="width: 16em;">Product Name</th>
+                                        <th style="width: 14em;">Quantity</th> 
+                                        <th style="width: 8em;">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-brand >
+                                    <tr>
+                                        <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                        <td><span class="ui-column-title">Product Name</span>{{brand.manufacturerName}}</td>
+                                        <td><span class="ui-column-title">Quantity</span>{{brand.supplyType.name}}</td>
+                                        <td>
+                                            <span class="ui-column-title">Action</span>
+                                        
+                                            <div class="dropdown">
+                                                <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+                    
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                    
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td class="text-center text-danger font-weight-600" colspan="4">No Records Found.</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="text-right">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                        <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+                        <span class="d-lg-block d-none" >Add Row</span>
+                    </button>
+                  </div>
+
+                  <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+                    <div class="form-body">
+                        <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Description</label>
+                                  <ckeditor class="border-primary" formControlName="description"></ckeditor>
+                                  <!-- (change)="editorValidation(3)" -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Warranty</label>
+                                  <ckeditor class="border-primary" formControlName="warranty"></ckeditor>
+                                  <!-- (change)="editorValidation(3)" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Features</label>
+                                  <ckeditor class="border-primary" formControlName="features"></ckeditor>
+                                  <!-- (change)="editorValidation(3)" -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Embeded Video</label>
+                                    <input type="text" formControlName="embededVideo" class="form-control border-primary" placeholder="Embeded Video"> 
+                                </div>
+                                <span id="sizeValidations">Paste Embeded Code Only.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                        <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                    </div>
+                </form>
+
+                <div class="product-page-listing">
+                    <h4 class="form-section"> Quantity Based Discount</h4>
+                    <div class="customer-wrapper">
+                        <div class="heading-wrapper">
+                        </div>
+                        <div class="table-wrapper vehiclwrappere- ">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                            <ng-template pTemplate="header">
+                                    <tr class="table-coustom-style">
+                                        <th style="width:6em">S. No.</th>
+                                        <th style="width: 16em;">Minimum Quantity</th>
+                                        <th style="width: 16em;">Maximum Quantity</th>
+                                        <th style="width: 13em;">Price</th> 
+                                        <th style="width: 13em;">Wallet Price</th> 
+                                        <th style="width: 10em;">Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-brand >
+                                    <tr>
+                                        <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                        <td><span class="ui-column-title">Minimum Quantity</span>{{brand.manufacturerName}}</td>
+                                        <td><span class="ui-column-title">Maximum Quantity</span>{{brand.supplyType.name}}</td>
+                                        <td><span class="ui-column-title">Price</span></td>
+                                        <td><span class="ui-column-title">Wallet Price</span></td>
+                                        <td>
+                                            <span class="ui-column-title">Action</span>
+                                        
+                                            <div class="dropdown">
+                                                <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+                    
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                    
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td class="text-center text-danger font-weight-600" colspan="6">No Records Found.</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                        <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+                        <span class="d-lg-block d-none" >Add Row</span>
+                    </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

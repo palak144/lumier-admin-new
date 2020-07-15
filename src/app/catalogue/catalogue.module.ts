@@ -10,6 +10,10 @@ import { AddNewCategoryComponent } from './pages/categories/add-new-category/add
 import { CKEditorModule } from 'ckeditor4-angular';
 import { ParentCategoryComponent } from './pages/parent-category/parent-category.component';
 import { AddParentCategoryComponent } from './pages/parent-category/add-parent-category/add-parent-category.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { AddProductComponent } from './pages/products/add-product/add-product.component';
+import { CombosComponent } from './pages/products/combos/combos.component';
+import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 
@@ -21,6 +25,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     CKEditorModule,
     AngularMultiSelectModule
   ],
-  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent]
+  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent]
 })
 export class CatalogueModule {  }

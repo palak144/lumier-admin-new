@@ -46,6 +46,7 @@ export const ROUTES: RouteInfo[] = [
         badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
         isExternalLink: false,
         submenu: [
+          { path: '/catalogues/products', title: 'Products', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           { path: '/catalogues/manufacturing-brand', title: 'Manufacturer / Brands', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           { path: '/catalogues/categories', title: 'Categories', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           { path: '/catalogues/parent-categories', title: 'Parent Categories', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
