@@ -19,7 +19,23 @@ export class SystemSettingsService {
 
   }
 
+  getLanguage() {
+    debugger
+    return this.http.get(this.baseUrl + 'admin/language').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCurrency() {
+    debugger
+    return this.http.get(this.baseUrl + 'admin/currency').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
   addCountry(data) {
+    debugger
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -34,6 +50,14 @@ export class SystemSettingsService {
     );
   }
 
+  getCountrydetails(id) {
+    debugger
+    return this.http.get(this.baseUrl + 'admin/countrySetting/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
 
   getSupplyTypedetails(id) {
     return this.http.get(this.baseUrl + 'admin/supplyType/' + id)
@@ -62,6 +86,7 @@ export class SystemSettingsService {
   }
   getCountry() 
   {
+    debugger
     return this.http.get(this.baseUrl + 'admin/countrySetting')
       .pipe(
         retry(3),
@@ -69,10 +94,10 @@ export class SystemSettingsService {
       );
   }
 
-  getAllCountriesSearch(page?, searchKey?, exportAll?) {
-    
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll }
-    return this.http.get(this.baseUrl + 'admin/countrySetting')
+  getAllCountriesSearch(page?, searchKey?) {
+    debugger
+    const params = { page: page, searchKey: searchKey  }
+    return this.http.get(this.baseUrl + 'admin/countrySetting', { params: params })
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -93,14 +118,6 @@ addSupply(data) {
         catchError(this.errorHandler.handleError)
       );
   }
-
-  deleteSeller(id) {
-    return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
-    .pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-}
 deleteCountry(id) {
   return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
   .pipe(

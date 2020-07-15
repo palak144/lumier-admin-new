@@ -61,7 +61,6 @@ export class SystemTypeComponent implements OnInit {
       
     } 
     else if(!this.countryId){
- console.log("mayuri");
       this.getAllSupplyType(this.page);
       
           }
@@ -75,7 +74,6 @@ export class SystemTypeComponent implements OnInit {
   getAllSupplyType(page) {
     this.SystemSettingsService.getAllSupplyType(page).subscribe(
       (success: any) => {
-        console.log(success);
         this.supplyList = success.data.results;
         this.totalCount = success.data.total;
       },
@@ -163,20 +161,8 @@ export class SystemTypeComponent implements OnInit {
      this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
     }
    }
-  //  getCountry()
-  //  {
-  //    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-  //      (success:any) => {
-  //        console.log(success);
-  //        this.countries = success.data;
-  //   console.log( this.countries);
-  //      },
-  //      error => {
-  //      }
-  //    )
-  //  }
+   
    onChange(deviceValue) {
-     console.log(deviceValue);
      if(deviceValue)
  {
    this.countryId=deviceValue;
@@ -191,7 +177,6 @@ export class SystemTypeComponent implements OnInit {
  {
    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
      (success:any) => {
-       console.log(success);
        this.countries = success.data;
      },
      error => {

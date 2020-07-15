@@ -38,4 +38,13 @@ export class CommonServiceService {
       );
     
   }
+  getAllCountries()
+  {
+    return this.http.get(this.baseUrl + 'web/countries')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+    
+  }
 }

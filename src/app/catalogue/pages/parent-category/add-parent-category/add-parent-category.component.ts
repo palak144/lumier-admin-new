@@ -45,8 +45,6 @@ export class AddParentCategoryComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
-       console.log(this.id);
-        // this.sellerId=this.id;
         this.editMode = id['id'] != null
         if(this.id)
         {
@@ -54,7 +52,7 @@ export class AddParentCategoryComponent implements OnInit {
         }
         if(!this.id)
         {
-          this.parentcategoryTitle = "Add New Parent Categories";
+          this.parentcategoryTitle = "Add New Parent Category";
         }
         if(this.id)
         {
@@ -83,15 +81,12 @@ export class AddParentCategoryComponent implements OnInit {
   }
 
   onSubmitParentCategoriesForm(event) {
-    console.log(event,this.addParentCategoriesForm);
     event.preventDefault();
     this.isSubmittedParentCategoriesForm = true
     if (this.addParentCategoriesForm.invalid) {
       return
     }
     let data = this.addParentCategoriesForm.value;
-    console.log(data);
-    debugger
     if(this.id)
     {
       data.id= this.id;
@@ -99,9 +94,7 @@ export class AddParentCategoryComponent implements OnInit {
     if(!this.id)
     {
     this.manufactureService.addParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
-      (success:any) => {
-  console.log(success);
- 
+      (success:any) => { 
         this.toastr.success('Parent Category Create Successfully!');
         this.router.navigate(['/catalogues/parent-categories']);
 
@@ -185,9 +178,7 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
  getParentCategoryDetails(id) {
     this.manufactureService.getParentCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.ParentcategoryData = success.data;
-       console.log( this.ParentcategoryData);
         this.patchForm(this.ParentcategoryData);
        
   

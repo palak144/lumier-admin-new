@@ -45,13 +45,7 @@ export class AddSystemSettingComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
-       console.log(this.id);
-        // this.sellerId=this.id;
         this.editMode = id['id'] != null
-        if(this.id)
-        {
-          this.getSupplyTypedetails(this.id);
-        }
         if(!this.id)
         {
           this.userTitle = "Add Supply Type";
@@ -59,6 +53,8 @@ export class AddSystemSettingComponent implements OnInit {
         if(this.id)
         {
           this.userTitle = "Edit Supply Type";
+          this.getSupplyTypedetails(this.id);
+
         }
       }
       )
@@ -83,7 +79,6 @@ export class AddSystemSettingComponent implements OnInit {
     if (this.addUserForm.invalid) {
       return
     }
-    console.log(this.addUserForm.value);
     let data = this.addUserForm.value;
     if(this.id)
     {
@@ -133,7 +128,6 @@ export class AddSystemSettingComponent implements OnInit {
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
@@ -154,7 +148,6 @@ this.supplyTypeValue=event.value;
   {
     this.commonService.getSupplyType().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
       
       },
@@ -165,6 +158,7 @@ this.supplyTypeValue=event.value;
   getSupplyTypedetails(id) {
     this.SystemSettingsService.getSupplyTypedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
         this.supplyDetailsData = success.data;
        
         this.patchForm(this.supplyDetailsData);
@@ -177,6 +171,7 @@ this.supplyTypeValue=event.value;
   } 
 patchForm(item)
 {
+  debugger
   this.addUserForm.controls.name.patchValue(item.name);
   this.addUserForm.controls.countryId.patchValue(item.countryId);
 }
