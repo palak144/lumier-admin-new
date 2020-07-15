@@ -81,7 +81,6 @@ export class SellerListingComponent implements OnInit {
       switchMap((term: string) => this.sellerService.getAllSellersSearch(this.page, term ,this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-      
       this.sellerList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -107,7 +106,7 @@ export class SellerListingComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        debugger
+        
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -123,7 +122,7 @@ export class SellerListingComponent implements OnInit {
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar && !this.countryId)  {
-      debugger
+      
       this.getAllSellers(this.page);
     } 
     else {

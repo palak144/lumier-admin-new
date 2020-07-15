@@ -37,14 +37,14 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Logo</label>
-          <div class="row ">
+          <label>Logo</label><span class="asterick">*</span>
+          <div class="row">
             <div class="col-md-2 form-group center">
                 <label for="file">
                   <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
             </div>
-            <div class="col-md-10 ">
-                <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
+            <div class="col-md-10">
+                <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                 <span id="sizeValidations">File size should not exceed 200kb</span>
             </div>
         </div>
@@ -69,16 +69,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Wallet Discount</label>
-          <input type="text" class="form-control border-primary" placeholder="Wallet Discount" formControlName="walletDiscount"
+          <input type="number" min="0" class="form-control border-primary" placeholder="Wallet Discount" formControlName="walletDiscount"
             [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.walletDiscount.errors }">
-         
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Sort</label>
-          <input type="text" class="form-control border-primary" placeholder="Sort" formControlName="sort"
-            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.sort.errors }">
          
         </div>
       </div>

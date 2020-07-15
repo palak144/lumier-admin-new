@@ -5,8 +5,6 @@ import { SystemSettingsService } from '../../../../shared/services/system-settin
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { UtilityService } from '../../../../shared/utility/utility.service';
-import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Country {
@@ -34,9 +32,10 @@ export class AddCountryComponent implements OnInit {
   countryDetailsData: any;
   countries:Country[];
   countryValue: any;
-  currencies: string[];
-  languages: string[];
-  // statuses: string[];
+  currencies: any[];
+  languages: any[];
+  languageValue: any;
+  currencyValue: any;
  
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,17 +46,11 @@ export class AddCountryComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    this.currencies = ['Rupee', 'Doller', 'Pound'];
-
-    this.languages = ['Hindi', 'English'];
-    
-    // this.statuses = ['Active.', 'Inactive.'];
-
+debugger
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
        
-        // this.sellerId=this.id;
         this.editMode = id['id'] != null
         if(!this.id)
         {
@@ -66,19 +59,17 @@ export class AddCountryComponent implements OnInit {
         if(this.id)
         {
           this.countryTitle = "Edit Country";
+          this.getCountrydetails(this.id)
         }
          this.initForm()
-        // if(this.id)
-        // {
-        //   this.getCountrydetails(this.id);
-        // }
 
   this.getCountry(); 
-  
+  this.getLanguage();
+  this.getCurrency();
+
       }
     )
   }
-
   private initForm() {
     
     let countryName = "";
@@ -90,36 +81,33 @@ export class AddCountryComponent implements OnInit {
      "countryName": new FormControl(countryName, Validators.required),
      "languages": new FormControl(languages, Validators.required),
      "currency": new FormControl(currency, Validators.required),
-    //  "status": new FormControl(status, Validators.required),
   });
+  debugger
 }
 onSubmitCountryForm() {
   this.isSubmittedaddCountryForm = true
-
+debugger
 
   if (this.addCountryForm.invalid) {
     return
   }
     let data = this.addCountryForm.value;
-    console.log(data);
     if(this.id)
     {
       data.id= this.id;
     }
-    console.log('===',this.countryValue);
-   if(this.countryValue)
-  //  {
-  //     data.countryName = this.countryValue;
-  //  }
-
+    data.languages = this.languageValue;
+    data.currency = this.currencyValue;
+    data.countryName = this.countryValue;
+ 
+debugger
    if(!this.id)
 
       {
-        console.log('data=========', data);
         this.systemSettingsService.addCountry(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
          
-            this.toastr.success('Country Create Successfully!');
+            this.toastr.success('Country Created Successfully!');
             this.router.navigate(['/systemsetting/country']);
   
           },
@@ -134,7 +122,7 @@ onSubmitCountryForm() {
       this.systemSettingsService.updateCountry(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();
-          this.toastr.success('Country Update Successfully!');
+          this.toastr.success('Country Edited Successfully!');
           this.router.navigate(['/systemsetting/country']);
 
         },
@@ -145,59 +133,106 @@ onSubmitCountryForm() {
      }
 
 }
+
+
+patchForm(item) {
+  debugger
+   this.addCountryForm.controls.countryName.patchValue(item.countryName);
+   this.addCountryForm.controls.languages.patchValue(item.languages);
+  this.addCountryForm.controls.currency.patchValue(item.currency);
+}
+getCountrydetails(id) {
+  this.systemSettingsService.getCountrydetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      debugger
+      this.countryDetailsData = success.data;
+      this.patchForm(this.countryDetailsData);
+    },
+    error => {
+    }
+  ) 
+} 
 get signUpControls() {
   return this.addCountryForm.controls;
 }
 
-// getCountrydetails(id) {
-//   this.systemSettingsService.getCountrydetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
-//     (success:any) => {
-//       this.countryDetailsData = success.data;
-     
-//       this.patchForm(this.countryDetailsData);
-
-
-//     },
-//     error => {
-//     }
-//   ) 
-// } 
-
-patchForm(item) {
-   this.addCountryForm.controls.countryName.patchValue(item.countryName);
-   this.addCountryForm.controls.languages.patchValue(item.languages);
-  this.addCountryForm.controls.currency.patchValue(item.currency);
-
-}
-
 getCountry()
 {
-  this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+  this.commonService.getAllCountries().pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      console.log(success);
-      this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+      debugger
+      this.countries = this.arrayOfStringsToArrayOfObjectsCountry(success.data);
     },
     error => {
     }
   )
 }
-
+getLanguage()
+{
+  this.systemSettingsService.getLanguage().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      debugger
+      this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+    },
+    error => {
+    }
+  )
+}
+getCurrency()
+{
+  this.systemSettingsService.getCurrency().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      debugger
+      this.currencies = this.arrayOfStringsToArrayOfObjectsCurrency(success.data);
+    },
+    error => {
+    }
+  )
+}
+arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
+  const newArray = [];
+  arr.forEach(element => {
+    newArray.push({
+      label: element.itemName +" - "+ element.currencyCode,
+      value: element.itemName +" - "+ element.currencyCode
+    });
+  });
+  debugger
+  return newArray;
+}
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
   arr.forEach(element => {
     newArray.push({
       label: element.itemName,
-      value: element.id
+      value: element.itemName
     });
   });
   return newArray;
 }
-
-
+arrayOfStringsToArrayOfObjectsCountry(arr: any[]) {
+  const newArray = [];
+  arr.forEach(element => {
+    newArray.push({
+      label: element.country,
+      value: element.country
+    });
+  });
+  return newArray;
+}
 getdropdown(event) 
 {
+debugger
   this.countryValue = this.countries.find( item => item.value === event.value).label;
-  console.log('===',this.countryValue);
 }
-
+getdropdown1(event) 
+{
+  debugger
+  this.languageValue = this.languages.find( item => item.value === event.value).label;
+}
+getdropdown2(event) 
+{
+  debugger
+  this.currencyValue = this.currencies.find( item => item.value === event.value).label;
+}
 }

@@ -21,17 +21,19 @@ export class ManufactureService {
 
   }
   addBrand(data ) {
-      debugger
-      const dataForm = new FormData();
+    const dataForm = new FormData();
+      if(data.id != null){
+        dataForm.append('id', data['id']);
+      }
       dataForm.append('manufacturerName', data['manufacturerName']);
-      dataForm.append('sort', data['sort']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
+      dataForm.append('logoName', data['logoName']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-      console.log("dataform", dataForm)
-      debugger
+      
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
+     
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -43,8 +45,22 @@ export class ManufactureService {
       catchError(this.errorHandler.handleError)
     );
   }
+  addParentCategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  updateParentCategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getAllBrands(page) {
-    debugger
+    
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
@@ -52,10 +68,29 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
+  getAllParentCategory(page) {
+  
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
-    debugger
+    
+  
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
+  getAllParentCategorysSearch(page?, searchKey?, exportAll?, countryId?) {
+
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
@@ -68,16 +103,30 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-
+  getParentCategoryDetails(id)
+  {
+    return this.http.get(this.baseUrl + 'admin/parentCategory/' + id)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   deleteBrand(id) {
-    debugger
+    
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
-
+  deleteParentCategory(id) {
+    debugger
+    return this.http.delete(this.baseUrl + 'admin/parentCategory/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   updateBrandStatus(statusData: {id: Number; adminStatus: Number }){
     
     return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
@@ -86,8 +135,16 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
+  updateparentCategoryStatus(statusData: {id: Number; adminStatus: Number }){
+    
+    return this.http.put(this.baseUrl + 'admin/parentCategory', statusData)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   public upload(formData) {
-debugger
+
     return this.http.post<any>(this.baseUrl, formData, {  
         reportProgress: true,  
         observe: 'events'  

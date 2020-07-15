@@ -74,7 +74,6 @@ export class AddNewCategoryComponent implements OnInit {
   }
 
 
-
   get signUpControls() {
     return this.addCategoriesForm.controls;
   }

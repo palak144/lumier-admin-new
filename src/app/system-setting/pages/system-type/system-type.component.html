@@ -50,14 +50,14 @@
       <p-table [value]="supplyList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
           <ng-template pTemplate="header">
               <tr>
-                  <th >S No.
+                  <th style="width:6em">S No.
                   </th>
                   <th>Country</th>
                   <th >Supply type</th>
               
-                  <th>Status</th>
+                  <th style="width:8em">Status</th>
                
-                  <th>Edit</th>
+                  <th style="width:8em">Edit</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-customer >

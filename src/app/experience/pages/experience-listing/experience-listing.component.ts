@@ -56,7 +56,6 @@ export class ExperienceListingComponent implements OnInit {
     this.experienceService.getExperience().subscribe(
       (success: any) => {
         this.experience = success.data.map(experienceData => experienceData);
-        // console.log(this.category);
         this.utilityService.resetPage();
       },
       error => {

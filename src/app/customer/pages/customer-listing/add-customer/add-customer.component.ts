@@ -26,18 +26,18 @@ export class AddCustomerComponent implements OnInit {
   customerTitle: string;
   password: any;
   practises: string[];
-  selected_assignGroup : any 
+  selected_assignGroup: any
   constructor(
 
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
     private toastr: ToastrService,
-    private utilityService:UtilityService
+    private utilityService: UtilityService
 
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
 
     this.customerTitle = "Add New Customers";
     this.activatedRoute.params.subscribe(
@@ -47,19 +47,19 @@ export class AddCustomerComponent implements OnInit {
         this.initForm()
       }
     )
-    
+
     this.customerService.getAssignGroup().subscribe((res: any) => {
-      
+
       res.data.results.forEach(item => {
-        
+
         this.assignGroupList.push({
-          
+
           label: item.groupName,
           value: item.id
         })
       });
 
-    }); 
+    });
     this.selected_assignGroup = [];
   }
 
@@ -67,15 +67,15 @@ export class AddCustomerComponent implements OnInit {
     return this.addCustomerForm.controls;
   }
 
-  onSubmitAddCustomerForm( event: Event) {
-    
+  onSubmitAddCustomerForm(event: Event) {
+
     event.preventDefault();
     this.isSubmittedaddCustomerForm = true
     if (this.addCustomerForm.invalid) {
       return
     }
     this.password = (this.addCustomerForm.get('password').value != "" && this.addCustomerForm.get('password').value != undefined) ? this.addCustomerForm.get('password').value : ""
-    
+
     this.addCustomerFormDetails = {
       "Email": this.addCustomerForm.get('email').value,
       "password": this.password,
@@ -95,25 +95,25 @@ export class AddCustomerComponent implements OnInit {
       "teleNumber": this.addCustomerForm.get('phoneNo').value,
       "mobileNumber": this.addCustomerForm.get('contactNo').value,
       "jobTitle": this.addCustomerForm.get('jobTitle').value,
-      "customerGroupId" : this.addCustomerForm.get('assignGroup').value,
+      "customerGroupId": this.addCustomerForm.get('assignGroup').value,
     }
-    
+
     if (this.id) {
 
       this.addCustomerFormDetails.customerId = this.id;
     }
     if (this.editMode) {
       this.customerTitle = "Edit Customer";
-      
+
       this.customerService.updateCustomer(this.addCustomerFormDetails).subscribe(
         data => {
-          
+
           this.toastr.success("Customer Details Editted Successfully")
-          this.router.navigate(['../../'],{relativeTo : this.activatedRoute})
+          this.router.navigate(['../../'], { relativeTo: this.activatedRoute })
 
         },
         error => {
-          
+
           this.toastr.error(error.message)
         });
 
@@ -121,17 +121,17 @@ export class AddCustomerComponent implements OnInit {
 
     }
     else {
-      
+
       this.customerService.addCustomer(this.addCustomerFormDetails).subscribe(
         data => {
-          
+
           this.toastr.success("New Customer Added Successfully")
-          this.router.navigate(['../'],{relativeTo : this.activatedRoute})
+          this.router.navigate(['../'], { relativeTo: this.activatedRoute })
         },
         error => {
 
           this.toastr.error(error.message)
-          
+
         });
     }
 
@@ -139,7 +139,7 @@ export class AddCustomerComponent implements OnInit {
 
 
   private initForm() {
-    
+
     let email = "";
     let password = "";
     let title = "";
@@ -158,7 +158,7 @@ export class AddCustomerComponent implements OnInit {
     let pincode = "";
     let phoneNo = "";
     let jobTitle = "";
-    
+
     this.addCustomerForm = new FormGroup({
       "email": new FormControl(email, [
         Validators.required,
@@ -167,41 +167,41 @@ export class AddCustomerComponent implements OnInit {
       "fname": new FormControl(fname, Validators.required),
       "lname": new FormControl(lname, Validators.required),
       "clinicName": new FormControl(clinicName, Validators.required),
-      "contactNo": new FormControl(contactNo,[
+      "contactNo": new FormControl(contactNo, [
         Validators.required,
         Validators.pattern('^[0-9]{5,15}$')]),
       "web": new FormControl(web, [
         Validators.pattern('https?://w{3}[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      "jobTitle": new FormControl(jobTitle, ),
+      "jobTitle": new FormControl(jobTitle,),
       "practiceType": new FormControl(practiceType, Validators.required),
       "assignGroup": new FormControl(assignGroup,),
-      "blockNo": new FormControl(blockNo, ),
-      "floorNo": new FormControl(floorNo, ),
+      "blockNo": new FormControl(blockNo,),
+      "floorNo": new FormControl(floorNo,),
       "unitNo": new FormControl(unitNo,),
       "streetName": new FormControl(streetName,),
       "buildingName": new FormControl(buildingName,),
       "pincode": new FormControl(pincode, [
         Validators.pattern('^[0-9\+\-]{6}$')]),
-      "phoneNo": new FormControl(phoneNo,[ ,
+      "phoneNo": new FormControl(phoneNo, [,
         Validators.pattern('^[0-9]{5,15}$')]),
     });
-    
+
 
     this.titles = ['Dr.', 'Ms.', 'Mr', 'Prof.'];
     this.practises = ['Medical', 'Dental', 'Other'];
 
 
     if (this.editMode) {
-      
+
       this.customerTitle = "Edit Customer";
       this.addCustomerForm.addControl(
-      "password", new FormControl(password, [
-        Validators.minLength(8),
-        Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
-        Validators.maxLength(20)]))
+        "password", new FormControl(password, [
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
+          Validators.maxLength(20)]))
       this.customerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
-          
+
           this.customer = success.data
           this.addCustomerForm.patchValue({
             "email": this.customer.Email,
@@ -223,23 +223,26 @@ export class AddCustomerComponent implements OnInit {
             "jobTitle": this.customer.jobTitle,
           })
           
-            this.selected_assignGroup = this.customer.customerGroup.id 
-               
+          if (this.customer.customerGroup != null) {
+            
+            this.selected_assignGroup = this.customer.customerGroup.id
+
+          }
         },
         error => {
-          
+
         }
       )
     }
-    else{
-      
+    else {
+
       this.addCustomerForm.addControl(
         "password", new FormControl(password, [Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
-          Validators.maxLength(20)]))
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
+        Validators.maxLength(20)]))
     }
-    
+
 
   }
 }

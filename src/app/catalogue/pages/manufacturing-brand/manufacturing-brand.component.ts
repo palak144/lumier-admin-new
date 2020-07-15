@@ -11,8 +11,8 @@ import { ManufactureService } from 'app/shared/services/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Action {
-  name:string, 
-  code:string
+  name: string,
+  code: string
 }
 
 @Component({
@@ -23,50 +23,49 @@ interface Action {
 export class ManufacturingBrandComponent implements OnInit {
 
 
-  brandList:any[];
-  actions:Action[];
-  page:number = 0;
-  brand:any;
+  brandList: any[];
+  actions: Action[];
+  page: number = 0;
+  brand: any;
   totalCount: number;
-  action:string;
+  action: string;
   id: number;
   Date = new Date();
-  status:string
-  countries:any[];
+  status: string
+  countries: any[];
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
-  
-   // Real time search
-   searchTerms$ = new Subject<string>();
-   searchBar: any = "";
-   private _unsubscribe = new Subject<boolean>();
+
+  // Real time search
+  searchTerms$ = new Subject<string>();
+  searchBar: any = "";
+  private _unsubscribe = new Subject<boolean>();
   exportAll = "false";
-    countryId : number = null;
- 
+  countryId: number = null;
+
 
   constructor(
-    private router:Router, 
-    private activateRoute : ActivatedRoute,
-    private utilityService:UtilityService,
-    private manufactureService:ManufactureService,
+    private router: Router,
+    private activateRoute: ActivatedRoute,
+    private utilityService: UtilityService,
+    private manufactureService: ManufactureService,
     private confirmationService: ConfirmationService,
-    private excelService:ExcelServiceService,
-    private commonService : CommonServiceService
-    ) {}
-    setStatus(id:Number,adminStatus:Number){
+    private excelService: ExcelServiceService,
+    private commonService: CommonServiceService
+  ) { }
+  setStatus(id: Number, adminStatus: Number) {
 
-      let statusData = {id,adminStatus}
-      
-   this.manufactureService.updateBrandStatus(statusData).subscribe(
-     (success:any)=>
-     {
-     
-      this.ngOnInit()
-} )
-    }
+    let statusData = { id, adminStatus }
 
-    
+    this.manufactureService.updateBrandStatus(statusData).subscribe(
+      (success: any) => {
+
+        this.ngOnInit()
+      })
+  }
+
+
   ngOnInit() {
     this.initiateSearch();
     this.getCountry();
@@ -79,44 +78,44 @@ export class ManufacturingBrandComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.manufactureService.getAllBrandsSearch(this.page, term ,this.exportAll, this.countryId
+      switchMap((term: string) => this.manufactureService.getAllBrandsSearch(this.page, term, this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-      debugger
+
       this.brandList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     })
-  } 
+  }
 
   getAllBrands(page) {
     this.manufactureService.getAllBrands(page).subscribe(
       (success: any) => {
-        debugger
+
         this.brandList = success.data.results;
         this.totalCount = success.data.total;
       },
       error => {
-      
+
         this.utilityService.resetPage();
       }
     );
   }
 
-  getAllBrandsSearch(page, searchBar , exportAll, countryId) {
-  debugger
-    
-    this.manufactureService.getAllBrandsSearch(page, searchBar , exportAll , countryId)
+  getAllBrandsSearch(page, searchBar, exportAll, countryId) {
+
+
+    this.manufactureService.getAllBrandsSearch(page, searchBar, exportAll, countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        debugger
+
         this.brandList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        if(exportAll == "true"){
-   debugger
+        if (exportAll == "true") {
+
           this.excelService.exportAsExcelFile(this.brandList, 'Seller List')
           this.exportAll = "false"
         }
@@ -124,23 +123,23 @@ export class ManufacturingBrandComponent implements OnInit {
   }
 
   loadDataLazy(event: LazyLoadEvent) {
-    debugger
+
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar && !this.countryId) {
-      debugger
+
       this.getAllBrands(this.page);
-      
-    } 
-    else if(!this.countryId){
-debugger
-this.getAllBrands(this.page);
+
+    }
+    else if (!this.countryId) {
+
+      this.getAllBrands(this.page);
 
     }
     else {
-      debugger
-      this.getAllBrandsSearch(this.page, this.searchBar , this.exportAll, this.countryId);
-    } 
+
+      this.getAllBrandsSearch(this.page, this.searchBar, this.exportAll, this.countryId);
+    }
   }
   filterGlobal(searchTerm) {
     // indexing starts from 0 in primeng
@@ -149,13 +148,13 @@ this.getAllBrands(this.page);
     this.searchTerms$.next(searchTerm);
   }
 
-  onAddBrand(){
-    this.router.navigate(['../new'],{relativeTo : this.activateRoute})
+  onAddBrand() {
+    this.router.navigate(['../new'], { relativeTo: this.activateRoute })
   }
 
   getDropDownValue1(event, id) {
-    debugger
-    if(event.currentTarget.firstChild.data === 'Delete') {
+
+    if (event.currentTarget.firstChild.data === 'Delete') {
 
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
@@ -174,31 +173,30 @@ this.getAllBrands(this.page);
         reject: () => {
           this.action = null;
         }
-    });
-     
+      });
+
     }
-    if(event.currentTarget.firstChild.data === 'Edit'){
-          this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
-          
+    if (event.currentTarget.firstChild.data === 'Edit') {
+      this.router.navigate(['../edit', id], { relativeTo: this.activateRoute })
+
     }
   }
- 
-  exportAsXLSX(id:number) {
-   
-    if (id==0){
- debugger
+
+  exportAsXLSX(id: number) {
+
+    if (id == 0) {
+
       this.excelService.exportAsExcelFile(this.brandList, 'Brand List')
     }
-    else{
-    debugger
+    else {
+
       this.exportAll = "true"
-     this.getAllBrandsSearch(this.page, this.searchBar,this.exportAll , this.countryId);
+      this.getAllBrandsSearch(this.page, this.searchBar, this.exportAll, this.countryId);
     }
-   }
-    getCountry()
-  {
+  }
+  getCountry() {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-      (success:any) => {
+      (success: any) => {
         this.countries = success.data;
       },
       error => {
@@ -206,14 +204,12 @@ this.getAllBrands(this.page);
     )
   }
   onChange(deviceValue) {
-    if(deviceValue)
-{
-  this.countryId=deviceValue;
-}
-  else
-  {
+    if (deviceValue) {
+      this.countryId = deviceValue;
+    }
+    else {
+    }
+
+    this.getAllBrandsSearch(this.page, this.searchBar, this.exportAll, this.countryId);
   }
-  debugger
-    this.getAllBrandsSearch(this.page, this.searchBar , this.exportAll, this.countryId);
-}
 }

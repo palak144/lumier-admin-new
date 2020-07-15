@@ -133,7 +133,7 @@ export class AddSellerComponent implements OnInit {
       return
     }
       let data = this.addSellerForm.value;
-      debugger
+      
       if(this.id)
       {
         data.id= this.id;
@@ -149,7 +149,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
       {
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-         debugger
+         
             this.toastr.success('Seller Create Successfully!');
             this.router.navigate(['/seller/sellers']);
   
@@ -202,22 +202,22 @@ this.addSellerForm.controls.countryId=this.countryValue;
       this.companyFlagSize = true;
       this.compLogofiletype = last;
        let reader = new FileReader();
-       debugger
+       
         reader.readAsDataURL(this.file);
-        debugger
+        
         reader.onload = (event) => {
           this.url = reader.result;
           this.companyLogo = this.url;
           this.orgLogoData = this.url.substr(this.url.indexOf(',') + 1);
           document.getElementById('sizeValidations').style.color = 'black';
-  debugger
+  
         }
         this.addSellerForm.controls['file'].setValue(this.file ? this.file.name : '');
       }
     }
       else {
         this.companyFlagSize = false;
-        debugger
+        
         document.getElementById('sizeValidations').style.color = '#ffae42';
         this.addSellerForm.controls['file'].setValue(this.file ? '' : '');
       }
@@ -261,7 +261,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {

@@ -13,7 +13,7 @@
         </div>
     </form> 
   
-  <div class="col-8 text-right country-add">
+  <div class="col-8 text-right pr-0">
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
     <span class="d-lg-block d-none" (click)="onAddcountry()">Add New</span>
@@ -31,11 +31,11 @@
           <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
             <ng-template pTemplate="header"> 
                 <tr>
-                    <th style="width:10em">S. No.</th>
+                    <th style="width:6em">S. No.</th>
                     <th style="width:14em">Country Name</th>
                     <th style="width: 14em;">Currency</th>
-                    <th style="width: 15em;">Languages</th> 
-                    <th style="width: 9em;">Status</th>
+                    <th style="width: 14em;">Languages</th> 
+                    <th style="width: 8em;">Status</th>
                     <th style="width: 6em;">Edit</th>
                 </tr>
             </ng-template>
