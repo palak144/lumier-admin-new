@@ -38,6 +38,33 @@ export class ManufactureService {
       catchError(this.errorHandler.handleError)
     );
   }
+  addcategory(data)
+  {
+    const dataForm = new FormData();
+      if(data.id != null){
+        dataForm.append('id', data['id']);
+      }
+      dataForm.append('categoryName', data['fname']);
+      dataForm.append('countryId', data['countryId']);
+      dataForm.append('type', data['type']);
+      dataForm.append('filterTitle', data['filterTitle']);
+      dataForm.append('filterDetail', data['filterDetail']);
+      dataForm.append('category', data['category']);
+      dataForm.append('sort', data['sort']);
+      dataForm.append('metaTitle', data['metaTitle']);
+      dataForm.append('metaDescription', data['metaDescription']);
+      dataForm.append('metaKeyword', data['metaKeyword']);
+      dataForm.append('staticmetaTag', data['staticmetaTag']);
+      dataForm.append('description', data['description']);
+      dataForm.append('icon',"");
+      dataForm.append('image', "");
+      console.log(dataForm);
+    return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
+     
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    ); 
+  }
   updateBrand(data)
   {
     return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(

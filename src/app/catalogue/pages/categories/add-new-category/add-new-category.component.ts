@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
-
+import { CategoriesService } from 'app/shared/services/categories.service';
 interface Country {
   _id:string,
   country:string
@@ -41,6 +41,7 @@ export class AddNewCategoryComponent implements OnInit {
     private manufactureService: ManufactureService,
     private commonService: CommonServiceService,
     private toastr: ToastrService,
+    private categoriesService: CategoriesService
   ) { }
 
   ngOnInit() {
@@ -59,15 +60,17 @@ export class AddNewCategoryComponent implements OnInit {
     let data=this.addCategoriesForm.value;
     console.log(data);
       
-    // this.manufactureService.addChildCategory(data).subscribe(
-    //   data => {
-    //     this.toastr.success("Category Added Successfully")
-    //     this.router.navigate(['/catalogues/categories'],{relativeTo : this.activatedRoute})
-    //   },
-    //   error => {
-    //     this.toastr.error(error.message)
+    this.manufactureService.addcategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+     
+        this.toastr.success('Category  Create Successfully!');
+        this.router.navigate(['/catalogues/categories']);
 
-    //   });
+      },
+      error => {
+        this.toastr.error('error',error);
+      }
+    )
   } 
 
   get signUpControls() {
