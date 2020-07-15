@@ -82,13 +82,13 @@ export class AddCountryComponent implements OnInit {
   private initForm() {
     
     let countryName = "";
-    let language = "";
+    let languages = "";
     let currency = "";
     // let status = "";
   
   this.addCountryForm = new FormGroup({
      "countryName": new FormControl(countryName, Validators.required),
-     "language": new FormControl(language, Validators.required),
+     "languages": new FormControl(languages, Validators.required),
      "currency": new FormControl(currency, Validators.required),
     //  "status": new FormControl(status, Validators.required),
   });
@@ -108,9 +108,9 @@ onSubmitCountryForm() {
     }
     console.log('===',this.countryValue);
    if(this.countryValue)
-   {
-      data.countryName = this.countryValue;
-   }
+  //  {
+  //     data.countryName = this.countryValue;
+  //  }
 
    if(!this.id)
 

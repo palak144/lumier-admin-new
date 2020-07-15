@@ -10,7 +10,6 @@
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
-
       </div>
   </form>
 </div>
@@ -43,7 +42,6 @@
 </div>
 <div class="customer-wrapper">
   <div class="heading-wrapper">
-
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
@@ -56,27 +54,27 @@
                   <th style="width: 12em;">Child No.</th>
                   <th style="width: 12em;">Name</th> 
                   <th style="width: 12em;">Country</th>
-                  <th style="width: 9em;">Status</th> 
-                  <th style="width: 6em;">Action</th>
+                  <th style="width: 10em;">Status</th> 
+                  <th style="width: 10em;">Action</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-seller >
+          <ng-template pTemplate="body" let-category >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{sellerList.id}}</td>
-                  <td><span class="ui-column-title">Supply Type</span>{{sellerList.supplyType}}</td>
-                  <td><span class="ui-column-title">Child No.</span>{{sellerList.child}}</td>
-                  <td><span class="ui-column-title">Name</span>{{sellerList.name}}</td>
-                  <td><span class="ui-column-title">Country</span>{{sellerList.country}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{category.id}}</td>
+                  <td><span class="ui-column-title">Supply Type</span>{{category.supplyType}}</td>
+                  <td><span class="ui-column-title">Child No.</span>{{category.child}}</td>
+                  <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
+                  <td><span class="ui-column-title">Country</span>{{category.countries.itemName}}</td>
                   <td >
                       <span class="ui-column-title ">Status</span> 
                       
                       <div class="dropdown">
-                      <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': seller.adminStatus === 1 , 'badge-danger': seller.adminStatus === 0 }" id="customerStatusId" type="button" data-toggle="dropdown">{{(seller.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                      <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': category.adminStatus === 1 , 'badge-danger': category.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(category.adminStatus === 1) ? 'Active' : 'Inactive'}}
 
                       </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="seller.adminStatus == 1"><a (click)="setStatus(seller.id ,1, $event)">Active</a></li>
-                              <li [hidden]="seller.adminStatus == 0"><a (click)="setStatus(seller.id,0, $event)">Inactive</a></li>
+                              <li [hidden]="category.adminStatus == 1"><a (click)="setStatus(category.id ,1, $event)">Active</a></li>
+                              <li [hidden]="category.adminStatus == 0"><a (click)="setStatus(category.id,0, $event)">Inactive</a></li>
                           </ul>
                       </div>
                                             
@@ -90,8 +88,8 @@
 
                           </a>
                           <ul class="dropdown-menu" role="menu">
-                              <li><a (click)="getDropDownValue($event,seller.id)" >Edit</a></li>
-                              <li><a (click)="getDropDownValue($event,seller.id)">Delete</a></li>
+                              <li><a (click)="getDropDownValue($event,category.id)" >Edit</a></li>
+                              <li><a (click)="getDropDownValue($event,category.id)">Delete</a></li>
                           </ul>
                       </div>
                   </td>

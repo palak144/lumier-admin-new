@@ -68,7 +68,7 @@ export class CountryComponent implements OnInit {
     }
 
     initiateSearch() {
-   
+    
       this.searchTerms$.pipe(
         takeUntil(this._unsubscribe),
         startWith(''),
@@ -79,7 +79,7 @@ export class CountryComponent implements OnInit {
       )
       .subscribe((success: any) => {
       debugger
-        this.countriesList = success.data.results;
+        this.countriesList = success.data.results; 
         
         this.totalCount = success.data.total;
         this.utilityService.resetPage();

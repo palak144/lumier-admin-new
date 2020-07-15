@@ -1,7 +1,7 @@
 <div class="row container breadcrum-container">
     <ul class="col-sm-12 pl-0">
         <li>
-            <a [routerLink]="[' /systemsetting/country']">Country</a>
+            <a [routerLink]="['/systemsetting/country']">Country</a>
         </li>
         <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
         </li>
@@ -21,19 +21,15 @@
                           <div class="row">
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <label>Select Country</label><span class="asterick">*</span>
-                                         <div class="assign-group-dropdown">
-                                          <p-dropdown [options]="countries" formControlName="countryName" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.countryName.errors }"
-                                        >
-                                           </p-dropdown>
-                                          <div *ngIf="isSubmittedaddCountryForm && signUpControls.countryName.errors" class="invalid-feedback">
-                                              <div *ngIf="signUpControls.countryName.errors.required">Country is required</div>
-                                          </div>
-                                      </div>
-                                  </div>
+                                    <label>Country Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="countryName" class="form-control border-primary" placeholder="Country Name">
+                                    <div *ngIf="isSubmittedaddCountryForm && signUpControls.countryName.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.countryName.errors.required">Select Country is required</div>
+                                    </div> 
+                                  </div> 
                               </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
+                              <!-- <div class="col-md-6"> -->
+                                  <!-- <div class="form-group">
                                     <label>Languages </label><span class="asterick">*</span>
                                     <select formControlName="language" class="form-control border-primary" placeholder="Select Language" [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.language.errors }">
                                         <option value="" >Select Language</option>
@@ -43,30 +39,23 @@
                                     <div *ngIf="isSubmittedaddCountryForm && signUpControls.language.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.language.errors.required">Languages is required</div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Languages </label><span class="asterick">*</span>
-                                        <select formControlName="language" class="form-control border-primary"
+                                        <select formControlName="languages" class="form-control border-primary"
                                             placeholder="Select Language"
-                                            [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.language.errors }">
+                                            [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
                                             <option value="" >Select Language</option>
                                             <option value={{language}} *ngFor="let language of languages">{{language}}
                                             </option>
                                         </select>
-                                        <div *ngIf="isSubmittedaddCountryForm && signUpControls.language.errors"
+                                        <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors"
                                             class="invalid-feedback">
-                                            <div *ngIf="signUpControls.language.errors.required">Languages is required
+                                            <div *ngIf="signUpControls.languages.errors.required">Languages is required
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                      <label>Languages</label><span class="asterick">*</span> 
-                                      <input type="text" formControlName="languages" class="form-control border-primary" placeholder="Languages" [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
-                                      <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors" class="invalid-feedback">
-                                          <div *ngIf="signUpControls.languages.errors.required">language is required</div>
-                                      </div>
-                                  </div> -->
                                 </div>
                             </div>
                             <div class="row">

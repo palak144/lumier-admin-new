@@ -36,7 +36,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
   ],
   providers: [
     {
