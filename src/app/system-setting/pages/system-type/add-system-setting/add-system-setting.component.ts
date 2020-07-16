@@ -158,7 +158,7 @@ this.supplyTypeValue=event.value;
   getSupplyTypedetails(id) {
     this.SystemSettingsService.getSupplyTypedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.supplyDetailsData = success.data;
        
         this.patchForm(this.supplyDetailsData);
@@ -171,7 +171,7 @@ this.supplyTypeValue=event.value;
   } 
 patchForm(item)
 {
-  debugger
+  
   this.addUserForm.controls.name.patchValue(item.name);
   this.addUserForm.controls.countryId.patchValue(item.countryId);
 }

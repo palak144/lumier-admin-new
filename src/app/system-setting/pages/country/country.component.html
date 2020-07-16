@@ -11,7 +11,7 @@
                 <i class="ft-search"></i>
             </div> 
         </div>
-    </form>
+    </form> 
   
   <div class="col-8 text-right pr-0">
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
@@ -24,7 +24,7 @@
   <div class="customer-wrapper">
     <div class="heading-wrapper">
   
-    </div>
+    </div> 
   
     <div class="table-wrapper vehicle-wrapper">
         <p-table [value]="countriesList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [totalRecords]="totalCount">
@@ -50,7 +50,7 @@
                         
                         <div class="dropdown">
                         <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': country.adminStatus === 1 , 'badge-danger': country.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(country.adminStatus === 1) ? 'Active' : 'Inactive'}}
-  
+
                         </a>
                             <ul class="dropdown-menu">
                                 <li [hidden]="country.adminStatus == 1"><a (click)="setStatus(country.id ,1, $event)">Active</a></li>

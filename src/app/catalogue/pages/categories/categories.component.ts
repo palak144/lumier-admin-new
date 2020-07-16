@@ -68,7 +68,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
       this.initiateSearch();
-       this.getCountry();
+      // this.getCountry();
   }
 
   initiateSearch() {
@@ -82,7 +82,7 @@ export class CategoriesComponent implements OnInit {
       ))
     )
     .subscribe((success: any) => {
-      console.log(success);
+    debugger
       this.categoriesList = success.data.results; 
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -93,7 +93,7 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
-      console.log(success);
+        debugger
         this.categoriesList = success.data.results;
         console.log(this.categoriesList);
         this.totalCount = success.data.total;
@@ -114,7 +114,6 @@ export class CategoriesComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-         console.log(success);
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -165,27 +164,19 @@ export class CategoriesComponent implements OnInit {
         
   }
 }
-arrayOfStringsToArrayOfObjects(arr: any[]) {
-  const newArray = [];
-  arr.forEach(element => {
-    newArray.push({
-      label: element.itemName,
-      value: element.id
-    });
-  });
-  return newArray;
-}
-getCountry() 
-{
-  this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-    (success:any) => {
-      this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
-    },
-    error => {
-    }
-  )
-  this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
-}
+
+// getCountry() 
+// {
+//   this.categoryService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+//     (success:any) => {
+//       debugger
+//       this.countries = success.data.result;
+//     },
+//     error => {
+//     }
+//   )
+//   this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
+// }
 
   onAddCategories(){
     this.router.navigate(['../new-category'],{relativeTo : this.activateRoute})

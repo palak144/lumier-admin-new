@@ -81,14 +81,6 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Assign Group</label>
-                                        <!-- <select class="form-control border-primary" formControlName="assignGroup" 
-                      [(ngModel)]="selectedAssignGroup"
-                      [ngClass]="{  'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
-                      <option value="" >Select Assign Group</option>
-                      <option value={{assignGroup.id}} *ngFor="let assignGroup of assignGroupList">
-                        {{assignGroup.groupName}}
-                      </option>
-                    </select> -->   
                                         <div class="assign-group-dropdown">
                                             <p-dropdown [options]="assignGroupList" styleClass="form-control border-primary" [(ngModel)]="selected_assignGroup" formControlName="assignGroup" filter="true" placeholder="Select Assign Group"
                                             [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.assignGroup.errors }">
@@ -222,19 +214,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- <div class="form-group">
-                                    <label for="userinput3">Phone No.</label>
-                                    <input type="number" formControlName="phoneNo" placeholder="Phone No." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.phoneNo.errors }">
-                                    <div *ngIf="isSubmittedaddCustomerForm && signUpControls.phoneNo.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.phoneNo.errors.required">Phone No. is required</div>
-                                        <div *ngIf="signUpControls.phoneNo.errors.pattern">Phone No. must be between 10 to 15 digits
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
+                        
                         <div class="form-actions right">
                             <button type="button" [routerLink]="['/customer/customers']" class="btn btn-raised btn-warning mr-1"> Back
               </button>

@@ -35,6 +35,7 @@ export class AddNewCategoryComponent implements OnInit {
   base64result: string;
   filenew: any;
   urlnew: string | ArrayBuffer;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -44,7 +45,9 @@ export class AddNewCategoryComponent implements OnInit {
     private categoriesService: CategoriesService
   ) { }
 
-  ngOnInit() {
+
+
+  ngOnInit(): void {
 
     this.categoryTitle = "Add New Categories";
     this.initForm();
@@ -82,7 +85,7 @@ export class AddNewCategoryComponent implements OnInit {
 
     let fname = "";
     let countryId = "";
-    let type = "";
+    let parentCategory = "";
     let filterTitle = "";
     let filterDetail = "";
     let category = "";
@@ -99,16 +102,16 @@ export class AddNewCategoryComponent implements OnInit {
   this.addCategoriesForm = new FormGroup({
      "fname": new FormControl(fname, Validators.required),
      "countryId": new FormControl(countryId, Validators.required),
-     "type": new FormControl(type, Validators.required),
-     "filterTitle": new FormControl(type, Validators.required),
-     "filterDetail": new FormControl(type, Validators.required),
-     "category": new FormControl(type, Validators.required),
-     "sort": new FormControl(type, Validators.required),
-     "metaTitle": new FormControl(type, Validators.required),
-     "metaDescription": new FormControl(type, Validators.required),
-     "metaKeyword": new FormControl(type, Validators.required),
-     "staticmetaTag": new FormControl(type, Validators.required),
-     "description": new FormControl(type, Validators.required),
+     "parentCategory": new FormControl(parentCategory, Validators.required),
+     "filterTitle": new FormControl(filterTitle, Validators.required),
+     "filterDetail": new FormControl(filterDetail, Validators.required),
+     "category": new FormControl(category, Validators.required),
+     "sort": new FormControl(sort, Validators.required),
+     "metaTitle": new FormControl(metaTitle, Validators.required),
+     "metaDescription": new FormControl(metaDescription, Validators.required),
+     "metaKeyword": new FormControl(metaKeyword, Validators.required),
+     "staticmetaTag": new FormControl(staticmetaTag, Validators.required),
+     "description": new FormControl(description, Validators.required),
   });
   this.addCategoriesForm.addControl(
     "file", new FormControl( file,),
@@ -119,16 +122,92 @@ export class AddNewCategoryComponent implements OnInit {
     
   );
 }
+
+// onSubmitCategoriesForm() {
+//   console.log(event,this.addCategoriesForm);
+//     event.preventDefault();
+//     this.isSubmittedaddCategoriesForm = true
+//     if (this.addCategoriesForm.invalid) {
+//       return
+//     }
+//   this.isSubmittedaddCategoriesForm = true
+
+
+//   if (this.addCategoriesForm.invalid) {
+//     return
+//   }
+//     let data = this.addCategoriesForm.value;
+//     console.log(data);
+//     if(this.id)
+//     {
+//       data.id= this.id;
+//     }
+//     console.log('===',this.countryValue);
+//    if(this.countryValue)
+//   //  {
+//   //     data.countryName = this.countryValue;
+//   //  }
+
+//    if(!this.id)
+
+//       {
+//         console.log('data=========', data);
+//         this.categoryService.addCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+//           (success:any) => {
+         
+//             this.toastr.success('Country Create Successfully!');
+//             this.router.navigate(['/catalogues/categories']);
+  
+//           },
+//           error => {
+//             this.toastr.error('error',error);
+//           }
+//         )
+//       }
+
+//       if(this.id)
+//      {
+//       this.categoryService.updateCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+//         (success:any) => {
+//           // this.addSellerForm.reset();
+//           this.toastr.success('Country Update Successfully!');
+//           this.router.navigate(['/catalogues/categories']);
+
+//         },
+//         error => {
+//           this.toastr.error(error.error.message);
+//         }
+//       )
+//      }
+// }
+
+// patchForm(item) {
+//   this.addCategoriesForm.controls.fname.patchValue(item.fname);
+//   this.addCategoriesForm.controls.countryId.patchValue(item.countryId);
+//   this.addCategoriesForm.controls.parentCategory.patchValue(item.parentCategory);
+//   this.addCategoriesForm.controls.filterTitle.patchValue(item.filterTitle);
+//   this.addCategoriesForm.controls.filterDetail.patchValue(item.filterDetail);
+//   this.addCategoriesForm.controls.category.patchValue(item.category);
+//   this.addCategoriesForm.controls.sort.patchValue(item.sort);
+//   this.addCategoriesForm.controls.metaTitle.patchValue(item.metaTitle);
+//   this.addCategoriesForm.controls.metaDescription.patchValue(item.metaDescription);
+//   this.addCategoriesForm.controls.metaKeyword.patchValue(item.metaKeyword);
+//   this.addCategoriesForm.controls.staticmetaTag.patchValue(item.staticmetaTag);
+//   this.addCategoriesForm.controls.description.patchValue(item.description);
+// }
+
 getCountry()
 {
   this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+      console.log(success);
+      // this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
     }
   )
 }
+
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
   arr.forEach(element => {
@@ -136,9 +215,12 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
       label: element.itemName,
       value: element.id
     });
+    return newArray;
   });
-  return newArray;
+ 
 }
+
+
 
 fileChangeEvent(fileInput : any){
   

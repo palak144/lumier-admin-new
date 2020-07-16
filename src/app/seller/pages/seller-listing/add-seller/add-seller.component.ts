@@ -97,7 +97,6 @@ export class AddSellerComponent implements OnInit {
       streetName: new FormControl(null,),
       file: new FormControl(''),
       pincode: new FormControl(null,),
-
       accHolderName: new FormControl(null,),
       accountNumber: new FormControl(null,),
       IFSCCode: new FormControl(null,),
@@ -127,8 +126,6 @@ export class AddSellerComponent implements OnInit {
 
   onSubmitSellerForm() {
     this.isSubmittedaddSellerForm = true
-    
-        
     if (this.addSellerForm.invalid) {
       return
     }

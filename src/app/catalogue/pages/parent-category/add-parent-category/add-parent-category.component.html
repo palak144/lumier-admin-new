@@ -23,8 +23,8 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="categoryName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors }">
-                                    <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
+                                    <input type="text" formControlName="categoryName" class="form-control" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.categoryName.errors }">
+                                    <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
                                     </div>   
                                 </div>
@@ -32,10 +32,12 @@
                               <div class="col-md-6">
                                 <div class="form-group"> 
                                   <label for="country">Select Countries</label><span class="asterick">*</span> 
-                                  <angular2-multiselect class="form-control form-control-override border-primary" name="dropdown" [data]="dropdownListCountry" formControlName="countries" [ngClass]="{ 'is-invalid': isSubmittedAddPerGroupForm && signUpControls.countries.errors }" [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
+                                  <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListCountry" formControlName="countries" 
+                                  [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.countries.errors }" 
+                                  [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
                                     disabled>
                                 </angular2-multiselect>
-                                <div *ngIf="isSubmittedAddPerGroupForm && signUpControls.countries.errors" class="invalid-feedback">
+                                <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.countries.errors" class="invalid-feedback">
                                   <div *ngIf="signUpControls.countries.errors.required">Country is required</div>
                                 </div>
                               </div>
@@ -48,19 +50,32 @@
                             <div class="form-group">
                                 <label>Supply Type</label><span class="asterick">*</span> 
                                 <div class="assign-group-dropdown">
-                                  <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control border-primary"
-                                  [(ngModel)]="selected_supplyType" placeholder="Select Supply Type"
-                                  [ngClass]="{ 'is-invalid': isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors }">
+                                  <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control"
+                                  placeholder="Select Supply Type"
+                                  [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.supplyTypeId.errors }">
                                 </p-dropdown>
-                                      <div *ngIf="isSubmittedaddParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                      <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
                                       <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
                                   </div>
                                   </div>  
                             </div>
                           </div>
+                          <div class="col-md-6">
+                            <div class="form-group"> 
+                              <label for="country">Select Language</label><span class="asterick">*</span> 
+                              <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListLanguage" formControlName="languages" 
+                              [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.languages.errors }" 
+                              [(ngModel)]="selected_languages" [settings]="dropdownSettings" 
+                                disabled>
+                            </angular2-multiselect>
+                            <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.languages.errors" class="invalid-feedback">
+                              <div *ngIf="signUpControls.languages.errors.required">Language is required</div>
+                            </div>
+                          </div>
+                      </div>
                       </div>
                       <div class="form-actions right">
-                          <button type="button" [routerLink]="['catalogues/parent-categories']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                          <button type="button" [routerLink]="['/catalogues/parent-categories']" class="btn btn-raised btn-warning mr-1"> Back</button>
                           <button type="submit" class="btn btn-raised btn-primary">Submit</button>
                       </div>
                   </form>

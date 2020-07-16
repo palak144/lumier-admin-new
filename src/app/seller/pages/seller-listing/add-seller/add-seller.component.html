@@ -13,257 +13,255 @@
 </div>
 <div class="row ">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-content">
-                <div class="px-3">
-                    <form class="form" [formGroup]="addSellerForm" (ngSubmit)="onSubmitSellerForm()">
-                        <div class="form-body">
-                            <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Select Country</label><span class="asterick">*</span>
-                                           <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }"
-                                          >
-                                            </p-dropdown>
-                                            <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
-                                                <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
-                                              
-                                            </div>
+        <div class="card-content">
+            <div class="px-3">
+                <form class="form" [formGroup]="addSellerForm" (ngSubmit)="onSubmitSellerForm()">
+                    <div class="form-body">
+                        <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Select Country</label><span class="asterick">*</span>
+                                        <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }"
+                                        >
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+                                            
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Name</label><span class="asterick">*</span> 
-                                        <input type="text" formControlName="sellerName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerName.errors }">
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerName.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.sellerName.errors.required">Seller Name is required</div>
-                                          
-                                        </div>
-                                    </div>
-                             
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>User Name</label><span class="asterick">*</span> 
-                                        <input type="text" formControlName="userName" class="form-control border-primary" placeholder="User Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.userName.errors }">
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.userName.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.userName.errors.required">User Name is required</div>
-                                        </div>   
-                                    </div>
-  
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Password </label><span class="asterick">*</span>
-                                        <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.password.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.password.errors.required">Password is required</div>
-                                            <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
-
-                                        </div>  
-                                    </div>
-                                </div>
-                              
-                            </div>
-                            <h4 class="form-section"><i class="ft-briefcase"></i> Professional Info</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email ID</label><span class="asterick">*</span> 
-                                        <input type="email" class="form-control border-primary" formControlName="sellerEmail" placeholder="Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerEmail.errors }" >
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerEmail.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.sellerEmail.errors.required">Email is required</div>
-                                            <div *ngIf="signUpControls.sellerEmail.errors.pattern">Please enter valid email (xyz@abc.com)</div>
-                                        </div> 
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Add CC-Email </label> 
-                                        <input type="email" class="form-control border-primary" formControlName="ccEmail" placeholder="Add CC-Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.ccEmail.errors }">
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Photo </label><span class="asterick">*</span> 
-                                        <div class="row ">
-                                            <div class="col-md-2 form-group center">
-                                                <label for="file">
-                                                  <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
-                                            </div>
-                                            <div class="col-md-10 ">
-                                                <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
-                                                <span id="sizeValidations">File size should not exceed 200kb</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Mobile </label>
-                                        <input type="number" formControlName="mobileNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.mobileNo.errors }" >
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="sellerName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerName.errors }">
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerName.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.sellerName.errors.required">Seller Name is required</div>
                                         
                                     </div>
                                 </div>
+                            
                             </div>
-                            <h4 class="form-section"><i class="ft-mail"></i> Contact Info</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Pickup Address</label>
-                                        <input type="text" class="form-control border-primary" formControlName="pickupAddress" placeholder="Pickup Address"  >
-                                      
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>User Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="userName" class="form-control border-primary" placeholder="User Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.userName.errors }">
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.userName.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.userName.errors.required">User Name is required</div>
+                                    </div>   
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Password </label><span class="asterick">*</span>
+                                    <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.password.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.password.errors.required">Password is required</div>
+                                        <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
+
+                                    </div>  
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <h4 class="form-section"><i class="ft-briefcase"></i> Professional Info</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email ID</label><span class="asterick">*</span> 
+                                    <input type="email" class="form-control border-primary" formControlName="sellerEmail" placeholder="Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerEmail.errors }" >
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerEmail.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.sellerEmail.errors.required">Email is required</div>
+                                        <div *ngIf="signUpControls.sellerEmail.errors.pattern">Please enter valid email (xyz@abc.com)</div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Add CC-Email </label> 
+                                    <input type="email" class="form-control border-primary" formControlName="ccEmail" placeholder="Add CC-Email" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.ccEmail.errors }">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Photo </label><span class="asterick">*</span> 
+                                    <div class="row ">
+                                        <div class="col-md-2 form-group center">
+                                            <label for="file">
+                                                <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                        </div>
+                                        <div class="col-md-10 ">
+                                            <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
+                                            <span id="sizeValidations">File size should not exceed 200kb</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Block/ House No.</label>
-                                        <input type="text" formControlName="houseNo" placeholder="Block/ House No." class="form-control border-primary" >
-                                     
-                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Mobile </label>
+                                    <input type="number" formControlName="mobileNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.mobileNo.errors }" >
+                                    
                                 </div>
                             </div>
+                        </div>
+                        <h4 class="form-section"><i class="ft-mail"></i> Contact Info</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pickup Address</label>
+                                    <input type="text" class="form-control border-primary" formControlName="pickupAddress" placeholder="Pickup Address"  >
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Block/ House No.</label>
+                                    <input type="text" formControlName="houseNo" placeholder="Block/ House No." class="form-control border-primary" >
+                                    
+                                </div>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Unit No.</label>
-                                    <input type="text" formControlName="unitNo" placeholder="Unit No." class="form-control border-primary">
-                                  
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Building Name</label>
-                                    <input type="text" formControlName="buildingName" placeholder="Building Name" class="form-control border-primary" >
-                               
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Street Name</label>
-                                    <input type="text" formControlName="streetName" placeholder="Street Name" class="form-control border-primary" >
-                               
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Pincode</label>
-                                    <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" >
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.pincode.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
-                                        <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
-
-                                    </div>  -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Floor No.</label>
-                                    <input type="text" formControlName="floorNo" placeholder="Floor No." class="form-control border-primary" >
-                                 
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Acc Holder Name</label>
-                                    <input type="text" formControlName="accHolderName" placeholder="Acc Holder Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accHolderName.errors }">
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accHolderName.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.accHolderName.errors.required">Account Holder Name is required</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Acc No.</label>
-                                    <input type="text" formControlName="accountNumber" placeholder="Account Number" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accountNumber.errors }">
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accountNumber.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.accountNumber.errors.required">Account Number is required</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>IFSC Code</label>
-                                    <input type="text" formControlName="IFSCCode" placeholder="IFSC Code" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.IFSCCode.errors }" >
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.IFSCCode.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.IFSCCode.errors.required">IFSC Code is required</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Bank Name</label>
-                                    <input type="text" formControlName="bankName" placeholder="Bank Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.bankName.errors }">
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.bankName.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.bankName.errors.required">Bank Name is required</div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Type Of Acc.</label>
-                                    <input type="text" formControlName="typeofAccount" placeholder="Type Of Acc." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.typeofAccount.errors }">
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.typeofAccount.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.typeofAccount.errors.required">Type Of Acc. is required</div>
-                                    </div>  -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Commission</label>
-                                    <input type="text" formControlName="commission" placeholder="Commission" class="form-control border-primary" >
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Unit No.</label>
+                                <input type="text" formControlName="unitNo" placeholder="Unit No." class="form-control border-primary">
                                 
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Supply Type</label>
-                                    <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.supplyType.errors }" >
-                                    <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div>  -->
-                                </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Building Name</label>
+                                <input type="text" formControlName="buildingName" placeholder="Building Name" class="form-control border-primary" >
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Street Name</label>
+                                <input type="text" formControlName="streetName" placeholder="Street Name" class="form-control border-primary" >
+                            
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Pincode</label>
+                                <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" >
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.pincode.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
+                                    <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
+
+                                </div>  -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Floor No.</label>
+                                <input type="text" formControlName="floorNo" placeholder="Floor No." class="form-control border-primary" >
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Acc Holder Name</label>
+                                <input type="text" formControlName="accHolderName" placeholder="Acc Holder Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accHolderName.errors }">
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accHolderName.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.accHolderName.errors.required">Account Holder Name is required</div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Acc No.</label>
+                                <input type="text" formControlName="accountNumber" placeholder="Account Number" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.accountNumber.errors }">
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.accountNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.accountNumber.errors.required">Account Number is required</div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>IFSC Code</label>
+                                <input type="text" formControlName="IFSCCode" placeholder="IFSC Code" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.IFSCCode.errors }" >
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.IFSCCode.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.IFSCCode.errors.required">IFSC Code is required</div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Bank Name</label>
+                                <input type="text" formControlName="bankName" placeholder="Bank Name" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.bankName.errors }">
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.bankName.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.bankName.errors.required">Bank Name is required</div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Type Of Acc.</label>
+                                <input type="text" formControlName="typeofAccount" placeholder="Type Of Acc." class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.typeofAccount.errors }">
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.typeofAccount.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.typeofAccount.errors.required">Type Of Acc. is required</div>
+                                </div>  -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Commission</label>
+                                <input type="text" formControlName="commission" placeholder="Commission" class="form-control border-primary" >
+                            
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Supply Type</label>
+                                <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.supplyType.errors }" >
+                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
+                                </div>  -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="row">
                         
-                        <!-- <div class="row">
-                         
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Floor No.</label>
-                                    <input type="text" formControlName="floorNo" placeholder="Floor No." class="form-control border-primary" >
-                                 
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Floor No.</label>
+                                <input type="text" formControlName="floorNo" placeholder="Floor No." class="form-control border-primary" >
+                                
                             </div>
-                        </div> -->
-                        <div class="form-actions right">
-                            <button type="button" [routerLink]="['/seller/sellers']" class="btn btn-raised btn-warning mr-1"> Back
-              </button>
-                            <button type="submit" class="btn btn-raised btn-primary">Submit
-              </button>
                         </div>
-                    </form>
-                </div>
+                    </div> -->
+                    <div class="form-actions right">
+                        <button type="button" [routerLink]="['/seller/sellers']" class="btn btn-raised btn-warning mr-1"> Back
+            </button>
+                        <button type="submit" class="btn btn-raised btn-primary">Submit
+            </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

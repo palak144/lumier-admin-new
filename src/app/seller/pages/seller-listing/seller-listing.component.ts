@@ -200,9 +200,6 @@ export class SellerListingComponent implements OnInit {
 
   this.countryId=deviceValue;
 }
-  else
-  {
-  }
     this.getAllSellersSearch(this.page, this.searchBar , this.exportAll, this.countryId);
 }
 }

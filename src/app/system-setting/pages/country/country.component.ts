@@ -72,7 +72,7 @@ export class CountryComponent implements OnInit {
   }
   
   initiateSearch() {
-    debugger
+    
     this.searchTerms$.pipe(
       takeUntil(this._unsubscribe),
       startWith(''),
@@ -82,7 +82,7 @@ export class CountryComponent implements OnInit {
       ))
     )
       .subscribe((success: any) => {
-        debugger
+        
         this.countriesList = success.data.results;
 
         this.totalCount = success.data.total;
@@ -94,7 +94,7 @@ export class CountryComponent implements OnInit {
 
     this.systemSettingsService.getAllCountries(page).subscribe(
       (success: any) => {
-        debugger
+        
         this.countriesList = success.data.results;
 
         this.totalCount = success.data.total;
@@ -107,14 +107,14 @@ export class CountryComponent implements OnInit {
   }
 
   getAllCountrySearch(page, searchBar) {
-    debugger
+    
 
     this.systemSettingsService.getAllCountriesSearch(page, searchBar)
       .pipe(
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        debugger
+        
         this.countriesList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -122,7 +122,7 @@ export class CountryComponent implements OnInit {
   }
 
   filterGlobal(searchTerm) {
-    debugger
+    
     // indexing starts from 0 in primeng
     this.primeNGTable.first = 0;
     this.page = 0;
@@ -143,7 +143,7 @@ export class CountryComponent implements OnInit {
             (success: any) => {
 
               this.getAllCountries(this.page);
-              debugger
+              
               this.countriesList = this.countriesList.filter((item: any) => {
                 return id !== item.countryId
               })

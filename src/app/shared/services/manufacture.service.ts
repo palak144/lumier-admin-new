@@ -114,9 +114,9 @@ export class ManufactureService {
         catchError(this.errorHandler.handleError)
       );
   }
-  getAllParentCategorysSearch(page?, searchKey?, exportAll?, countryId?) {
+  getAllParentCategorysSearch(page?, searchKey?,  countryId?) {
 
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    const params = { page: page, searchKey: searchKey ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
         retry(3),
@@ -147,7 +147,7 @@ export class ManufactureService {
       );
   }
   deleteParentCategory(id) {
-    debugger
+    
     return this.http.delete(this.baseUrl + 'admin/parentCategory/' + id)
       .pipe(
         retry(3),
