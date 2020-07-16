@@ -14,7 +14,7 @@
   </form>
 </div>
 <div class="row">
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <div class="col-xl-3 col-lg-6 col-md-12">
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
@@ -23,7 +23,16 @@
             </select>
         </fieldset>   
     </div>
-  <div class="col-8 text-right">
+    <div class="col-xl-3 col-lg-6 col-md-12">
+        <fieldset class="form-group">
+            <label for="basicSelect">Supply Type</label>
+            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+                <option value="">ALL</option>
+                <option *ngFor="let type of supplytype" [value]="supplytype.id">{{supplytype.type}}</option> 
+            </select>
+        </fieldset>   
+    </div>
+  <div class="col-6 text-right button-export">
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
     <div class="dropdown">
@@ -54,8 +63,8 @@
                   <th style="width: 12em;">Child No.</th>
                   <th style="width: 12em;">Name</th> 
                   <th style="width: 12em;">Country</th>
-                  <th style="width: 10em;">Status</th> 
-                  <th style="width: 10em;">Action</th>
+                  <th style="width: 9em;">Status</th> 
+                  <th style="width: 9em;">Action</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-category >
@@ -97,7 +106,7 @@
           </ng-template>
           <ng-template pTemplate="emptymessage">
               <tr>
-                  <td class="text-center text-danger font-weight-600" colspan="9">No Records Found.</td>
+                  <td class="text-center text-danger font-weight-600" colspan="7">No Records Found.</td>
               </tr>
           </ng-template>
       </p-table>

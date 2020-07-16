@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilityService } from 'app/shared/utility/utility.service';
 import { DashboardService } from 'app/shared/services/dashboard.service';
+import {NgbProgressbarConfig} from '@ng-bootstrap/ng-bootstrap';
 
 // export interface Chart {
 //   type: ChartType;
@@ -13,7 +14,8 @@ import { DashboardService } from 'app/shared/services/dashboard.service';
 @Component({
   selector: 'app-main-dashboard',
   templateUrl: './main-dashboard.component.html',
-  styleUrls: ['./main-dashboard.component.scss']
+  styleUrls: ['./main-dashboard.component.scss'],
+  providers: [NgbProgressbarConfig]
 })
 export class MainDashboardComponent implements OnInit {
 
@@ -22,8 +24,14 @@ export class MainDashboardComponent implements OnInit {
 
   constructor(
     private utilityService: UtilityService,
-    private dashboardService: DashboardService
-  ) { }
+    private dashboardService: DashboardService,
+    config: NgbProgressbarConfig
+  ) {
+    config.max = 1000;
+    config.animated = true;
+    config.type = 'success';
+    config.height = '5px';
+   }
 
   ngOnInit() {
     // this.dashboardStats();
