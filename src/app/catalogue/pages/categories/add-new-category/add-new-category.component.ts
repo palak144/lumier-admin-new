@@ -7,10 +7,20 @@ import { takeUntil } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { CategoriesService } from 'app/shared/services/categories.service';
+
 interface Country {
   _id:string,
   country:string
 }
+interface Category {
+  _id:string,
+  country:string
+}
+interface CategoryList {
+  _id:string,
+  country:string
+}
+
 @Component({
   selector: 'app-add-new-category',
   templateUrl: './add-new-category.component.html',
@@ -18,7 +28,7 @@ interface Country {
 })
 export class AddNewCategoryComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
-  countries:Country[];
+
   categoryTitle:string;
   addCategoriesForm: FormGroup; 
   isSubmittedaddCategoriesForm: boolean = false;
@@ -31,11 +41,13 @@ export class AddNewCategoryComponent implements OnInit {
   orgLogoData: any;
   dLogo: string;
   selectedFile: any;
+ countries:Country[];
   url: any;
   base64result: string;
   filenew: any;
   urlnew: string | ArrayBuffer;
-
+  parentcategory: Category[];
+  category: CategoryList[];
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -52,6 +64,8 @@ export class AddNewCategoryComponent implements OnInit {
     this.categoryTitle = "Add New Categories";
     this.initForm();
     this.getCountry();
+    this.getparentCategory();
+    this.getCategory();
   }
 
   onSubmitCategoriesForm(event) {
@@ -123,102 +137,56 @@ export class AddNewCategoryComponent implements OnInit {
   );
 }
 
-// onSubmitCategoriesForm() {
-//   console.log(event,this.addCategoriesForm);
-//     event.preventDefault();
-//     this.isSubmittedaddCategoriesForm = true
-//     if (this.addCategoriesForm.invalid) {
-//       return
-//     }
-//   this.isSubmittedaddCategoriesForm = true
 
-
-//   if (this.addCategoriesForm.invalid) {
-//     return
-//   }
-//     let data = this.addCategoriesForm.value;
-//     console.log(data);
-//     if(this.id)
-//     {
-//       data.id= this.id;
-//     }
-//     console.log('===',this.countryValue);
-//    if(this.countryValue)
-//   //  {
-//   //     data.countryName = this.countryValue;
-//   //  }
-
-//    if(!this.id)
-
-//       {
-//         console.log('data=========', data);
-//         this.categoryService.addCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
-//           (success:any) => {
-         
-//             this.toastr.success('Country Create Successfully!');
-//             this.router.navigate(['/catalogues/categories']);
-  
-//           },
-//           error => {
-//             this.toastr.error('error',error);
-//           }
-//         )
-//       }
-
-//       if(this.id)
-//      {
-//       this.categoryService.updateCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
-//         (success:any) => {
-//           // this.addSellerForm.reset();
-//           this.toastr.success('Country Update Successfully!');
-//           this.router.navigate(['/catalogues/categories']);
-
-//         },
-//         error => {
-//           this.toastr.error(error.error.message);
-//         }
-//       )
-//      }
-// }
-
-// patchForm(item) {
-//   this.addCategoriesForm.controls.fname.patchValue(item.fname);
-//   this.addCategoriesForm.controls.countryId.patchValue(item.countryId);
-//   this.addCategoriesForm.controls.parentCategory.patchValue(item.parentCategory);
-//   this.addCategoriesForm.controls.filterTitle.patchValue(item.filterTitle);
-//   this.addCategoriesForm.controls.filterDetail.patchValue(item.filterDetail);
-//   this.addCategoriesForm.controls.category.patchValue(item.category);
-//   this.addCategoriesForm.controls.sort.patchValue(item.sort);
-//   this.addCategoriesForm.controls.metaTitle.patchValue(item.metaTitle);
-//   this.addCategoriesForm.controls.metaDescription.patchValue(item.metaDescription);
-//   this.addCategoriesForm.controls.metaKeyword.patchValue(item.metaKeyword);
-//   this.addCategoriesForm.controls.staticmetaTag.patchValue(item.staticmetaTag);
-//   this.addCategoriesForm.controls.description.patchValue(item.description);
-// }
 
 getCountry()
-{
-  this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-    (success:any) => {
-      console.log(success);
-      // this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
-    },
-    error => {
-    }
-  )
-}
-
-arrayOfStringsToArrayOfObjects(arr: any[]) {
-  const newArray = [];
-  arr.forEach(element => {
-    newArray.push({
-      label: element.itemName,
-      value: element.id
+  {
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+      },
+      error => {
+      }
+    )
+  }
+  getparentCategory()
+  {
+    this.commonService.getparentCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.parentcategory = this.arrayOfStringsToArrayOfObjects(success.data.result);
+        console.log(this.parentcategory);
+      },
+      error => {
+      }
+    )
+  }
+  getCategory()
+  {
+    this.commonService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.category = this.arrayOfStringsToArrayOfObjects(success.data);
+        console.log(this.category);
+      },
+      error => {
+      }
+    )
+  }
+  arrayOfStringsToArrayOfObjects(arr: any[]) {
+    const newArray = [];
+    
+    arr.forEach(element => {
+      newArray.push({
+        label: element.itemName,
+        value: element.id
+      });
+    
     });
     return newArray;
-  });
- 
-}
+  
+  }
 
 
 

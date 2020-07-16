@@ -45,16 +45,16 @@ export class ManufactureService {
         dataForm.append('id', data['id']);
       }
       dataForm.append('categoryName', data['fname']);
-      dataForm.append('countryId', data['countryId']);
-      dataForm.append('type', data['type']);
-      dataForm.append('filterTitle', data['filterTitle']);
-      dataForm.append('filterDetail', data['filterDetail']);
-      dataForm.append('category', data['category']);
+      dataForm.append('countries', data['countryId']);
+      dataForm.append('parentCategoryId', data['parentCategory']);
+      dataForm.append('filtersTitle', data['filterTitle']);
+      dataForm.append('filtersDetail', data['filterDetail']);
+      dataForm.append('categoryId', data['category']);
       dataForm.append('sort', data['sort']);
       dataForm.append('metaTitle', data['metaTitle']);
       dataForm.append('metaDescription', data['metaDescription']);
       dataForm.append('metaKeyword', data['metaKeyword']);
-      dataForm.append('staticmetaTag', data['staticmetaTag']);
+      dataForm.append('isStaticMetaTag', "");
       dataForm.append('description', data['description']);
       dataForm.append('icon',"");
       dataForm.append('image', "");
