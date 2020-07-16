@@ -28,6 +28,23 @@ export class CommonServiceService {
       );
     
   }
+  getparentCategory()
+  {
+    return this.http.get(this.baseUrl + 'admin/parentCategoryList')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+    
+  }
+  getCategory()
+  {
+    return this.http.get(this.baseUrl + 'admin/categoryList')
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getSupplyType()
   {
   
