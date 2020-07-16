@@ -89,7 +89,7 @@ export class CategoriesComponent implements OnInit {
     }) 
   } 
 
-  getAllCategories(page) {
+  getAllCategories(page) { 
 
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
@@ -119,7 +119,7 @@ export class CategoriesComponent implements OnInit {
         this.utilityService.resetPage();
         if(exportAll == "true"){
    
-          this.excelService.exportAsExcelFile(this.categoriesList, 'Seller List')
+          this.excelService.exportAsExcelFile(this.categoriesList, 'Category List')
           this.exportAll = "false"
         }
       })
@@ -165,18 +165,18 @@ export class CategoriesComponent implements OnInit {
   }
 }
 
-// getCountry() 
-// {
-//   this.categoryService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
-//     (success:any) => {
-//       debugger
-//       this.countries = success.data.result;
-//     },
-//     error => {
-//     }
-//   )
-//   this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
-// }
+getCountry() 
+{
+  this.categoryService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      debugger
+      this.countries = success.data.result;
+    },
+    error => {
+    }
+  )
+  this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
+}
 
   onAddCategories(){
     this.router.navigate(['../new-category'],{relativeTo : this.activateRoute})

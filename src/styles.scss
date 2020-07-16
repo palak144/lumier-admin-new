@@ -806,3 +806,11 @@ body .ui-inputtext{
     margin-bottom: 0px;
     margin-top: 7px;
 }
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 1px 15px;
+}
+.tab-content {
+    padding: 1rem 0;
+}

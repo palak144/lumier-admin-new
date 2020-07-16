@@ -64,7 +64,7 @@
                                         <label>Parent Category</label><span class="asterick">*</span> 
                                         <input type="text" formControlName="parentCategory" class="form-control border-primary" placeholder="Parent Category" [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.parentCategory.errors }">
                                         <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.parentCategory.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.parentCategory.errors.required">Type is required</div>
+                                            <div *ngIf="signUpControls.parentCategory.errors.required">Parent Category is required</div>
                                         </div>   
                                     </div>
                                 </div>
