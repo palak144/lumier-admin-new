@@ -47,4 +47,18 @@ export class CommonServiceService {
       );
     
   }
+  getLanguage() {
+    
+    return this.http.get(this.baseUrl + 'admin/language').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCurrency() {
+    
+    return this.http.get(this.baseUrl + 'admin/currency').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 }

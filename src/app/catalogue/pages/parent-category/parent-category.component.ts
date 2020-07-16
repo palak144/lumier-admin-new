@@ -28,7 +28,6 @@ export class ParentCategoryComponent implements OnInit {
   searchTerms$ = new Subject<string>();
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
- exportAll = "false";
   action: any;
   countries:any[];
   countryId : number = null;
@@ -65,7 +64,7 @@ export class ParentCategoryComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.manufactureService.getAllParentCategorysSearch(this.page, term ,this.exportAll, this.countryId
+      switchMap((term: string) => this.manufactureService.getAllParentCategorysSearch(this.page, term ,this.countryId
       ))
     ).subscribe((success: any) => {
 
@@ -84,7 +83,7 @@ export class ParentCategoryComponent implements OnInit {
       
     } 
     else {
-      this.getAllParentCategorysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+      this.getAllParentCategorysSearch(this.page, this.searchBar ,  this.countryId);
     
     }
 
@@ -107,6 +106,7 @@ export class ParentCategoryComponent implements OnInit {
     )
   }
   getAllParentCategory(page) {
+    debugger
     this.manufactureService.getAllParentCategory(page).subscribe(
       (success: any) => {
         this.categoriesList = success.data.results;
@@ -118,10 +118,9 @@ export class ParentCategoryComponent implements OnInit {
       }
     );
   }
-  getAllParentCategorysSearch(page, searchBar , exportAll, countryId) {
- 
-      
-      this.manufactureService.getAllParentCategorysSearch(page, searchBar , exportAll , countryId)
+  getAllParentCategorysSearch(page, searchBar , countryId) {
+ debugger
+      this.manufactureService.getAllParentCategorysSearch(page, searchBar, countryId)
         .pipe(
           takeUntil(this._unsubscribe)
         )
@@ -129,11 +128,6 @@ export class ParentCategoryComponent implements OnInit {
           this.categoriesList = success.data.results;
           this.totalCount = success.data.total;
           this.utilityService.resetPage();
-          if(exportAll == "true"){
-
-            this.excelService.exportAsExcelFile(this.categoriesList, 'Seller List')
-            this.exportAll = "false"
-          }
         })
     }
     getDropDownValue(event, id) {
@@ -146,9 +140,6 @@ export class ParentCategoryComponent implements OnInit {
             this.manufactureService.deleteParentCategory(id).pipe(takeUntil(this._unsubscribe)).subscribe(
               (success: any) => {
                 this.getAllParentCategory(this.page);
-                // this.customerList = this.customerList.filter((item: any) => {
-                //   return id !== item.customerId
-                // })
               },
               error => {
               }
@@ -165,28 +156,14 @@ export class ParentCategoryComponent implements OnInit {
             
       }
     }
-    exportAsXLSX(id:number) {
-   
-      if (id==0){
 
-        this.excelService.exportAsExcelFile(this.categoriesList, 'Brand List')
-      }
-      else{
-      
-        this.exportAll = "true"
-       this.getAllParentCategorysSearch(this.page, this.searchBar,this.exportAll , this.countryId);
-      }
-     }
      onChange(deviceValue) {
       if(deviceValue)
   {
+    debugger
     this.countryId=deviceValue;
   }
-    else
-    {
-    }
-    
-      this.getAllParentCategorysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+      this.getAllParentCategorysSearch(this.page, this.searchBar , this.countryId);
   }
   onAddParentCategories(){
     this.router.navigate(['../new-parent-categories'],{relativeTo : this.activateRoute})
