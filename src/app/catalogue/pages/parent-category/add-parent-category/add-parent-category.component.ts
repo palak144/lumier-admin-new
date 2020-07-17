@@ -33,6 +33,7 @@ export class AddParentCategoryComponent implements OnInit {
   editMode: boolean;
   id: number;
   selected_supplyType:any;
+  name: {};
 
   constructor(
     private router: Router,
@@ -60,11 +61,7 @@ export class AddParentCategoryComponent implements OnInit {
       )
       this.selected_supplyType = [];
     this.initForm();
-    this.getSupplyType();
-    this.commonService.getCountry()
-    .subscribe((data:any) => {
-        this.dropdownListCountry = data.data
-    })
+    this.getCountry();
     this.commonService.getLanguage()
     .subscribe((data:any) => {
         this.dropdownListLanguage = data.data
@@ -80,8 +77,20 @@ export class AddParentCategoryComponent implements OnInit {
       maxHeight: "50px",
     };
   }
-
+  getCountry()
+  {
+    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        debugger
+        this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+      },
+      error => {
+      }
+    )
+  }
   onSubmitParentCategoriesForm(event) {
+    debugger
     event.preventDefault();
     this.isSubmittedParentCategoriesForm = true
     debugger
@@ -89,6 +98,9 @@ export class AddParentCategoryComponent implements OnInit {
       return
     }
     let data = this.addParentCategoriesForm.value;
+    data.categoryNameLang = this.languageObject(this.addParentCategoriesForm.get('categoryNameLang').value)
+   
+    debugger
     if(this.id)
     {
       data.id= this.id;
@@ -120,7 +132,16 @@ export class AddParentCategoryComponent implements OnInit {
     }
 
   } 
+  languageObject(name){
+    let language = this.addParentCategoriesForm.get('languages').value[0].itemName
+   this.name = {
+     'categoryName' : name,
+     'language' : language
 
+   }
+   debugger
+   return this.name
+  }
   get signUpControls() {
     return this.addParentCategoriesForm.controls;
   }
@@ -144,6 +165,8 @@ export class AddParentCategoryComponent implements OnInit {
      "supplyTypeId": new FormControl(null, Validators.required),
      "countries":new FormControl(null, Validators.required),
      "languages":new FormControl(null, Validators.required),
+     "categoryNameLang":new FormControl(null, Validators.required),
+
 
   });
 
@@ -151,13 +174,21 @@ export class AddParentCategoryComponent implements OnInit {
 
 getSupplyType()
 {
-  this.commonService.getSupplyType().pipe(takeUntil(this._unsubscribe)).subscribe(
+  debugger
+  this.commonService.supply(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
+      debugger
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
     }
   )
+}
+getdropdown(event:any){
+debugger
+this.selectedCountryId = event.value
+this.getSupplyType();
+
 }
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
@@ -186,6 +217,8 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
     this.addParentCategoriesForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
     this.addParentCategoriesForm.controls.countries.patchValue(item.countries);
     this.addParentCategoriesForm.controls.languages.patchValue(item.languages);
+        this.addParentCategoriesForm.controls.languages.patchValue(item.categoryNameLang.categoryName);
+
 
   }
 }

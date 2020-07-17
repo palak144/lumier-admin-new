@@ -55,6 +55,15 @@ export class CommonServiceService {
       );
     
   }
+  supply(country){
+    debugger
+    const params = { countryId: country }
+    return this.http.get(this.baseUrl + 'admin/supplyTypeList',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getAllCountries()
   {
     return this.http.get(this.baseUrl + 'web/countries')
