@@ -33,6 +33,7 @@ export class AddParentCategoryComponent implements OnInit {
   editMode: boolean;
   id: number;
   selected_supplyType:any;
+  add: boolean;
 
   constructor(
     private router: Router,
@@ -188,4 +189,19 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
     this.addParentCategoriesForm.controls.languages.patchValue(item.languages);
 
   }
+  onClose(items: any) {
+   debugger
+   this.languages
+  }
+  onItemSelect(item:any){
+    this.add = true;
+    console.log(item);
+    if(item.id != null){
+
+    } 
+}
+OnItemDeSelect(item:any){
+  console.log(item);
+  this.add = false;
+}
 }

@@ -35,8 +35,6 @@ export class CategoriesComponent implements OnInit {
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
 
-
-  
    // Real time search
    searchTerms$ = new Subject<string>();
    searchBar: any = "";
