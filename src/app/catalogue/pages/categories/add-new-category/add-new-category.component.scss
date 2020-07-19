@@ -1,3 +1,17 @@
 .cke_inner {
     border-color: #009DA0 !important;
 }
+::ng-deep .assign-group-dropdown {
+    .ui-dropdown {
+        &.form-control {
+            padding: 0 !important;
+        }
+        .ui-inputtext {
+            text-transform: capitalize;
+            letter-spacing: 0px;
+        }
+    }
+}
+.invalid-feedback {
+    display : block !important
+}

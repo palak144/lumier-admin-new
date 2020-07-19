@@ -67,5 +67,5 @@ export class CategoriesService {
         catchError(this.errorHandler.handleError)
     );
   }
-
+  
 }

@@ -28,6 +28,23 @@ export class CommonServiceService {
       );
     
   }
+  getparentCategory()
+  {
+    return this.http.get(this.baseUrl + 'admin/parentCategoryList')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+    
+  }
+  getCategory()
+  {
+    return this.http.get(this.baseUrl + 'admin/categoryList')
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getSupplyType()
   {
   
@@ -37,6 +54,15 @@ export class CommonServiceService {
         catchError(this.errorHandler.handleError)
       );
     
+  }
+  supply(country){
+    debugger
+    const params = { countryId: country }
+    return this.http.get(this.baseUrl + 'admin/supplyTypeList',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
   }
   getAllCountries()
   {
