@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
 
 interface Country {
   _id:string, 
@@ -10,7 +11,8 @@ interface Country {
 @Component({
   selector: 'app-combos',
   templateUrl: './combos.component.html',
-  styleUrls: ['./combos.component.scss']
+  styleUrls: ['./combos.component.scss'],
+  providers: [NgbTabsetConfig]
 })
 export class CombosComponent implements OnInit {
 
@@ -26,7 +28,9 @@ export class CombosComponent implements OnInit {
   combo: any;
   countries:Country[];
 
-  constructor() { }
+  constructor(config: NgbTabsetConfig) {
+    config.type = 'pills';
+   }
 
   ngOnInit() {
   }

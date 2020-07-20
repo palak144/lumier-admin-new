@@ -135,11 +135,16 @@
           </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Combos">
-      <ng-template ngbTabContent>
+    <ngb-tab>
+        <ng-template ngbTabTitle>
+        <a class="btn-link" [routerLink]="['/catalogues/combos']">Combos</a>
+        </ng-template>
+        </ngb-tab>
+    <!-- <ngb-tab title="Combos" ngbTabContent routerLink="/catalogues/new-product">
+       <ng-template ngbTabContent>
         <p>Because default values have been customized.</p>
-      </ng-template>
-    </ngb-tab>
+      </ng-template> 
+    </ngb-tab> -->
   </ngb-tabset>
 
 
