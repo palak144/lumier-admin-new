@@ -172,7 +172,6 @@ export class PermissionsComponent implements OnInit {
   }
 
   exportAsXLSX():void {
-
     this.excelService.exportAsExcelFile(this.perGroupList, 'Customer Group List');
   }
   open(content , permission) {

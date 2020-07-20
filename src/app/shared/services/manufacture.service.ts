@@ -58,7 +58,6 @@ export class ManufactureService {
       dataForm.append('description', data['description']);
       dataForm.append('icon',"");
       dataForm.append('image', "");
-      console.log(dataForm);
     return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
      
       retry(3),

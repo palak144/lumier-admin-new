@@ -22,6 +22,7 @@ export class AddParentCategoryComponent implements OnInit {
   selected_clanguages:any;
   countries = [];
   languages = [];
+  categoryNameLang = [];
   dropdownSettings = {};
   dropdownListCountry = [];
   dropdownListLanguage= [];
@@ -33,8 +34,13 @@ export class AddParentCategoryComponent implements OnInit {
   editMode: boolean;
   id: number;
   selected_supplyType:any;
-  add: boolean;
   name: {};
+  categoryLang: any;
+  inputs: any;
+  language: any;
+  countryLanguage: any;
+  countryData: any;
+  selectedCountryData: any;
 
   constructor(
     private router: Router,
@@ -63,10 +69,10 @@ export class AddParentCategoryComponent implements OnInit {
       this.selected_supplyType = [];
     this.initForm();
     this.getCountry();
-    this.commonService.getLanguage()
-    .subscribe((data:any) => {
-        this.dropdownListLanguage = data.data
-    })
+    // this.commonService.getLanguage()
+    // .subscribe((data:any) => {
+    //     this.dropdownListLanguage = data.data
+    // })
     this.selected_countries = []
     this.dropdownSettings = {
       singleSelection: false,
@@ -82,8 +88,8 @@ export class AddParentCategoryComponent implements OnInit {
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         debugger
+        this.countryData = success.data
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
@@ -91,7 +97,6 @@ export class AddParentCategoryComponent implements OnInit {
     )
   }
   onSubmitParentCategoriesForm(event) {
-    debugger
     event.preventDefault();
     this.isSubmittedParentCategoriesForm = true
     debugger
@@ -99,9 +104,9 @@ export class AddParentCategoryComponent implements OnInit {
       return
     }
     let data = this.addParentCategoriesForm.value;
+    this.addParentCategoriesForm.get('categoryNameLang').value
     data.categoryNameLang = this.languageObject(this.addParentCategoriesForm.get('categoryNameLang').value)
-   
-    debugger
+     debugger
     if(this.id)
     {
       data.id= this.id;
@@ -134,13 +139,16 @@ export class AddParentCategoryComponent implements OnInit {
 
   } 
   languageObject(name){
-    let language = this.addParentCategoriesForm.get('languages').value[0].itemName
+    debugger
+    name.forEach(element =>{
+      this.language = this.addParentCategoriesForm.get('languages').value[element].itemName
+
+    })
    this.name = {
      'categoryName' : name,
-     'language' : language
+     'language' : this.language
 
    }
-   debugger
    return this.name
   }
   get signUpControls() {
@@ -156,7 +164,6 @@ export class AddParentCategoryComponent implements OnInit {
 
       });
     }
-    
     return this.selectedCountryId;
   }
   private initForm() {
@@ -175,10 +182,8 @@ export class AddParentCategoryComponent implements OnInit {
 
 getSupplyType()
 {
-  debugger
   this.commonService.supply(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      debugger
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
@@ -186,10 +191,14 @@ getSupplyType()
   )
 }
 getdropdown(event:any){
-debugger
 this.selectedCountryId = event.value
+
 this.getSupplyType();
 
+this.selectedCountryData = this.countryData.filter(item => item.id === this.selectedCountryId)
+
+// this.languages = this.selectedCountryData[0].languages
+debugger
 }
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
@@ -222,19 +231,14 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
 
 
   }
-  onClose(items: any) {
-   debugger
-   this.languages
-  }
   onItemSelect(item:any){
-    this.add = true;
-    console.log(item);
-    if(item.id != null){
-
-    } 
+    debugger
+    this.categoryLang = item.itemName
+    this.inputs = this.addParentCategoriesForm.get('languages').value
+    
 }
 OnItemDeSelect(item:any){
-  console.log(item);
-  this.add = false;
+  debugger
+  this.inputs = this.addParentCategoriesForm.get('languages').value
 }
 }

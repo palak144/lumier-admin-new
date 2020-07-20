@@ -8,6 +8,7 @@ import { UtilityService } from '../../../shared/utility/utility.service';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-customer-group',
@@ -34,6 +35,8 @@ export class CustomerGroupComponent implements OnInit {
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false";
+  closeResult: string;
+  groups: any;
 
   constructor(
     private router: Router,
@@ -42,7 +45,7 @@ export class CustomerGroupComponent implements OnInit {
     private utilityService: UtilityService,
     private excelService: ExcelServiceService,
     private toastr: ToastrService,
-
+    private modalService: NgbModal,
     private confirmationService: ConfirmationService
   ) { }
 
@@ -172,4 +175,25 @@ export class CustomerGroupComponent implements OnInit {
       this.getAllCustomersSearch(this.page, this.searchBar, this.exportAll);
     }
   }
+  open(content , group) {
+    debugger
+    this.groups = group
+    this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+        
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
+
+// This function is used in open
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+  } else {
+      return `with: ${reason}`;
+  }
+}
 }

@@ -9,7 +9,7 @@
         {{parentcategoryTitle}}
       </li>
   </ul>
-  <div class="content-header text-left">Add New Parent Category</div>
+  <div class="content-header text-left">{{parentcategoryTitle}}</div>
 </div>
 <div class="row ">
   <div class="col-md-12">
@@ -35,7 +35,7 @@
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Name</label><span class="asterick">*</span> 
+                                    <label>Category Name</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="categoryName" class="form-control" placeholder="Name" >
                                     <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
@@ -61,21 +61,20 @@
                           <div class="col-md-6">
                             <div class="form-group"> 
                               <label for="country">Select Language</label><span class="asterick">*</span> 
-                              <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListLanguage" formControlName="languages" 
-                              [(ngModel)]="selected_languages" (onDeSelect)="OnItemDeSelect($event)"
-                               (onClose)="onClose(languages)" (onSelect)="onItemSelect($event)" [settings]="dropdownSettings" disabled>
-                            </angular2-multiselect>
+                              <p-dropdown [options]="languages" formControlName="languages" styleClass="form-control"
+                                  placeholder="Select Language">
+                                </p-dropdown>
                             <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.languages.errors" class="invalid-feedback">
                               <div *ngIf="signUpControls.languages.errors.required">Language is required</div>
                             </div>
                           </div>
                       </div>
                       </div>
-                      <div class="row">
+                      <div class="row" *ngFor="let input of inputs">
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Name New</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="categoryNameLang" class="form-control" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.categoryNameLang.errors }">
+                                    <label>Category Name in {{input.itemName}}</label><span class="asterick">*</span> 
+                                    <input type="text" [(ngModel)]="input.itemName" formControlName="categoryNameLang" class="form-control" placeholder="Name" >
                                     <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryNameLang.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.categoryNameLang.errors.required">Category Name is required</div>
                                     </div>   

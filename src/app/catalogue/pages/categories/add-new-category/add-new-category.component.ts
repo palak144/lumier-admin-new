@@ -75,7 +75,6 @@ export class AddNewCategoryComponent implements OnInit {
       return
     }
     let data=this.addCategoriesForm.value;
-    console.log(data);
       
     this.manufactureService.addcategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
@@ -143,7 +142,6 @@ getCountry()
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
@@ -154,9 +152,7 @@ getCountry()
   {
     this.commonService.getparentCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.parentcategory = this.arrayOfStringsToArrayOfObjects(success.data.result);
-        console.log(this.parentcategory);
       },
       error => {
       }
@@ -166,9 +162,7 @@ getCountry()
   {
     this.commonService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.category = this.arrayOfStringsToArrayOfObjects(success.data);
-        console.log(this.category);
       },
       error => {
       }
@@ -193,7 +187,6 @@ getCountry()
 fileChangeEvent(fileInput : any){
   
   this.file = fileInput.target.files[0];
-  console.log(this.file);
   var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
   if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
   if (this.file.size < 200000) {
@@ -206,7 +199,6 @@ fileChangeEvent(fileInput : any){
       
       reader.onload = (event) => {
          this.url = reader.result;
-         console.log(this.url);
         this.companyLogo = this.url;
         
         document.getElementById('sizeValidations').style.color = 'black';
@@ -215,7 +207,6 @@ fileChangeEvent(fileInput : any){
       
       this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : '');
       this.file = this.file.name;
-      console.log(this.file);
       
     }
   }
@@ -229,7 +220,6 @@ fileChangeEvent(fileInput : any){
 fileChangeEventnew(fileInput : any){
   
   this.filenew = fileInput.target.files[0];
-  console.log(this.filenew);
   var last = this.filenew.name.substring(this.filenew.name.lastIndexOf(".") + 1, this.filenew.name.length); 
   if(this.filenew.type == "image/jpeg" || this.filenew.type == "image/jpg" || this.filenew.type == "image/png")
   if (this.filenew.size < 200000) {
@@ -242,7 +232,6 @@ fileChangeEventnew(fileInput : any){
       
       reader.onload = (event) => {
          this.urlnew = reader.result;
-         console.log(this.urlnew);
         this.companyLogo = this.urlnew;
         
         document.getElementById('sizeValidations').style.color = 'black';
@@ -251,7 +240,6 @@ fileChangeEventnew(fileInput : any){
       
       this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? this.filenew : '');
       this.filenew = this.filenew.name;
-      console.log(this.filenew);
       
     }
   }
@@ -264,6 +252,5 @@ fileChangeEventnew(fileInput : any){
 }
 editorValidation(event)
 {
-console.log(event);
 }
 }
