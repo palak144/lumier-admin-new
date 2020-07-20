@@ -24,14 +24,14 @@
         </fieldset>   
     </div>
     <div class="col-xl-3 col-lg-6 col-md-12">
-        <fieldset class="form-group">
+        <!-- <fieldset class="form-group">
             <label for="basicSelect">Supply Type</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
                 <option value="">ALL</option>
                 <option *ngFor="let type of supplytype" [value]="supplytype.id">{{supplytype.type}}</option> 
             </select>
-        </fieldset>   
-    </div>
+        </fieldset>    -->
+    </div> 
   <div class="col-6 text-right button-export">
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
     <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
@@ -59,7 +59,7 @@
           <ng-template pTemplate="header">
               <tr>
                   <th style="width:5em">S. No.</th>
-                  <th style="width: 14em;">Supply Type</th>
+                  <th style="width: 14em;">Parent Category</th>
                   <th style="width: 12em;">Child No.</th>
                   <th style="width: 12em;">Name</th> 
                   <th style="width: 12em;">Country</th>
@@ -70,10 +70,10 @@
           <ng-template pTemplate="body" let-category >
               <tr>
                   <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{category.id}}</td>
-                  <td><span class="ui-column-title">Supply Type</span>{{category.supplyType}}</td>
-                  <td><span class="ui-column-title">Child No.</span>{{category.child}}</td>
+                  <td><span class="ui-column-title">Parent Category</span>{{category.parentCategory.categoryName}}</td>
+                  <td><span class="ui-column-title">Child No.</span></td>
                   <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
-                  <td><span class="ui-column-title">Country</span>{{category.countries.itemName}}</td>
+                  <td><span class="ui-column-title">Country</span>{{category.country.countryName}}</td>
                   <td >
                       <span class="ui-column-title ">Status</span> 
                       

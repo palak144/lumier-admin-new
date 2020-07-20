@@ -72,6 +72,13 @@ export class ManufactureService {
       catchError(this.errorHandler.handleError)
     );
   }
+  updatecategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/category', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   addParentCategory(data)
   {
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
@@ -133,6 +140,14 @@ export class ManufactureService {
   getParentCategoryDetails(id)
   {
     return this.http.get(this.baseUrl + 'admin/parentCategory/' + id)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCategoryDetails(id)
+  {
+    return this.http.get(this.baseUrl + 'admin/category/' + id)
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

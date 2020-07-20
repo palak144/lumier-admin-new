@@ -82,7 +82,7 @@ export class CategoriesComponent implements OnInit {
       ))
     )
     .subscribe((success: any) => {
-    debugger
+      console.log(success);
       this.categoriesList = success.data.results; 
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -93,7 +93,7 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
-        debugger
+        console.log(success);
         this.categoriesList = success.data.results;
         console.log(this.categoriesList);
         this.totalCount = success.data.total;
@@ -114,6 +114,7 @@ export class CategoriesComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
+        console.log(success);
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
@@ -160,7 +161,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
   if(event.currentTarget.firstChild.data === 'Edit'){
-        this.router.navigate(['../edit-category',id], {relativeTo: this.activateRoute})
+        this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
         
   }
 }
