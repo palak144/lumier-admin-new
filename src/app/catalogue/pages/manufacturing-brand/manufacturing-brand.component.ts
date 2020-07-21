@@ -203,7 +203,7 @@ export class ManufacturingBrandComponent implements OnInit {
       }
     )
   }
-  onChange(deviceValue) {
+  onChange(deviceValue) { 
     if (deviceValue) {
       this.countryId = deviceValue;
     }

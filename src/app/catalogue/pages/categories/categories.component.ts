@@ -41,7 +41,7 @@ export class CategoriesComponent implements OnInit {
    searchTerms$ = new Subject<string>();
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
-  exportAll: string = "false";
+  exportAll: "false";
   countryId : number = null;
 
    constructor(
@@ -68,7 +68,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
       this.initiateSearch();
-      // this.getCountry();
+      this.getCountry();
   }
 
   initiateSearch() {
@@ -82,7 +82,6 @@ export class CategoriesComponent implements OnInit {
       ))
     )
     .subscribe((success: any) => {
-    debugger
       this.categoriesList = success.data.results; 
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -93,11 +92,9 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
-        debugger
         this.categoriesList = success.data.results;
         console.log(this.categoriesList);
         this.totalCount = success.data.total;
-        debugger
       },
       error => {
       
@@ -144,7 +141,6 @@ export class CategoriesComponent implements OnInit {
         accept: () => {
           this.categoryService.deleteCategory(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              debugger
               this.getAllCategories(this.page);
               this.categoriesList = this.categoriesList.filter((item: any) => {
                 return id !== item.countryId
@@ -167,15 +163,14 @@ export class CategoriesComponent implements OnInit {
 
 getCountry() 
 {
-  this.categoryService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+  this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      debugger
-      this.countries = success.data.result;
+      this.countries = success.data;
     },
     error => {
     }
   )
-  this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
+  this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll );
 }
 
   onAddCategories(){
