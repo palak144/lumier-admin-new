@@ -53,7 +53,6 @@ export class AddCustomerComponent implements OnInit {
       res.data.results.forEach(item => {
 
         this.assignGroupList.push({
-
           label: item.groupName,
           value: item.id
         })

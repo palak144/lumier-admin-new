@@ -161,19 +161,13 @@ export class AddManufacturerBrandComponent implements OnInit {
     {
       this.companyFlagSize = true;
       this.compLogofiletype = last;
-       let reader = new FileReader();
-       
-        reader.readAsDataURL(this.file);
-        
+       let reader = new FileReader();      
+        reader.readAsDataURL(this.file);      
         reader.onload = (event) => {
            this.url = reader.result;
-           
-          this.companyLogo = this.url;
-          
+          this.companyLogo = this.url;        
           document.getElementById('sizeValidations').style.color = 'black';
-  
         }
-        
         this.addBrandForm.controls['file'].setValue(this.file ? this.file : '');
         this.file = this.file.name
         
@@ -198,16 +192,19 @@ export class AddManufacturerBrandComponent implements OnInit {
     return newArray;
   }
   private initForm(){
-    let name = "";
+    
+let name = "";
 let supplyTypeId = "";
 let file = "";
 let walletDiscount = 0;
+
 this.addBrandForm = new FormGroup({
   "countryId":new FormControl(null,[Validators.required]),
   "name": new FormControl( name, Validators.required),
   "supplyTypeId": new FormControl( supplyTypeId, Validators.required),
   "walletDiscount": new FormControl( walletDiscount,),
 });
+
     if(this.editMode){
       this.brandTitle = "Edit Manufacturer/ Brand"
       this.addBrandForm.addControl(

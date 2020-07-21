@@ -9,7 +9,7 @@
         {{parentcategoryTitle}}
       </li>
   </ul>
-  <div class="content-header text-left">Add New Parent Category</div>
+  <div class="content-header text-left">{{parentcategoryTitle}}</div>
 </div>
 <div class="row ">
   <div class="col-md-12">
@@ -20,39 +20,37 @@
                       <div class="form-body">
                           <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                             <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="categoryName" class="form-control" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.categoryName.errors }">
-                                    <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
-                                    </div>   
-                                </div>
-                              </div>
+                              
                               <div class="col-md-6">
                                 <div class="form-group"> 
                                   <label for="country">Select Countries</label><span class="asterick">*</span> 
-                                  <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListCountry" formControlName="countries" 
-                                  [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.countries.errors }" 
-                                  [(ngModel)]="selected_countries" [settings]="dropdownSettings" 
-                                    disabled>
-                                </angular2-multiselect>
+                                  <p-dropdown [options]="countries" formControlName="countries" styleClass="form-control"
+                                  placeholder="Select Country" (onChange)="getdropdown($event)"
+                                  [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.countries.errors }">
+                                </p-dropdown>
                                 <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.countries.errors" class="invalid-feedback">
                                   <div *ngIf="signUpControls.countries.errors.required">Country is required</div>
                                 </div>
                               </div>
                               </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Category Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="categoryName" class="form-control" placeholder="Name" >
+                                    <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
+                                    </div>   
+                                </div>
+                              </div>
                             </div>                        
                       </div>
-                      <div class="row">
-                     
+                      <div class="row">                  
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label>Supply Type</label><span class="asterick">*</span> 
                                 <div class="assign-group-dropdown">
                                   <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control"
-                                  placeholder="Select Supply Type"
-                                  [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.supplyTypeId.errors }">
+                                  placeholder="Select Supply Type">
                                 </p-dropdown>
                                       <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
                                       <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
@@ -63,16 +61,25 @@
                           <div class="col-md-6">
                             <div class="form-group"> 
                               <label for="country">Select Language</label><span class="asterick">*</span> 
-                              <angular2-multiselect class="form-control form-control-override" name="dropdown" [data]="dropdownListLanguage" formControlName="languages" 
-                              [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.languages.errors }" 
-                              [(ngModel)]="selected_languages" [settings]="dropdownSettings" 
-                                disabled>
-                            </angular2-multiselect>
+                              <p-dropdown [options]="languages" formControlName="languages" styleClass="form-control"
+                                  placeholder="Select Language">
+                                </p-dropdown>
                             <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.languages.errors" class="invalid-feedback">
                               <div *ngIf="signUpControls.languages.errors.required">Language is required</div>
                             </div>
                           </div>
                       </div>
+                      </div>
+                      <div class="row" *ngFor="let input of inputs">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Category Name in {{input.itemName}}</label><span class="asterick">*</span> 
+                                    <input type="text" [(ngModel)]="input.itemName" formControlName="categoryNameLang" class="form-control" placeholder="Name" >
+                                    <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryNameLang.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.categoryNameLang.errors.required">Category Name is required</div>
+                                    </div>   
+                                </div>
+                              </div>
                       </div>
                       <div class="form-actions right">
                           <button type="button" [routerLink]="['/catalogues/parent-categories']" class="btn btn-raised btn-warning mr-1"> Back</button>

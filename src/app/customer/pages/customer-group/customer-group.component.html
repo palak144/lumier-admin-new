@@ -1,5 +1,5 @@
 <div class="row container">
-    <div class="content-header text-left">Customers Group</div>
+    <div class="content-header text-left">Customer Group</div>
     <p class="content-sub-header"></p>
 </div>
 <div class="row paddingSearch">
@@ -50,6 +50,7 @@
                     </th>
                     <th>Group Name</th>
                     <th style="width:16em;">Group Email</th>
+                    <th>Customers</th>
                     <th>Registration Date</th>
                     <th style="width:7em;">Action</th>
                 </tr>
@@ -59,6 +60,16 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
                     <td><span class="ui-column-title">Group Name</span>{{customer.groupName}}</td>
                     <td><span class="ui-column-title">Group Email</span>{{customer.groupEmail}}</td>
+                    <td ><span class="ui-column-title">Customers</span>
+                        <a class="text" (click)="open(content, customer.group)"><b>View Customers </b></a>
+                        
+                    </td>
+                    <!-- <td><span class="ui-column-title">Customers</span>
+                        <ng-container *ngFor="let group of customer.group">
+                            <span>{{group.firstName}} {{group.lastName}}</span>         
+                      </ng-container>
+                    </td> -->
+
                     <td><span class="ui-column-title">Registration
                             Date</span>{{customer.created_at | date: 'mediumDate'}}</td>
                    
@@ -86,3 +97,19 @@
         </p-table>
     </div>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title title "><b> <u>Customers</u> </b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+<div class="container pt-3">
+    <div *ngFor="let group of groups">
+      <ul><li>{{group.firstName}} {{group.lastName}}</li> </ul>
+      </div>
+</div>    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>

@@ -58,7 +58,6 @@ export class ManufactureService {
       dataForm.append('description', data['description']);
       dataForm.append('icon',"");
       dataForm.append('image', "");
-      console.log(dataForm);
     return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
      
       retry(3),
@@ -68,6 +67,13 @@ export class ManufactureService {
   updateBrand(data)
   {
     return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  updatecategory(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/category', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -133,6 +139,14 @@ export class ManufactureService {
   getParentCategoryDetails(id)
   {
     return this.http.get(this.baseUrl + 'admin/parentCategory/' + id)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCategoryDetails(id)
+  {
+    return this.http.get(this.baseUrl + 'admin/category/' + id)
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
