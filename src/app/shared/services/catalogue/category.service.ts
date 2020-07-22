@@ -84,13 +84,13 @@ addcategory(data)
     dataForm.append('categoryName', data['categoryName']);
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
-  
+    dataForm.append('languageId', data['languageId']);
     dataForm.append('categoryId', data['categoryId']);
     dataForm.append('sort', data['sort']);
     dataForm.append('metaTitle', data['metaTitle']);
     dataForm.append('metaDescription', data['metaDescription']);
     dataForm.append('metaKeyword', data['metaKeyword']);
-    dataForm.append('isStaticMetaTag', "");
+    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
     dataForm.append('description', data['description']);
     dataForm.append('icon',"");
     dataForm.append('image', data['file']);

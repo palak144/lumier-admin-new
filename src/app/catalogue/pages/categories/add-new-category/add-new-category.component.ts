@@ -41,17 +41,28 @@ export class AddNewCategoryComponent implements OnInit {
   orgLogoData: any;
   dLogo: string;
   selectedFile: any;
+  selectedCountryId: any[];
+  selected_countries:any;
+  selectedCategoryLanguages:any;
+  languages = [];
+  categoryNameLang = []
+  language: any;
+  countryLanguage: any;
  countries:Country[];
   url: any;
   base64result: string;
   filenew: any;
   urlnew: string | ArrayBuffer;
+ 
   parentcategory: Category[];
   category: CategoryList[];
   categoryData: any;
   id: number;
   editMode: boolean;
   addCategoryFormDetails: any;
+  supplyTypes:any[];
+  supplyTypeValue: any;
+ 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -65,7 +76,9 @@ export class AddNewCategoryComponent implements OnInit {
 
 
   ngOnInit(): void {
+  
     this.file='';
+    this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
@@ -100,11 +113,11 @@ export class AddNewCategoryComponent implements OnInit {
 
     this.addCategoryFormDetails = {
       "categoryName": this.addCategoriesForm.get('fname').value,
-      "": this.addCategoriesForm.get('file').value,
+      "file": this.addCategoriesForm.get('file').value,
       "countries": this.addCategoriesForm.get('countryId').value,
       "parentCategoryId": this.addCategoriesForm.get('parentCategory').value,
-     
       "categoryId": this.addCategoriesForm.get('category').value,
+      "languageId": this.addCategoriesForm.get('languageId').value,
       "sort": this.addCategoriesForm.get('sort').value,
       "metaTitle": this.addCategoriesForm.get('metaTitle').value,
       "metaDescription": this.addCategoriesForm.get('metaDescription').value,
@@ -171,14 +184,14 @@ export class AddNewCategoryComponent implements OnInit {
     let staticmetaTag = "";
     let description = "";
     let file = "";
-    // let filenew = "";
+    let languageId = "";
 
   
   this.addCategoriesForm = new FormGroup({
      "fname": new FormControl(fname, Validators.required),
      "countryId": new FormControl(countryId, Validators.required),
      "parentCategory": new FormControl(parentCategory, Validators.required),
-  
+     "languageId":new FormControl(languageId, Validators.required),
      "category": new FormControl(category, Validators.required),
      "sort": new FormControl(sort, Validators.required),
      "metaTitle": new FormControl(metaTitle, Validators.required),
@@ -190,10 +203,7 @@ export class AddNewCategoryComponent implements OnInit {
   this.addCategoriesForm.addControl(
     "file", new FormControl( file,Validators.required),
   );;
-  // this.addCategoriesForm.addControl(
-  //   "filenew", new FormControl( filenew,),
-    
-  // );
+
 }
 
 
@@ -283,39 +293,7 @@ fileChangeEvent(fileInput : any){
       this.addCategoriesForm.controls['file'].setValue(this.file ? '' : '');
     }
 }
-// fileChangeEventnew(fileInput : any){
-  
-//   this.filenew = fileInput.target.files[0];
-//   var last = this.filenew.name.substring(this.filenew.name.lastIndexOf(".") + 1, this.filenew.name.length); 
-//   if(this.filenew.type == "image/jpeg" || this.filenew.type == "image/jpg" || this.filenew.type == "image/png")
-//   if (this.filenew.size < 200000) {
-//   {
-//     this.companyFlagSize = true;
-//     this.compLogofiletype = last;
-//      let reader = new FileReader();
-     
-//       reader.readAsDataURL(this.filenew);
-      
-//       reader.onload = (event) => {
-//          this.urlnew = reader.result;
-//         this.companyLogo = this.urlnew;
-        
-//         document.getElementById('sizeValidations').style.color = 'black';
 
-//       }
-      
-//       this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? this.filenew : '');
-//       this.filenew = this.filenew.name;
-      
-//     }
-//   }
-//     else {
-//       this.companyFlagSize = false;
-      
-//       document.getElementById('sizeValidations').style.color = '#ffae42';
-//       this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? '' : '');
-//     }
-// }
 editorValidation(event)
 {
 }
@@ -333,12 +311,14 @@ getCategoryDetails(id) {
 patchForm(item)
 {
   console.log(item);
-
+  this.companyFlagSize = true;
+  this.companyLogo = item.image,
+  console.log( this.companyLogo);
   this.addCategoriesForm.controls.fname.patchValue(item.categoryName);  
   this.addCategoriesForm.controls.countryId.patchValue(item.countries);
   this.addCategoriesForm.controls.parentCategory.patchValue(item.parentCategoryId);
-  this.addCategoriesForm.controls.filterTitle.patchValue(item.filtersTitle);
-  this.addCategoriesForm.controls.filterDetail.patchValue(item.filtersDetail);
+  // this.addCategoriesForm.controls.filterTitle.patchValue(item.filtersTitle);
+  // this.addCategoriesForm.controls.filterDetail.patchValue(item.filtersDetail);
   this.addCategoriesForm.controls.category.patchValue(item.categoryId);
   this.addCategoriesForm.controls.sort.patchValue(item.sort);
   this.addCategoriesForm.controls.metaTitle.patchValue(item.metaTitle);
@@ -346,11 +326,39 @@ patchForm(item)
   this.addCategoriesForm.controls.metaKeyword.patchValue(item.metaKeyword);
   this.addCategoriesForm.controls.staticmetaTag.patchValue(item.isStaticMetaTag);
   this.addCategoriesForm.controls.description.patchValue(item.description);
+  this.addCategoriesForm.controls.languageId.patchValue(item.languageId);
 
 
-  // this.addCategoriesForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
-  // this.addCategoriesForm.controls.countries.patchValue(item.countries);
-  // this.addCategoriesForm.controls.languages.patchValue(item.languages);
 
 }
+getLanguage()
+{
+ 
+  this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      
+      let newArray = [
+        {
+          "id": success.data.id,
+          "itemName": success.data.itemName,
+        }
+      ]
+      
+      this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
+      
+    },
+    error => {
+    }
+  )
+}
+getdropdown(event:any){
+  
+  this.selectedCountryId = event.value
+  
+
+  this.getLanguage();
+
+  
+  }
+
 }

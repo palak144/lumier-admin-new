@@ -213,7 +213,7 @@ this.addBrandForm = new FormGroup({
       this.manufactureService.getBrandDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any)=>{          
           this.brand=success.data
-          
+          console.log(this.brand);
           this.addBrandForm.patchValue({
             "name" : this.brand.manufacturerName,
             "walletDiscount" : this.brand.walletDiscount,
