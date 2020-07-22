@@ -152,19 +152,22 @@ export class SystemTypeComponent implements OnInit {
   exportAsXLSX(id:number) {
    
     if (id==0){
- 
+  
       this.excelService.exportAsExcelFile(this.supplyList, 'Seller List')
+      debugger
     }
     else{
     
       this.exportAll = "true"
+      console.log(this.exportAll);
      this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
+    
     }
    }
    
    onChange(deviceValue) {
      if(deviceValue)
- {
+ { 
    this.countryId=deviceValue;
  }
    else
