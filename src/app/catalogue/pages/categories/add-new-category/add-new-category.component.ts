@@ -100,11 +100,10 @@ export class AddNewCategoryComponent implements OnInit {
 
     this.addCategoryFormDetails = {
       "categoryName": this.addCategoriesForm.get('fname').value,
-      
+      "": this.addCategoriesForm.get('file').value,
       "countries": this.addCategoriesForm.get('countryId').value,
       "parentCategoryId": this.addCategoriesForm.get('parentCategory').value,
-      "filtersTitle": this.addCategoriesForm.get('filterTitle').value,
-      "filtersDetail": this.addCategoriesForm.get('filterDetail').value,
+     
       "categoryId": this.addCategoriesForm.get('category').value,
       "sort": this.addCategoriesForm.get('sort').value,
       "metaTitle": this.addCategoriesForm.get('metaTitle').value,
@@ -114,6 +113,7 @@ export class AddNewCategoryComponent implements OnInit {
       "description": this.addCategoriesForm.get('description').value,
 
     }
+    console.log(this.addCategoryFormDetails);
    if(this.id)
     {
      this.addCategoryFormDetails.id=this.id;
@@ -178,8 +178,7 @@ export class AddNewCategoryComponent implements OnInit {
      "fname": new FormControl(fname, Validators.required),
      "countryId": new FormControl(countryId, Validators.required),
      "parentCategory": new FormControl(parentCategory, Validators.required),
-     "filterTitle": new FormControl(filterTitle, Validators.required),
-     "filterDetail": new FormControl(filterDetail, Validators.required),
+  
      "category": new FormControl(category, Validators.required),
      "sort": new FormControl(sort, Validators.required),
      "metaTitle": new FormControl(metaTitle, Validators.required),
@@ -269,8 +268,8 @@ fileChangeEvent(fileInput : any){
         document.getElementById('sizeValidations').style.color = 'black';
 
       }
-      console.log("mayur",this.file);
-      console.log( this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : ''));
+      console.log(this.file);
+
        this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : '');
       this.file = this.file.name;
       
@@ -278,9 +277,9 @@ fileChangeEvent(fileInput : any){
   }
     else {
       this.companyFlagSize = false;
-      console.log("hello", this.file);
+      console.log( this.file);
       document.getElementById('sizeValidations').style.color = '#ffae42';
-      console.log(this.addCategoriesForm.controls['file'].setValue(this.file ? '' : ''));
+   
       this.addCategoriesForm.controls['file'].setValue(this.file ? '' : '');
     }
 }

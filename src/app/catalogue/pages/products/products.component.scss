@@ -41,7 +41,12 @@ p-dropdown.icons {
 a.btn-link.ng-star-inserted {
     text-decoration: none; 
     padding: 8.5px 17px;
-    background: #1b5f61;
+    background: #009da0;
     color: #fff;
     border-radius: 6px;
+}
+ 
+.nav-pills .nav-link.active {
+    color: #fff;
+    background-color: #00484a;
 }
