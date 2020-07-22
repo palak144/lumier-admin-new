@@ -152,7 +152,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
   
           },
           error => {
-            this.toastr.error('error',error);
+            this.toastr.error(error.error.message);
           }
         )
       }

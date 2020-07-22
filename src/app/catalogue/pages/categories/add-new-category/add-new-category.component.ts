@@ -142,7 +142,7 @@ export class AddNewCategoryComponent implements OnInit {
 
       },
       error => {
-        this.toastr.error('error',error);
+        this.toastr.error(error.error.message);
       }
     )
     }
@@ -157,7 +157,7 @@ export class AddNewCategoryComponent implements OnInit {
   
         },
         error => {
-          this.toastr.error('error',error);
+          this.toastr.error(error.error.message);
         }
       )
     }
