@@ -84,8 +84,7 @@ addcategory(data)
     dataForm.append('categoryName', data['categoryName']);
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
-    dataForm.append('filtersTitle', data['filtersTitle']);
-    dataForm.append('filtersDetail', data['filtersDetail']);
+  
     dataForm.append('categoryId', data['categoryId']);
     dataForm.append('sort', data['sort']);
     dataForm.append('metaTitle', data['metaTitle']);
@@ -94,7 +93,7 @@ addcategory(data)
     dataForm.append('isStaticMetaTag', "");
     dataForm.append('description', data['description']);
     dataForm.append('icon',"");
-    dataForm.append('image', "");
+    dataForm.append('image', data['file']);
   return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
    
     retry(3),
