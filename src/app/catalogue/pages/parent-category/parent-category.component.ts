@@ -152,8 +152,7 @@ export class ParentCategoryComponent implements OnInit {
        
       }
       if(event.currentTarget.firstChild.data === 'Edit'){
-            this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
-            
+            this.router.navigate(['../edit-parent-category',id], {relativeTo: this.activateRoute})          
       }
     }
 
@@ -168,5 +167,4 @@ export class ParentCategoryComponent implements OnInit {
   onAddParentCategories(){
     this.router.navigate(['../new-parent-categories'],{relativeTo : this.activateRoute})
   }
-
 }

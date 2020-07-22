@@ -80,6 +80,7 @@ export class ManufactureService {
   }
   addParentCategory(data)
   {
+    debugger
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -87,6 +88,7 @@ export class ManufactureService {
   }
   updateParentCategory(data)
   {
+    debugger
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

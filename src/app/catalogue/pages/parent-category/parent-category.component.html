@@ -53,11 +53,7 @@
               <tr>
                   <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{category.id}}</td>
                   <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
-                  <td ><span class="ui-column-title">Country</span>
-                    <ng-container *ngFor="let country of category.countries">
-                        <span>{{country.itemName}}</span>         
-                  </ng-container></td>
-                
+                  <td><span class="ui-column-title">Supply Type</span> {{category.country.countryName}}</td>
                   <td><span class="ui-column-title">Supply Type</span>{{category.supplyType.name}}</td>
                   <td >
                       <span class="ui-column-title ">Status</span> 

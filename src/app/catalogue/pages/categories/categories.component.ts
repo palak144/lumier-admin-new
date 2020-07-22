@@ -130,9 +130,6 @@ export class CategoriesComponent implements OnInit {
     this.searchTerms$.next(searchTerm);
   }
 
-  onAddcountry(){
-    this.router.navigate(['../new-country'],{relativeTo : this.activateRoute})
-  }
 
   getDropDownValue(event, id) {
     if(event.currentTarget.firstChild.data === 'Delete') {

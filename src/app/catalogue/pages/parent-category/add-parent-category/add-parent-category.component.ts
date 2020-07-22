@@ -19,7 +19,7 @@ export class AddParentCategoryComponent implements OnInit {
   addParentCategoriesForm: FormGroup; 
   isSubmittedParentCategoriesForm: boolean = false;
   selected_countries:any;
-  selected_clanguages:any;
+  selectedCategoryLanguages:any;
   countries = [];
   languages = [];
   categoryNameLang = [];
@@ -61,7 +61,9 @@ export class AddParentCategoryComponent implements OnInit {
         }
         if(this.id)
         {
-          this.parentcategoryTitle = "Edit New Parent Category";
+          debugger
+          
+          this.parentcategoryTitle = "Edit Parent Category";
           this.getParentCategoryDetails(this.id);
         }
       }
@@ -88,9 +90,11 @@ export class AddParentCategoryComponent implements OnInit {
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.countryData = success.data
+        debugger
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+        
       },
       error => {
       }
@@ -99,20 +103,19 @@ export class AddParentCategoryComponent implements OnInit {
   onSubmitParentCategoriesForm(event) {
     event.preventDefault();
     this.isSubmittedParentCategoriesForm = true
-    debugger
+    
     if (this.addParentCategoriesForm.invalid) {
       return
     }
     let data = this.addParentCategoriesForm.value;
-    this.addParentCategoriesForm.get('categoryNameLang').value
-    data.categoryNameLang = this.languageObject(this.addParentCategoriesForm.get('categoryNameLang').value)
-     debugger
+debugger     
     if(this.id)
     {
       data.id= this.id;
     }
     if(!this.id)
     {
+      debugger
     this.manufactureService.addParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => { 
         this.toastr.success('Parent Category Created Successfully!');
@@ -125,6 +128,7 @@ export class AddParentCategoryComponent implements OnInit {
     }
     if(this.id)
     {
+      debugger
      this.manufactureService.updateParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
        (success:any) => {
          // this.addSellerForm.reset();
@@ -138,19 +142,19 @@ export class AddParentCategoryComponent implements OnInit {
     }
 
   } 
-  languageObject(name){
-    debugger
-    name.forEach(element =>{
-      this.language = this.addParentCategoriesForm.get('languages').value[element].itemName
+  // languageObject(name){
+    
+  //   name.forEach(element =>{
+  //     this.language = this.addParentCategoriesForm.get('languages').value[element].itemName
 
-    })
-   this.name = {
-     'categoryName' : name,
-     'language' : this.language
+  //   })
+  //  this.name = {
+  //    'categoryName' : name,
+  //    'language' : this.language
 
-   }
-   return this.name
-  }
+  //  }
+  //  return this.name
+  // }
   get signUpControls() {
     return this.addParentCategoriesForm.controls;
   }
@@ -172,48 +176,110 @@ export class AddParentCategoryComponent implements OnInit {
      "categoryName": new FormControl(null, Validators.required),
      "supplyTypeId": new FormControl(null, Validators.required),
      "countries":new FormControl(null, Validators.required),
-     "languages":new FormControl(null, Validators.required),
-     "categoryNameLang":new FormControl(null, Validators.required),
-
-
+     "languageId":new FormControl(null, Validators.required),
+    //  "categoryNameLang":new FormControl(null, Validators.required),
   });
 
 }
 
 getSupplyType()
 {
+  
   this.commonService.supply(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
+      debugger
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
     }
   )
 }
-getdropdown(event:any){
-this.selectedCountryId = event.value
-
-this.getSupplyType();
-
-this.selectedCountryData = this.countryData.filter(item => item.id === this.selectedCountryId)
-
-// this.languages = this.selectedCountryData[0].languages
-debugger
+getLanguage()
+{
+ 
+  this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      debugger
+      let newArray = [
+        {
+          "id": success.data.id,
+          "itemName": success.data.itemName,
+        }
+      ]
+      debugger
+      this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
+      debugger
+    },
+    error => {
+    }
+  )
 }
+getdropdown(event:any){
+  debugger
+this.selectedCountryId = event.value
+debugger
+this.getSupplyType();
+this.getLanguage();
+// this.selectedCountryData = this.countryData.filter(item => item.id === this.selectedCountryId)
+
+//  this.languages =this.arrayOfStringsToArrayOfObjectsLanguage( this.selectedCountryData[0].languages)
+
+}
+// arrayOfStringsToArrayOfObjectsLanguage(arr : any){
+//   const newArray = [];
+  
+//     newArray.push({
+//       label: arr.itemName,
+//       value: arr.id
+//     });
+  
+  
+//   return newArray;
+// }
 arrayOfStringsToArrayOfObjects(arr: any[]) {
+  debugger
   const newArray = [];
+  if (arr != null) {
+
   arr.forEach(element => {
     newArray.push({
       label: element.itemName,
       value: element.id
     });
   });
+}
   return newArray;
 }
  getParentCategoryDetails(id) {
     this.manufactureService.getParentCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
+       
         this.ParentcategoryData = success.data;
+        this.commonService.supply(this.ParentcategoryData.countries).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success:any) => {
+            debugger
+            this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
+          },
+          error => {
+          }
+        )       
+        this.commonService.getCountryLanguage(this.ParentcategoryData.countries).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success:any) => {
+            debugger
+            let newArray = [
+              {
+                "id": success.data.id,
+                "itemName": success.data.itemName,
+              }
+            ]
+            debugger
+            this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
+            debugger
+          },
+          error => {
+          }
+        )
         this.patchForm(this.ParentcategoryData);
       },
       error => {
@@ -223,22 +289,21 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   patchForm(item)
   {
     debugger
+    
     this.addParentCategoriesForm.controls.categoryName.patchValue(item.categoryName);
     this.addParentCategoriesForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
     this.addParentCategoriesForm.controls.countries.patchValue(item.countries);
-    this.addParentCategoriesForm.controls.languages.patchValue(item.languages);
-        this.addParentCategoriesForm.controls.languages.patchValue(item.categoryNameLang.categoryName);
+    this.addParentCategoriesForm.controls.languageId.patchValue(item.languages);
+    // this.addParentCategoriesForm.controls.languages.patchValue(item.categoryNameLang.categoryName);
 
 
   }
-  onItemSelect(item:any){
-    debugger
-    this.categoryLang = item.itemName
-    this.inputs = this.addParentCategoriesForm.get('languages').value
+  // onLanguageselect(item:any){
     
-}
-OnItemDeSelect(item:any){
-  debugger
-  this.inputs = this.addParentCategoriesForm.get('languages').value
-}
+  //   if(item){
+  //   this.categoryLang = item
+    
+  //   }
+    
+//}
 }

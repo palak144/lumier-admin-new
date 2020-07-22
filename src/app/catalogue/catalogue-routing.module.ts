@@ -33,11 +33,6 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'new-product',
-          component: AddProductComponent,
-          
-        },
-        {
           path: 'combos',
           component: CombosComponent,
           data: {
@@ -64,26 +59,6 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'new-category',
-          component: AddNewCategoryComponent,
-          
-        },
-        {
-          path: 'edit/:id',
-          component: AddNewCategoryComponent,
-          
-        },
-        {
-          path: 'edit-category/:id',
-          component: AddNewCategoryComponent,
-          
-        },
-        {
-          path: 'new',
-          component: AddManufacturerBrandComponent,
-          
-        },
-        {
           path: 'parent-categories',
           component: ParentCategoryComponent,
           data: {
@@ -91,12 +66,24 @@ const routes: Routes = [{
           }
         },
         {
-          path: 'new-parent-categories',
-          component: AddParentCategoryComponent,
+          path: 'new-product',
+          component: AddProductComponent,
           
         },
         {
-          path: 'edit/:id',
+          path: 'new-category',
+          component: AddNewCategoryComponent,
+          
+        },
+        
+        {
+          path: 'new',
+          component: AddManufacturerBrandComponent,
+          
+        },
+     
+        {
+          path: 'new-parent-categories',
           component: AddParentCategoryComponent,
           
         },
@@ -110,6 +97,27 @@ const routes: Routes = [{
           component: AddManufacturerBrandComponent,
           
         },
+        {
+          path: ':id',
+          component: AddNewCategoryComponent,
+          
+        },
+        {
+          path: 'edit-category/:id',
+          component: AddNewCategoryComponent,
+          
+        },
+        {
+          path: ':id',
+          component: AddParentCategoryComponent,
+          
+        },
+        {
+          path: 'edit-parent-category/:id',
+          component: AddParentCategoryComponent,
+          
+        },
+      
         
         
       ]

@@ -81,7 +81,7 @@ export class ManufacturingBrandComponent implements OnInit {
       switchMap((term: string) => this.manufactureService.getAllBrandsSearch(this.page, term, this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-
+      debugger
       this.brandList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
