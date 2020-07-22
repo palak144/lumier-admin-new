@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { CategoriesService } from 'app/shared/services/categories.service';
-
+import { CategoryService } from '../../../../shared/services/catalogue/category.service';
 interface Country {
   _id:string,
   country:string
@@ -58,12 +58,14 @@ export class AddNewCategoryComponent implements OnInit {
     private manufactureService: ManufactureService,
     private commonService: CommonServiceService,
     private toastr: ToastrService,
+    private categoryService:CategoryService,
     private categoriesService: CategoriesService
   ) { }
 
 
 
   ngOnInit(): void {
+    this.file='';
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
@@ -119,7 +121,7 @@ export class AddNewCategoryComponent implements OnInit {
     console.log(this.addCategoryFormDetails);
     if(!this.id)
     {
-    this.manufactureService.addcategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.categoryService.addcategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
      
         this.toastr.success('Category  Create Successfully!');
@@ -134,7 +136,7 @@ export class AddNewCategoryComponent implements OnInit {
     if(this.id)
     {
       console.log("update");
-      this.manufactureService.updatecategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
+      this.categoryService.updatecategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
        console.log(success);
           this.toastr.success('Category  Update  Successfully!');
@@ -169,7 +171,7 @@ export class AddNewCategoryComponent implements OnInit {
     let staticmetaTag = "";
     let description = "";
     let file = "";
-    let filenew = "";
+    // let filenew = "";
 
   
   this.addCategoriesForm = new FormGroup({
@@ -187,13 +189,12 @@ export class AddNewCategoryComponent implements OnInit {
      "description": new FormControl(description, Validators.required),
   });
   this.addCategoriesForm.addControl(
-    "file", new FormControl( file,),
+    "file", new FormControl( file,Validators.required),
+  );;
+  // this.addCategoriesForm.addControl(
+  //   "filenew", new FormControl( filenew,),
     
-  );
-  this.addCategoriesForm.addControl(
-    "filenew", new FormControl( filenew,),
-    
-  );
+  // );
 }
 
 
@@ -247,7 +248,11 @@ getCountry()
 fileChangeEvent(fileInput : any){
   
   this.file = fileInput.target.files[0];
+  console.log(this.file);
+  console.log(this.file.name);
+  console.log(this.file.type);
   var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
+  console.log(last);
   if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
   if (this.file.size < 200000) {
   {
@@ -264,57 +269,59 @@ fileChangeEvent(fileInput : any){
         document.getElementById('sizeValidations').style.color = 'black';
 
       }
-      
-      this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : '');
+      console.log("mayur",this.file);
+      console.log( this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : ''));
+       this.addCategoriesForm.controls['file'].setValue(this.file ? this.file : '');
       this.file = this.file.name;
       
     }
   }
     else {
       this.companyFlagSize = false;
-      
+      console.log("hello", this.file);
       document.getElementById('sizeValidations').style.color = '#ffae42';
+      console.log(this.addCategoriesForm.controls['file'].setValue(this.file ? '' : ''));
       this.addCategoriesForm.controls['file'].setValue(this.file ? '' : '');
     }
 }
-fileChangeEventnew(fileInput : any){
+// fileChangeEventnew(fileInput : any){
   
-  this.filenew = fileInput.target.files[0];
-  var last = this.filenew.name.substring(this.filenew.name.lastIndexOf(".") + 1, this.filenew.name.length); 
-  if(this.filenew.type == "image/jpeg" || this.filenew.type == "image/jpg" || this.filenew.type == "image/png")
-  if (this.filenew.size < 200000) {
-  {
-    this.companyFlagSize = true;
-    this.compLogofiletype = last;
-     let reader = new FileReader();
+//   this.filenew = fileInput.target.files[0];
+//   var last = this.filenew.name.substring(this.filenew.name.lastIndexOf(".") + 1, this.filenew.name.length); 
+//   if(this.filenew.type == "image/jpeg" || this.filenew.type == "image/jpg" || this.filenew.type == "image/png")
+//   if (this.filenew.size < 200000) {
+//   {
+//     this.companyFlagSize = true;
+//     this.compLogofiletype = last;
+//      let reader = new FileReader();
      
-      reader.readAsDataURL(this.filenew);
+//       reader.readAsDataURL(this.filenew);
       
-      reader.onload = (event) => {
-         this.urlnew = reader.result;
-        this.companyLogo = this.urlnew;
+//       reader.onload = (event) => {
+//          this.urlnew = reader.result;
+//         this.companyLogo = this.urlnew;
         
-        document.getElementById('sizeValidations').style.color = 'black';
+//         document.getElementById('sizeValidations').style.color = 'black';
 
-      }
+//       }
       
-      this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? this.filenew : '');
-      this.filenew = this.filenew.name;
+//       this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? this.filenew : '');
+//       this.filenew = this.filenew.name;
       
-    }
-  }
-    else {
-      this.companyFlagSize = false;
+//     }
+//   }
+//     else {
+//       this.companyFlagSize = false;
       
-      document.getElementById('sizeValidations').style.color = '#ffae42';
-      this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? '' : '');
-    }
-}
+//       document.getElementById('sizeValidations').style.color = '#ffae42';
+//       this.addCategoriesForm.controls['filenew'].setValue(this.filenew ? '' : '');
+//     }
+// }
 editorValidation(event)
 {
 }
 getCategoryDetails(id) {
-  this.manufactureService.getCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+  this.categoryService.getCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
       console.log(success);
       this.categoryData = success.data;

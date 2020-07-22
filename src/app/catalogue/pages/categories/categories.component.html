@@ -6,7 +6,7 @@
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text" class="form-control round searchBtn" pInputText placeholder="Search" (input)="filterGlobal($event.target.value)" />
+          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -18,10 +18,10 @@
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
-                <option value=null>ALL</option>
+                 <option value=null>All</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.itemName}}</option> 
             </select>
-        </fieldset>   
+        </fieldset>    
     </div>
     <div class="col-xl-3 col-lg-6 col-md-12">
         <!-- <fieldset class="form-group">
@@ -54,13 +54,13 @@
   </div>
 
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="categoriesList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" [totalRecords]="totalCount">
+      <p-table [value]="categoriesList"  styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
         <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
           <ng-template pTemplate="header">
               <tr>
                   <th style="width:5em">S. No.</th>
                   <th style="width: 14em;">Parent Category</th>
-                  <th style="width: 12em;">Child No.</th>
+                  <!-- <th style="width: 12em;">Child No.</th> -->
                   <th style="width: 12em;">Name</th> 
                   <th style="width: 12em;">Country</th>
                   <th style="width: 9em;">Status</th>  
@@ -71,7 +71,7 @@
               <tr>
                   <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{category.id}}</td>
                   <td><span class="ui-column-title">Parent Category</span>{{category.parentCategory.categoryName}}</td>
-                  <td><span class="ui-column-title">Child No.</span></td>
+                  <!-- <td><span class="ui-column-title">Child No.</span></td> -->
                   <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
                   <td><span class="ui-column-title">Country</span>{{category.country.countryName}}</td>
                   <td >
