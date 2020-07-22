@@ -56,7 +56,7 @@ export class CommonServiceService {
     
   }
   supply(country){
-    debugger
+    
     const params = { countryId: country }
     return this.http.get(this.baseUrl + 'admin/supplyTypeList',
       { params: params }).pipe(

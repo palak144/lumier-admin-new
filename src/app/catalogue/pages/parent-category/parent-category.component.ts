@@ -106,7 +106,7 @@ export class ParentCategoryComponent implements OnInit {
     )
   }
   getAllParentCategory(page) {
-    debugger
+    
     this.manufactureService.getAllParentCategory(page).subscribe(
       (success: any) => {
         this.categoriesList = success.data.results;
@@ -119,7 +119,7 @@ export class ParentCategoryComponent implements OnInit {
     );
   }
   getAllParentCategorysSearch(page, searchBar , countryId) {
- debugger
+ 
       this.manufactureService.getAllParentCategorysSearch(page, searchBar, countryId)
         .pipe(
           takeUntil(this._unsubscribe)
@@ -159,7 +159,7 @@ export class ParentCategoryComponent implements OnInit {
      onChange(deviceValue) {
       if(deviceValue)
   {
-    debugger
+    
     this.countryId=deviceValue;
   }
       this.getAllParentCategorysSearch(this.page, this.searchBar , this.countryId);

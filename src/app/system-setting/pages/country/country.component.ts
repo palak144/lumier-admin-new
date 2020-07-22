@@ -82,7 +82,7 @@ export class CountryComponent implements OnInit {
       ))
     )
       .subscribe((success: any) => {
-        debugger
+        
         this.countriesList = success.data.results;
 
         this.totalCount = success.data.total;

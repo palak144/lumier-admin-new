@@ -41,7 +41,7 @@ export class CustomerService {
       retry(3),
       catchError(this.errorHandler.handleError)
     );
-  }
+  }c
 
   getAllCustomers(page) {
     const params = { page: page }

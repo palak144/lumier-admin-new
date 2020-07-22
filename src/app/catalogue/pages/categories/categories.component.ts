@@ -91,7 +91,7 @@ export class CategoriesComponent implements OnInit {
         console.log(success);
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
-        debugger
+        
       },
       error => {
       

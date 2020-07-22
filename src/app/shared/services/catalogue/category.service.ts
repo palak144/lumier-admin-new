@@ -34,7 +34,7 @@ export class CategoryService {
 
   getAllCategories(page) 
   {
-    debugger
+    
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/category',
       { params: params }).pipe(

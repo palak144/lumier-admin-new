@@ -61,7 +61,7 @@ export class AddParentCategoryComponent implements OnInit {
         }
         if(this.id)
         {
-          debugger
+          
           
           this.parentcategoryTitle = "Edit Parent Category";
           this.getParentCategoryDetails(this.id);
@@ -92,7 +92,7 @@ export class AddParentCategoryComponent implements OnInit {
       (success:any) => {
         
         this.countryData = success.data
-        debugger
+        
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
         
       },
@@ -108,14 +108,14 @@ export class AddParentCategoryComponent implements OnInit {
       return
     }
     let data = this.addParentCategoriesForm.value;
-debugger     
+     
     if(this.id)
     {
       data.id= this.id;
     }
     if(!this.id)
     {
-      debugger
+      
     this.manufactureService.addParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => { 
         this.toastr.success('Parent Category Created Successfully!');
@@ -128,7 +128,7 @@ debugger
     }
     if(this.id)
     {
-      debugger
+      
      this.manufactureService.updateParentCategory(data).pipe(takeUntil(this._unsubscribe)).subscribe(
        (success:any) => {
          // this.addSellerForm.reset();
@@ -187,7 +187,7 @@ getSupplyType()
   
   this.commonService.supply(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      debugger
+      
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
@@ -199,25 +199,25 @@ getLanguage()
  
   this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      debugger
+      
       let newArray = [
         {
           "id": success.data.id,
           "itemName": success.data.itemName,
         }
       ]
-      debugger
+      
       this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
-      debugger
+      
     },
     error => {
     }
   )
 }
 getdropdown(event:any){
-  debugger
+  
 this.selectedCountryId = event.value
-debugger
+
 this.getSupplyType();
 this.getLanguage();
 // this.selectedCountryData = this.countryData.filter(item => item.id === this.selectedCountryId)
@@ -237,7 +237,7 @@ this.getLanguage();
 //   return newArray;
 // }
 arrayOfStringsToArrayOfObjects(arr: any[]) {
-  debugger
+  
   const newArray = [];
   if (arr != null) {
 
@@ -253,12 +253,12 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
  getParentCategoryDetails(id) {
     this.manufactureService.getParentCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
        
         this.ParentcategoryData = success.data;
         this.commonService.supply(this.ParentcategoryData.countries).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-            debugger
+            
             this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
           },
           error => {
@@ -266,16 +266,16 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
         )       
         this.commonService.getCountryLanguage(this.ParentcategoryData.countries).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-            debugger
+            
             let newArray = [
               {
                 "id": success.data.id,
                 "itemName": success.data.itemName,
               }
             ]
-            debugger
+            
             this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
-            debugger
+            
           },
           error => {
           }
@@ -288,7 +288,7 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   }
   patchForm(item)
   {
-    debugger
+    
     
     this.addParentCategoriesForm.controls.categoryName.patchValue(item.categoryName);
     this.addParentCategoriesForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
