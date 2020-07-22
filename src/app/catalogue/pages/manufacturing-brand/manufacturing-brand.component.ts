@@ -125,7 +125,7 @@ export class ManufacturingBrandComponent implements OnInit {
   loadDataLazy(event: LazyLoadEvent) {
 
     this.page = event.first / 10;
-    // if there is a search term present in the search bar, then paginate with the search term
+   
     if (!this.searchBar && !this.countryId) {
 
       this.getAllBrands(this.page);

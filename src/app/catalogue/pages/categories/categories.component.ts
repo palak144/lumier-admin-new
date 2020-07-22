@@ -35,12 +35,12 @@ export class CategoriesComponent implements OnInit {
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
 
-   // Real time search
-   searchTerms$ = new Subject<string>();
-   searchBar: any = "";
-   private _unsubscribe = new Subject<boolean>();
-  exportAll: string = "false";
-  countryId : number = null;
+  // Real time search
+  searchTerms$ = new Subject<string>();
+  searchBar: any = "";
+  private _unsubscribe = new Subject<boolean>();
+  exportAll = "false";
+  countryId: number = null;
 
    constructor(
     private router:Router, 
@@ -59,33 +59,30 @@ export class CategoriesComponent implements OnInit {
    this.categoryService.updateCategoryStatus(statusData).subscribe(
      (success:any)=>
      {
-     
+     console.log(success);
       this.ngOnInit()
 } )
     }
 
   ngOnInit() {
       this.initiateSearch();
-      // this.getCountry();
+      this.getCountry();
   }
-
   initiateSearch() {
-    
     this.searchTerms$.pipe(
       takeUntil(this._unsubscribe),
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.categoryService.getAllCategoriesSearch(this.page, term ,this.exportAll
+      switchMap((term: string) => this.categoryService.getAllCategoriesSearch(this.page, term, this.exportAll, this.countryId
       ))
-    )
-    .subscribe((success: any) => {
+    ).subscribe((success: any) => {
       console.log(success);
-      this.categoriesList = success.data.results; 
+      this.categoriesList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
-    }) 
-  } 
+    })
+  }
 
   getAllCategories(page) { 
 
@@ -103,10 +100,10 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  getAllCategoriesSearch(page, searchBar , exportAll) {
+  getAllCategoriesSearch(page, searchBar , exportAll,countryId) {
     
       
-    this.categoryService.getAllCategoriesSearch(page, searchBar , exportAll )
+    this.categoryService.getAllCategoriesSearch(page, searchBar , exportAll ,countryId )
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -122,18 +119,37 @@ export class CategoriesComponent implements OnInit {
         }
       })
   }
+  loadDataLazy(event: LazyLoadEvent) {
 
-  filterGlobal(searchTerm) {
-    // indexing starts from 0 in primeng
-    this.primeNGTable.first = 0;
-    this.page = 0; 
-    this.searchTerms$.next(searchTerm);
+    this.page = event.first / 10;
+    // if there is a search term present in the search bar, then paginate with the search term
+    if (!this.searchBar && !this.countryId) {
+
+      this.getAllCategories(this.page);
+
+    }
+    else if (!this.countryId) {
+
+      this.getAllCategories(this.page);
+
+    }
+    else {
+
+      this.getAllCategoriesSearch(this.page, this.searchBar, this.exportAll, this.countryId);
+    }
   }
+  filterGlobal(searchTerm) {
+    console.log(searchTerm);
+       this.primeNGTable.first = 0;
+       this.page = 0; 
+       this.searchTerms$.next(searchTerm);
+     }
 
   onAddcountry(){
     this.router.navigate(['../new-country'],{relativeTo : this.activateRoute})
   }
 
+ 
   getDropDownValue(event, id) {
     if(event.currentTarget.firstChild.data === 'Delete') {
 
@@ -142,7 +158,7 @@ export class CategoriesComponent implements OnInit {
         accept: () => {
           this.categoryService.deleteCategory(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-              debugger
+            
               this.getAllCategories(this.page);
               this.categoriesList = this.categoriesList.filter((item: any) => {
                 return id !== item.countryId
@@ -162,18 +178,35 @@ export class CategoriesComponent implements OnInit {
         
   }
 }
+exportAsXLSX(id: number) {
 
-getCountry() 
-{
-  this.categoryService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
-    (success:any) => {
-      debugger
-      this.countries = success.data.result;
+  if (id == 0) {
+
+    this.excelService.exportAsExcelFile(this.categoriesList, 'Category List')
+  }
+  else {
+
+    this.exportAll = "true"
+    this.getAllCategoriesSearch(this.page, this.searchBar, this.exportAll, this.countryId);
+  }
+}
+getCountry() {
+  this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success: any) => {
+      this.countries = success.data;
     },
     error => {
     }
   )
-  this.getAllCategoriesSearch(this.page, this.searchBar , this.exportAll);
+}
+onChange(deviceValue) {
+  if (deviceValue) {
+    this.countryId = deviceValue;
+  }
+  else {
+  }
+
+  this.getAllCategoriesSearch(this.page, this.searchBar, this.exportAll, this.countryId);
 }
 
   onAddCategories(){

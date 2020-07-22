@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { CategoriesService } from 'app/shared/services/categories.service';
-
+import { CategoryService } from '../../../../shared/services/catalogue/category.service';
 interface Country {
   _id:string,
   country:string
@@ -58,6 +58,7 @@ export class AddNewCategoryComponent implements OnInit {
     private manufactureService: ManufactureService,
     private commonService: CommonServiceService,
     private toastr: ToastrService,
+    private categoryService:CategoryService,
     private categoriesService: CategoriesService
   ) { }
 
@@ -119,7 +120,7 @@ export class AddNewCategoryComponent implements OnInit {
     console.log(this.addCategoryFormDetails);
     if(!this.id)
     {
-    this.manufactureService.addcategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.categoryService.addcategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
      
         this.toastr.success('Category  Create Successfully!');
@@ -134,7 +135,7 @@ export class AddNewCategoryComponent implements OnInit {
     if(this.id)
     {
       console.log("update");
-      this.manufactureService.updatecategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
+      this.categoryService.updatecategory(this.addCategoryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
        console.log(success);
           this.toastr.success('Category  Update  Successfully!');
@@ -314,7 +315,7 @@ editorValidation(event)
 {
 }
 getCategoryDetails(id) {
-  this.manufactureService.getCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+  this.categoryService.getCategoryDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
       console.log(success);
       this.categoryData = success.data;
