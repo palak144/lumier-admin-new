@@ -52,14 +52,14 @@ export class CategoryService {
       );
   }
 
-  getAllCategoriesSearch(page?, searchKey?, exportAll?) 
+  getAllCategoriesSearch(page?, searchKey?, exportAll?, countryId?) 
   {
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll }
-    return this.http.get(this.baseUrl + 'admin/category')
-    .pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    return this.http.get(this.baseUrl + 'admin/category',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
 }
 deleteCategory(id) {
   return this.http.delete(this.baseUrl + 'admin/category/' + id)
@@ -75,5 +75,46 @@ updateCategoryStatus(statusData: {id: Number; adminStatus: Number }){
     catchError(this.errorHandler.handleError)
   );
 }
+addcategory(data)
+{
+  const dataForm = new FormData();
+    if(data.id != null){
+      dataForm.append('id', data['id']);
+    }
+    dataForm.append('categoryName', data['categoryName']);
+    dataForm.append('countries', data['countries']);
+    dataForm.append('parentCategoryId', data['parentCategoryId']);
+    dataForm.append('filtersTitle', data['filtersTitle']);
+    dataForm.append('filtersDetail', data['filtersDetail']);
+    dataForm.append('categoryId', data['categoryId']);
+    dataForm.append('sort', data['sort']);
+    dataForm.append('metaTitle', data['metaTitle']);
+    dataForm.append('metaDescription', data['metaDescription']);
+    dataForm.append('metaKeyword', data['metaKeyword']);
+    dataForm.append('isStaticMetaTag', "");
+    dataForm.append('description', data['description']);
+    dataForm.append('icon',"");
+    dataForm.append('image', "");
+  return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
+   
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  ); 
+}
+updatecategory(data)
+{
+  return this.http.post(this.baseUrl + 'admin/category', data).pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
+}
+  getCategoryDetails(id)
+  {
+    return this.http.get(this.baseUrl + 'admin/category/' + id)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 }
  
