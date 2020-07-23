@@ -4,7 +4,7 @@ import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { CategoriesService } from 'app/shared/services/categories.service';
 import { CategoryService } from '../../../../shared/services/catalogue/category.service';
@@ -62,6 +62,7 @@ export class AddNewCategoryComponent implements OnInit {
   addCategoryFormDetails: any;
   supplyTypes:any[];
   supplyTypeValue: any;
+  selectedLanguageId: any;
  
   constructor(
     private router: Router,
@@ -99,8 +100,7 @@ export class AddNewCategoryComponent implements OnInit {
    
     this.initForm();
     this.getCountry();
-    this.getparentCategory();
-    this.getCategory();
+
   }
 
   onSubmitCategoriesForm(event) {
@@ -220,7 +220,7 @@ getCountry()
   }
   getparentCategory()
   {
-    this.commonService.getparentCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getparentCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.parentcategory = this.arrayOfStringsToArrayOfObjects(success.data.result);
       },
@@ -230,7 +230,7 @@ getCountry()
   }
   getCategory()
   {
-    this.commonService.getCategory().pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.category = this.arrayOfStringsToArrayOfObjects(success.data);
       },
@@ -359,6 +359,14 @@ getdropdown(event:any){
   this.getLanguage();
 
   
+  }
+  getlanguage(event:any)
+  {
+    console.log(event.value);
+    this.selectedLanguageId = event.value ;
+    console.log(this.selectedLanguageId);
+    this.getparentCategory();
+    this.getCategory();
   }
 
 }

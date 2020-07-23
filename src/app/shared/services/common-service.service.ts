@@ -28,18 +28,20 @@ export class CommonServiceService {
       );
     
   }
-  getparentCategory()
+  getparentCategory(languageId)
   {
-    return this.http.get(this.baseUrl + 'admin/parentCategoryList')
+    const params = { languageId: languageId }
+    return this.http.get(this.baseUrl + 'admin/parentCategoryList' , { params: params })
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
     
   }
-  getCategory()
+  getCategory(languageId)
   {
-    return this.http.get(this.baseUrl + 'admin/categoryList')
+    const params = { languageId: languageId }
+    return this.http.get(this.baseUrl + 'admin/categoryList' ,{ params: params })
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

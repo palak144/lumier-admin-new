@@ -4,7 +4,7 @@ import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Country {

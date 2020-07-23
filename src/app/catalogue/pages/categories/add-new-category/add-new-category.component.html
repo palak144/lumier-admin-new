@@ -145,7 +145,7 @@
                                  <div class="form-group">
                                         <label>Select Language</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
- <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control border-primary"  filter="true" placeholder="Select languageId"  [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.languageId.errors }"
+ <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control border-primary" (onChange)="getlanguage($event)"  filter="true" placeholder="Select languageId"  [ngClass]="{ 'is-invalid': isSubmittedaddCategoriesForm && signUpControls.languageId.errors }"
                                         >
                                             </p-dropdown>
                                             <div *ngIf="isSubmittedaddCategoriesForm && signUpControls.languageId.errors" class="invalid-feedback">
