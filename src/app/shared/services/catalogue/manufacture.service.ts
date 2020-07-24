@@ -25,6 +25,7 @@ export class ManufactureService {
       if(data.id != null){
         dataForm.append('id', data['id']);
       }
+      
       dataForm.append('manufacturerName', data['manufacturerName']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
@@ -33,19 +34,11 @@ export class ManufactureService {
       dataForm.append('supplyTypeId', data['supplyTypeId']);
       
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
-     
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
 
-  updateBrand(data)
-  {
-    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
 
   addParentCategory(data)
   {

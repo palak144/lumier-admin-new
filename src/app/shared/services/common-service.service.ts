@@ -47,17 +47,8 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getSupplyType()
-  {
-  
-    return this.http.get(this.baseUrl + 'admin/supplyTypeList')
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
-    
-  }
-  supply(country){
+ 
+  getSupplyType(country){
     
     const params = { countryId: country }
     return this.http.get(this.baseUrl + 'admin/supplyTypeList',
@@ -83,8 +74,6 @@ export class CommonServiceService {
     );
   }
   getCountryLanguage(country) {
-    const params = { countryId: country }
-
     return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

@@ -7,13 +7,15 @@ import { SystemTypeComponent } from './pages/system-type/system-type.component';
 import { AddSystemSettingComponent } from './pages/system-type/add-system-setting/add-system-setting.component';
 import { CountryComponent } from './pages/country/country.component';
 import { AddCountryComponent } from './pages/country/add-country/add-country.component';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SystemSettingRoutingModule,
-    SharedModule
+    SharedModule,
+    AngularMultiSelectModule
  
   ],
 // tslint:disable-next-line: max-line-length

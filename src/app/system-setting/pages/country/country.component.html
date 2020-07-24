@@ -44,7 +44,10 @@
                     <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{country.id}}</td>
                     <td><span class="ui-column-title">Country Name</span>{{country.countryName}}</td>
                     <td><span class="ui-column-title">Currency</span>{{country.currency.itemName}}</td>
-                    <td><span class="ui-column-title">Languages</span>{{country.languages.itemName}}</td>                
+                    <td ><span class="ui-column-title">Languages</span>
+                        <ng-container *ngFor="let language of country.languages">
+                            <span>{{language.itemName}}</span>         
+                      </ng-container></td>               
                      <td >
                         <span class="ui-column-title ">Status</span> 
                         

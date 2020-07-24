@@ -23,7 +23,7 @@
                                   <div class="form-group">
                                       <label>Select Country</label><span class="asterick">*</span>
                                          <div class="assign-group-dropdown">
-                                          <p-dropdown [options]="countries" formControlName="countryName" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.countryName.errors }">
+                                          <p-dropdown [options]="countries" formControlName="countryName" styleClass="form-control " (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.countryName.errors }">
                                            </p-dropdown>
                                           <div *ngIf="isSubmittedaddCountryForm && signUpControls.countryName.errors" class="invalid-feedback">
                                               <div *ngIf="signUpControls.countryName.errors.required">Country is required</div>
@@ -35,8 +35,13 @@
                                   <div class="form-group">
                                     <label>Language</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
-                                    <p-dropdown [options]="languages" formControlName="languages" styleClass="form-control border-primary" (onChange)="getdropdown1($event)"  filter="true" placeholder="Select Language"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
-                                    </p-dropdown>
+                                   
+                                    <angular2-multiselect class="form-control-override " name="dropdown" [data]="languageData"
+                                     formControlName="languages" (onSelect)="getdropdown1($event)" 
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }"
+                                        [(ngModel)]="selected_perGroups" [settings]="dropdownSettings" 
+                                    disabled>
+                                  </angular2-multiselect>
                                     <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.languages.errors.required">Language is required</div>
                                     </div>
@@ -49,7 +54,7 @@
                                     <div class="form-group">
                                         <label>Currency </label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
+                                        <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control " (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.currency.errors }">
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddCountryForm && signUpControls.currency.errors"
                                             class="invalid-feedback">
