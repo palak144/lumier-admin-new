@@ -76,7 +76,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Is Sale</label>
-                                    <input type="text" formControlName="isSale" class="form-control border-primary" placeholder="Is Sale"> 
+                                    <div class="issale-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="isSale">
+                                        <label class="issale" for="isSale">
+                                            Is Sale
+                                        </label>
+                                      </div>
+                                    <!-- <label>Is Sale</label>
+                                    <input type="text" formControlName="isSale" class="form-control border-primary" placeholder="Is Sale">  -->
                                 </div>
                             </div>
                         </div>
@@ -102,17 +109,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Code</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="code" class="form-control border-primary" placeholder="Code" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.code.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.code.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.code.errors.required">Code is required</div>
-                                    </div>   
+                                    <label>Related Products</label>
+                                    <input type="text" formControlName="relatedProducts" class="form-control border-primary" placeholder="Related Products"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Related Products</label>
-                                    <input type="text" formControlName="relatedProducts" class="form-control border-primary" placeholder="Related Products"> 
+                                    <label>Package Content</label>
+                                    <input type="text" formControlName="packageContent" class="form-control border-primary" placeholder="Package Content"> 
                                 </div>
                             </div>
                         </div>
@@ -137,7 +141,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Manufacturer / Brand</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="manufacturerBrand" class="form-control border-primary" placeholder="Manufacturer / Brand" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors }">
+                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors }">
+                                        <option value="" >Select Manufacturer / Brand</option>
+                                        <option value={{manufacturerBrand}} *ngFor="let manufacturerBrand of manufacturerBrands">{{manufacturerBrand}}
+                                        </option>
+                                        </select>
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.manufacturerBrand.errors.required">Manufacturer / Brand is required</div>
                                     </div>   
@@ -200,7 +208,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Country Origin</label>
-                                    <input type="text" formControlName="countryOrigin" class="form-control border-primary" placeholder="Country Origin"> 
+                                    <select formControlName="countryOrigin" placeholder="country Origin" class="form-control border-primary">
+                                         <option value="" >Select country Origin</option>
+                                         <option value={{countryOrigin}} *ngFor="let countryOrigin of countryOrigins">{{countryOrigin}}
+                                        </option>
+                                    </select>  
                                 </div>
                             </div>
                         </div>
@@ -222,10 +234,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supply Type</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyType.errors }">
+                                    <select formControlName="supplyType" placeholder="Supply Type" class="form-control border-primary">
+                                         <option value="" >Select Supply Type</option>
+                                         <option value={{supplyType}} *ngFor="let supplyType of supplyTypes">{{supplyType}}
+                                        </option>
+                                    </select>  
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyType.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div>   
+                                    </div>  
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -242,10 +258,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Category</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="category" class="form-control border-primary" placeholder="Category" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.category.errors }">
+                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.category.errors }">
+                                         <option value="" >Select Supply Type</option>
+                                         <option value={{category}} *ngFor="let category of categories">{{category}}
+                                        </option>
+                                    </select>  
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.category.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.price.category.required">Category is required</div>
-                                    </div>   
+                                    </div> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -259,7 +279,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Speciality Type</label>
-                                    <input type="text" formControlName="specialityType" class="form-control border-primary" placeholder="Speciality Type"> 
+                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityType.errors }">
+                                         <option value="" >Select Supply Type</option>
+                                         <option value={{specialityType}} *ngFor="let specialityType of specialityTypes">{{specialityType}}
+                                        </option>
+                                    </select>  
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -285,12 +309,6 @@
                                 </div>
                                 </div>
                               </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Package Content</label>
-                                    <input type="text" formControlName="packageContent" class="form-control border-primary" placeholder="Package Content"> 
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="form-actions right">
@@ -355,8 +373,63 @@
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
-                        <div class="table-wrapper vehiclwrappere- ">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <div class="table-wrapper vehiclwrappere varient">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                       <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                       <ng-template pTemplate="header">
+                               <tr class="table-coustom-style">
+                                   <th style="width:4em">S. No.</th>
+                                   <th style="width: 4em;">Varient</th>
+                                   <th style="width: 4em;">Package</th>
+                                   <th style="width: 3em;"></th> 
+                                   <th style="width: 3em;"></th> 
+                                   <th style="width: 3em;"></th> 
+                                   <th style="width: 4em;">Quantity</th>
+                                   <th style="width: 4em;">Is Sale?</th>
+                                   <th style="width: 6em;">Sale Price</th>
+                                   <th style="width: 4em;">Price</th>
+                                   <th style="width: 6em;">Wallet Price</th>
+                                   <th style="width: 3em;">Action</th>
+                               </tr>
+                           </ng-template>
+                           <ng-template pTemplate="body" let-brand >
+                               <tr>
+                                   <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                   <td><span class="ui-column-title">Varient</span>{{brand.manufacturerName}}</td>
+                                   <td><span class="ui-column-title">Package</span>{{brand.supplyType.name}}</td>
+                                   <td><span class="ui-column-title"></span></td>
+                                   <td><span class="ui-column-title"></span></td>
+                                   <td><span class="ui-column-title"></span></td>
+                                   <td><span class="ui-column-title">Quantity</span></td>
+                                   <td><span class="ui-column-title">Is Sale?</span></td>
+                                   <td><span class="ui-column-title">Sale Price</span></td>
+                                   <td><span class="ui-column-title">Price</span></td>
+                                   <td><span class="ui-column-title">Wallet Price</span></td>
+                                   <td>
+                                       <span class="ui-column-title">Action</span>
+                                   
+                                       <div class="dropdown">
+                                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+               
+                                           </a>
+                                           <ul class="dropdown-menu" role="menu">
+                                               <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                               <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+               
+                                           </ul>
+                                       </div>
+                                   </td>
+                               </tr>
+                           </ng-template>
+                           <ng-template pTemplate="emptymessage">
+                               <tr>
+                                   <td class="text-center text-danger font-weight-600" colspan="12">No Records Found.</td>
+                               </tr>
+                           </ng-template>
+                       </p-table>
+                   </div>
+                        <div class="table-wrapper vehiclwrappere varient" *ngFor="let field of fieldArray; let i = index">
+                                 <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -413,7 +486,7 @@
                     </div>
                   </div>
                   <div class="text-right">
-                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" (click)="addFieldValue()">
                         <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
                         <span class="d-lg-block d-none" >Add Row</span>
                     </button>
@@ -466,7 +539,50 @@
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
-                        <div class="table-wrapper vehiclwrappere- ">
+                        <div class="table-wrapper vehiclwrappere varient">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                                <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                                <ng-template pTemplate="header">
+                                        <tr class="table-coustom-style">
+                                            <th style="width:6em">S. No.</th>
+                                            <th style="width: 16em;">Minimum Quantity</th>
+                                            <th style="width: 16em;">Maximum Quantity</th>
+                                            <th style="width: 13em;">Price</th> 
+                                            <th style="width: 13em;">Wallet Price</th> 
+                                            <th style="width: 10em;">Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-brand >
+                                        <tr>
+                                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                            <td><span class="ui-column-title">Minimum Quantity</span>{{brand.manufacturerName}}</td>
+                                            <td><span class="ui-column-title">Maximum Quantity</span>{{brand.supplyType.name}}</td>
+                                            <td><span class="ui-column-title">Price</span></td>
+                                            <td><span class="ui-column-title">Wallet Price</span></td>
+                                            <td>
+                                                <span class="ui-column-title">Action</span>
+                                            
+                                                <div class="dropdown">
+                                                    <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+                        
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                                        <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                        
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td class="text-center text-danger font-weight-600" colspan="6">No Records Found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        <div class="table-wrapper vehiclwrappere varient" *ngFor="let based of basedArray; let i = index">
                         <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
@@ -512,7 +628,7 @@
                     </div>
                   </div>
                   <div class="text-right">
-                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" (click)="addBasedValue()">
                         <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
                         <span class="d-lg-block d-none" >Add Row</span>
                     </button>

@@ -48,10 +48,10 @@
                                     <div class="form-group">
                                         <label>Title </label><span class="asterick">*</span>
                                         <select formControlName="title" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.title.errors }">
-                      <option value="" >Select Title</option>
-                      <option value={{title}} *ngFor="let title of titles">{{title}}
-                      </option>
-                    </select>
+                                        <option value="" >Select Title</option>
+                                        <option value={{title}} *ngFor="let title of titles">{{title}}
+                                        </option>
+                                        </select>
                                         <div *ngIf="isSubmittedaddCustomerForm && signUpControls.title.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.title.errors.required">Title is required</div>
                                         </div>
