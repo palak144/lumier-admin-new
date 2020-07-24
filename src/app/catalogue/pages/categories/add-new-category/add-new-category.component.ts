@@ -331,7 +331,7 @@ patchForm(item)
   // this.addCategoriesForm.controls.filterTitle.patchValue(item.filtersTitle);
   // this.addCategoriesForm.controls.filterDetail.patchValue(item.filtersDetail);
   this.addCategoriesForm.controls.category.patchValue(item.categoryId);
-  this.addCategoriesForm.controls.sort.patchValue(item.sort);
+  // this.addCategoriesForm.controls.sort.patchValue(item.sort);
   this.addCategoriesForm.controls.metaTitle.patchValue(item.metaTitle);
   this.addCategoriesForm.controls.metaDescription.patchValue(item.metaDescription);
   this.addCategoriesForm.controls.metaKeyword.patchValue(item.metaKeyword);
