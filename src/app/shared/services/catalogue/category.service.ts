@@ -18,19 +18,6 @@ export class CategoryService {
   ) {
     this.baseUrl = this.baseService.baseUrl;
    }
-   addCategory(data) {
-    return this.http.post(this.baseUrl + 'admin/category', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-  updateCategory(data)
-  {
-    return this.http.post(this.baseUrl + 'admin/category', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
 
   getAllCategories(page) 
   {
@@ -77,57 +64,33 @@ updateCategoryStatus(statusData: {id: Number; adminStatus: Number }){
 }
 addcategory(data)
 {
+  debugger
   const dataForm = new FormData();
     if(data.id != null){
       dataForm.append('id', data['id']);
-    }
-    if(data.file != ""){
-      dataForm.append('file', data['file']);
-    }
-    dataForm.append('categoryName', data['categoryName']);
-    dataForm.append('countries', data['countries']);
-    dataForm.append('parentCategoryId', data['parentCategoryId']);
-    dataForm.append('languageId', data['languageId']);
-    // dataForm.append('categoryId', data['categoryId']);
-    dataForm.append('metaTitle', data['metaTitle']);
-    dataForm.append('metaDescription', data['metaDescription']);
-    dataForm.append('metaKeyword', data['metaKeyword']);
-    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
-    dataForm.append('description', data['description']);
-    dataForm.append('icon',"");
-  
-  return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
-   
-    retry(3),
-    catchError(this.errorHandler.handleError)
-  ); 
-}
-updatecategory(data)
-{
-  const dataForm = new FormData();
-    if(data.id != null){
-      dataForm.append('id', data['id']);
-    }
 
-    dataForm.append('categoryName', data['categoryName']);
-    dataForm.append('countries', data['countries']);
-    dataForm.append('parentCategoryId', data['parentCategoryId']);
-    dataForm.append('languageId', data['languageId']);
-    dataForm.append('categoryId', data['categoryId']);
-    dataForm.append('sort', data['sort']);
-    dataForm.append('metaTitle', data['metaTitle']);
-    dataForm.append('metaDescription', data['metaDescription']);
-    dataForm.append('metaKeyword', data['metaKeyword']);
-    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
-    dataForm.append('description', data['description']);
-    dataForm.append('icon',"");
+    }
     if(data.file != ""){
       dataForm.append('image', data['file']);
     }
-  return this.http.post(this.baseUrl + 'admin/category', dataForm).pipe(
+    if(data.categoryId != null){
+      debugger
+      dataForm.append('categoryId', data['categoryId']);
+    }
+    dataForm.append('categoryName', data['categoryName']);
+    dataForm.append('countries', data['countries']);
+    dataForm.append('parentCategoryId', data['parentCategoryId']);
+    dataForm.append('languageId', data['languageId']);
+    dataForm.append('metaTitle', data['metaTitle']);
+    dataForm.append('metaDescription', data['metaDescription']);
+    dataForm.append('metaKeyword', data['metaKeyword']);
+    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
+    dataForm.append('description', data['description']);
+  
+  return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
     retry(3),
     catchError(this.errorHandler.handleError)
-  );
+  ); 
 }
   getCategoryDetails(id)
   {

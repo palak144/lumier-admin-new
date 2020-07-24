@@ -13,8 +13,9 @@
 </div>
 <div class="row ">
     <div class="col-md-12">
-        <div class="card-content">
-            <div class="px-3">
+        <div class="card">
+            <div class="card-content">
+                <div class="px-3">
                 <form class="form" [formGroup]="addSellerForm" (ngSubmit)="onSubmitSellerForm()">
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
@@ -121,10 +122,11 @@
                                         <div class="col-md-10">
                                             <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                                             <span id="sizeValidations">File size should not exceed 200kb</span>
+                                            <div *ngIf="isSubmittedaddSellerForm && signUpControls.file.errors" class="invalid-feedback mt-0">
+                                                <div *ngIf="signUpControls.file.errors.required">Photo is required</div>
+                                            </div> 
                                         </div>
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.file.errors" class="invalid-feedback pl-2">
-                                            <div *ngIf="signUpControls.file.errors.required">Photo is required</div>
-                                        </div> 
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -281,6 +283,7 @@
             </button>
                     </div>
                 </form>
+            </div>
             </div>
         </div>
     </div>
