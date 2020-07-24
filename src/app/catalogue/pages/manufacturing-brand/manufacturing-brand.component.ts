@@ -7,7 +7,7 @@ import { SellerService } from 'app/shared/services/seller.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Action {
@@ -81,7 +81,7 @@ export class ManufacturingBrandComponent implements OnInit {
       switchMap((term: string) => this.manufactureService.getAllBrandsSearch(this.page, term, this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-
+      
       this.brandList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();

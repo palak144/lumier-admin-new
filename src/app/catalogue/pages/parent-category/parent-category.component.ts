@@ -7,7 +7,7 @@ import { SellerService } from 'app/shared/services/seller.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { SystemSettingsService } from '../../../shared/services/system-settings.service';
 interface Action {
@@ -106,7 +106,7 @@ export class ParentCategoryComponent implements OnInit {
     )
   }
   getAllParentCategory(page) {
-    debugger
+    
     this.manufactureService.getAllParentCategory(page).subscribe(
       (success: any) => {
         this.categoriesList = success.data.results;
@@ -119,7 +119,7 @@ export class ParentCategoryComponent implements OnInit {
     );
   }
   getAllParentCategorysSearch(page, searchBar , countryId) {
- debugger
+ 
       this.manufactureService.getAllParentCategorysSearch(page, searchBar, countryId)
         .pipe(
           takeUntil(this._unsubscribe)
@@ -152,15 +152,14 @@ export class ParentCategoryComponent implements OnInit {
        
       }
       if(event.currentTarget.firstChild.data === 'Edit'){
-            this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
-            
+            this.router.navigate(['../edit-parent-category',id], {relativeTo: this.activateRoute})          
       }
     }
 
      onChange(deviceValue) {
       if(deviceValue)
   {
-    debugger
+    
     this.countryId=deviceValue;
   }
       this.getAllParentCategorysSearch(this.page, this.searchBar , this.countryId);
@@ -168,5 +167,4 @@ export class ParentCategoryComponent implements OnInit {
   onAddParentCategories(){
     this.router.navigate(['../new-parent-categories'],{relativeTo : this.activateRoute})
   }
-
 }

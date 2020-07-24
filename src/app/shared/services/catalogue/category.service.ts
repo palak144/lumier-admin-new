@@ -34,7 +34,7 @@ export class CategoryService {
 
   getAllCategories(page) 
   {
-    debugger
+    
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/category',
       { params: params }).pipe(
@@ -84,17 +84,16 @@ addcategory(data)
     dataForm.append('categoryName', data['categoryName']);
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
-    dataForm.append('filtersTitle', data['filtersTitle']);
-    dataForm.append('filtersDetail', data['filtersDetail']);
+    dataForm.append('languageId', data['languageId']);
     dataForm.append('categoryId', data['categoryId']);
     dataForm.append('sort', data['sort']);
     dataForm.append('metaTitle', data['metaTitle']);
     dataForm.append('metaDescription', data['metaDescription']);
     dataForm.append('metaKeyword', data['metaKeyword']);
-    dataForm.append('isStaticMetaTag', "");
+    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
     dataForm.append('description', data['description']);
     dataForm.append('icon',"");
-    dataForm.append('image', "");
+    dataForm.append('image', data['file']);
   return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
    
     retry(3),
@@ -103,7 +102,24 @@ addcategory(data)
 }
 updatecategory(data)
 {
-  return this.http.post(this.baseUrl + 'admin/category', data).pipe(
+  const dataForm = new FormData();
+    if(data.id != null){
+      dataForm.append('id', data['id']);
+    }
+    dataForm.append('categoryName', data['categoryName']);
+    dataForm.append('countries', data['countries']);
+    dataForm.append('parentCategoryId', data['parentCategoryId']);
+    dataForm.append('languageId', data['languageId']);
+    dataForm.append('categoryId', data['categoryId']);
+    dataForm.append('sort', data['sort']);
+    dataForm.append('metaTitle', data['metaTitle']);
+    dataForm.append('metaDescription', data['metaDescription']);
+    dataForm.append('metaKeyword', data['metaKeyword']);
+    dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
+    dataForm.append('description', data['description']);
+    dataForm.append('icon',"");
+    dataForm.append('image', data['file']);
+  return this.http.post(this.baseUrl + 'admin/category', dataForm).pipe(
     retry(3),
     catchError(this.errorHandler.handleError)
   );

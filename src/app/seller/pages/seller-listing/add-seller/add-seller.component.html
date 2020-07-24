@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }"
+                                        <p-dropdown [options]="countries" formControlName="countryId" (onChange)="getdropdown1($event)" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }"
                                         >
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
@@ -35,6 +35,21 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Supply Type</label><span class="asterick">*</span> 
+                                    <div class="assign-group-dropdown">
+                                      <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control"
+                                      placeholder="Select Supply Type">
+                                    </p-dropdown>
+                                          <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                          <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+                                      </div>
+                                      </div>  
+                                </div>
+                              </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="sellerName" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.sellerName.errors }">
                                     <div *ngIf="isSubmittedaddSellerForm && signUpControls.sellerName.errors" class="invalid-feedback">
@@ -44,8 +59,6 @@
                                 </div>
                             
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>User Name</label><span class="asterick">*</span> 
@@ -56,19 +69,24 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Password </label><span class="asterick">*</span>
-                                    <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
-                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.password.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.password.errors.required">Password is required</div>
-                                        <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
-
-                                    </div>  
-                                </div>
-                            </div>
+                           
                             
                         </div>
+                        <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Password </label><span class="asterick">*</span>
+                                <input type="password" formControlName="password" placeholder="Password" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.password.errors }" >
+                                <div *ngIf="isSubmittedaddSellerForm && signUpControls.password.errors" class="invalid-feedback">
+                                    <div *ngIf="signUpControls.password.errors.required">Password is required</div>
+                                    <div *ngIf="signUpControls.password.errors.pattern">Password must be atleast 8 digits with one special character</div>
+
+                                </div>  
+                            </div>
+                        </div>
+                        </div>
+
                         <h4 class="form-section"><i class="ft-briefcase"></i> Professional Info</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -92,24 +110,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Photo </label><span class="asterick">*</span> 
+                                    <label>Photo </label><span class="asterick">*</span>
                                     <div class="row ">
                                         <div class="col-md-2 form-group center">
                                             <label for="file">
-                                                <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                              <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
                                         </div>
-                                        <div class="col-md-10 ">
-                                            <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="file" class="form-control border-primary">
+                                        <div class="col-md-10">
+                                            <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                                             <span id="sizeValidations">File size should not exceed 200kb</span>
                                         </div>
+                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.file.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.file.errors.required">Photo is required</div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Mobile </label>
+                                    <label>Mobile </label><span class="asterick">*</span>
                                     <input type="number" formControlName="mobileNo" placeholder="Mobile" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.mobileNo.errors }" >
-                                    
+                                    <div *ngIf="isSubmittedaddSellerForm && signUpControls.mobileNo.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.mobileNo.errors.required">Mobile No is required
+                                        </div>
+                                        <div *ngIf="signUpControls.mobileNo.errors.pattern">Mobile No. must be between 5 to 15 digits
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +145,6 @@
                                 <div class="form-group">
                                     <label>Pickup Address</label>
                                     <input type="text" class="form-control border-primary" formControlName="pickupAddress" placeholder="Pickup Address"  >
-                                    
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -234,15 +259,7 @@
                             
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Supply Type</label>
-                                <input type="text" formControlName="supplyType" class="form-control border-primary" placeholder="Supply Type" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.supplyType.errors }" >
-                                <!-- <div *ngIf="isSubmittedaddSellerForm && signUpControls.supplyType.errors" class="invalid-feedback">
-                                    <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                </div>  -->
-                            </div>
-                        </div>
+                      
                     </div>
                     
                     <!-- <div class="row">

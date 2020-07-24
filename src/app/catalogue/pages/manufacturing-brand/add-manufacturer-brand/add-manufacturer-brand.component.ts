@@ -4,7 +4,7 @@ import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-import { ManufactureService } from 'app/shared/services/manufacture.service';
+import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Country {
@@ -45,6 +45,7 @@ export class AddManufacturerBrandComponent implements OnInit {
   orgLogoData: any;
   dLogo: string;
   wallet_discount: number;
+  selectedCountryId: any;
 
   constructor(
     private router: Router,
@@ -67,7 +68,6 @@ export class AddManufacturerBrandComponent implements OnInit {
         
         this.initForm()
         this.getCountry();
-        this.getSupplyType();
       }
     )
     
@@ -79,7 +79,12 @@ export class AddManufacturerBrandComponent implements OnInit {
   get signUpControls() {
     return this.addBrandForm.controls;
   }
-
+  getdropdown(event:any){
+  
+    this.selectedCountryId = event.value
+    
+    this.getSupplyType();
+      }
   onSubmitBrandForm() {
     this.isSubmittedaddBrandForm = true
     if (this.addBrandForm.invalid) {
@@ -118,7 +123,6 @@ export class AddManufacturerBrandComponent implements OnInit {
         });
     }
     else{
-    
     this.manufactureService.addBrand(this.addBrandFormDetails).subscribe(
       data => {
         this.toastr.success("Manufacturer/ Brand Added Successfully")
@@ -132,6 +136,7 @@ export class AddManufacturerBrandComponent implements OnInit {
   }
   getCountry()
   {
+    
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -142,7 +147,8 @@ export class AddManufacturerBrandComponent implements OnInit {
   }
   getSupplyType()
   {
-    this.commonService.getSupplyType().pipe(takeUntil(this._unsubscribe)).subscribe(
+    
+    this.commonService.getSupplyType(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
       },
@@ -170,7 +176,6 @@ export class AddManufacturerBrandComponent implements OnInit {
         }
         this.addBrandForm.controls['file'].setValue(this.file ? this.file : '');
         this.file = this.file.name
-        
       }
     }
       else {
@@ -182,6 +187,7 @@ export class AddManufacturerBrandComponent implements OnInit {
   }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
+    
     const newArray = [];
     arr.forEach(element => {
       newArray.push({
@@ -194,14 +200,13 @@ export class AddManufacturerBrandComponent implements OnInit {
   private initForm(){
     
 let name = "";
-let supplyTypeId = "";
 let file = "";
 let walletDiscount = 0;
 
 this.addBrandForm = new FormGroup({
   "countryId":new FormControl(null,[Validators.required]),
   "name": new FormControl( name, Validators.required),
-  "supplyTypeId": new FormControl( supplyTypeId, Validators.required),
+  "supplyTypeId": new FormControl( null, Validators.required),
   "walletDiscount": new FormControl( walletDiscount,),
 });
 
@@ -213,7 +218,13 @@ this.addBrandForm = new FormGroup({
       this.manufactureService.getBrandDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any)=>{          
           this.brand=success.data
-          
+          this.commonService.getSupplyType(this.brand.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
+            },
+            error => {
+            }
+          )
           this.addBrandForm.patchValue({
             "name" : this.brand.manufacturerName,
             "walletDiscount" : this.brand.walletDiscount,

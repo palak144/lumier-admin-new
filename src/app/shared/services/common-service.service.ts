@@ -28,35 +28,28 @@ export class CommonServiceService {
       );
     
   }
-  getparentCategory()
+  getparentCategory(languageId)
   {
-    return this.http.get(this.baseUrl + 'admin/parentCategoryList')
+    const params = { languageId: languageId }
+    return this.http.get(this.baseUrl + 'admin/parentCategoryList' , { params: params })
       .pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
     
   }
-  getCategory()
+  getCategory(languageId)
   {
-    return this.http.get(this.baseUrl + 'admin/categoryList')
+    const params = { languageId: languageId }
+    return this.http.get(this.baseUrl + 'admin/categoryList' ,{ params: params })
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
-  getSupplyType()
-  {
-  
-    return this.http.get(this.baseUrl + 'admin/supplyTypeList')
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler.handleError)
-      );
+ 
+  getSupplyType(country){
     
-  }
-  supply(country){
-    debugger
     const params = { countryId: country }
     return this.http.get(this.baseUrl + 'admin/supplyTypeList',
       { params: params }).pipe(
@@ -76,6 +69,12 @@ export class CommonServiceService {
   getLanguage() {
     
     return this.http.get(this.baseUrl + 'admin/language').pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCountryLanguage(country) {
+    return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );

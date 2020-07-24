@@ -176,7 +176,7 @@ export class CustomerGroupComponent implements OnInit {
     }
   }
   open(content , group) {
-    debugger
+    
     this.groups = group
     this.modalService.open(content).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;

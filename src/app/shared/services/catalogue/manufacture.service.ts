@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { ErrorHandlerService } from './error-handler.service';
+import { BaseService } from '../base.service';
+import { ErrorHandlerService } from '../error-handler.service';
 import { HttpClient } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 
@@ -25,6 +25,7 @@ export class ManufactureService {
       if(data.id != null){
         dataForm.append('id', data['id']);
       }
+      
       dataForm.append('manufacturerName', data['manufacturerName']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('file', data['file']);
@@ -33,22 +34,15 @@ export class ManufactureService {
       dataForm.append('supplyTypeId', data['supplyTypeId']);
       
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
-     
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
 
-  updateBrand(data)
-  {
-    return this.http.post(this.baseUrl + 'admin/manufacturer', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
 
   addParentCategory(data)
   {
+    
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -56,6 +50,7 @@ export class ManufactureService {
   }
   updateParentCategory(data)
   {
+    
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

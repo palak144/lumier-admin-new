@@ -154,7 +154,7 @@ export class SystemTypeComponent implements OnInit {
     if (id==0){
    console.log(this.supplyList); return
       this.excelService.exportAsExcelFile(this.supplyList, 'Seller List')
-      debugger
+      
     }
     else{ 
     

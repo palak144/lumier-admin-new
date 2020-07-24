@@ -144,9 +144,6 @@ export class CategoriesComponent implements OnInit {
        this.searchTerms$.next(searchTerm);
      }
 
-  onAddcountry(){
-    this.router.navigate(['../new-country'],{relativeTo : this.activateRoute})
-  }
 
  
   getDropDownValue(event, id) {
@@ -173,7 +170,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
   if(event.currentTarget.firstChild.data === 'Edit'){
-        this.router.navigate(['../edit',id], {relativeTo: this.activateRoute})
+        this.router.navigate(['../edit-category',id], {relativeTo: this.activateRoute})
         
   }
 }

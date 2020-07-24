@@ -34,9 +34,12 @@ export class AddCountryComponent implements OnInit {
   countries:Country[];
   countryValue: any;
   currencies: any[];
-  languages: any[];
+  languages = [];
   languageValue: any;
   currencyValue: any;
+  selectedCriteria: any;
+  languageData =[];
+  selectedCriteriaId = [];
  
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -80,23 +83,35 @@ export class AddCountryComponent implements OnInit {
   });
   
 }
+select(criteriaId: any , criteriaName:any) {
+    
+  this.selectedCriteria = {
+              "id" : criteriaId,
+        "itemName" : criteriaName
+  
+  }
+  return this.selectedCriteria;
+}
 onSubmitCountryForm() {
   this.isSubmittedaddCountryForm = true
   if (this.addCountryForm.invalid) {
     return
   }
-    let data = this.addCountryForm.value;
+  
+    this.addCountryFormDetails = {
+      "languages": this.multiSelectedList(this.addCountryForm.get('languages').value),
+      "currency": this.select(this.addCountryForm.get('currency').value , this.currencyValue),
+      "countryName": this.countryValue,
+    }
+    
     if(this.id)
     {
-      data.id= this.id;
+      this.addCountryFormDetails.id= this.id;
     }
-    data.languages = this.languageValue;
-    data.currency = this.currencyValue;
-    data.countryName = this.countryValue;
  
    if(!this.id)
       {
-        this.systemSettingsService.addCountry(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+        this.systemSettingsService.addCountry(this.addCountryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
             this.toastr.success('Country Created Successfully!');
             this.router.navigate(['/systemsetting/country']);
@@ -109,7 +124,7 @@ onSubmitCountryForm() {
 
       if(this.id)
      {
-      this.systemSettingsService.updateCountry(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+      this.systemSettingsService.updateCountry(this.addCountryFormDetails).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();
           this.toastr.success('Country Edited Successfully!');
@@ -132,7 +147,6 @@ patchForm(item) {
 getCountrydetails(id) {
   this.systemSettingsService.getCountrydetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      
       this.countryDetailsData = success.data;
       this.patchForm(this.countryDetailsData);
     },
@@ -143,7 +157,15 @@ getCountrydetails(id) {
 get signUpControls() {
   return this.addCountryForm.controls;
 }
-
+multiSelectedList(criteriaArray: any) {
+  if (criteriaArray != null) {
+    this.selectedCriteriaId = [];
+    criteriaArray.forEach(element => {
+      this.selectedCriteriaId.push(element);
+    });
+    return this.selectedCriteriaId;
+  }
+}
 getCountry()
 {
   this.commonService.getAllCountries().pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -159,7 +181,8 @@ getLanguage()
 {
   this.commonService.getLanguage().pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+      
+      this.languageData = success.data
     },
     error => {
     }
@@ -181,7 +204,7 @@ arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
   arr.forEach(element => {
     newArray.push({
       label: element.itemName +" - "+ element.currencyCode,
-      value: element.itemName +" - "+ element.currencyCode
+      value: element.id
     });
   });
   
@@ -192,7 +215,7 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   arr.forEach(element => {
     newArray.push({
       label: element.itemName,
-      value: element.itemName
+      value: element.id
     });
   });
   return newArray;
@@ -202,7 +225,7 @@ arrayOfStringsToArrayOfObjectsCountry(arr: any[]) {
   arr.forEach(element => {
     newArray.push({
       label: element.country,
-      value: element.country
+      value: element.id
     });
   });
   return newArray;
