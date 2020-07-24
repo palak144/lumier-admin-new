@@ -29,6 +29,7 @@ export class AddSystemSettingComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   countries: any;
   countryValue: any;
+  dropdownSettings = {};
   supplyTypes:any[];
   supplyTypeValue: any;
   supplyDetailsData: any;
@@ -59,14 +60,21 @@ export class AddSystemSettingComponent implements OnInit {
       }
       )
       this.getCountry();
-      this.getSupplyType();
 
     this.addUserForm = new FormGroup({
       name: new FormControl('',[Validators.required]),
       countryId: new FormControl('',[Validators.required]),
       // status: new FormControl('',[Validators.required]),
     })
-  
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: "myclass custom-class",
+      position: "bottom",
+      maxHeight: "50px"
+    };
 }
   get signUpControls() {
     return this.addUserForm.controls;
@@ -144,17 +152,7 @@ this.countryValue=event.value;
   
 this.supplyTypeValue=event.value;
   }
-  getSupplyType()
-  {
-    this.commonService.getSupplyType().pipe(takeUntil(this._unsubscribe)).subscribe(
-      (success:any) => {
-        this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
-      
-      },
-      error => {
-      }
-    )
-  }
+
   getSupplyTypedetails(id) {
     this.SystemSettingsService.getSupplyTypedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {

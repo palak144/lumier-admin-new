@@ -34,10 +34,12 @@ export class AddCountryComponent implements OnInit {
   countries:Country[];
   countryValue: any;
   currencies: any[];
-  languages: any[];
+  languages = [];
   languageValue: any;
   currencyValue: any;
   selectedCriteria: any;
+  languageData =[];
+  selectedCriteriaId = [];
  
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -97,10 +99,11 @@ onSubmitCountryForm() {
   }
   
     this.addCountryFormDetails = {
-      "languages": this.select(this.addCountryForm.get('languages').value , this.languageValue),
+      "languages": this.multiSelectedList(this.addCountryForm.get('languages').value),
       "currency": this.select(this.addCountryForm.get('currency').value , this.currencyValue),
       "countryName": this.countryValue,
     }
+    
     if(this.id)
     {
       this.addCountryFormDetails.id= this.id;
@@ -144,7 +147,6 @@ patchForm(item) {
 getCountrydetails(id) {
   this.systemSettingsService.getCountrydetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      
       this.countryDetailsData = success.data;
       this.patchForm(this.countryDetailsData);
     },
@@ -155,7 +157,15 @@ getCountrydetails(id) {
 get signUpControls() {
   return this.addCountryForm.controls;
 }
-
+multiSelectedList(criteriaArray: any) {
+  if (criteriaArray != null) {
+    this.selectedCriteriaId = [];
+    criteriaArray.forEach(element => {
+      this.selectedCriteriaId.push(element);
+    });
+    return this.selectedCriteriaId;
+  }
+}
 getCountry()
 {
   this.commonService.getAllCountries().pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -171,7 +181,8 @@ getLanguage()
 {
   this.commonService.getLanguage().pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+      
+      this.languageData = success.data
     },
     error => {
     }

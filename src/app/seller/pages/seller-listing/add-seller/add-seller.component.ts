@@ -25,13 +25,17 @@ export class AddSellerComponent implements OnInit {
   id: number;
   addSellerFormDetails: any;
   seller: any;
+  supplyTypes:any[];
+  supplyTypeValue: any;
+  selected_supplyType:any;
+
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   sellerTitle:string; 
   selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
-  // sellerId:any;
+  selectedCountryId: any[];
   countries:Country[];
   countryValue: any;
   companyFlagSize: boolean;
@@ -73,38 +77,50 @@ export class AddSellerComponent implements OnInit {
         {
           this.getSellerdetails(this.id);
         }
-       
+        this.selected_supplyType = [];
+
   this.getCountry();
   
       }
     )
 
   }
+  getSupplyType()
+{
+  
+  this.commonService.getSupplyType(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      
+      this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
+    },
+    error => {
+    }
+  )
+}
   public initForm(){
     
     this.addSellerForm = new FormGroup({
-      countryId:new FormControl(null,[Validators.required]),
-      sellerName: new FormControl(null,[Validators.required, ]),
+      countryId:new FormControl('',[Validators.required]),
+      sellerName: new FormControl('',[Validators.required, ]),
       userName: new FormControl('',[Validators.required]),
       // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
-      ccEmail: new FormControl(null,[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      mobileNo:new FormControl(null,[ Validators.pattern('^[0-9]{5,15}$')]),
-      pickupAddress:new FormControl(null,),
-      houseNo: new FormControl(null,),
-      unitNo: new FormControl(null,),
-      buildingName: new FormControl(null,),
-      streetName: new FormControl(null,),
-      file: new FormControl(''),
-      pincode: new FormControl(null,),
-      accHolderName: new FormControl(null,),
-      accountNumber: new FormControl(null,),
-      IFSCCode: new FormControl(null,),
-      bankName: new FormControl(null,),
-      typeofAccount: new FormControl(null,),
-      commission: new FormControl(null,),
-      supplyType: new FormControl(null,),
-      floorNo: new FormControl(null,),
+      ccEmail: new FormControl('',[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
+      mobileNo:new FormControl('',[ Validators.pattern('^[0-9]{5,15}$')]),
+      pickupAddress:new FormControl('',),
+      houseNo: new FormControl('',),
+      unitNo: new FormControl('',),
+      buildingName: new FormControl('',),
+      streetName: new FormControl('',),
+      pincode: new FormControl('',),
+      accHolderName: new FormControl('',),
+      accountNumber: new FormControl('',),
+      IFSCCode: new FormControl('',),
+      bankName: new FormControl('',),
+      typeofAccount: new FormControl('',),
+      commission: new FormControl('',),
+      supplyTypeId: new FormControl('', Validators.required),
+      floorNo: new FormControl('',),
     })
     if(this.id)
     {
@@ -113,7 +129,11 @@ export class AddSellerComponent implements OnInit {
         "password", new FormControl("", [
           Validators.minLength(8),
           Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
-          Validators.maxLength(20)]))
+          Validators.maxLength(20)]),
+          )
+          this.addSellerForm.addControl(
+               "file", new FormControl(''),
+              )
     }
     else{
       this.addSellerForm.addControl(
@@ -121,15 +141,20 @@ export class AddSellerComponent implements OnInit {
           Validators.minLength(8),
           Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
           Validators.maxLength(20)]))
+          this.addSellerForm.addControl(
+            "file", new FormControl('',  Validators.required),
+           )
     }
   }
 
   onSubmitSellerForm() {
+
     this.isSubmittedaddSellerForm = true
     if (this.addSellerForm.invalid) {
       return
     }
       let data = this.addSellerForm.value;
+      data.file = this.addSellerForm.get('file').value
       
       if(this.id)
       {
@@ -152,13 +177,13 @@ this.addSellerForm.controls.countryId=this.countryValue;
   
           },
           error => {
-            this.toastr.error('error',error);
+            this.toastr.error(error.error.message);
           }
         )
       }
      if(this.id)
      {
-      this.SellerService.updateSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+      this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();
           this.toastr.success('Seller Update Successfully!');
@@ -180,7 +205,14 @@ this.addSellerForm.controls.countryId=this.countryValue;
     this.SellerService.getSellerdetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.sellerDetailsData = success.data;
-       
+        this.commonService.getSupplyType(this.sellerDetailsData.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success:any) => {
+            
+            this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
+          },
+          error => {
+          }
+        )
         this.patchForm(this.sellerDetailsData);
        
   
@@ -192,24 +224,23 @@ this.addSellerForm.controls.countryId=this.countryValue;
   fileChangeEvent(fileInput : any){
   
     this.file = fileInput.target.files[0];
+    
     var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
     if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
     if (this.file.size < 200000) {
     {
       this.companyFlagSize = true;
       this.compLogofiletype = last;
-       let reader = new FileReader();
-       
-        reader.readAsDataURL(this.file);
-        
+       let reader = new FileReader();      
+        reader.readAsDataURL(this.file);      
         reader.onload = (event) => {
-          this.url = reader.result;
-          this.companyLogo = this.url;
-          this.orgLogoData = this.url.substr(this.url.indexOf(',') + 1);
+           this.url = reader.result;
+          this.companyLogo = this.url;        
           document.getElementById('sizeValidations').style.color = 'black';
-  
         }
-        this.addSellerForm.controls['file'].setValue(this.file ? this.file.name : '');
+        this.addSellerForm.controls['file'].setValue(this.file ? this.file : '');
+        this.file = this.file.name
+        
       }
     }
       else {
@@ -220,14 +251,13 @@ this.addSellerForm.controls.countryId=this.countryValue;
       }
   }
   patchForm(item) {
+    
+    this.companyFlagSize = true;
+    this.companyLogo = item.logo,
     this.addSellerForm.controls.countryId.patchValue(item.countryId);
      this.addSellerForm.controls.sellerName.patchValue(item.sellerName);
-     this.addSellerForm.controls.sellerName.patchValue(item.file);
-   
+    //  this.addSellerForm.controls.file.patchValue(item.file);
     this.addSellerForm.controls.userName.patchValue(item.userName);
-
-    // this.addSellerForm.controls.password.patchValue(item.password);
-  
     this.addSellerForm.controls.sellerEmail.patchValue(item.sellerEmail);
     this.addSellerForm.controls.ccEmail.patchValue(item.ccEmail);
     this.addSellerForm.controls.mobileNo.patchValue(item.mobileNo);
@@ -244,16 +274,20 @@ this.addSellerForm.controls.countryId=this.countryValue;
     this.addSellerForm.controls.accountNumber.patchValue(item.accountNumber);
     this.addSellerForm.controls.IFSCCode.patchValue(item.IFSCCode);
     this.addSellerForm.controls.bankName.patchValue(item.bankName);
-  
     this.addSellerForm.controls.typeofAccount.patchValue(item.typeofAccount);
     this.addSellerForm.controls.commission.patchValue(item.commission);
     
-    this.addSellerForm.controls.supplyType.patchValue(item.supplyType);
+    this.addSellerForm.controls.supplyTypeId.patchValue(item.supplyTypeId);
     this.addSellerForm.controls.floorNo.patchValue(item.floorNo);
     // this.addSellerForm.controls.password.patchValue(item.password);
-
   }
-  
+  getdropdown1(event:any){
+    this.selectedCountryId = event.value
+    this.getSupplyType();
+    // this.selectedCountryData = this.countryData.filter(item => item.id === this.selectedCountryId)
+    //  this.languages =this.arrayOfStringsToArrayOfObjectsLanguage( this.selectedCountryData[0].languages)
+    }
+
   getCountry()
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(

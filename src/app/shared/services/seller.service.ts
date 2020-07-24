@@ -23,14 +23,17 @@ export class SellerService {
   addSeller(data) {
     
     const dataForm = new FormData();
+    if(data.id != null){
+      dataForm.append('id', data['id']);
+    }
       dataForm.append('IFSCCode', data['IFSCCode']);
-      dataForm.append('sort', data['accHolderName']);
-      dataForm.append('walletDiscount', data['accountNumber']);
-      dataForm.append('file', data['bankName']);
-      dataForm.append('countryId', data['buildingName']);
-      dataForm.append('supplyTypeId', data['ccEmail']);
+      dataForm.append('accHolderName', data['accHolderName']);
+      dataForm.append('accountNumber', data['accountNumber']);
+      dataForm.append('bankName', data['bankName']);
+      dataForm.append('buildingName', data['buildingName']);
+      dataForm.append('ccEmail', data['ccEmail']);
       dataForm.append('commission', data['commission']);
-      dataForm.append('socountryIdrt', data['countryId']);
+      dataForm.append('countryId', data['countryId']);
       dataForm.append('file', data['file']);
       dataForm.append('floorNo', data['floorNo']);
       dataForm.append('houseNo', data['houseNo']);
@@ -41,18 +44,11 @@ export class SellerService {
       dataForm.append('sellerEmail', data['sellerEmail']);
       dataForm.append('sellerName', data['sellerName']);
       dataForm.append('streetName', data['streetName']);
-      dataForm.append('supplyType', data['supplyType']);
+      dataForm.append('supplyTypeId',data['supplyTypeId']);
       dataForm.append('unitNo', data['unitNo']);
       dataForm.append('userName', data['userName']);
       
-    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-  updateSeller(data)
-  {
-    return this.http.post(this.baseUrl + 'admin/seller', data).pipe(
+    return this.http.post(this.baseUrl + 'admin/seller', dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
