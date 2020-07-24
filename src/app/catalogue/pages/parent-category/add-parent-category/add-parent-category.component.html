@@ -13,9 +13,9 @@
 </div>
 <div class="row ">
   <div class="col-md-12">
-      <div class="pt-3">
+      <div class="card">
           <div class="card-content">
-              <div class="">
+              <div class="px-3 pt-3">
                   <form class="form" [formGroup]="addParentCategoriesForm" (ngSubmit)="onSubmitParentCategoriesForm($event)">
                       <div class="form-body">
                           <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
@@ -84,7 +84,7 @@
                       </div> -->
                       <div class="form-actions right">
                           <button type="button" [routerLink]="['/catalogues/parent-categories']" class="btn btn-raised btn-warning mr-1"> Back</button>
-                          <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                          <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addParentCategoriesForm.dirty" >Submit</button>
                       </div>
                   </form>
               </div>

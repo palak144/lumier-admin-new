@@ -188,22 +188,12 @@ getLanguage()
  
   this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      
-
       let newArray = [];
-
       if (success.data != null) {
         success.data.forEach(element => {
           newArray.push(element);
         });
       }
-      // let newArray = [
-      //   {
-      //     "id": success.data.id,
-      //     "itemName": success.data.itemName,
-      //   }
-      // ]
-      
       this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
       
     },
@@ -263,23 +253,13 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
         )       
         this.commonService.getCountryLanguage(this.ParentcategoryData.countries).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-            
             let newArray = [];
-
             if (success.data != null) {
               success.data.forEach(element => {
                 newArray.push(element);
               });
             }
-            // let newArray = [
-            //   {
-            //     "id": success.data.id,
-            //     "itemName": success.data.itemName,
-            //   }
-            // ]
-            
             this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
-            
           },
           error => {
           }

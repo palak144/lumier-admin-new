@@ -106,7 +106,7 @@ export class AddSellerComponent implements OnInit {
       // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
       ccEmail: new FormControl('',[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
-      mobileNo:new FormControl('',[ Validators.pattern('^[0-9]{5,15}$')]),
+      mobileNo:new FormControl('',[Validators.required , Validators.pattern('^[0-9]{5,15}$')]),
       pickupAddress:new FormControl('',),
       houseNo: new FormControl('',),
       unitNo: new FormControl('',),

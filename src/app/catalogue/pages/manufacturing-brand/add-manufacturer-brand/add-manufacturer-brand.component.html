@@ -6,6 +6,11 @@
   </ul>
   <div class="content-header text-left pb-3">{{brandTitle}}</div>
 </div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3 pt-3">
 <form class="form" [formGroup]="addBrandForm" (ngSubmit)="onSubmitBrandForm()">
   <div class="form-body">
     <div class="row">
@@ -47,7 +52,10 @@
             <div class="col-md-10">
                 <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                 <span id="sizeValidations">File size should not exceed 200kb</span>
-            </div>
+                <div *ngIf="isSubmittedaddBrandForm && signUpControls.file.errors" class="invalid-feedback mt-0">
+                  <div *ngIf="signUpControls.file.errors.required">Logo is required</div>
+              </div> 
+              </div>
         </div>
         </div>
       </div>
@@ -59,7 +67,7 @@
             [(ngModel)]="selected_supplyType" placeholder="Select Supply Type"
             [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.supplyTypeId.errors }">
           </p-dropdown>
-                <div *ngIf="isSubmittedaddCustomerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                <div *ngIf="isSubmittedaddBrandForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
                 <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
             </div>
             </div>
@@ -81,7 +89,12 @@
     <button type="button" [routerLink]="['/catalogues/manufacturing-brand']" class="btn btn-raised btn-warning mr-1">
       Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addBrandForm.dirty"> Submit
     </button>
   </div>
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>

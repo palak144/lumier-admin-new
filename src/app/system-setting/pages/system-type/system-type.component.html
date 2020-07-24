@@ -14,7 +14,7 @@
   </form>
 </div>
 <div class="row">
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <div class="col-xl-4 col-lg-4 col-md-4">
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
             <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
@@ -24,19 +24,10 @@
         </fieldset>   
     </div> 
   <div class="col-8 text-right">
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <div class="dropdown">
-      <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
-      <ul class="dropdown-menu" role="menu">
-          <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
-          <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
-      </ul>
-  </div> 
-  </button>
+      
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/systemsetting/new']">
-    <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-    <span class="d-lg-block d-none" >Add New</span>
+    
+    <span class="d-lg-block " >Add New</span>
   </button>
   </div>
 </div>
