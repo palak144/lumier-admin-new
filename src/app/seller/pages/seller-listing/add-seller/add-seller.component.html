@@ -56,6 +56,7 @@
                                         <div *ngIf="signUpControls.sellerName.errors.required">Seller Name is required</div>
                                         
                                     </div>
+                                    
                                 </div>
                             
                             </div>
@@ -66,6 +67,7 @@
                                     <div *ngIf="isSubmittedaddSellerForm && signUpControls.userName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.userName.errors.required">User Name is required</div>
                                     </div>   
+                                    
                                 </div>
 
                             </div>
@@ -112,7 +114,7 @@
                                 <div class="form-group">
                                     <label>Photo </label><span class="asterick">*</span>
                                     <div class="row ">
-                                        <div class="col-md-2 form-group center">
+                                        <div class="col-md-2 form-group center mb-0">
                                             <label for="file">
                                               <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
                                         </div>
@@ -120,7 +122,7 @@
                                             <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                                             <span id="sizeValidations">File size should not exceed 200kb</span>
                                         </div>
-                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.file.errors" class="invalid-feedback">
+                                        <div *ngIf="isSubmittedaddSellerForm && signUpControls.file.errors" class="invalid-feedback pl-2">
                                             <div *ngIf="signUpControls.file.errors.required">Photo is required</div>
                                         </div> 
                                     </div>

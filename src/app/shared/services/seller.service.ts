@@ -26,6 +26,9 @@ export class SellerService {
     if(data.id != null){
       dataForm.append('id', data['id']);
     }
+    if(data.file != ""){
+      dataForm.append('file', data['file']);
+    }
       dataForm.append('IFSCCode', data['IFSCCode']);
       dataForm.append('accHolderName', data['accHolderName']);
       dataForm.append('accountNumber', data['accountNumber']);
@@ -34,7 +37,6 @@ export class SellerService {
       dataForm.append('ccEmail', data['ccEmail']);
       dataForm.append('commission', data['commission']);
       dataForm.append('countryId', data['countryId']);
-      dataForm.append('file', data['file']);
       dataForm.append('floorNo', data['floorNo']);
       dataForm.append('houseNo', data['houseNo']);
       dataForm.append('mobileNo', data['mobileNo']);

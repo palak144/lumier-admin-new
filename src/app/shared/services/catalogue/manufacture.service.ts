@@ -21,14 +21,16 @@ export class ManufactureService {
 
   }
   addBrand(data ) {
+    debugger
     const dataForm = new FormData();
       if(data.id != null){
         dataForm.append('id', data['id']);
       }
-      
+      if(data.file != ""){
+        dataForm.append('file', data['file']);
+      }
       dataForm.append('manufacturerName', data['manufacturerName']);
       dataForm.append('walletDiscount', data['walletDiscount']);
-      dataForm.append('file', data['file']);
       dataForm.append('logoName', data['logoName']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
@@ -66,7 +68,7 @@ export class ManufactureService {
       );
   }
   getAllParentCategory(page) {
-  
+  debugger
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
@@ -76,7 +78,6 @@ export class ManufactureService {
   }
   getAllBrandsSearch(page?, searchKey?, exportAll?, countryId?) {
     
-  
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
@@ -85,7 +86,7 @@ export class ManufactureService {
       );
   }
   getAllParentCategorysSearch(page?, searchKey?,  countryId?) {
-
+    debugger
     const params = { page: page, searchKey: searchKey ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(

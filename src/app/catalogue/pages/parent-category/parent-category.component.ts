@@ -67,14 +67,14 @@ export class ParentCategoryComponent implements OnInit {
       switchMap((term: string) => this.manufactureService.getAllParentCategorysSearch(this.page, term ,this.countryId
       ))
     ).subscribe((success: any) => {
-
+debugger
       this.categoriesList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     })
   } 
   loadDataLazy(event: LazyLoadEvent) {
-
+debugger
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar && !this.countryId) {
@@ -125,6 +125,7 @@ export class ParentCategoryComponent implements OnInit {
           takeUntil(this._unsubscribe)
         )
         .subscribe((success: any) => {
+          debugger
           this.categoriesList = success.data.results;
           this.totalCount = success.data.total;
           this.utilityService.resetPage();

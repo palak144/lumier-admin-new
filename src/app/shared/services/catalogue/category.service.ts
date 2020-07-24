@@ -81,6 +81,9 @@ addcategory(data)
     if(data.id != null){
       dataForm.append('id', data['id']);
     }
+    if(data.file != ""){
+      dataForm.append('file', data['file']);
+    }
     dataForm.append('categoryName', data['categoryName']);
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
@@ -93,7 +96,6 @@ addcategory(data)
     dataForm.append('isStaticMetaTag',data['isStaticMetaTag']);
     dataForm.append('description', data['description']);
     dataForm.append('icon',"");
-    dataForm.append('image', data['file']);
   return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
    
     retry(3),
@@ -106,6 +108,7 @@ updatecategory(data)
     if(data.id != null){
       dataForm.append('id', data['id']);
     }
+
     dataForm.append('categoryName', data['categoryName']);
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
