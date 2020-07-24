@@ -116,9 +116,9 @@ export class AddNewCategoryComponent implements OnInit {
       "file": this.addCategoriesForm.get('file').value,
       "countries": this.addCategoriesForm.get('countryId').value,
       "parentCategoryId": this.addCategoriesForm.get('parentCategory').value,
-      "categoryId": this.addCategoriesForm.get('category').value,
+      "categoryId":this.addCategoriesForm.get('category').value,
       "languageId": this.addCategoriesForm.get('languageId').value,
-      "sort": this.addCategoriesForm.get('sort').value,
+      // "sort": this.addCategoriesForm.get('sort').value,
       "metaTitle": this.addCategoriesForm.get('metaTitle').value,
       "metaDescription": this.addCategoriesForm.get('metaDescription').value,
       "metaKeyword": this.addCategoriesForm.get('metaKeyword').value,
@@ -126,6 +126,15 @@ export class AddNewCategoryComponent implements OnInit {
       "description": this.addCategoriesForm.get('description').value,
 
     }
+  //   c
+  // if (this.addCategoriesForm.get('category').value)
+  //  {
+  //   this.addCategoryFormDetails.categoryId = this.addCategoriesForm.get('category').value
+  //  }
+  //  else{
+  //   this.addCategoryFormDetails.categoryId = "1";
+  //  }
+
     console.log(this.addCategoryFormDetails);
    if(this.id)
     {
@@ -192,13 +201,13 @@ export class AddNewCategoryComponent implements OnInit {
      "countryId": new FormControl(countryId, Validators.required),
      "parentCategory": new FormControl(parentCategory, Validators.required),
      "languageId":new FormControl(languageId, Validators.required),
-     "category": new FormControl(category, Validators.required),
-     "sort": new FormControl(sort, Validators.required),
-     "metaTitle": new FormControl(metaTitle, Validators.required),
-     "metaDescription": new FormControl(metaDescription, Validators.required),
-     "metaKeyword": new FormControl(metaKeyword, Validators.required),
-     "staticmetaTag": new FormControl(staticmetaTag, Validators.required),
-     "description": new FormControl(description, Validators.required),
+     "category": new FormControl(category),
+    //  "sort": new FormControl(sort, Validators.required),
+     "metaTitle": new FormControl(metaTitle),
+     "metaDescription": new FormControl(metaDescription),
+     "metaKeyword": new FormControl(metaKeyword),
+     "staticmetaTag": new FormControl(staticmetaTag),
+     "description": new FormControl(description),
   });
   this.addCategoriesForm.addControl(
     "file", new FormControl( file,Validators.required),
@@ -233,6 +242,7 @@ getCountry()
     this.commonService.getCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.category = this.arrayOfStringsToArrayOfObjects(success.data);
+        console.log(this.category);
       },
       error => {
       }
@@ -303,6 +313,7 @@ getCategoryDetails(id) {
       console.log(success);
       this.categoryData = success.data;
       this.patchForm(this.categoryData);
+
     },
     error => {
     }
@@ -320,7 +331,7 @@ patchForm(item)
   // this.addCategoriesForm.controls.filterTitle.patchValue(item.filtersTitle);
   // this.addCategoriesForm.controls.filterDetail.patchValue(item.filtersDetail);
   this.addCategoriesForm.controls.category.patchValue(item.categoryId);
-  this.addCategoriesForm.controls.sort.patchValue(item.sort);
+  // this.addCategoriesForm.controls.sort.patchValue(item.sort);
   this.addCategoriesForm.controls.metaTitle.patchValue(item.metaTitle);
   this.addCategoriesForm.controls.metaDescription.patchValue(item.metaDescription);
   this.addCategoriesForm.controls.metaKeyword.patchValue(item.metaKeyword);
@@ -336,15 +347,16 @@ getLanguage()
  
   this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
+      console.log(success);
+      // let newArray = [
+      //   {
+      //     "id": success.data.id,
+      //     "itemName": success.data.itemName,
+      //   }
+      // ]
       
-      let newArray = [
-        {
-          "id": success.data.id,
-          "itemName": success.data.itemName,
-        }
-      ]
-      
-      this.languages = this.arrayOfStringsToArrayOfObjects(newArray);
+      this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+      console.log(this.languages);
       
     },
     error => {
@@ -352,16 +364,17 @@ getLanguage()
   )
 }
 getdropdown(event:any){
-  
-  this.selectedCountryId = event.value
-  
-
+ console.log(event.value);
+  this.selectedCountryId = event.value;
+  console.log( this.selectedCountryId);
   this.getLanguage();
 
   
   }
   getlanguage(event:any)
   {
+   
+  
     console.log(event.value);
     this.selectedLanguageId = event.value ;
     console.log(this.selectedLanguageId);
