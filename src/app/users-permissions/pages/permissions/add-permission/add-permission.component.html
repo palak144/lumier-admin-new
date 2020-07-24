@@ -59,7 +59,7 @@
   <div class="form-actions right">
     <button type="button" [routerLink]="['/user-permissions/user-permissions']" class="btn btn-raised btn-warning mr-1"> Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addPerGroupForm.dirty"> Submit
     </button>
   </div>
 </form>
@@ -68,4 +68,3 @@
               </div>
               </div>
               </div>
-              

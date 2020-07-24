@@ -46,7 +46,7 @@
   <div class="form-actions right">
     <button type="button" [routerLink]="['/customer/customer-groups']" class="btn btn-raised btn-warning mr-1"> Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addCustomerGroupForm.dirty"> Submit
     </button>
   </div>
 </form>
