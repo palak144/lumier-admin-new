@@ -22,8 +22,8 @@
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-raised btn-primary btn-darken-3 white copy-product">
-                <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-                <span class="d-lg-block d-none" >Copy product data</span>
+                
+                <span class="d-lg-block " >Copy product data</span>
             </button>
         </div>
     </div>
@@ -209,7 +209,46 @@
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
-                        <div class="table-wrapper vehiclwrappere- ">
+                        <div class="table-wrapper vehiclwrappere varient">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                                <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                                <ng-template pTemplate="header">
+                                        <tr class="table-coustom-style">
+                                            <th style="width:8em">S. No.</th>
+                                            <th style="width: 16em;">Product Name</th>
+                                            <th style="width: 14em;">Quantity</th> 
+                                            <th style="width: 8em;">Action</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-brand >
+                                        <tr>
+                                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                            <td><span class="ui-column-title">Product Name</span>{{brand.manufacturerName}}</td>
+                                            <td><span class="ui-column-title">Quantity</span>{{brand.supplyType.name}}</td>
+                                            <td>
+                                                <span class="ui-column-title">Action</span>
+                                            
+                                                <div class="dropdown">
+                                                    <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+                        
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                                        <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                        
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td class="text-center text-danger font-weight-600" colspan="4">No Records Found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        <div class="table-wrapper vehiclwrappere varient" *ngFor="let field of fieldArray; let i = index">
                         <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
@@ -252,11 +291,11 @@
                 </div>
 
                   <div class="text-right">
-                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" (click)="addFieldValue()">
                         <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
                         <span class="d-lg-block d-none" >Add Row</span>
                     </button>
-                  </div>
+                  </div> 
 
                   <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
                     <div class="form-body">
@@ -305,8 +344,51 @@
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
-                        <div class="table-wrapper vehiclwrappere- ">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <div class="table-wrapper vehiclwrappere varient">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                           <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                           <ng-template pTemplate="header">
+                                   <tr class="table-coustom-style">
+                                       <th style="width:6em">S. No.</th>
+                                       <th style="width: 16em;">Minimum Quantity</th>
+                                       <th style="width: 16em;">Maximum Quantity</th>
+                                       <th style="width: 13em;">Price</th> 
+                                       <th style="width: 13em;">Wallet Price</th> 
+                                       <th style="width: 10em;">Action</th>
+                                   </tr>
+                               </ng-template>
+                               <ng-template pTemplate="body" let-brand >
+                                   <tr>
+                                       <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                                       <td><span class="ui-column-title">Minimum Quantity</span>{{brand.manufacturerName}}</td>
+                                       <td><span class="ui-column-title">Maximum Quantity</span>{{brand.supplyType.name}}</td>
+                                       <td><span class="ui-column-title">Price</span></td>
+                                       <td><span class="ui-column-title">Wallet Price</span></td>
+                                       <td>
+                                           <span class="ui-column-title">Action</span>
+                                       
+                                           <div class="dropdown">
+                                               <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+                   
+                                               </a>
+                                               <ul class="dropdown-menu" role="menu">
+                                                   <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
+                                                   <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                   
+                                               </ul>
+                                           </div>
+                                       </td>
+                                   </tr>
+                               </ng-template>
+                               <ng-template pTemplate="emptymessage">
+                                   <tr>
+                                       <td class="text-center text-danger font-weight-600" colspan="6">No Records Found.</td>
+                                   </tr>
+                               </ng-template>
+                           </p-table>
+                       </div>
+                        <div class="table-wrapper vehiclwrappere varient" *ngFor="let varient of varientArray; let i = index">
+                             <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -351,7 +433,7 @@
                     </div>
                   </div>
                   <div class="text-right">
-                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" (click)="addVarientValue()">
                         <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
                         <span class="d-lg-block d-none" >Add Row</span>
                     </button>

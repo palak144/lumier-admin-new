@@ -24,7 +24,6 @@ export class SystemTypeComponent implements OnInit {
   searchTerms$ = new Subject<string>();
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
- exportAll = "false";
   action: any;
   countries:any[];
   countryId : number = null;
@@ -65,7 +64,7 @@ export class SystemTypeComponent implements OnInit {
       
           }
     else {
-      this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll,this.countryId);
+      this.getAllSupplysSearch(this.page, this.searchBar , this.countryId);
     
     }
 
@@ -89,7 +88,7 @@ export class SystemTypeComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.SystemSettingsService.getAllSupplysSearch(this.page, term ,this.exportAll,this.countryId
+      switchMap((term: string) => this.SystemSettingsService.getAllSupplysSearch(this.page, term ,this.countryId
       ))
     ).subscribe((success: any) => {
       this.supplyList = success.data.results;
@@ -97,10 +96,10 @@ export class SystemTypeComponent implements OnInit {
       this.utilityService.resetPage();
     })
   } 
-  getAllSupplysSearch(page, searchBar , exportAll ,countryId ) {
+  getAllSupplysSearch(page, searchBar ,countryId ) {
   
     
-    this.SystemSettingsService.getAllSupplysSearch(page, searchBar , exportAll ,countryId)
+    this.SystemSettingsService.getAllSupplysSearch(page, searchBar ,countryId)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -108,11 +107,6 @@ export class SystemTypeComponent implements OnInit {
         this.supplyList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        if(exportAll == "true"){
-        
-          this.excelService.exportAsExcelFile(this.supplyList, 'Supply List')
-          this.exportAll = "false"
-        }
       })
   }
   filterGlobal(searchTerm) {
@@ -149,32 +143,6 @@ export class SystemTypeComponent implements OnInit {
           
     }
   }
-  exportAsXLSX(id:number) {
-   
-    if (id==0){
-   console.log(this.supplyList); 
-   console.log(this.supplyList);
-     
-       console.log(this.supplyList.length);
-       for (var i =0; i< this.supplyList.length; i++)
-       {
-   console.log(this.supplyList[i].created_at);
-   var yourDate=this.supplyList[i].created_at;
-    var date=yourDate.split('T')[0]
-   console.log(date);
-   
-       }
-      this.excelService.exportAsExcelFile(this.supplyList, 'Seller List')
-      
-    }
-    else{ 
-    
-      this.exportAll = "true"
-      console.log(this.exportAll);
-     this.getAllSupplysSearch(this.page, this.searchBar,this.exportAll,this.countryId);
-    
-    }
-   }
    
    onChange(deviceValue) {
      if(deviceValue)
@@ -185,7 +153,7 @@ export class SystemTypeComponent implements OnInit {
    {
    }
    
-     this.getAllSupplysSearch(this.page, this.searchBar , this.exportAll, this.countryId);
+     this.getAllSupplysSearch(this.page, this.searchBar , this.countryId);
  }
  getCountry()
  {

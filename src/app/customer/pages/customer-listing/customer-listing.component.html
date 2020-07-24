@@ -14,9 +14,9 @@
     </form>
     <div class="col-8 text-right pr-0">
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-      <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
+      
       <div class="dropdown">
-        <a class="d-lg-block d-none dropdown-toggle" data-toggle="dropdown" >Export</a>
+        <a class="d-lg-block  dropdown-toggle" data-toggle="dropdown" >Export</a>
         <ul class="dropdown-menu" role="menu">
             <li><a (click)="exportAsXLSX(0)" >Currents Data</a></li>
             <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
@@ -24,8 +24,8 @@
     </div>
     </button>
         <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/customer/add-customer']">
-      <i class="fa fa-paper-plane-o d-lg-none d-block"></i>
-      <span class="d-lg-block d-none" (click)="onAddCustomer()">Add New</span>
+      
+      <span class="d-lg-block " (click)="onAddCustomer()">Add New</span>
     </button>
     </div> 
 </div>

@@ -11,6 +11,11 @@
   </ul>
   <div class="content-header text-left">{{customerGroupTitle}}</div>
 </div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3 pt-3">
 <form class="form" [formGroup]="addCustomerGroupForm" (ngSubmit)="onSubmitAddCustomerGroupForm()">
   <div class="form-body">
     <div class="row">
@@ -41,7 +46,12 @@
   <div class="form-actions right">
     <button type="button" [routerLink]="['/customer/customer-groups']" class="btn btn-raised btn-warning mr-1"> Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addCustomerGroupForm.dirty"> Submit
     </button>
   </div>
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>

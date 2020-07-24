@@ -10,20 +10,49 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AddProductComponent implements OnInit {
 
+ 
   productTitle:string;
   addCategoriesForm: FormGroup; 
   isSubmittedaddCategoriesForm: boolean = false;
   permissions: any;
   closeResult: string;
   languages: string[];
+  private fieldArray: Array<any> = [];
+  private newAttribute: any = {};
+  private basedArray: Array<any> = [];
+  manufacturerBrands: string[];
+  countryOrigins: string[];
+  supplyTypes: string[];
+  categories: string[];
+  specialityTypes: string[];
+  
   constructor(
     private modalService: NgbModal,
   ) { }
+
+  addFieldValue() {
+    this.fieldArray.push(this.newAttribute)
+    this.newAttribute = {};
+}
+
+addBasedValue() {
+  this.basedArray.push(this.newAttribute)
+  this.newAttribute = {};
+}
+
+deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+}
 
   ngOnInit() {
 
     this.productTitle = "Add New Product";
     this.languages = ['Hindi', 'English'];
+    this.manufacturerBrands = ['One', 'Two', 'Three', 'Four'];
+    this.countryOrigins = ['India', 'Australia', 'USA', 'Singapour.'];
+    this.supplyTypes = ['Dental', 'Madical'];
+    this.categories = ['category-one', 'category-two', 'category-three'];
+    this.specialityTypes = ['Dental', 'Madical'];
     // this.initForm();
   }
 
@@ -49,4 +78,6 @@ private getDismissReason(reason: any): string {
       return `with: ${reason}`;
   }
 }
+
+
 }

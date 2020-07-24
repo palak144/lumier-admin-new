@@ -11,6 +11,11 @@
   </ul>
   <div class="content-header text-left pb-3">{{perGroupTitle}}</div>
 </div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3 pt-3">
 <form class="form" [formGroup]="addPerGroupForm" (ngSubmit)="onSubmitPerGroupForm()">
   <div class="form-body">
     <div class="row">
@@ -54,7 +59,12 @@
   <div class="form-actions right">
     <button type="button" [routerLink]="['/user-permissions/user-permissions']" class="btn btn-raised btn-warning mr-1"> Back
     </button>
-    <button type="submit" class="btn btn-raised btn-primary"> Submit
+    <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addPerGroupForm.dirty"> Submit
     </button>
   </div>
 </form>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>

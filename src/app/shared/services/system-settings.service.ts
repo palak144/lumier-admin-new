@@ -94,9 +94,9 @@ addSupply(data) {
       catchError(this.errorHandler.handleError)
     );
   }
-  getAllSupplysSearch(page?, searchKey?, exportAll?, countryId?) {
+  getAllSupplysSearch(page?, searchKey?, countryId?) {
     
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    const params = { page: page, searchKey: searchKey  ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/supplyType',
       { params: params }).pipe(
         retry(3),

@@ -64,7 +64,6 @@ export class AddSystemSettingComponent implements OnInit {
     this.addUserForm = new FormGroup({
       name: new FormControl('',[Validators.required]),
       countryId: new FormControl('',[Validators.required]),
-      // status: new FormControl('',[Validators.required]),
     })
     this.dropdownSettings = {
       singleSelection: false,
