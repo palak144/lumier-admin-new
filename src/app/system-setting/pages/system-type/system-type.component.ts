@@ -109,7 +109,7 @@ export class SystemTypeComponent implements OnInit {
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
         if(exportAll == "true"){
-   
+        
           this.excelService.exportAsExcelFile(this.supplyList, 'Supply List')
           this.exportAll = "false"
         }
@@ -152,7 +152,18 @@ export class SystemTypeComponent implements OnInit {
   exportAsXLSX(id:number) {
    
     if (id==0){
-   console.log(this.supplyList); return
+   console.log(this.supplyList); 
+   console.log(this.supplyList);
+     
+       console.log(this.supplyList.length);
+       for (var i =0; i< this.supplyList.length; i++)
+       {
+   console.log(this.supplyList[i].created_at);
+   var yourDate=this.supplyList[i].created_at;
+    var date=yourDate.split('T')[0]
+   console.log(date);
+   
+       }
       this.excelService.exportAsExcelFile(this.supplyList, 'Seller List')
       
     }

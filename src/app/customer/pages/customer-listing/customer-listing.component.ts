@@ -111,7 +111,21 @@ export class CustomerListingComponent implements OnInit {
         this.utilityService.resetPage();
         
         if(exportAll == "true"){
-          
+          console.log(this.customerList);
+     
+          console.log(this.customerList.length);
+          var date;
+          for (var i =0; i< this.customerList.length; i++)
+          {
+      console.log(this.customerList[i].created_at);
+      var yourDate=this.customerList[i].created_at;
+       date=yourDate.split('T')[0]
+   
+      console.log(date);
+          }
+          console.log(date);
+     
+    console.log(this.customerList);
           this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
           this.exportAll = "false"
         }
@@ -173,7 +187,21 @@ export class CustomerListingComponent implements OnInit {
   exportAsXLSX(id:number) {
    
    if (id==0){
+    console.log(this.customerList);
      
+    console.log(this.customerList.length);
+    var date;
+    for (var i =0; i< this.customerList.length; i++)
+    {
+console.log(this.customerList[i].created_at);
+var yourDate=this.customerList[i].created_at;
+ date=yourDate.split('T')[0]
+
+console.log(date);
+    }
+    console.log(date);
+
+console.log(this.customerList);
      this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
    }
    else{

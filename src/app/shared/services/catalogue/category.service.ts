@@ -113,8 +113,8 @@ updatecategory(data)
     dataForm.append('countries', data['countries']);
     dataForm.append('parentCategoryId', data['parentCategoryId']);
     dataForm.append('languageId', data['languageId']);
-    dataForm.append('categoryId', data['categoryId']);
-    dataForm.append('sort', data['sort']);
+    // dataForm.append('categoryId', data['categoryId']);
+    // dataForm.append('sort', data['sort']);
     dataForm.append('metaTitle', data['metaTitle']);
     dataForm.append('metaDescription', data['metaDescription']);
     dataForm.append('metaKeyword', data['metaKeyword']);
