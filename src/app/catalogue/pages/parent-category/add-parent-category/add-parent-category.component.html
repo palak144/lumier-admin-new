@@ -24,7 +24,7 @@
                               <div class="col-md-6">
                                 <div class="form-group"> 
                                   <label for="country">Select Countries</label><span class="asterick">*</span> 
-                                  <p-dropdown [options]="countries" formControlName="countries" styleClass="form-control"
+                                  <p-dropdown [options]="countries" formControlName="countries" styleClass="form-control border-primary"
                                   placeholder="Select Country" (onChange)="getdropdown($event)"
                                   [ngClass]="{ 'is-invalid': isSubmittedParentCategoriesForm && signUpControls.countries.errors }">
                                 </p-dropdown>
@@ -37,7 +37,7 @@
                                 <div class="form-group">
                                     <label>Supply Type</label><span class="asterick">*</span> 
                                     <div class="assign-group-dropdown">
-                                      <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control"
+                                      <p-dropdown [options]="supplyTypes" formControlName="supplyTypeId" styleClass="form-control border-primary"
                                       placeholder="Select Supply Type">
                                     </p-dropdown>
                                           <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
@@ -53,7 +53,7 @@
                           <div class="col-md-6">
                             <div class="form-group"> 
                               <label for="country">Select Language</label><span class="asterick">*</span> 
-                              <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control"
+                              <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control border-primary"
                                   placeholder="Select Language">
                                 </p-dropdown>
                             <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.languageId.errors" class="invalid-feedback">
@@ -64,7 +64,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label>Category Name</label><span class="asterick">*</span> 
-                            <input type="text" formControlName="categoryName" class="form-control" placeholder="Name" >
+                            <input type="text" formControlName="categoryName" class="form-control border-primary" placeholder="Name" >
                             <div *ngIf="isSubmittedParentCategoriesForm && signUpControls.categoryName.errors" class="invalid-feedback">
                                 <div *ngIf="signUpControls.categoryName.errors.required">Category Name is required</div>
                             </div>   

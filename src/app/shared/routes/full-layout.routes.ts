@@ -36,10 +36,6 @@ export const Full_ROUTES: Routes = [
     loadChildren: './companies/companies.module#CompaniesModule'
   },
   {
-    path: 'categories',
-    loadChildren: './categories/categories.module#CategoriesModule'
-  },
-  {
     path: 'skill',
     loadChildren: './skill/skill.module#SkillModule'
   },

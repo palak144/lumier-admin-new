@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , Inject,LOCALE_ID} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-customer-group',
@@ -37,8 +38,11 @@ export class CustomerGroupComponent implements OnInit {
   exportAll: string = "false";
   closeResult: string;
   groups: any;
+  exportAllData: any;
+  exportData: any;
 
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private router: Router,
     private route: ActivatedRoute,
     private customerService: CustomerService,
@@ -50,6 +54,8 @@ export class CustomerGroupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.exportData = [];
+    this.exportAllData = [];
     this.initiateSearch();
   }
 
@@ -78,6 +84,7 @@ export class CustomerGroupComponent implements OnInit {
       (success: any) => {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
+        
       },
       error => {
         this.utilityService.routingAccordingToError(error);
@@ -96,12 +103,24 @@ export class CustomerGroupComponent implements OnInit {
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
 
-        if (exportAll == "true") {
-          this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
-          this.exportAll = "false"
+        if(exportAll == "true"){
+          this.customerList.forEach(element=>{
+              this.exportAllData.push({
+                Group_Name : element.groupName,
+                Group_Email : element.groupEmail,
+                Customer_Group_Id : element.id,
+                Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+                Admin_Status : element.adminStatus,
+                isDelete : element.isDelete,
+                Updated_at : formatDate(element.updated_at,'yyyy-MM-dd',this.locale),
+              })
+          })
+          
+          this.exportAll = "false"  
+          this.excelService.exportAsExcelFile(this.exportAllData, 'Customer-Group List')
+          this.exportAllData= [];
         }
       }, error => {
-
         this.utilityService.routingAccordingToError(error);
       })
   }
@@ -167,8 +186,21 @@ export class CustomerGroupComponent implements OnInit {
 
     if (id == 0) {
 
-      this.excelService.exportAsExcelFile(this.customerList, 'Customer-Group List')
-    }
+      this.customerList.forEach(element=>{
+          this.exportData.push({
+            Group_Name: element.groupName,
+            Group_Email : element.groupEmail,
+            Customer_Group_Id : element.id,
+            Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+            Admin_Status : element.adminStatus,
+            isDelete : element.isDelete,
+            Updated_at : formatDate(element.updated_at,'yyyy-MM-dd',this.locale),
+          })
+      })
+      
+      this.excelService.exportAsExcelFile(this.exportData, 'Customer-Group List')
+      this.exportData= [];
+        }
     else {
 
       this.exportAll = "true"

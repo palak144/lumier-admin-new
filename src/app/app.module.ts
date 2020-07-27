@@ -20,7 +20,7 @@ import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-
+import { DatePipe } from '@angular/common';
 
 
 
@@ -43,7 +43,8 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

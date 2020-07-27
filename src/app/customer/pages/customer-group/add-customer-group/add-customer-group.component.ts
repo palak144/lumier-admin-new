@@ -51,7 +51,8 @@ export class AddCustomerGroupComponent implements OnInit {
   }
 
   onSubmitAddCustomerGroupForm() {
-    
+    event.preventDefault();
+
     this.isSubmittedaddCustomerGroupForm = true
     if (this.addCustomerGroupForm.invalid) {
       return

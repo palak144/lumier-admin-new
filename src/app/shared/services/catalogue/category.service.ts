@@ -64,7 +64,7 @@ updateCategoryStatus(statusData: {id: Number; adminStatus: Number }){
 }
 addcategory(data)
 {
-  debugger
+  
   const dataForm = new FormData();
     if(data.id != null){
       dataForm.append('id', data['id']);
@@ -74,7 +74,7 @@ addcategory(data)
       dataForm.append('image', data['file']);
     }
     if(data.categoryId != null){
-      debugger
+      
       dataForm.append('categoryId', data['categoryId']);
     }
     dataForm.append('categoryName', data['categoryName']);

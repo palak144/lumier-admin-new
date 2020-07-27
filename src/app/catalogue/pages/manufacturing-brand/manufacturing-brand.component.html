@@ -32,8 +32,8 @@
     <div class="dropdown">
       <a class="d-lg-block  dropdown-toggle" data-toggle="dropdown" >Export</a>
       <ul class="dropdown-menu" role="menu">
-          <li><a  >Current Data</a></li>
-          <li><a  >All Data</a></li>
+          <li><a  (click)="exportAsXLSX(0)">Current Data</a></li>
+          <li><a  (click)="exportAsXLSX(1)">All Data</a></li>
       </ul>
   </div>
   </button>
@@ -58,7 +58,6 @@
                   <th>Supply Type</th>
                   <th >Country</th> 
                   <th>Wallet Discount</th>
-                  <th >Sort</th> 
                    <th>Status</th>
                   <th >Action</th>
               </tr>
@@ -70,7 +69,6 @@
                   <td><span class="ui-column-title">Supply Type</span>{{brand.supplyType.name}}</td>
                   <td><span class="ui-column-title">Country</span>{{brand.country.countryName}}</td>
                   <td><span class="ui-column-title">Wallet Discount</span>{{brand.walletDiscount}}</td>
-                  <td><span class="ui-column-title">Sort</span>{{brand.sort}}</td>
                    <td >
                       <span class="ui-column-title ">Status</span> 
                       

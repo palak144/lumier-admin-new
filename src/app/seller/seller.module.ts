@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SellerRoutingModule } from './seller-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
@@ -13,7 +14,9 @@ import { AddSellerComponent } from './pages/seller-listing/add-seller/add-seller
   imports: [
     CommonModule,
     SellerRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule, 
+    ReactiveFormsModule 
   ],
   declarations: [SellerLayoutComponent, SellerListingComponent, SellerActivitesComponent, SellerPayoutComponent, AddSellerComponent,]
 })

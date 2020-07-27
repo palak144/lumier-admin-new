@@ -62,8 +62,8 @@ export class AddUserComponent implements OnInit {
       enableSearchFilter: true,
       classes: "myclass custom-class",
       position: "bottom",
-      maxHeight: "50px"
-    };
+      maxHeight: 150,
+     };
 
    
   }
@@ -88,6 +88,7 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmitUserForm() {
+    event.preventDefault();
 
     this.isSubmittedAddUserForm = true
     if (this.addUserForm.invalid) {

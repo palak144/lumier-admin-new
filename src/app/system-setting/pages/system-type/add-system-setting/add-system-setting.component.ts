@@ -29,7 +29,6 @@ export class AddSystemSettingComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   countries: any;
   countryValue: any;
-  dropdownSettings = {};
   supplyTypes:any[];
   supplyTypeValue: any;
   supplyDetailsData: any;
@@ -65,21 +64,14 @@ export class AddSystemSettingComponent implements OnInit {
       name: new FormControl('',[Validators.required]),
       countryId: new FormControl('',[Validators.required]),
     })
-    this.dropdownSettings = {
-      singleSelection: false,
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      enableSearchFilter: true,
-      classes: "myclass custom-class",
-      position: "bottom",
-      maxHeight: "50px"
-    };
 }
   get signUpControls() {
     return this.addUserForm.controls;
   }
   onSubmitUserForm()
   {
+    event.preventDefault();
+
     this.isSubmittedaddSellerForm = true
     
         
