@@ -10,7 +10,7 @@ import { AddCountryComponent } from './pages/country/add-country/add-country.com
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 
-@NgModule({
+@NgModule({ 
   imports: [
     CommonModule,
     SystemSettingRoutingModule,
