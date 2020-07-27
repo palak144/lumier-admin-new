@@ -45,6 +45,7 @@ export class SellerListingComponent implements OnInit {
     countryId : number = null;
   exportData: any[];
   exportAllData: any[];
+  sellerListExport: any;
  
 
   constructor(
@@ -115,12 +116,11 @@ export class SellerListingComponent implements OnInit {
       )
       .subscribe((success: any) => {
         
-        this.sellerList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
         
         if(exportAll == "true"){
-          this.sellerList.forEach(element=>{
+          this.sellerListExport = [];
+          this.sellerListExport = success.data.results;
+          this.sellerListExport.forEach(element=>{
               this.exportAllData.push({
                 Seller_Name:element.sellerName,
                 Seller_Email : element.sellerEmail,
@@ -137,7 +137,15 @@ export class SellerListingComponent implements OnInit {
           this.exportAll = "false"
           this.exportAllData= [];
         }
-      })
+        else{
+        this.sellerList = success.data.results;
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
+        }
+      }, error => {
+        this.utilityService.routingAccordingToError(error);
+      }
+      )
   }
 
   loadDataLazy(event: LazyLoadEvent) {

@@ -148,7 +148,7 @@ export class AddSellerComponent implements OnInit {
 
   onSubmitSellerForm() {
     event.preventDefault();
-    debugger
+    
     this.isSubmittedaddSellerForm = true
     if (this.addSellerForm.invalid) {
       return
@@ -169,7 +169,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
     
       if(!this.id)
       {
-        debugger
+        
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
          
@@ -184,7 +184,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
       }
      if(this.id)
      {
-       debugger
+       
       this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();

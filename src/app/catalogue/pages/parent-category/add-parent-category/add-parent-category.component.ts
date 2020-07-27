@@ -87,6 +87,7 @@ export class AddParentCategoryComponent implements OnInit {
         
       },
       error => {
+        this.toastr.error(error.error.message);
       }
     )
   }
@@ -170,6 +171,7 @@ getSupplyType()
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
+      this.toastr.error(error.error.message);
     }
   )
 }
