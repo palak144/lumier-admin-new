@@ -86,6 +86,8 @@ export class AddManufacturerBrandComponent implements OnInit {
     this.getSupplyType();
       }
   onSubmitBrandForm() {
+    event.preventDefault();
+
     this.isSubmittedaddBrandForm = true
     if (this.addBrandForm.invalid) {
       return

@@ -245,7 +245,7 @@ getCountry()
     )
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
-    debugger
+    
     const newArray = [];
     
     arr.forEach(element => {
@@ -340,7 +340,7 @@ getCategoryDetails(id) {
 }
 patchForm(item)
 {
-  debugger
+  
   console.log(item);
   this.companyFlagSize = true;
   this.companyLogo = item.image,

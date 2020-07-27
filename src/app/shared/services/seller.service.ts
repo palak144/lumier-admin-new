@@ -21,7 +21,7 @@ export class SellerService {
 
   } 
   addSeller(data) {
-    
+    debugger
     const dataForm = new FormData();
     if(data.id != null){
       dataForm.append('id', data['id']);
@@ -49,7 +49,7 @@ export class SellerService {
       dataForm.append('supplyTypeId',data['supplyTypeId']);
       dataForm.append('unitNo', data['unitNo']);
       dataForm.append('userName', data['userName']);
-      
+      debugger
     return this.http.post(this.baseUrl + 'admin/seller', dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
