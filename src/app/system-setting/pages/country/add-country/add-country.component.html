@@ -39,7 +39,7 @@
                                     <angular2-multiselect class="form-control-override border-primary" name="dropdown" [data]="languageData"
                                      formControlName="languages" (onSelect)="getdropdown1($event)" 
                                      [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }"
-                                        [(ngModel)]="selected_perGroups" [settings]="dropdownSettings" 
+                                       settings]="dropdownSettings" 
                                     disabled>
                                   </angular2-multiselect>
                                     <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors" class="invalid-feedback">

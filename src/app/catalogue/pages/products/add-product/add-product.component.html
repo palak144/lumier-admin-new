@@ -12,7 +12,7 @@
   <div class="content-header text-left">Add New Product</div>
 </div>
 <div class="copy-data">
-    <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+    <form class="form" >
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -42,7 +42,7 @@
         <div class="text-right">
             <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
                 
-                <a class="text" (click)="open(content)"><span class="d-lg-block " >Add Languages</span></a>
+                <a class="text" ><span class="d-lg-block " >Add Languages</span></a>
                 
             </button>
         </div>
@@ -54,7 +54,7 @@
     <div class="col-md-12">
         <div class="card-content">
             <div class="">
-                <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+                <form class="form" >
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
@@ -64,12 +64,9 @@
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.countryId.errors }"
+                                            <p-dropdown  styleClass="form-control border-primary"   filter="true" placeholder="Select Country" 
                                     >
                                         </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.countryId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,10 +89,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.fname.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.fname.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.fname.errors.required">Name is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
+                        
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -124,10 +119,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.pnCde.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.pnCde.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.pnCde.errors.required">PN CDE is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" >
+                                  
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -141,14 +134,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Manufacturer / Brand</label><span class="asterick">*</span> 
-                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors }">
+                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" >
                                         <option value="" >Select Manufacturer / Brand</option>
                                         <option value={{manufacturerBrand}} *ngFor="let manufacturerBrand of manufacturerBrands">{{manufacturerBrand}}
                                         </option>
-                                        </select>
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.manufacturerBrand.errors.required">Manufacturer / Brand is required</div>
-                                    </div>   
+                                        </select> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -162,10 +152,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Price</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.price.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.price.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.errors.required">Price is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" >
+                                     
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -196,10 +184,10 @@
                                   <div class="row ">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="images" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="images" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -239,18 +227,13 @@
                                          <option value={{supplyType}} *ngFor="let supplyType of supplyTypes">{{supplyType}}
                                         </option>
                                     </select>  
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyType.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div>  
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Keyword</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.metaKeyword.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.metaKeyword.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.metaKeyword.errors.required">Meta Keyword is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" >
+                          
                                 </div>
                             </div>
                         </div>
@@ -258,14 +241,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Category</label><span class="asterick">*</span> 
-                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.category.errors }">
+                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{category}} *ngFor="let category of categories">{{category}}
                                         </option>
                                     </select>  
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.category.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.category.required">Category is required</div>
-                                    </div> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -279,7 +259,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Speciality Type</label>
-                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityType.errors }">
+                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{specialityType}} *ngFor="let specialityType of specialityTypes">{{specialityType}}
                                         </option>
@@ -300,10 +280,10 @@
                                   <div class="row ">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="catalogue" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="catalogue" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -322,7 +302,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere- ">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -374,7 +354,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                        <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                        <ng-template pTemplate="header">
                                <tr class="table-coustom-style">
@@ -492,7 +472,7 @@
                     </button>
                   </div>
 
-                  <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+                  <form class="form" >
                     <div class="form-body">
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">
@@ -540,7 +520,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  >
                                 <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                                 <ng-template pTemplate="header">
                                         <tr class="table-coustom-style">
@@ -583,7 +563,7 @@
                                 </p-table>
                             </div>
                         <div class="table-wrapper vehiclwrappere varient" *ngFor="let based of basedArray; let i = index">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -649,17 +629,11 @@
         <div class="form-group">
             <label>Select Language</label><span class="asterick">*</span>
             <select formControlName="languages" class="form-control border-primary"
-                placeholder="Select Language"
-                [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
+                placeholder="Select Language">
                 <option value="" >Select Language</option>
                 <option value={{language}} *ngFor="let language of languages">{{language}}
                 </option>
             </select>
-            <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors"
-                class="invalid-feedback">
-                <div *ngIf="signUpControls.languages.errors.required">Languages is required
-                </div>
-            </div>
         </div>
     </div>
         <!-- <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let permission of permissions">
