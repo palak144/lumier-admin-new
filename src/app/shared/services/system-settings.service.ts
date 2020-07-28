@@ -26,7 +26,13 @@ export class SystemSettingsService {
       catchError(this.errorHandler.handleError)
     );
   }
-
+  addCancel(data) {
+    
+    return this.http.post(this.baseUrl + 'admin/cancelReason', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   updateCountry(data)
   {
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
@@ -69,6 +75,15 @@ export class SystemSettingsService {
         catchError(this.errorHandler.handleError)
       );
   }
+  getAllCancel(page) {
+    
+    const params = { page: page }
+    return this.http.get(this.baseUrl + 'admin/cancelReason',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  }
   getCountry() 
   {
     
@@ -88,6 +103,15 @@ export class SystemSettingsService {
       catchError(this.errorHandler.handleError)
     );
 }  
+getAllCancelSearch(page?, searchKey?) {
+    
+  const params = { page: page, searchKey: searchKey  }
+  return this.http.get(this.baseUrl + 'admin/cancelReason', { params: params })
+  .pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
+} 
 addSupply(data) {
     return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
       retry(3),
@@ -110,6 +134,15 @@ deleteCountry(id) {
     catchError(this.errorHandler.handleError)
   );
 }
+
+deleteCancel(id)
+{ return this.http.delete(this.baseUrl + 'admin/cancelReason/' + id)
+.pipe(
+  retry(3),
+  catchError(this.errorHandler.handleError)
+);
+
+}
   deleteSupply(id) {
     return this.http.delete(this.baseUrl + 'admin/supplyType/' + id)
       .pipe(
@@ -125,6 +158,13 @@ deleteCountry(id) {
       retry(3),
       catchError(this.errorHandler.handleError)
     );
+}
+updateCancelStatus(statusData: {id: Number; adminStatus: Number }){
+  return this.http.put(this.baseUrl + 'admin/cancelReason', statusData)
+  .pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
 }
   updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
     
