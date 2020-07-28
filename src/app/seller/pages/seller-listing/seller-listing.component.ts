@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,  Inject,LOCALE_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
 import { SellerService } from '../../../shared/services/seller.service';
@@ -8,6 +8,7 @@ import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } f
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { formatDate } from '@angular/common';
 
 interface Action { 
   name:string, 
@@ -42,9 +43,13 @@ export class SellerListingComponent implements OnInit {
    private _unsubscribe = new Subject<boolean>();
   exportAll = "false";
     countryId : number = null;
+  exportData: any[];
+  exportAllData: any[];
+  sellerListExport: any;
  
 
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
@@ -67,6 +72,8 @@ export class SellerListingComponent implements OnInit {
 
     
   ngOnInit() {
+    this.exportData =[];
+    this.exportAllData = [];
     this.initiateSearch();
     this.getCountry();
   }
@@ -92,6 +99,8 @@ export class SellerListingComponent implements OnInit {
       (success: any) => {
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
+          
+        
       },
       error => {
       
@@ -107,15 +116,36 @@ export class SellerListingComponent implements OnInit {
       )
       .subscribe((success: any) => {
         
+        
+        if(exportAll == "true"){
+          this.sellerListExport = [];
+          this.sellerListExport = success.data.results;
+          this.sellerListExport.forEach(element=>{
+              this.exportAllData.push({
+                Seller_Name:element.sellerName,
+                Seller_Email : element.sellerEmail,
+                Seller_Id : element.id,
+                Mobile_No : element.mobileNo,
+                Country : element.country.countryName,
+                Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+                Admin_Status : element.adminStatus,
+                isDelete : element.isDelete,
+              })
+          })
+          
+          this.excelService.exportAsExcelFile(this.exportAllData, 'Seller List')
+          this.exportAll = "false"
+          this.exportAllData= [];
+        }
+        else{
         this.sellerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        if(exportAll == "true"){
-   
-          this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
-          this.exportAll = "false"
         }
-      })
+      }, error => {
+        this.utilityService.routingAccordingToError(error);
+      }
+      )
   }
 
   loadDataLazy(event: LazyLoadEvent) {
@@ -175,8 +205,21 @@ export class SellerListingComponent implements OnInit {
   exportAsXLSX(id:number) {
    
     if (id==0){
- 
-      this.excelService.exportAsExcelFile(this.sellerList, 'Seller List')
+      this.sellerList.forEach(element=>{
+        this.exportData.push({
+          Seller_Name:element.sellerName,
+          Seller_Email : element.sellerEmail,
+          Seller_Id : element.id,
+          Mobile_No : element.mobileNo,
+          Country : element.country.countryName,
+          Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+          Admin_Status : element.adminStatus,
+          isDelete : element.isDelete,
+        })
+    })
+    
+    this.excelService.exportAsExcelFile(this.exportData, 'Seller List')
+    this.exportData= [];
     }
     else{
     

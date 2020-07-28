@@ -43,6 +43,9 @@ export class ManufacturingBrandComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   exportAll = "false";
   countryId: number = null;
+  exportData: any;
+  exportAllData: any[];
+  brandListExport: any;
 
 
   constructor(
@@ -67,6 +70,8 @@ export class ManufacturingBrandComponent implements OnInit {
 
 
   ngOnInit() {
+    this.exportAllData =[];
+    this.exportData = [];
     this.initiateSearch();
     this.getCountry();
   }
@@ -111,15 +116,34 @@ export class ManufacturingBrandComponent implements OnInit {
       )
       .subscribe((success: any) => {
 
-        this.brandList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
-        if (exportAll == "true") {
-
-          this.excelService.exportAsExcelFile(this.brandList, 'Seller List')
+       
+        if(exportAll == "true"){
+          this.brandListExport = [];
+          this.brandListExport = success.data.results;
+          this.brandListExport.forEach(element=>{
+            this.exportAllData.push({
+              Id:element.id,
+              Admin_Status : element.adminStatus,
+              Manufacturer_Name : element.manufacturerName,
+              Supply_Type : element.supplyType.name,
+              Country : element.country.countryName,
+              Wallet_Discount: element.walletDiscount
+            })
+          })
+          this.excelService.exportAsExcelFile(this.exportAllData, 'Manufacturer List')
           this.exportAll = "false"
+          this.exportAllData = [];
         }
-      })
+        else{
+          this.brandList = success.data.results;
+          this.totalCount = success.data.total;
+          this.utilityService.resetPage();
+        }
+      },
+      error => {
+        this.utilityService.routingAccordingToError(error);
+      }
+      )
   }
 
   loadDataLazy(event: LazyLoadEvent) {
@@ -162,9 +186,6 @@ export class ManufacturingBrandComponent implements OnInit {
           this.manufactureService.deleteBrand(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               this.getAllBrands(this.page);
-              // this.customerList = this.customerList.filter((item: any) => {
-              //   return id !== item.customerId
-              // })
             },
             error => {
             }
@@ -186,8 +207,19 @@ export class ManufacturingBrandComponent implements OnInit {
 
     if (id == 0) {
 
-      this.excelService.exportAsExcelFile(this.brandList, 'Brand List')
-    }
+      this.brandList.forEach(element=>{
+        this.exportData.push({
+          Id:element.id,
+          Admin_Status : element.adminStatus,
+          Manufacturer_Name : element.manufacturerName,
+          Supply_Type : element.supplyType.name,
+          Country : element.country.countryName,
+          Wallet_Discount: element.walletDiscount
+        })
+      })
+          this.excelService.exportAsExcelFile(this.exportData, 'Manufacturer List')
+          this.exportData = [];    
+        }
     else {
 
       this.exportAll = "true"

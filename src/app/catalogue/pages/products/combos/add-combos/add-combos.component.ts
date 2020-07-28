@@ -11,23 +11,23 @@ export class AddCombosComponent implements OnInit {
   comboTitle:string;
   addComboForm: FormGroup; 
   isSubmittedaddComboForm: boolean = false;
-  private fieldArray: Array<any> = [];
-  private newAttribute: any = {};
-  private varientArray: Array<any> = [];
+   fieldArray: Array<any> = [];
+   newAttribute: any = {};
+   varientArray: Array<any> = [];
 
   addVarientValue() {
     this.varientArray.push(this.newAttribute)
     this.newAttribute = {};
 }
 
-  addFieldValue() {
+  addFieldcomboValue() {
     this.fieldArray.push(this.newAttribute)
     this.newAttribute = {};
 }
 
-deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-}
+// deleteFieldValue(index) {
+//     this.fieldArray.splice(index, 1);
+// }
 
   constructor() { }
 

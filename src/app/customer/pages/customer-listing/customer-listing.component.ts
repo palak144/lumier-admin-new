@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , Inject,LOCALE_ID} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
 import { CustomerService } from '../../../shared/services/customer.service';
@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
+import { formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 interface Action {
   name:string, 
@@ -31,6 +33,7 @@ export class CustomerListingComponent implements OnInit {
   Date = new Date();
   status:string
   countries:any[];
+  datePipeString : string;
 
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
@@ -40,9 +43,14 @@ export class CustomerListingComponent implements OnInit {
    searchBar: any = "";
    private _unsubscribe = new Subject<boolean>();
   exportAll: string = "false"
+  exportData: any;
+  exportAllData: any[];
+  customerListExport: any;
 
   constructor(
-    private router:Router, 
+    @Inject(LOCALE_ID) private locale: string,
+        private router:Router, 
+        private toastr: ToastrService,
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
     private customerService:CustomerService,
@@ -62,7 +70,8 @@ export class CustomerListingComponent implements OnInit {
     }
 
   ngOnInit() {
-    
+    this.exportAllData = [];
+    this.exportData = [];
     this.initiateSearch();
   }
 
@@ -82,7 +91,7 @@ export class CustomerListingComponent implements OnInit {
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     }, error => {
-      this.utilityService.routingAccordingToError(error);
+      this.toastr.error(error.message)
     })
   }
 
@@ -92,8 +101,10 @@ export class CustomerListingComponent implements OnInit {
       (success: any) => {
         this.customerList = success.data.results;
         this.totalCount = success.data.total;
+       
       },
       error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
         this.utilityService.resetPage();
       }
@@ -106,30 +117,37 @@ export class CustomerListingComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        this.customerList = success.data.results;
+          
+        if(exportAll == "true"){
+          
+          this.customerListExport = [];
+          this.customerListExport = success.data.results;
+          this.customerListExport.forEach(element=>{
+            this.exportAllData.push({
+              Title : element.title,
+              first_Name:element.firstName,
+              last_Name : element.lastName,
+              Email : element.Email,
+              Mobile_Number : element.mobileNumber,
+              Clinic_Name : element.clinicName,
+              Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+              Admin_Status : element.adminStatus,
+              Customer_Id : element.customerId,
+              Country_Code : element.countryCode,
+            })
+          })
+          
+          this.excelService.exportAsExcelFile(this.exportAllData, 'Customer List')
+          this.exportAll = "false"
+          this.exportAllData= [];
+        }
+        else{
+          this.customerList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        
-        if(exportAll == "true"){
-          console.log(this.customerList);
-     
-          console.log(this.customerList.length);
-          var date;
-          for (var i =0; i< this.customerList.length; i++)
-          {
-      console.log(this.customerList[i].created_at);
-      var yourDate=this.customerList[i].created_at;
-       date=yourDate.split('T')[0]
-   
-      console.log(date);
-          }
-          console.log(date);
-     
-    console.log(this.customerList);
-          this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
-          this.exportAll = "false"
         }
       }, error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
       })
   }
@@ -169,6 +187,7 @@ export class CustomerListingComponent implements OnInit {
               this.getAllCustomers(this.page);
             },
             error => {
+              this.toastr.error(error.message)
             }
           )
         },
@@ -187,22 +206,23 @@ export class CustomerListingComponent implements OnInit {
   exportAsXLSX(id:number) {
    
    if (id==0){
-    console.log(this.customerList);
-     
-    console.log(this.customerList.length);
-    var date;
-    for (var i =0; i< this.customerList.length; i++)
-    {
-console.log(this.customerList[i].created_at);
-var yourDate=this.customerList[i].created_at;
- date=yourDate.split('T')[0]
-
-console.log(date);
-    }
-    console.log(date);
-
-console.log(this.customerList);
-     this.excelService.exportAsExcelFile(this.customerList, 'Customer List')
+    this.customerList.forEach(element=>{
+      this.exportData.push({
+        Title : element.title,
+        first_Name:element.firstName,
+        last_Name : element.lastName,
+        Email : element.Email,
+        Mobile_Number : element.mobileNumber,
+        Clinic_Name : element.clinicName,
+        Registration_Date : formatDate(element.created_at,'yyyy-MM-dd',this.locale),
+        Admin_Status : element.adminStatus,
+        Customer_Id : element.customerId,
+        Country_Code : element.countryCode,
+      })
+    })
+    
+    this.excelService.exportAsExcelFile(this.exportData, 'Customer List')
+    this.exportData= [];
    }
    else{
      

@@ -6,7 +6,8 @@
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
+          <input type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" />
+          <!-- [(ngModel)]="searchBar" -->
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -19,7 +20,7 @@
     <div class="col-xl-3 col-lg-6 col-md-12">
         <fieldset class="form-group">
             <label for="basicSelect">Country</label>
-            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+            <select class="form-control" id="basicSelect" >
                  <option value=null>All</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.itemName}}</option> 
             </select>
@@ -28,7 +29,7 @@
     <div class="col-xl-3 col-lg-6 col-md-12">
         <fieldset class="form-group">
             <label for="basicSelect">Child Category</label>
-            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+            <select class="form-control" id="basicSelect">
                  <option value=null>All</option>
                 <option *ngFor="let countries of countries" [value]="countries.id">{{countries.itemName}}</option> 
             </select>
@@ -49,7 +50,7 @@
                 <div class="heading-wrapper">
                 </div>
                 <div class="table-wrapper vehiclwrappere- ">
-                <p-table [value]="brandList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                <p-table [value]="brandList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                     <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                     <ng-template pTemplate="header">
                             <tr class="table-coustom-style">

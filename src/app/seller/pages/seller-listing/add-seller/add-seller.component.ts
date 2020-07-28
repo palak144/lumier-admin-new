@@ -26,13 +26,9 @@ export class AddSellerComponent implements OnInit {
   addSellerFormDetails: any;
   seller: any;
   supplyTypes:any[];
-  supplyTypeValue: any;
-  selected_supplyType:any;
-
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   sellerTitle:string; 
-  selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
   selectedCountryId: any[];
@@ -56,12 +52,9 @@ export class AddSellerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dLogo = "assets/img/defaultImg.png";
-
-   
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
-       
         // this.sellerId=this.id;
         this.editMode = id['id'] != null
         if(!this.id)
@@ -77,13 +70,9 @@ export class AddSellerComponent implements OnInit {
         {
           this.getSellerdetails(this.id);
         }
-        this.selected_supplyType = [];
-
-  this.getCountry();
-  
+  this.getCountry();  
       }
     )
-
   }
   getSupplyType()
 {
@@ -102,7 +91,7 @@ export class AddSellerComponent implements OnInit {
     this.addSellerForm = new FormGroup({
       countryId:new FormControl('',[Validators.required]),
       sellerName: new FormControl('',[Validators.required, ]),
-      userName: new FormControl('',[Validators.required]),
+      userName: new FormControl('',[Validators.required,  Validators.pattern('^[a-zA-Z0-9.]{8,20}$')]),
       // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
       ccEmail: new FormControl('',[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
@@ -148,7 +137,8 @@ export class AddSellerComponent implements OnInit {
   }
 
   onSubmitSellerForm() {
-
+    event.preventDefault();
+    
     this.isSubmittedaddSellerForm = true
     if (this.addSellerForm.invalid) {
       return
@@ -169,6 +159,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
     
       if(!this.id)
       {
+        
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
          
@@ -183,6 +174,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
       }
      if(this.id)
      {
+       
       this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();

@@ -86,6 +86,8 @@ export class AddManufacturerBrandComponent implements OnInit {
     this.getSupplyType();
       }
   onSubmitBrandForm() {
+    event.preventDefault();
+
     this.isSubmittedaddBrandForm = true
     if (this.addBrandForm.invalid) {
       return
@@ -245,9 +247,6 @@ this.addBrandForm = new FormGroup({
           "file", new FormControl( file,Validators.required),
         );
       }
-
-
-
 
 }
 

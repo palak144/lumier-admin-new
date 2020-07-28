@@ -23,7 +23,6 @@ export class AddParentCategoryComponent implements OnInit {
   countries = [];
   languages = [];
   categoryNameLang = [];
-  dropdownSettings = {};
   dropdownListCountry = [];
   dropdownListLanguage= [];
   selectedCountryId: any[];
@@ -76,15 +75,6 @@ export class AddParentCategoryComponent implements OnInit {
     //     this.dropdownListLanguage = data.data
     // })
     this.selected_countries = []
-    this.dropdownSettings = {
-      singleSelection: false,
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      enableSearchFilter: true,
-      classes: "myclass custom-class",
-      position: "bottom",
-      maxHeight: "50px",
-    };
   }
   getCountry()
   {
@@ -97,6 +87,7 @@ export class AddParentCategoryComponent implements OnInit {
         
       },
       error => {
+        this.toastr.error(error.error.message);
       }
     )
   }
@@ -180,6 +171,7 @@ getSupplyType()
       this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
     },
     error => {
+      this.toastr.error(error.error.message);
     }
   )
 }

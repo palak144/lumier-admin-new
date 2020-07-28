@@ -12,7 +12,7 @@ import { CancelreasonComponent } from './pages/cancelreason/cancelreason.compone
 import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
 
 
-@NgModule({
+@NgModule({ 
   imports: [
     CommonModule,
     SystemSettingRoutingModule,

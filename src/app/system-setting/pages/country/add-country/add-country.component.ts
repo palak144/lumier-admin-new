@@ -93,6 +93,8 @@ select(criteriaId: any , criteriaName:any) {
   return this.selectedCriteria;
 }
 onSubmitCountryForm() {
+  event.preventDefault();
+
   this.isSubmittedaddCountryForm = true
   if (this.addCountryForm.invalid) {
     return

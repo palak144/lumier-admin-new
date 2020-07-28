@@ -41,6 +41,9 @@ export class CategoriesComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   exportAll = "false";
   countryId: number = null;
+  exportData: any[];
+  exportAllData: any;
+  categoryListExport: any;
 
    constructor(
     private router:Router, 
@@ -65,6 +68,8 @@ export class CategoriesComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.exportData = [];
+    this.exportAllData = [];
       this.initiateSearch();
       this.getCountry();
   }
@@ -89,6 +94,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
         console.log(success);
+        
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
       },
@@ -107,33 +113,47 @@ export class CategoriesComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        console.log(success);
+
+       
+        if(exportAll == "true"){
+          this.categoryListExport = [];
+          this.categoryListExport = success.data.results;
+          this.categoryListExport.forEach(element=>{
+            this.exportAllData.push({
+              Id:element.id,
+              Admin_Status : element.adminStatus,
+              Category_Name : element.categoryName,
+              Country : element.country.countryName,
+              isDelete : element.isDelete,
+              Language : element.language.language,
+              Parent_Category : element.parentCategory.categoryName,
+              Parent_Child_Category : element.parentChildCategory
+            })
+          })
+          this.excelService.exportAsExcelFile(this.exportAllData, 'Category List')
+          this.exportAll = "false"
+          this.exportAllData = [];
+        }
+        else{
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
-        if(exportAll == "true"){
-   
-          this.excelService.exportAsExcelFile(this.categoriesList, 'Category List')
-          this.exportAll = "false"
         }
+      },
+      error => {
+        this.utilityService.routingAccordingToError(error);
       })
   }
   loadDataLazy(event: LazyLoadEvent) {
-
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar && !this.countryId) {
-
       this.getAllCategories(this.page);
-
     }
     else if (!this.countryId) {
-
       this.getAllCategories(this.page);
-
     }
     else {
-
       this.getAllCategoriesSearch(this.page, this.searchBar, this.exportAll, this.countryId);
     }
   }
@@ -154,7 +174,6 @@ export class CategoriesComponent implements OnInit {
         accept: () => {
           this.categoryService.deleteCategory(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
-            
               this.getAllCategories(this.page);
               this.categoriesList = this.categoriesList.filter((item: any) => {
                 return id !== item.countryId
@@ -178,7 +197,21 @@ exportAsXLSX(id: number) {
 
   if (id == 0) {
 
-    this.excelService.exportAsExcelFile(this.categoriesList, 'Category List')
+this.categoriesList.forEach(element=>{
+  this.exportData.push({
+    Id:element.id,
+    Admin_Status : element.adminStatus,
+    Category_Name : element.categoryName,
+    Country : element.country.countryName,
+    isDelete : element.isDelete,
+    Language : element.language.language,
+    Parent_Category : element.parentCategory.categoryName,
+    Parent_Child_Category : element.parentChildCategory
+  })
+})
+    this.excelService.exportAsExcelFile(this.exportData, 'Category List')
+    this.exportData = [];
+
   }
   else {
 

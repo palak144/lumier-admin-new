@@ -27,13 +27,13 @@ export const Full_ROUTES: Routes = [
     path: 'user-permissions',
     loadChildren: './users-permissions/users-permissions.module#UsersPermissionsModule'
   },
+  {
+    path: 'website-elements',
+    loadChildren: './website-elements/website-elements.module#WebsiteElementsModule'
+  },
   {     
     path: 'companies',
     loadChildren: './companies/companies.module#CompaniesModule'
-  },
-  {
-    path: 'categories',
-    loadChildren: './categories/categories.module#CategoriesModule'
   },
   {
     path: 'skill',

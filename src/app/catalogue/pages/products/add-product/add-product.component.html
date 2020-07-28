@@ -12,12 +12,12 @@
   <div class="content-header text-left">Add New Product</div>
 </div>
 <div class="copy-data">
-    <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+    <form class="form" >
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
                 <label>Enter Product Id</label><span class="asterick">*</span> 
-                <input type="text" formControlName="productId" class="form-control border-primary" placeholder="Enter Product Id"> 
+                <input type="text" class="form-control border-primary" placeholder="Enter Product Id"> 
             </div>
         </div>
         <div class="col-md-3">
@@ -32,8 +32,7 @@
   <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-6 imp-exp-buttons">
         <div class="text-left">
-            <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
-                
+            <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
                 <span class="d-lg-block " >English</span>
             </button>
         </div>
@@ -42,7 +41,7 @@
         <div class="text-right">
             <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
                 
-                <a class="text" (click)="open(content)"><span class="d-lg-block " >Add Languages</span></a>
+                <a class="text" ><span class="d-lg-block " >Add Languages</span></a>
                 
             </button>
         </div>
@@ -54,7 +53,7 @@
     <div class="col-md-12">
         <div class="card-content">
             <div class="">
-                <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+                <form class="form" >
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
@@ -64,12 +63,9 @@
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
-                                            <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.countryId.errors }"
+                                            <p-dropdown  styleClass="form-control border-primary"   filter="true" placeholder="Select Country" 
                                     >
                                         </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.countryId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +77,7 @@
                                         <label class="issale" for="isSale">
                                             Is Sale
                                         </label>
-                                      </div>
+                                      </div>  
                                     <!-- <label>Is Sale</label>
                                     <input type="text" formControlName="isSale" class="form-control border-primary" placeholder="Is Sale">  -->
                                 </div>
@@ -92,16 +88,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.fname.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.fname.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.fname.errors.required">Name is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
+                        
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>No Discount</label>
-                                    <input type="text" formControlName="noDiscount" class="form-control border-primary" placeholder="No Discount"> 
+                                    <input type="text" class="form-control border-primary" placeholder="No Discount"> 
                                 </div>
                             </div>
                         </div>
@@ -110,13 +104,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Related Products</label>
-                                    <input type="text" formControlName="relatedProducts" class="form-control border-primary" placeholder="Related Products"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Related Products"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Package Content</label>
-                                    <input type="text" formControlName="packageContent" class="form-control border-primary" placeholder="Package Content"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Package Content"> 
                                 </div>
                             </div>
                         </div>
@@ -124,16 +118,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.pnCde.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.pnCde.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.pnCde.errors.required">PN CDE is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" >
+                                  
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Short Description</label>
-                                    <input type="text" formControlName="shortDescription" class="form-control border-primary" placeholder="Short Description"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Short Description"> 
                                 </div>
                             </div>
                         </div>
@@ -141,20 +133,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Manufacturer / Brand</label><span class="asterick">*</span> 
-                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors }">
+                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" >
                                         <option value="" >Select Manufacturer / Brand</option>
                                         <option value={{manufacturerBrand}} *ngFor="let manufacturerBrand of manufacturerBrands">{{manufacturerBrand}}
                                         </option>
-                                        </select>
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.manufacturerBrand.errors.required">Manufacturer / Brand is required</div>
-                                    </div>   
+                                        </select> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Discount Range</label>
-                                    <input type="text" formControlName="discountRange" class="form-control border-primary" placeholder="Discount Range"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Discount Range"> 
                                 </div>
                             </div>
                         </div>
@@ -162,16 +151,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Price</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.price.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.price.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.errors.required">Price is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" >
+                                     
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Title</label>
-                                    <input type="text" formControlName="metaTitle" class="form-control border-primary" placeholder="Meta Title"> 
+                                    <input type="text"  class="form-control border-primary" placeholder="Meta Title"> 
                                 </div>
                             </div>
                         </div>
@@ -179,13 +166,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Is Quote only?</label>
-                                    <input type="text" formControlName="isQuote" class="form-control border-primary" placeholder="Is Quote only?"> 
+                                    <input type="text"  class="form-control border-primary" placeholder="Is Quote only?"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>UOM</label>
-                                    <input type="text" formControlName="uom" class="form-control border-primary" placeholder="UOM"> 
+                                    <input type="text"  class="form-control border-primary" placeholder="UOM"> 
                                 </div>
                             </div>
                         </div>
@@ -196,10 +183,10 @@
                                   <div class="row ">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="images" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="images" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -208,7 +195,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Country Origin</label>
-                                    <select formControlName="countryOrigin" placeholder="country Origin" class="form-control border-primary">
+                                    <select placeholder="country Origin" class="form-control border-primary">
                                          <option value="" >Select country Origin</option>
                                          <option value={{countryOrigin}} *ngFor="let countryOrigin of countryOrigins">{{countryOrigin}}
                                         </option>
@@ -220,13 +207,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Wallet Price</label>
-                                    <input type="text" formControlName="walletPrice" class="form-control border-primary" placeholder="Wallet Price"> 
+                                    <input type="text"  class="form-control border-primary" placeholder="Wallet Price"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Description</label>
-                                    <input type="text" formControlName="metaDescription" class="form-control border-primary" placeholder="Meta Description"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Meta Description"> 
                                 </div>
                             </div>
                         </div>
@@ -234,23 +221,18 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Supply Type</label><span class="asterick">*</span> 
-                                    <select formControlName="supplyType" placeholder="Supply Type" class="form-control border-primary">
+                                    <select placeholder="Supply Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{supplyType}} *ngFor="let supplyType of supplyTypes">{{supplyType}}
                                         </option>
                                     </select>  
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyType.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div>  
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Keyword</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.metaKeyword.errors }">
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.metaKeyword.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.metaKeyword.errors.required">Meta Keyword is required</div>
-                                    </div>   
+                                    <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" >
+                          
                                 </div>
                             </div>
                         </div>
@@ -258,20 +240,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Category</label><span class="asterick">*</span> 
-                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.category.errors }">
+                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{category}} *ngFor="let category of categories">{{category}}
                                         </option>
                                     </select>  
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.category.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.category.required">Category is required</div>
-                                    </div> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Ribbon Text</label>
-                                    <input type="text" formControlName="ribbonText" class="form-control border-primary" placeholder="Ribbon Text"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Ribbon Text"> 
                                 </div>
                             </div>
                         </div>
@@ -279,7 +258,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Speciality Type</label>
-                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityType.errors }">
+                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{specialityType}} *ngFor="let specialityType of specialityTypes">{{specialityType}}
                                         </option>
@@ -289,7 +268,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Is Package</label>
-                                    <input type="text" formControlName="isPackage" class="form-control border-primary" placeholder="Is Package"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Is Package"> 
                                 </div>
                             </div>
                         </div>
@@ -300,10 +279,10 @@
                                   <div class="row ">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)" formControlName="catalogue" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="catalogue" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -311,18 +290,18 @@
                               </div>
                         </div>
                     </div>
-                    <div class="form-actions right">
+                    <!-- <div class="form-actions right">
                         <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
                         <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                    </div>
-                </form>
+                    </div>-->
+                </form> 
                 
                 <div class="product-page-listing">
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere- ">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -341,7 +320,7 @@
                                         <td><span class="ui-column-title">Seller Fee</span>{{brand.supplyType.name}}</td>
                                         <td><span class="ui-column-title">Quantity</span></td>
                                         <td><span class="ui-column-title">Delivery Within Days</span>{{brand.walletDiscount}}</td>
-                                        <td>
+                                        <!-- <td>
                                             <span class="ui-column-title">Action</span>
                                         
                                             <div class="dropdown">
@@ -354,7 +333,7 @@
                     
                                                 </ul>
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="emptymessage">
@@ -374,7 +353,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                        <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                        <ng-template pTemplate="header">
                                <tr class="table-coustom-style">
@@ -405,7 +384,7 @@
                                    <td><span class="ui-column-title">Sale Price</span></td>
                                    <td><span class="ui-column-title">Price</span></td>
                                    <td><span class="ui-column-title">Wallet Price</span></td>
-                                   <td>
+                                   <!-- <td>
                                        <span class="ui-column-title">Action</span>
                                    
                                        <div class="dropdown">
@@ -418,23 +397,25 @@
                
                                            </ul>
                                        </div>
-                                   </td>
+                                   </td> -->
                                </tr>
                            </ng-template>
                            <ng-template pTemplate="emptymessage">
                                <tr>
-                                   <td class="text-center text-danger font-weight-600" colspan="12">No Records Found.</td>
+                                    <td class="text-center text-danger font-weight-600" colspan="12">No Records Found.</td>
                                </tr>
                            </ng-template>
                        </p-table>
                    </div>
                         <div class="table-wrapper vehiclwrappere varient" *ngFor="let field of fieldArray; let i = index">
-                                 <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <!-- *ngFor="let field of fieldArray; let i = index" -->
+                                 <p-table>
+                                    <!-- [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount" -->
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
                                         <th style="width:4em">S. No.</th>
-                                        <th style="width: 4em;">Varient</th>
+                                        <th style="width: 4em;">Varient</th> 
                                         <th style="width: 4em;">Package</th>
                                         <th style="width: 3em;"></th> 
                                         <th style="width: 3em;"></th> 
@@ -460,7 +441,7 @@
                                         <td><span class="ui-column-title">Sale Price</span></td>
                                         <td><span class="ui-column-title">Price</span></td>
                                         <td><span class="ui-column-title">Wallet Price</span></td>
-                                        <td>
+                                        <!-- <td>
                                             <span class="ui-column-title">Action</span>
                                         
                                             <div class="dropdown">
@@ -473,7 +454,7 @@
                     
                                                 </ul>
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="emptymessage">
@@ -492,21 +473,21 @@
                     </button>
                   </div>
 
-                  <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitProductForm($event)">
+                  <form class="form" >
                     <div class="form-body">
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Description</label>
-                                  <ckeditor class="border-primary" formControlName="description"></ckeditor>
+                                  <ckeditor class="border-primary"></ckeditor>
                                   <!-- (change)="editorValidation(3)" -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Warranty</label>
-                                  <ckeditor class="border-primary" formControlName="warranty"></ckeditor>
+                                  <ckeditor class="border-primary"></ckeditor>
                                   <!-- (change)="editorValidation(3)" -->
                                 </div>
                             </div>
@@ -515,14 +496,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Features</label>
-                                  <ckeditor class="border-primary" formControlName="features"></ckeditor>
+                                  <ckeditor class="border-primary"></ckeditor>
                                   <!-- (change)="editorValidation(3)" -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Embeded Video</label>
-                                    <input type="text" formControlName="embededVideo" class="form-control border-primary" placeholder="Embeded Video"> 
+                                    <input type="text" class="form-control border-primary" placeholder="Embeded Video"> 
                                 </div>
                                 <span id="sizeValidations">Paste Embeded Code Only.</span>
                             </div>
@@ -540,7 +521,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  >
                                 <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                                 <ng-template pTemplate="header">
                                         <tr class="table-coustom-style">
@@ -559,7 +540,7 @@
                                             <td><span class="ui-column-title">Maximum Quantity</span>{{brand.supplyType.name}}</td>
                                             <td><span class="ui-column-title">Price</span></td>
                                             <td><span class="ui-column-title">Wallet Price</span></td>
-                                            <td>
+                                            <!-- <td>
                                                 <span class="ui-column-title">Action</span>
                                             
                                                 <div class="dropdown">
@@ -572,7 +553,7 @@
                         
                                                     </ul>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
@@ -583,7 +564,7 @@
                                 </p-table>
                             </div>
                         <div class="table-wrapper vehiclwrappere varient" *ngFor="let based of basedArray; let i = index">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -602,7 +583,7 @@
                                         <td><span class="ui-column-title">Maximum Quantity</span>{{brand.supplyType.name}}</td>
                                         <td><span class="ui-column-title">Price</span></td>
                                         <td><span class="ui-column-title">Wallet Price</span></td>
-                                        <td>
+                                        <!-- <td>
                                             <span class="ui-column-title">Action</span>
                                         
                                             <div class="dropdown">
@@ -615,7 +596,7 @@
                     
                                                 </ul>
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="emptymessage">
@@ -649,17 +630,11 @@
         <div class="form-group">
             <label>Select Language</label><span class="asterick">*</span>
             <select formControlName="languages" class="form-control border-primary"
-                placeholder="Select Language"
-                [ngClass]="{ 'is-invalid': isSubmittedaddCountryForm && signUpControls.languages.errors }">
+                placeholder="Select Language">
                 <option value="" >Select Language</option>
                 <option value={{language}} *ngFor="let language of languages">{{language}}
                 </option>
             </select>
-            <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors"
-                class="invalid-feedback">
-                <div *ngIf="signUpControls.languages.errors.required">Languages is required
-                </div>
-            </div>
         </div>
     </div>
         <!-- <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let permission of permissions">

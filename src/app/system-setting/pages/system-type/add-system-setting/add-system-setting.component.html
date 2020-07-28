@@ -23,7 +23,7 @@
         <div class="form-group">
           <label>Supply Type</label><span class="asterick">*</span> 
           <input type="text" class="form-control border-primary" placeholder="Supply Type" formControlName="name"
-            [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.name.errors }">
+            [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.name.errors }">
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.name.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.name.errors.required">Supply Type is required</div>
           
@@ -37,7 +37,7 @@
           <label>Country</label><span class="asterick">*</span>
           <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary"
               (onChange)="getdropdown($event)" filter="true" placeholder="Select Country"
-              [ngClass]="{ 'is-invalid': isSubmittedaddBrandForm && signUpControls.countryId.errors }">
+              [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.countryId.errors }">
             </p-dropdown>
           <div *ngIf="isSubmittedaddSellerForm && signUpControls.countryId.errors" class="invalid-feedback">
             <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>

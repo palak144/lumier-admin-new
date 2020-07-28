@@ -75,7 +75,7 @@ export class AddPermissionComponent implements OnInit {
       enableSearchFilter: true,
       classes: "myclass custom-class",
       position: "bottom",
-      maxHeight: "50px",
+      maxHeight: 250,
     };
     this.dropdownSettingsPermission = {
       singleSelection: false,
@@ -84,7 +84,7 @@ export class AddPermissionComponent implements OnInit {
       enableSearchFilter: true,
       classes: "myclass custom-class",
       position: "bottom",
-      maxHeight: "50px",
+      maxHeight: 150,
       groupBy: "menuName"
     };
   }
@@ -123,6 +123,7 @@ export class AddPermissionComponent implements OnInit {
   }
 
   onSubmitPerGroupForm() {
+    event.preventDefault();
 
     this.isSubmittedAddPerGroupForm = true
     if (this.addPerGroupForm.invalid) {

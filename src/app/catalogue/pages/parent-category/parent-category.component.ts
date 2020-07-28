@@ -10,6 +10,9 @@ import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/oper
 import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { SystemSettingsService } from '../../../shared/services/system-settings.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 interface Action {
   name:string, 
   code:string
@@ -38,9 +41,8 @@ export class ParentCategoryComponent implements OnInit {
     private utilityService:UtilityService,
     private manufactureService:ManufactureService,
     private commonService:CommonServiceService,
-    private SystemSettingsService:SystemSettingsService,
     private confirmationService: ConfirmationService,
-    private excelService:ExcelServiceService,
+    private toastr: ToastrService,
   ) { }
 
     setStatus(id:Number,adminStatus:Number){
@@ -100,6 +102,8 @@ export class ParentCategoryComponent implements OnInit {
         this.countries = success.data;
       },
       error => {
+        this.toastr.error(error.error.message);
+
       }
     )
   }
@@ -111,7 +115,8 @@ export class ParentCategoryComponent implements OnInit {
         this.totalCount = success.data.total;
       },
       error => {
-      
+        this.toastr.error(error.error.message);
+
         this.utilityService.resetPage();
       }
     );
@@ -140,6 +145,8 @@ export class ParentCategoryComponent implements OnInit {
                 this.getAllParentCategory(this.page);
               },
               error => {
+                this.toastr.error(error.error.message);
+
               }
             )
           },

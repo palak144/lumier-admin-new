@@ -1,0 +1,125 @@
+<div class="row container breadcrum-container">
+  <ul class="col-sm-12 pl-0">
+      <li>
+          <a [routerLink]="['/website-elements/banners']">Banner</a>
+      </li>
+      <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+      </li>
+      <li>
+          {{bannerTitle}}
+      </li>
+  </ul>
+  <div class="content-header text-left">{{bannerTitle}}</div>
+</div>
+<div class="row ">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-content">
+              <div class="px-3 pt-3">
+                <form class="form" [formGroup]="addBannerForm" (ngSubmit)="onSubmitBannerForm()">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label><span class="asterick">*</span> 
+                                    <input type="text"  formControlName="name"  class="form-control border-primary" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Select Country</label><span class="asterick">*</span>
+                                        <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="countries"  formControlName="countryId" (onChange)="getdropdown1($event)" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryId.errors }"
+                                        >
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Page</label><span class="asterick">*</span> 
+                                    <input type="text"  formControlName="page" class="form-control border-primary" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supply Type</label><span class="asterick">*</span>
+                                       <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType" formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                         (onChange)="getdropdown($event)" filter="true" placeholder="Select Supply Type"
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryName.errors }">
+                                         </p-dropdown>
+                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">                         
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Position </label><span class="asterick">*</span>
+                                    <div class="assign-group-dropdown">
+                                    <p-dropdown [options]="positions" formControlName="position" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Position"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.position.errors }">
+                                    </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Sequence Number</label><span class="asterick">*</span> 
+                                <input type="text" class="form-control border-primary"  formControlName="sequenceNumber" placeholder="Sequence Number">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">                         
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Hyperlink </label><span class="asterick">*</span>
+                                    <div class="assign-group-dropdown">
+                                    <p-dropdown [options]="hyperlink" formControlName="hyperlink" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Hyperlink"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.hyperlink.errors }">
+                                    </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Image </label><span class="asterick">*</span>
+                                    <div class="row ">
+                                        <div class="col-md-2 form-group center mb-0">
+                                            <label for="file">
+                                              <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
+                                            <span id="sizeValidations">File size should not exceed 200kb</span>
+                                            <div *ngIf="isSubmittedaddBannerForm && signUpControls.file.errors" class="invalid-feedback mt-0">
+                                                <div *ngIf="signUpControls.file.errors.required">Image is required</div>
+                                            </div> 
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      </div>
+                      <div class="form-actions right">
+                          <button type="button" [routerLink]="['/website-elements/banners']"
+                              class="btn btn-raised btn-warning mr-1"> Back
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addBannerForm.dirty">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
