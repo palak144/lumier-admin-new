@@ -20,14 +20,14 @@ export class AddCombosComponent implements OnInit {
     this.newAttribute = {};
 }
 
-  addFieldValue() {
+  addFieldcomboValue() {
     this.fieldArray.push(this.newAttribute)
     this.newAttribute = {};
 }
 
-deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-}
+// deleteFieldValue(index) {
+//     this.fieldArray.splice(index, 1);
+// }
 
   constructor() { }
 

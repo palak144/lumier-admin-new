@@ -78,7 +78,7 @@ export const ROUTES: RouteInfo[] = [
               { path: '/user-permissions/user-permissions', title: 'Permissions', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             ]},
             {
-              path: '/websiteelement',
+              path: '/website-elements',
               title: 'Website Elements',
               icon: 'ft-users',
               class: 'has-sub',
@@ -86,9 +86,9 @@ export const ROUTES: RouteInfo[] = [
               badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
               isExternalLink: false,
               submenu: [
-                { path: '/websiteelement/banners', title: 'Banners', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+                { path: '/website-elements/banners', title: 'Banners', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             ]},
-            
+             
               
 
   // {

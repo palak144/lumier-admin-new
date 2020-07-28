@@ -12,8 +12,8 @@ export class AddProductComponent implements OnInit {
 
  
   productTitle:string;
-  addCategoriesForm: FormGroup; 
-  isSubmittedaddCategoriesForm: boolean = false;
+  addProductForm: FormGroup; 
+  isSubmittedaddProductForm: boolean = false;
   permissions: any;
   closeResult: string;
   languages: string[];
@@ -40,9 +40,9 @@ addBasedValue() {
   this.newAttribute = {};
 }
 
-deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-}
+// deleteFieldValue(index) {
+//     this.fieldArray.splice(index, 1);
+// }
 
   ngOnInit() {
 
@@ -55,6 +55,17 @@ deleteFieldValue(index) {
     this.specialityTypes = ['Dental', 'Madical'];
     // this.initForm();
   }
+
+  private initForm(){
+    
+    let name = "";
+    
+    this.addProductForm = new FormGroup({
+      "countryId":new FormControl(null,[Validators.required]),
+      "name": new FormControl( name, Validators.required),
+    });
+    
+    }
 
 
   open(content , permission) {
