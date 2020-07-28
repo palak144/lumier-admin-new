@@ -248,9 +248,6 @@ this.addBrandForm = new FormGroup({
         );
       }
 
-
-
-
 }
 
 }
