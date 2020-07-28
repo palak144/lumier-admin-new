@@ -101,7 +101,7 @@ export class AddSellerComponent implements OnInit {
     this.addSellerForm = new FormGroup({
       countryId:new FormControl('',[Validators.required]),
       sellerName: new FormControl('',[Validators.required, ]),
-      userName: new FormControl('',[Validators.required]),
+      userName: new FormControl('',[Validators.required,  Validators.pattern('^[a-zA-Z0-9.]{8,20}$')]),
       // password: new FormControl('',[Validators.required, Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       sellerEmail : new FormControl('',[Validators.required, Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]) ,
       ccEmail: new FormControl('',[Validators.pattern('^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$')]),
@@ -148,7 +148,7 @@ export class AddSellerComponent implements OnInit {
 
   onSubmitSellerForm() {
     event.preventDefault();
-    debugger
+    
     this.isSubmittedaddSellerForm = true
     if (this.addSellerForm.invalid) {
       return
@@ -169,7 +169,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
     
       if(!this.id)
       {
-        debugger
+        
         this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
          
@@ -184,7 +184,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
       }
      if(this.id)
      {
-       debugger
+       
       this.SellerService.addSeller(data).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           // this.addSellerForm.reset();

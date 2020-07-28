@@ -43,6 +43,7 @@ export class CategoriesComponent implements OnInit {
   countryId: number = null;
   exportData: any[];
   exportAllData: any;
+  categoryListExport: any;
 
    constructor(
     private router:Router, 
@@ -113,13 +114,11 @@ export class CategoriesComponent implements OnInit {
       )
       .subscribe((success: any) => {
 
-        this.categoriesList = success.data.results;
-        this.totalCount = success.data.total;
-        
-        this.utilityService.resetPage();
        
         if(exportAll == "true"){
-          this.categoriesList.forEach(element=>{
+          this.categoryListExport = [];
+          this.categoryListExport = success.data.results;
+          this.categoryListExport.forEach(element=>{
             this.exportAllData.push({
               Id:element.id,
               Admin_Status : element.adminStatus,
@@ -135,6 +134,14 @@ export class CategoriesComponent implements OnInit {
           this.exportAll = "false"
           this.exportAllData = [];
         }
+        else{
+        this.categoriesList = success.data.results;
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
+        }
+      },
+      error => {
+        this.utilityService.routingAccordingToError(error);
       })
   }
   loadDataLazy(event: LazyLoadEvent) {

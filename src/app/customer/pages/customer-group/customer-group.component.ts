@@ -40,6 +40,7 @@ export class CustomerGroupComponent implements OnInit {
   groups: any;
   exportAllData: any;
   exportData: any;
+  customerListExport: any[];
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -74,6 +75,7 @@ export class CustomerGroupComponent implements OnInit {
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     }, error => {
+      this.toastr.error(error.message)
       this.utilityService.routingAccordingToError(error);
     })
   }
@@ -87,6 +89,7 @@ export class CustomerGroupComponent implements OnInit {
         
       },
       error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
         this.utilityService.resetPage();
       }
@@ -99,12 +102,12 @@ export class CustomerGroupComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        this.customerList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
+        
 
         if(exportAll == "true"){
-          this.customerList.forEach(element=>{
+          this.customerListExport = [];
+          this.customerListExport = success.data.results;
+          this.customerListExport.forEach(element=>{
               this.exportAllData.push({
                 Group_Name : element.groupName,
                 Group_Email : element.groupEmail,
@@ -120,7 +123,13 @@ export class CustomerGroupComponent implements OnInit {
           this.excelService.exportAsExcelFile(this.exportAllData, 'Customer-Group List')
           this.exportAllData= [];
         }
+        else{
+          this.customerList = success.data.results;
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
+        }
       }, error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
       })
   }
@@ -165,6 +174,7 @@ export class CustomerGroupComponent implements OnInit {
               // this.initiateSearch();
             },
             error => {
+              this.toastr.error(error.message)
             }
           )
         },

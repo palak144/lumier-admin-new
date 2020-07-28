@@ -12,7 +12,7 @@
   <div class="content-header text-left">Add New Product</div>
 </div>
 <div class="copy-data">
-    <form class="form">
+    <form class="form" >
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -39,8 +39,10 @@
     </div>
     <div class="col-xl-6 col-lg-6 col-md-6 imp-exp-buttons">
         <div class="text-right">
-            <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-                <a class="text" (click)="open(content)"><span class="d-lg-block " >Add Languages</span></a>
+            <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+                
+                <a class="text" ><span class="d-lg-block " >Add Languages</span></a>
+                
             </button>
         </div>
     </div>
@@ -51,7 +53,7 @@
     <div class="col-md-12">
         <div class="card-content">
             <div class="">
-                <form class="form">
+                <form class="form" >
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
@@ -61,11 +63,9 @@
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
-                                            <p-dropdown styleClass="form-control border-primary" filter="true" placeholder="Select Country">
+                                            <p-dropdown  styleClass="form-control border-primary"   filter="true" placeholder="Select Country" 
+                                    >
                                         </p-dropdown>
-                                        <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.countryId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -88,10 +88,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="Name">
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.name.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.name.errors.required">Name is required</div>
-                                    </div>    -->
+                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
+                        
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -120,10 +118,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="PN CDE">
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.pnCde.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.pnCde.errors.required">PN CDE is required</div>
-                                    </div>    -->
+                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" >
+                                  
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -137,14 +133,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Manufacturer / Brand</label><span class="asterick">*</span> 
-                                    <select placeholder="Select Manufacturer / Brand" class="form-control border-primary">
+                                    <select formControlName="manufacturerBrand" placeholder="Select Manufacturer / Brand" class="form-control border-primary" >
                                         <option value="" >Select Manufacturer / Brand</option>
                                         <option value={{manufacturerBrand}} *ngFor="let manufacturerBrand of manufacturerBrands">{{manufacturerBrand}}
                                         </option>
-                                        </select>
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.manufacturerBrand.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.manufacturerBrand.errors.required">Manufacturer / Brand is required</div>
-                                    </div>    -->
+                                        </select> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -158,10 +151,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Price</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="Price">
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.price.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.errors.required">Price is required</div>
-                                    </div>    -->
+                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" >
+                                     
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -192,11 +183,10 @@
                                   <div class="row ">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px"  class="ImgIcon" /> </label>
-                                          <!-- [src]="companyFlagSize ? companyLogo : dLogo" -->
+                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="images" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -236,18 +226,13 @@
                                          <option value={{supplyType}} *ngFor="let supplyType of supplyTypes">{{supplyType}}
                                         </option>
                                     </select>  
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyType.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.supplyType.errors.required">Supply Type is required</div>
-                                    </div>   -->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Keyword</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="Meta Keyword">
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.metaKeyword.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.metaKeyword.errors.required">Meta Keyword is required</div>
-                                    </div>    -->
+                                    <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" >
+                          
                                 </div>
                             </div>
                         </div>
@@ -255,14 +240,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Category</label><span class="asterick">*</span> 
-                                    <select placeholder="Supply Type" class="form-control border-primary">
+                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{category}} *ngFor="let category of categories">{{category}}
                                         </option>
                                     </select>  
-                                    <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.category.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.price.category.required">Category is required</div>
-                                    </div>  -->
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -276,7 +258,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Speciality Type</label>
-                                    <select placeholder="Speciality Type" class="form-control border-primary">
+                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary">
                                          <option value="" >Select Supply Type</option>
                                          <option value={{specialityType}} *ngFor="let specialityType of specialityTypes">{{specialityType}}
                                         </option>
@@ -298,10 +280,9 @@
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
                                           <img width="80px" height="80px" class="ImgIcon" /> </label>
-                                          <!-- [src]="companyFlagSize ? companyLogo : dLogo" -->
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile" class="form-control border-primary">
+                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="catalogue" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                     </div>
                                 </div>
@@ -320,7 +301,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere- ">
-                        <p-table>
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -372,7 +353,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table>
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                        <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                        <ng-template pTemplate="header">
                                <tr class="table-coustom-style">
@@ -492,7 +473,7 @@
                     </button>
                   </div>
 
-                  <form class="form">
+                  <form class="form" >
                     <div class="form-body">
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">
@@ -540,7 +521,7 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table>
+                            <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  >
                                 <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                                 <ng-template pTemplate="header">
                                         <tr class="table-coustom-style">
@@ -583,8 +564,7 @@
                                 </p-table>
                             </div>
                         <div class="table-wrapper vehiclwrappere varient" *ngFor="let based of basedArray; let i = index">
-                            <!-- *ngFor="let based of basedArray; let i = index" -->
-                        <p-table>
+                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
                             <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                             <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
@@ -649,17 +629,12 @@
     <div class="modal-body">
         <div class="form-group">
             <label>Select Language</label><span class="asterick">*</span>
-            <select class="form-control border-primary"
+            <select formControlName="languages" class="form-control border-primary"
                 placeholder="Select Language">
                 <option value="" >Select Language</option>
                 <option value={{language}} *ngFor="let language of languages">{{language}}
                 </option>
             </select>
-            <!-- <div *ngIf="isSubmittedaddCountryForm && signUpControls.languages.errors"
-                class="invalid-feedback">
-                <div *ngIf="signUpControls.languages.errors.required">Languages is required
-                </div>
-            </div> -->
         </div>
     </div>
         <!-- <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let permission of permissions">

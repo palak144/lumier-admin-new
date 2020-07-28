@@ -8,6 +8,7 @@ import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } f
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { formatDate } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 interface Action {
   name:string, 
@@ -44,10 +45,12 @@ export class CustomerListingComponent implements OnInit {
   exportAll: string = "false"
   exportData: any;
   exportAllData: any[];
+  customerListExport: any;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
         private router:Router, 
+        private toastr: ToastrService,
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
     private customerService:CustomerService,
@@ -88,7 +91,7 @@ export class CustomerListingComponent implements OnInit {
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     }, error => {
-      this.utilityService.routingAccordingToError(error);
+      this.toastr.error(error.message)
     })
   }
 
@@ -101,6 +104,7 @@ export class CustomerListingComponent implements OnInit {
        
       },
       error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
         this.utilityService.resetPage();
       }
@@ -113,12 +117,12 @@ export class CustomerListingComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        this.customerList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
-        
+          
         if(exportAll == "true"){
-          this.customerList.forEach(element=>{
+          
+          this.customerListExport = [];
+          this.customerListExport = success.data.results;
+          this.customerListExport.forEach(element=>{
             this.exportAllData.push({
               Title : element.title,
               first_Name:element.firstName,
@@ -137,7 +141,13 @@ export class CustomerListingComponent implements OnInit {
           this.exportAll = "false"
           this.exportAllData= [];
         }
+        else{
+          this.customerList = success.data.results;
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
+        }
       }, error => {
+        this.toastr.error(error.message)
         this.utilityService.routingAccordingToError(error);
       })
   }
@@ -177,6 +187,7 @@ export class CustomerListingComponent implements OnInit {
               this.getAllCustomers(this.page);
             },
             error => {
+              this.toastr.error(error.message)
             }
           )
         },

@@ -67,6 +67,7 @@
                                     <input type="text" formControlName="userName" class="form-control border-primary" placeholder="User Name" [ngClass]="{ 'is-invalid': isSubmittedaddSellerForm && signUpControls.userName.errors }">
                                     <div *ngIf="isSubmittedaddSellerForm && signUpControls.userName.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.userName.errors.required">User Name is required</div>
+                                        <div *ngIf="signUpControls.userName.errors.pattern">User Name must be between 8 to 20 chacters without space or any special character</div>
                                     </div>   
                                     
                                 </div>

@@ -45,6 +45,7 @@ export class ManufacturingBrandComponent implements OnInit {
   countryId: number = null;
   exportData: any;
   exportAllData: any[];
+  brandListExport: any;
 
 
   constructor(
@@ -115,11 +116,11 @@ export class ManufacturingBrandComponent implements OnInit {
       )
       .subscribe((success: any) => {
 
-        this.brandList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
+       
         if(exportAll == "true"){
-          this.brandList.forEach(element=>{
+          this.brandListExport = [];
+          this.brandListExport = success.data.results;
+          this.brandListExport.forEach(element=>{
             this.exportAllData.push({
               Id:element.id,
               Admin_Status : element.adminStatus,
@@ -133,7 +134,16 @@ export class ManufacturingBrandComponent implements OnInit {
           this.exportAll = "false"
           this.exportAllData = [];
         }
-      })
+        else{
+          this.brandList = success.data.results;
+          this.totalCount = success.data.total;
+          this.utilityService.resetPage();
+        }
+      },
+      error => {
+        this.utilityService.routingAccordingToError(error);
+      }
+      )
   }
 
   loadDataLazy(event: LazyLoadEvent) {

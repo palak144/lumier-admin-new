@@ -17,9 +17,9 @@ export class AddProductComponent implements OnInit {
   permissions: any;
   closeResult: string;
   languages: string[];
-  private fieldArray: Array<any> = [];
-  private newAttribute: any = {};
-  private basedArray: Array<any> = [];
+  fieldArray: Array<any> = [];
+   newAttribute: any = {};
+   basedArray: Array<any> = [];
   manufacturerBrands: string[];
   countryOrigins: string[];
   supplyTypes: string[];
