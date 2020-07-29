@@ -114,7 +114,6 @@ export class AddManufacturerBrandComponent implements OnInit {
     }
     if (this.editMode) {
       
-      this.brandTitle = "Edit Manufacturer/ Brand Group"
       this.manufactureService.addBrand(this.addBrandFormDetails ).subscribe(
         data => {
         this.toastr.success("Manufacturer/ Brand Edited Successfully")

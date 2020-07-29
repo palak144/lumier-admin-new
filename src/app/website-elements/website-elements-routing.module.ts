@@ -22,7 +22,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'new',
+        path: 'new-banner',
         component: AddBannerComponent,
         
       },

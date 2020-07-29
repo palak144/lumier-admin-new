@@ -5,8 +5,7 @@
 <div class="row paddingSearch">
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
-          <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text"
+          <input type="text" [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text"
               class="form-control round searchBtn" pInputText placeholder="Search"
               (input)="filterGlobal($event.target.value)" />
           <div class="form-control-position">
