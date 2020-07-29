@@ -9,7 +9,7 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ManufactureService } from 'app/shared/services/catalogue/manufacture.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
-import { SystemSettingsService } from '../../../shared/services/system-settings.service';
+import { SystemSettingsService } from '../../../shared/services/systemSetting/system-settings.service';
 import { ToastrService } from 'ngx-toastr';
 
 

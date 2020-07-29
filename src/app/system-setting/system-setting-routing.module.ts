@@ -5,6 +5,8 @@ import { SystemTypeComponent } from './pages/system-type/system-type.component';
 import { AddSystemSettingComponent } from './pages/system-type/add-system-setting/add-system-setting.component';
 import { CountryComponent } from './pages/country/country.component';
 import { AddCountryComponent } from './pages/country/add-country/add-country.component';
+import { CancelreasonComponent } from './pages/cancelreason/cancelreason.component';
+import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
 const routes: Routes = [
   {
     path: '',
@@ -40,13 +42,30 @@ const routes: Routes = [
         }
       },
       {
+        path: 'cancel',
+        component: CancelreasonComponent,
+        data: {
+          title: 'cancel'
+        }
+      },
+      {
         path: 'new-country',
         component: AddCountryComponent,
         
       },
       {
+        path: 'new-cancel',
+        component: AddCancelComponent,
+        
+      },
+      {
         path: 'edit-country/:id',
         component: AddCountryComponent,
+        
+      },
+      {
+        path: 'edit-cancel/:id',
+        component: AddCancelComponent,
         
       },
     ]

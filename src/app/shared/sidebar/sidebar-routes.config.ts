@@ -63,6 +63,7 @@ export const ROUTES: RouteInfo[] = [
           submenu: [
             { path: '/systemsetting/supplytype', title:'Supply Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/country', title: 'Country', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/cancel', title: 'Cancel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
           
            ]},
           { 

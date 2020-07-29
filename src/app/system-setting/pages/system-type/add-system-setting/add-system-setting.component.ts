@@ -5,7 +5,7 @@ import { SellerService } from '../../../../shared/services/seller.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { SystemSettingsService } from '../../../../shared/services/system-settings.service';
+import { SystemSettingsService } from '../../../../shared/services/systemSetting/system-settings.service';
 import { UtilityService } from '../../../../shared/utility/utility.service';
 import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
