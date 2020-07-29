@@ -8,6 +8,10 @@ import { AddSystemSettingComponent } from './pages/system-type/add-system-settin
 import { CountryComponent } from './pages/country/country.component';
 import { AddCountryComponent } from './pages/country/add-country/add-country.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { ReturnReasonComponent } from './pages/return-reason/return-reason.component';
+import { AddReturnComponent } from './pages/return-reason/add-return/add-return.component';
+import { DeliveryChargeComponent } from './pages/delivery-charge/delivery-charge.component';
+import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery-charge/add-delivery-charge.component';
 
 
 @NgModule({ 
@@ -19,6 +23,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
  
   ],
 // tslint:disable-next-line: max-line-length
-  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent, CountryComponent, AddCountryComponent,]
+  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent, CountryComponent, AddCountryComponent, ReturnReasonComponent, AddReturnComponent, DeliveryChargeComponent, AddDeliveryChargeComponent,]
 })
 export class SystemSettingModule { }
