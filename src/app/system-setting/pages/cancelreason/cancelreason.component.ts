@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
-import { SystemSettingsService } from '../../../shared/services/system-settings.service';
+import { SystemSettingsService } from '../../../shared/services/systemSetting/system-settings.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
-
+import { CancelReasonService } from '../../../shared/services/systemSetting/cancel-reason.service';
 @Component({
   selector: 'app-cancelreason',
   templateUrl: './cancelreason.component.html',
@@ -18,7 +18,7 @@ export class CancelreasonComponent implements OnInit {
   searchTerms$ = new Subject<string>();
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
-  page: number;
+  page:number = 0;
   cancelList: any;
   totalCount: any;
   action: any;
@@ -28,12 +28,13 @@ export class CancelreasonComponent implements OnInit {
     private utilityService: UtilityService,
     private systemSettingsService: SystemSettingsService,
     private confirmationService: ConfirmationService,
+    private CancelReasonService: CancelReasonService,
   ) { }
   setStatus(id: Number, adminStatus: Number) {
 
     let statusData = { id, adminStatus }
 
-    this.systemSettingsService.updateCancelStatus(statusData).subscribe(
+    this.CancelReasonService.updateCancelStatus(statusData).subscribe(
       (success: any) => {
 
         this.ngOnInit()
@@ -46,7 +47,7 @@ export class CancelreasonComponent implements OnInit {
     this.router.navigate(['../new-cancel'], { relativeTo: this.activateRoute })
   }
   filterGlobal(searchTerm) {
-    
+    console.log(searchTerm);
     // indexing starts from 0 in primeng
     this.primeNGTable.first = 0;
     this.page = 0;
@@ -68,7 +69,7 @@ export class CancelreasonComponent implements OnInit {
       startWith(''),
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.systemSettingsService.getAllCancelSearch(this.page, term
+      switchMap((term: string) => this.CancelReasonService.getAllCancelSearch(this.page, term
       ))
     )
       .subscribe((success: any) => {
@@ -81,7 +82,7 @@ export class CancelreasonComponent implements OnInit {
   }
   getAllCancel(page) {
 
-    this.systemSettingsService.getAllCancel(page).subscribe(
+    this.CancelReasonService.getAllCancel(page).subscribe(
       (success: any) => {
         console.log(success)
         this.cancelList = success.data.results;
@@ -97,7 +98,7 @@ export class CancelreasonComponent implements OnInit {
   getAllCancelSearch(page, searchBar) {
     
 
-    this.systemSettingsService.getAllCancelSearch(page, searchBar)
+    this.CancelReasonService.getAllCancelSearch(page, searchBar)
       .pipe(
         takeUntil(this._unsubscribe)
       )
@@ -108,6 +109,7 @@ export class CancelreasonComponent implements OnInit {
         this.utilityService.resetPage();
       })
   }
+
   getDropDownValue(event, id) {
     if (event.currentTarget.firstChild.data === 'Delete') {
 

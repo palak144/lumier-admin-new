@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SystemSettingsService } from '../../../../shared/services/system-settings.service';
+import { SystemSettingsService } from '../../../../shared/services/systemSetting/system-settings.service';
+import { CancelReasonService } from '../../../../shared/services/systemSetting/cancel-reason.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -30,9 +31,11 @@ export class AddCancelComponent implements OnInit {
   selectedCountryId: any;
   languages: any;
   selectedLanguageId: any;
+  cancelData: any;
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private systemSettingsService: SystemSettingsService,
+    private CancelReasonService: CancelReasonService,
     private toastr: ToastrService,
     private commonService:CommonServiceService) { }
 
@@ -45,13 +48,13 @@ export class AddCancelComponent implements OnInit {
         this.editMode = id['id'] != null
         if(!this.id)
         {
-          this.cancelTitle = "Add New Cancel";
+          this.cancelTitle = "Add New Cancel Reason";
         }
-        if(this.id)
-        {
-          this.cancelTitle = "Edit Cancel";
-         
-        }
+        // if(this.id)
+        // {
+        //   this.cancelTitle = "Edit Cancel";
+        //   this.getCancelDetails(this.id);
+        // }
          this.initForm()
          this.getCountry(); 
 
@@ -75,7 +78,7 @@ export class AddCancelComponent implements OnInit {
     }
     console.log(this.addCancelForm.value);
     let data=this.addCancelForm.value;
-    this.systemSettingsService.addCancel(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.CancelReasonService.addCancel(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         console.log(success);
         this.toastr.success('Cancel Created Successfully!');
@@ -146,4 +149,23 @@ getdropdown1(event:any){
 console.log(this.selectedCountryId);
 this.getLanguage();
   }
+//   getCancelDetails(id) {
+//     this.CancelReasonService.getCancelDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+//       (success:any) => {
+//         console.log(success);
+//         this.cancelData = success.data;
+          
+     
+      
+//         this.patchForm(this.cancelData);
+  
+//       },
+//       error => {
+//       }
+//     )
+//   }
+//   patchForm(item)
+//   {
+// console.log(item);
+//   }
 }
