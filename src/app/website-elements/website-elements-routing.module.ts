@@ -24,6 +24,14 @@ const routes: Routes = [
       {
         path: 'new-banner',
         component: AddBannerComponent,
+      },
+      {
+        path: ':id',
+        component: BannersComponent,
+      },
+      {
+        path: 'edit-banner/:id',
+        component: AddBannerComponent,
         
       },
     ]

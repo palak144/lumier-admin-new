@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { ErrorHandlerService } from './error-handler.service';
+import { BaseService } from '../base.service';
+import { ErrorHandlerService } from '../error-handler.service';
 import { HttpClient } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 

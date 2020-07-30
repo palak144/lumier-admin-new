@@ -20,49 +20,46 @@
       </button>
   </div>
 </div>
-<div class="users-wrapper">
+<div class="banners-wrapper">
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="userList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
-          [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
-          <!-- (onLazyLoad)="loadDataLazy($event)" -->
+      <p-table [value]="bannerList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
+          [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount"  (onLazyLoad)="loadDataLazy($event)">
           <ng-template pTemplate="header">
               <tr>
                   <th style="width:6em">S No.</th>
                   <th style="width:10em">Country Name</th>
                   <th style="width:8em">Name</th>
                   <th style="width:10em">Position</th>
-                  <th style="width:10em">Sequence No.</th>
-                  <th style="width:10em">Added on</th>
+                  <th style="width:10em">Start Date</th>
+                  <th style="width:10em">End Date</th>
                   <th style="width:6em">Status</th>
                   <th style="width:6em">Action</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-user>
+          <ng-template pTemplate="body" let-banner>
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.employeeId}}</td>
-                  <td><span class="ui-column-title">Country Name</span>{{user.employeeFullName}}</td>
-                  <td><span class="ui-column-title">Name</span>
-                      <!-- <ng-container *ngFor="let groupName of user.PermissionGroup ">
-                          <span>{{groupName.groupName}}</span>
-                      </ng-container> -->
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{banner.id}}</td>
+                  <td><span class="ui-column-title">Country Name</span>{{banner.country.countryName}}</td>
+                  <td><span class="ui-column-title">Name</span>{{banner.name}}
                   </td>
-                  <td><span class="ui-column-title">Position</span>{{user.employeeFullName}}</td>
-                  <td><span class="ui-column-title">Sequence No.</span>{{user.employeeFullName}}</td>
-                  <td><span class="ui-column-title">Added on</span>{{user.employeeFullName}}</td>
+                  <td><span class="ui-column-title">Position</span>{{banner.position}}</td>
+                  <td><span class="ui-column-title">Start Date</span>{{banner.startDate | date: 'mediumDate'}}</td>
+                  <td><span class="ui-column-title">End Date</span>{{banner.endDate | date: 'mediumDate'}}</td>
+
                   <td>
                       <span class="ui-column-title ">Status</span>
 
                       <div class="dropdown" style="text-align: center;">
                           <a class="dropdown-toggle badge colorStatus"
-                              [ngClass]="{ 'badge-primary': user.adminStatus === 1 , 'badge-danger': user.adminStatus === 0 }"
-                              id="userStatusId" type="button"
-                              data-toggle="dropdown">{{(user.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                              [ngClass]="{ 'badge-primary': banner.adminStatus === 1 , 'badge-danger': banner.adminStatus === 0 }"
+                              id="bannerStatusId" type="button"
+                              data-toggle="dropdown">{{(banner.adminStatus === 1) ? 'Active' : 'Inactive'}}
                           </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="user.adminStatus == 1"><a
-                                      (click)="setStatus(user.employeeId ,1, $event)">Active</a></li>
-                              <li [hidden]="user.adminStatus == 0"><a
-                                      (click)="setStatus(user.employeeId ,0, $event)">Inactive</a></li>
+                              <li [hidden]="banner.adminStatus == 1"><a
+                                      (click)="setStatus(banner.id ,1)">Active</a></li>
+                              <li [hidden]="banner.adminStatus == 0"><a
+                                      (click)="setStatus(banner.id ,0)">Inactive</a></li>
                           </ul>
                       </div>
                   </td> 
@@ -74,8 +71,8 @@
 
                           </a>
                           <ul class="dropdown-menu" role="menu">
-                              <li><a (click)="getDropDownValue($event,user.employeeId)">Edit</a></li>
-                              <li><a (click)="getDropDownValue($event,user.employeeId)">Delete</a></li>
+                              <li><a (click)="getDropDownValue($event,banner.id)">Edit</a></li>
+                              <li><a (click)="getDropDownValue($event,banner.id)">Delete</a></li>
 
                           </ul>
                       </div>

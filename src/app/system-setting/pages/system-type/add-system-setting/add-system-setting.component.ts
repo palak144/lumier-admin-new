@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SellerService } from '../../../../shared/services/seller.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -35,7 +34,6 @@ export class AddSystemSettingComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private SellerService: SellerService,
     private toastr: ToastrService,
     private commonService:CommonServiceService,
     private SystemSettingsService:SystemSettingsService,

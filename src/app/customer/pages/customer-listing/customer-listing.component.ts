@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild , Inject,LOCALE_ID} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
-import { CustomerService } from '../../../shared/services/customer.service';
+import { CustomerService } from '../../../shared/services/customers/customer.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -33,11 +33,8 @@ export class CustomerListingComponent implements OnInit {
   Date = new Date();
   status:string
   countries:any[];
-  datePipeString : string;
-
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
-
    // Real time search
    searchTerms$ = new Subject<string>();
    searchBar: any = "";

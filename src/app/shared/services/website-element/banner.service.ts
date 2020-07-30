@@ -51,8 +51,17 @@ debugger
         catchError(this.errorHandler.handleError)
       );
   }
-
+  getAllBannersSearch(page?, searchKey?) {
+    debugger
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/banner',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  } 
   deleteBanner(id) {
+      debugger
     return this.http.delete(this.baseUrl + 'admin/banner/' + id)
       .pipe(
         retry(3),
