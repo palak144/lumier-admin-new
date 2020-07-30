@@ -10,6 +10,8 @@ import { AddReturnComponent } from './pages/return-reason/add-return/add-return.
 import { DeliveryChargeComponent } from './pages/delivery-charge/delivery-charge.component';
 import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery-charge/add-delivery-charge.component';
 
+import { CancelreasonComponent } from './pages/cancelreason/cancelreason.component';
+import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
 const routes: Routes = [
   {
     path: '',
@@ -45,8 +47,20 @@ const routes: Routes = [
         }
       },
       {
+        path: 'cancel',
+        component: CancelreasonComponent,
+        data: {
+          title: 'cancel'
+        }
+      },
+      {
         path: 'new-country',
         component: AddCountryComponent,
+        
+      },
+      {
+        path: 'new-cancel',
+        component: AddCancelComponent,
         
       },
       {
@@ -67,6 +81,10 @@ const routes: Routes = [
         
       },
       {
+        path: 'edit-return/:id',
+        component: AddReturnComponent,
+      },
+      {
         path: 'delivery-charge',
         component: DeliveryChargeComponent,
         data: {
@@ -75,9 +93,12 @@ const routes: Routes = [
       },
       {
         path: 'new-delivery-charge',
-        component: AddDeliveryChargeComponent,
-        
+        component: AddDeliveryChargeComponent, 
       },
+      {
+        path: 'edit-cancel/:id',
+        component: AddCancelComponent,
+      }
     ]
   } 
 ]; 

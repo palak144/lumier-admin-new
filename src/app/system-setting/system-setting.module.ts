@@ -12,6 +12,8 @@ import { ReturnReasonComponent } from './pages/return-reason/return-reason.compo
 import { AddReturnComponent } from './pages/return-reason/add-return/add-return.component';
 import { DeliveryChargeComponent } from './pages/delivery-charge/delivery-charge.component';
 import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery-charge/add-delivery-charge.component';
+import { CancelreasonComponent } from './pages/cancelreason/cancelreason.component';
+import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
 
 
 @NgModule({ 
@@ -23,6 +25,6 @@ import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery
  
   ],
 // tslint:disable-next-line: max-line-length
-  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent, CountryComponent, AddCountryComponent, ReturnReasonComponent, AddReturnComponent, DeliveryChargeComponent, AddDeliveryChargeComponent,]
+  declarations: [SystemLayoutComponent, SystemTypeComponent, AddSystemSettingComponent, CountryComponent, AddCountryComponent, ReturnReasonComponent, AddReturnComponent, DeliveryChargeComponent, AddDeliveryChargeComponent,CancelreasonComponent, AddCancelComponent,]
 })
 export class SystemSettingModule { }

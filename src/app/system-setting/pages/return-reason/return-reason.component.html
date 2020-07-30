@@ -23,40 +23,54 @@
 </div>
 <div class="users-wrapper">
   <div class="table-wrapper vehicle-wrapper">
-      <p-table [value]="userList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
-          [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" [totalRecords]="totalCount">
-          <!-- (onLazyLoad)="loadDataLazy($event)" -->
+      <p-table [value]="returnList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
+          [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+         
           <ng-template pTemplate="header">
               <tr>
                   <th style="width:6em">S No.</th>
                   <th style="width:10em">Reason</th>
                   <th style="width:8em">Country</th>
-                  <th style="width:6em">Status</th>
+                  <th style="width:6em">Status</th> 
                   <th style="width:6em">Action</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-return>
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{user.employeeId}}</td>
-                  <td><span class="ui-column-title">Reason</span>{{user.employeeFullName}}</td>
-                  <td><span class="ui-column-title">Country</span>{{user.employeeFullName}}</td>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{return.id}}</td>
+                  <td><span class="ui-column-title">Reason</span>{{return.reason}}</td>
+                  <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
                   <td>
+                    <span class="ui-column-title ">Status</span> 
+                    
+                    <div class="dropdown">
+                    <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
+
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li [hidden]="return.adminStatus == 1"><a (click)="setStatus(return.id ,1, $event)">Active</a></li>
+                            <li [hidden]="return.adminStatus == 0"><a (click)="setStatus(return.id,0, $event)">Inactive</a></li>
+                        </ul>
+                    </div>
+                                          
+                </td> 
+                  <!-- <td>
                       <span class="ui-column-title ">Status</span>
 
                       <div class="dropdown" style="text-align: center;">
                           <a class="dropdown-toggle badge colorStatus"
-                              [ngClass]="{ 'badge-primary': user.adminStatus === 1 , 'badge-danger': user.adminStatus === 0 }"
-                              id="userStatusId" type="button"
-                              data-toggle="dropdown">{{(user.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                              [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }"
+                               type="button"
+                              data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
                           </a>
                           <ul class="dropdown-menu">
-                              <li [hidden]="user.adminStatus == 1"><a
-                                      (click)="setStatus(user.employeeId ,1, $event)">Active</a></li>
+                              <li [hidden]="return.adminStatus == 1"><a
+                                      (click)="setStatus(return.id ,1, $event)">Active</a></li>
                               <li [hidden]="user.adminStatus == 0"><a
-                                      (click)="setStatus(user.employeeId ,0, $event)">Inactive</a></li>
+                                      (click)="setStatus(return.id ,0, $event)">Inactive</a></li>
                           </ul>
                       </div>
-                  </td> 
+                  </td>  -->
                   <td>
                       <span class="ui-column-title">Action</span>
                      
@@ -65,8 +79,9 @@
 
                           </a>
                           <ul class="dropdown-menu" role="menu">
-                              <li><a (click)="getDropDownValue($event,user.employeeId)">Edit</a></li>
-                              <li><a (click)="getDropDownValue($event,user.employeeId)">Delete</a></li>
+                              <!-- <li><a (click)="getDropDownValue($event,return.id)">Edit</a></li> -->
+                              <li>
+                                <a (click)="getDropDownValue($event,return.id)">Delete</a></li>
                           </ul> 
                       </div>
                   </td>
@@ -76,7 +91,7 @@
               <tr>
                   <td class="text-center text-danger font-weight-600" colspan="5">No Records Found.</td>
               </tr>
-          </ng-template>
+          </ng-template> 
       </p-table>
   </div>
 </div>

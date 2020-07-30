@@ -16,19 +16,22 @@
       <div class="card">
           <div class="card-content">
               <div class="px-3 pt-3">
-                <form class="form" [formGroup]="addDeliverychargeForm" (ngSubmit)="onSubmitDeliverychargeForm()">
+                <form class="form" [formGroup]="addDeliveryForm" (ngSubmit)="onSubmitDeliveryForm()">
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Title</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="Title">
+                                    <input type="text" class="form-control border-primary" placeholder="Title" formControlName="title" [ngClass]="{ 'is-invalid': isSubmittedaddDeliveryForm && signUpControls.title.errors }">
+                                    <div *ngIf="isSubmittedaddDeliveryForm && signUpControls.title.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.title.errors.required">reason is required</div>
+                                    </div> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
                                   <label>No. of Days</label>
-                                  <input type="text" class="form-control border-primary" placeholder="No. of Days">
+                                  <input type="text" class="form-control border-primary" placeholder="No. of Days"  formControlName="noOfdays">
                               </div>
                           </div>
                         </div>
@@ -37,10 +40,10 @@
                             <div class="form-group">
                                 <label>Select Country</label><span class="asterick">*</span>
                                   <div class="assign-group-dropdown">
-                                    <p-dropdown [options]="countries" formControlName="countryName" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddDeliverychargeForm && signUpControls.countryName.errors }">
+                                    <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown1($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddDeliveryForm && signUpControls.countryId.errors }">
                                     </p-dropdown>
-                                    <div *ngIf="isSubmittedaddDeliverychargeForm && signUpControls.countryName.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.countryName.errors.required">Country is required</div>
+                                    <div *ngIf="isSubmittedaddDeliveryForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +51,7 @@
                           <div class="col-md-6">
                               <div class="form-group">
                                   <label>Minimum Order Amount</label>
-                                  <input type="text" class="form-control border-primary" placeholder="Minimum Order Amount">
+                                  <input type="text" class="form-control border-primary" placeholder="Minimum Order Amount" formControlName="minimumOrderAmount">
                               </div>
                           </div>
                       </div>
@@ -56,16 +59,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Delivery Charge</label>
-                                <input type="text" class="form-control border-primary" placeholder="Delivery Charge">
+                                <input type="text" class="form-control border-primary" placeholder="Delivery Charge"  formControlName="deliveryCharge">
                             </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                               <label>Instructions</label>
-                              <input type="text" class="form-control border-primary" placeholder="Instructions">
+                              <input type="text" class="form-control border-primary" placeholder="Instructions" formControlName="instruction">
                           </div>
                       </div>
-                    </div>   
+                    </div>    
 
                       </div> 
                       <div class="form-actions right">

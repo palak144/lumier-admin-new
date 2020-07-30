@@ -4,10 +4,11 @@ import { ErrorHandlerService } from './error-handler.service';
 import { HttpClient } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class ReturnReasonService {
+export class DeliveryChargeService {
 
   baseUrl: string;
 
@@ -17,46 +18,48 @@ export class ReturnReasonService {
     private http: HttpClient
   ) { 
     this.baseUrl = this.baseService.baseUrl;
-  }
-
-  addReturn(data) {
-    return this.http.post(this.baseUrl + 'admin/returnReason', data).pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-
-  updateReturnStatus(statusData: {id: Number; adminStatus: Number }){
-    return this.http.put(this.baseUrl + 'admin/returnReason', statusData)
-    .pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
-  }
-
-  getAllReturnSearch(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey  }
-    return this.http.get(this.baseUrl + 'admin/returnReason', { params: params })
-    .pipe(
-      retry(3),
-      catchError(this.errorHandler.handleError)
-    );
   } 
 
-  getAllReturn(page) {
+  addDelivery(data) {
+    return this.http.post(this.baseUrl + 'admin/deliveryCharge', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  updateDeliveryChargeStatus(statusData: {id: Number; adminStatus: Number }){
+    return this.http.put(this.baseUrl + 'admin/deliveryCharge', statusData)
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  getAllDeliveryChargeSearch(page?, searchKey?) {
+    const params = { page: page, searchKey: searchKey  }
+    return this.http.get(this.baseUrl + 'admin/deliveryCharge', { params: params })
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  
+  getAllDeliveryCharge(page) {
     const params = { page: page }
-    return this.http.get(this.baseUrl + 'admin/returnReason',
+    return this.http.get(this.baseUrl + 'admin/deliveryCharge',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
   }
 
-  deleteReturn(id){ 
-    return this.http.delete(this.baseUrl + 'admin/returnReason/' + id)
+  deleteDeliveryCharge(id){ 
+    return this.http.delete(this.baseUrl + 'admin/deliveryCharge/' + id)
     .pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
+
+
 }

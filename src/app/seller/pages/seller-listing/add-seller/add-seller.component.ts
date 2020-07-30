@@ -26,12 +26,9 @@ export class AddSellerComponent implements OnInit {
   addSellerFormDetails: any;
   seller: any;
   supplyTypes:any[];
-  supplyTypeValue: any;
-  selected_supplyType:any;
   private _unsubscribe = new Subject<boolean>();
   assignGroupList: any[] = [];
   sellerTitle:string; 
-  selectedAssignGroup: any;
   password: any;
   sellerDetailsData: any;
   selectedCountryId: any[];
@@ -55,12 +52,9 @@ export class AddSellerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dLogo = "assets/img/defaultImg.png";
-
-   
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
-       
         // this.sellerId=this.id;
         this.editMode = id['id'] != null
         if(!this.id)
@@ -76,13 +70,9 @@ export class AddSellerComponent implements OnInit {
         {
           this.getSellerdetails(this.id);
         }
-        this.selected_supplyType = [];
-
-  this.getCountry();
-  
+  this.getCountry();  
       }
     )
-
   }
   getSupplyType()
 {

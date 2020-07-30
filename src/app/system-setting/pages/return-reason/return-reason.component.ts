@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
 import { ReturnReasonService } from '../../../shared/services/return-reason.service';
@@ -18,38 +18,134 @@ interface Action {
   styleUrls: ['./return-reason.component.scss']
 })
 export class ReturnReasonComponent implements OnInit {
-  countriesList: any[];
-  page: number = 0;
-  totalCount: number;
-  action: string;
-  id: number;
-  status: string;
-  countries: any[];
-
-  // @ViewChild(Table) tableComponent: Table;
-  // @ViewChild(Table) primeNGTable: Table;
-
-  // Real time search
   searchTerms$ = new Subject<string>();
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
-  countryId: any = null;
+  page: number;
+  returnList: any;
+  totalCount: any;
+  action: any;
+  @ViewChild(Table) tableComponent: Table; 
+  @ViewChild(Table) primeNGTable: Table;
   
 
   constructor( 
     private router: Router, 
-    private route : ActivatedRoute,
+    private activateRoute : ActivatedRoute,
     private utilityService: UtilityService,
     private returnReasonService: ReturnReasonService,
     private confirmationService: ConfirmationService,
   ) { }
 
+  setStatus(id: Number, adminStatus: Number) {
+    let statusData = { id, adminStatus }
+    this.returnReasonService.updateReturnStatus(statusData).subscribe(
+      (success: any) => {
+        this.ngOnInit()
+      })
+  }
+  ngOnInit() {
+    this.initiateSearch();
+    // this.getCountry();
+  }
   onAddReturn(){
-    
-    this.router.navigate(['../new-return-reason'],{relativeTo : this.route})
+    this.router.navigate(['../new-return-reason'],{relativeTo : this.activateRoute})
   }
 
-  ngOnInit() {
+  filterGlobal(searchTerm) {
+    
+    // indexing starts from 0 in primeng
+    this.primeNGTable.first = 0;
+    this.page = 0;
+    this.searchTerms$.next(searchTerm);
   }
+
+  loadDataLazy(event: LazyLoadEvent) {
+    this.page = event.first / 10;
+    // if there is a search term present in the search bar, then paginate with the search term
+    if (!this.searchBar) {
+      this.getAllReturn(this.page);
+    }
+    else {
+      this.getAllReturnSearch(this.page, this.searchBar);
+    }
+  }
+  initiateSearch() {
+    this.searchTerms$.pipe(
+    takeUntil(this._unsubscribe),
+    startWith(''),
+    distinctUntilChanged(),
+    // switch to new search observable each time the term changes
+    switchMap((term: string) => this.returnReasonService.getAllReturnSearch(this.page, term
+    ))
+  )
+    .subscribe((success: any) => {
+      
+      this.returnList = success.data.results;
+
+      this.totalCount = success.data.total;
+      this.utilityService.resetPage();
+    })
+}
+getAllReturn(page) {
+  this.returnReasonService.getAllReturn(page).subscribe(
+    (success: any) => {
+      this.returnList = success.data.results;
+
+      this.totalCount = success.data.total;
+    },
+    error => {
+
+      this.utilityService.resetPage();
+    }
+  );
+}
+
+getAllReturnSearch(page, searchBar) {
+  
+  this.returnReasonService.getAllReturnSearch(page, searchBar)
+    .pipe(
+      takeUntil(this._unsubscribe)
+    )
+    .subscribe((success: any) => {
+      console.log(success);
+      this.returnList = success.data.results;
+      this.totalCount = success.data.total;
+      this.utilityService.resetPage();
+    })
+}
+
+getDropDownValue(event, id) {
+  if (event.currentTarget.firstChild.data === 'Delete') {
+
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        this.returnReasonService.deleteReturn(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success: any) => {
+
+            this.getAllReturn(this.page);
+            
+            this.returnList = this.returnList.filter((item: any) => {
+              return id !== item.countryId
+            })
+          },
+          error => {
+          }
+        )
+      },
+      reject: () => {
+        this.action = null;
+      }
+    });
+
+  }
+
+  // if (event.currentTarget.firstChild.data === 'Edit') {
+  //   this.router.navigate(['../edit-return', id], { relativeTo: this.activateRoute })
+
+  // }
+}
+
 
 }

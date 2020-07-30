@@ -16,52 +16,51 @@
       <div class="card">
           <div class="card-content">
               <div class="px-3 pt-3">
-                <form class="form" [formGroup]="addBannerForm" (ngSubmit)="onSubmitBannerForm()">
+                <form class="form" [formGroup]="addReturnForm" (ngSubmit)="onSubmitReturnForm()">
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Reason</label><span class="asterick">*</span> 
-                                    <input type="text" class="form-control border-primary" placeholder="Reason" formControlName="reason">
+                                    <input type="text" class="form-control border-primary" placeholder="Reason" formControlName="reason" [ngClass]="{ 'is-invalid': isSubmittedaddReturnForm && signUpControls.reason.errors }">
+                                    <div *ngIf="isSubmittedaddReturnForm && signUpControls.reason.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.reason.errors.required">reason is required</div>
+                                    </div>  
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                        <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="countries" formControlName="countryName" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryName.errors }">
+                                        <p-dropdown [options]="countries" formControlName="countryId" styleClass="form-control border-primary" (onChange)="getdropdown1($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddReturnForm && signUpControls.countryId.errors }">
                                          </p-dropdown>
-                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.countryName.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.countryName.errors.required">Country is required</div>
+                                        <div *ngIf="isSubmittedaddReturnForm && signUpControls.countryId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Language</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
-                                       <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control border-primary" (onChange)="getlanguage($event)"  filter="true" placeholder="Select language"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.languageId.errors }">
+                                       <p-dropdown [options]="languages" formControlName="languageId" styleClass="form-control border-primary"  filter="true" placeholder="Select language"  [ngClass]="{ 'is-invalid': isSubmittedaddReturnForm && signUpControls.languageId.errors }">
                                        </p-dropdown>
-                                       <div *ngIf="isSubmittedaddBannerForm && signUpControls.languageId.errors" class="invalid-feedback">
+                                       <div *ngIf="isSubmittedaddReturnForm && signUpControls.languageId.errors" class="invalid-feedback">
                                          <div *ngIf="signUpControls.languageId.errors.required"> Language is required</div>
                                        </div> 
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
-                        
-                        
-
+                        </div>
                       </div>
                       <div class="form-actions right">
                           <button type="button" [routerLink]="['/systemsetting/return-reason']"
                               class="btn btn-raised btn-warning mr-1"> Back
                           </button>
-                          <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                          <!-- [disabled]="!addBannerForm.dirty" -->
+                          <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addReturnForm.dirty">Submit</button>
                       </div>
                   </form>
               </div>
