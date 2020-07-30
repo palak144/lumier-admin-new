@@ -22,14 +22,23 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text"  formControlName="name"  class="form-control border-primary" placeholder="Name">
+                                    <input type="text"  formControlName="name" 
+                                     class="form-control border-primary" placeholder="Name"
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.name.errors }">
+                                     <div *ngIf="isSubmittedaddBannerForm && signUpControls.name.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.name.errors.required">Name is required</div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="countries"  formControlName="countryId" (onChange)="getdropdown1($event)" styleClass="form-control border-primary" (onChange)="getdropdown($event)"  filter="true" placeholder="Select Country"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryId.errors }"
+                                        <p-dropdown [options]="countries"  formControlName="countryId"
+                                         (onChange)="getdropdown1($event)" styleClass="form-control border-primary" 
+                                         filter="true" placeholder="Select Country"  
+                                         [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryId.errors }"
                                         >
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddBannerForm && signUpControls.countryId.errors" class="invalid-feedback">
@@ -43,17 +52,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Page</label><span class="asterick">*</span> 
-                                    <input type="text"  formControlName="page" class="form-control border-primary" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label>Supply Type</label><span class="asterick">*</span>
                                        <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType" formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
+                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
                                          (onChange)="getdropdown($event)" filter="true" placeholder="Select Supply Type"
-                                           [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryName.errors }">
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.supplyTypeId.errors }">
                                          </p-dropdown>
                                         <div *ngIf="isSubmittedaddBannerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
@@ -61,33 +65,35 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">                         
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Position </label><span class="asterick">*</span>
-                                    <div class="assign-group-dropdown">
-                                    <p-dropdown [options]="positions" formControlName="position" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Position"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.position.errors }">
-                                    </p-dropdown>
+                                    <label>Page</label><span class="asterick">*</span> 
+                                    <select type="text" formControlName="page" placeholder="Page"
+                                     class="form-control border-primary" 
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.page.errors }">
+                                     <option value="" >Select Page</option>
+                                        <option value={{_page}} *ngFor="let _page of pages">{{_page}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="isSubmittedaddBannerForm && signUpControls.page.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.page.errors.required">Page is required</div>
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Sequence Number</label><span class="asterick">*</span> 
-                                <input type="text" class="form-control border-primary"  formControlName="sequenceNumber" placeholder="Sequence Number">
-                            </div>
-                        </div>
+                           
                         </div>
                         <div class="row">                         
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Hyperlink </label><span class="asterick">*</span>
-                                    <div class="assign-group-dropdown">
-                                    <p-dropdown [options]="hyperlink" formControlName="hyperlink" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  filter="true" placeholder="Select Hyperlink"  [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.hyperlink.errors }">
-                                    </p-dropdown>
+                                        <input type="text"  formControlName="hyperlink" class="form-control border-primary" 
+                                        placeholder="Hyperlink"
+                                        [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.hyperlink.errors }">
+                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.hyperlink.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.hyperlink.errors.required">Hyperlink is required</div>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -95,10 +101,12 @@
                                     <div class="row ">
                                         <div class="col-md-2 form-group center mb-0">
                                             <label for="file">
-                                              <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                              <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" 
+                                              class="ImgIcon" /> </label>
                                         </div>
                                         <div class="col-md-10">
-                                            <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
+                                            <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   
+                                            formControlName="file" class="form-control border-primary">
                                             <span id="sizeValidations">File size should not exceed 200kb</span>
                                             <div *ngIf="isSubmittedaddBannerForm && signUpControls.file.errors" class="invalid-feedback mt-0">
                                                 <div *ngIf="signUpControls.file.errors.required">Image is required</div>
@@ -109,6 +117,65 @@
                                 </div>
                             </div>
                         </div>
+                           
+                        <div class="row">  
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="issueinput3">Start Date</label>
+                                  <input type="date" id="issueinput3"  name="dateopened" data-toggle="tooltip"
+                                    data-trigger="hover" data-placement="top" data-title="Date Opened"
+                                    formControlName="startDate" class="form-control border-primary" 
+                                        [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.startDate.errors }">
+                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.startDate.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.startDate.errors.required">Start Date is required</div>
+                                            
+                                        </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="issueinput4">End Date</label>
+                                  <input type="date" id="issueinput4" name="datefixed" data-toggle="tooltip"
+                                    data-trigger="hover" data-placement="top" data-title="Date Fixed"
+                                    formControlName="endDate" class="form-control border-primary" 
+                                        [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.endDate.errors }">
+                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.endDate.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.endDate.errors.required">End Date is required</div>
+                                        </div>
+                                </div>
+                              </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Position</label><span class="asterick">*</span> 
+                                    <select type="text" formControlName="position" placeholder="Position"
+                                     class="form-control border-primary" 
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.position.errors }">
+                                     <option value="" >Select Position</option>
+                                        <option value={{_position}} *ngFor="let _position of positions">{{_position}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="isSubmittedaddBannerForm && signUpControls.position.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.position.errors.required">Position is required</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Sequence Number</label><span class="asterick">*</span> 
+                                    <input type="number" min="1" max="5" formControlName="sequenceNumber"
+                                     class="form-control border-primary" placeholder="Sequence Number"
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.sequenceNumbererrors }">
+                                     <span id="">Note: Latest image will be uploaded for the same sequence</span>
+                                     <div *ngIf="isSubmittedaddBannerForm && signUpControls.sequenceNumber.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.sequenceNumber.errors.required">Sequence Number is required</div>
+                                        <div *ngIf="signUpControls.sequenceNumber.errors.pattern">Sequence Number must be between 1 to 5</div>
+
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                       
 
                       </div>
                       <div class="form-actions right">

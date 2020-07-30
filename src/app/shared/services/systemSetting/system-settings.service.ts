@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { ErrorHandlerService } from './error-handler.service';
+import { BaseService } from '../base.service';
+import { ErrorHandlerService } from '../error-handler.service';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
@@ -165,6 +165,14 @@ updateCancelStatus(statusData: {id: Number; adminStatus: Number }){
     retry(3),
     catchError(this.errorHandler.handleError)
   );
+}
+getCancelDetails(id)
+{
+  return this.http.get(this.baseUrl + 'admin/cancelReason/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      ); 
 }
   updateSellerStatus(statusData: {id: Number; adminStatus: Number }){
     

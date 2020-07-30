@@ -16,7 +16,7 @@ export class BannersComponent implements OnInit {
   
   onAddBanner(){
     
-    this.router.navigate(['../new'],{relativeTo : this.route})
+    this.router.navigate(['../new-banner'],{relativeTo : this.route})
   }
 
   ngOnInit() {
