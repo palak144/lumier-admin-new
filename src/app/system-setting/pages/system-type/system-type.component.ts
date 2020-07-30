@@ -98,7 +98,6 @@ export class SystemTypeComponent implements OnInit {
   } 
   getAllSupplysSearch(page, searchBar ,countryId ) {
   
-    
     this.SystemSettingsService.getAllSupplysSearch(page, searchBar ,countryId)
       .pipe(
         takeUntil(this._unsubscribe)

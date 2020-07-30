@@ -31,7 +31,7 @@
                   <th style="width:6em">S No.</th>
                   <th style="width:10em">Reason</th>
                   <th style="width:8em">Country</th>
-                  <th style="width:6em">Status</th> 
+                  <!-- <th style="width:6em">Status</th>  -->
                   <th style="width:6em">Action</th>
               </tr>
           </ng-template>
@@ -40,7 +40,7 @@
                   <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{return.id}}</td>
                   <td><span class="ui-column-title">Reason</span>{{return.reason}}</td>
                   <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
-                  <td>
+                  <!-- <td>
                     <span class="ui-column-title ">Status</span> 
                     
                     <div class="dropdown">
@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                                           
-                </td> 
+                </td>  -->
                   <!-- <td>
                       <span class="ui-column-title ">Status</span>
 
@@ -89,7 +89,7 @@
           </ng-template>
           <ng-template pTemplate="emptymessage">
               <tr>
-                  <td class="text-center text-danger font-weight-600" colspan="5">No Records Found.</td>
+                  <td class="text-center text-danger font-weight-600" colspan="4">No Records Found.</td>
               </tr>
           </ng-template> 
       </p-table>

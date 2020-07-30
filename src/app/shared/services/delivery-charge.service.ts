@@ -35,8 +35,8 @@ export class DeliveryChargeService {
     );
   }
 
-  getAllDeliveryChargeSearch(page?, searchKey?) {
-    const params = { page: page, searchKey: searchKey  }
+  getAllDeliveryChargeSearch(page?, searchKey?, countryId?) {
+    const params = { page: page, searchKey: searchKey  ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/deliveryCharge', { params: params })
     .pipe(
       retry(3),
@@ -53,6 +53,14 @@ export class DeliveryChargeService {
       );
   }
 
+  getAllDeliveryChargedetails(id) {
+    return this.http.get(this.baseUrl + 'admin/deliveryCharge/' + id)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      ); 
+  }
+
   deleteDeliveryCharge(id){ 
     return this.http.delete(this.baseUrl + 'admin/deliveryCharge/' + id)
     .pipe(
@@ -61,5 +69,12 @@ export class DeliveryChargeService {
     );
   }
 
+  updateDeliverycharge(data)
+  {
+    return this.http.post(this.baseUrl + 'admin/deliveryCharge', data).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 
 }

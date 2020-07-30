@@ -37,13 +37,13 @@ export class ReturnReasonComponent implements OnInit {
     private confirmationService: ConfirmationService,
   ) { }
 
-  setStatus(id: Number, adminStatus: Number) {
-    let statusData = { id, adminStatus }
-    this.returnReasonService.updateReturnStatus(statusData).subscribe(
-      (success: any) => {
-        this.ngOnInit()
-      })
-  }
+  // setStatus(id: Number, adminStatus: Number) {
+  //   let statusData = { id, adminStatus }
+  //   this.returnReasonService.updateReturnStatus(statusData).subscribe(
+  //     (success: any) => {
+  //       this.ngOnInit()
+  //     })
+  // }
   ngOnInit() {
     this.initiateSearch();
     // this.getCountry();

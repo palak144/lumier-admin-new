@@ -96,6 +96,10 @@ const routes: Routes = [
         component: AddDeliveryChargeComponent, 
       },
       {
+        path: 'edit-delivery-charge/:id',
+        component: AddDeliveryChargeComponent, 
+      },
+      {
         path: 'edit-cancel/:id',
         component: AddCancelComponent,
       }

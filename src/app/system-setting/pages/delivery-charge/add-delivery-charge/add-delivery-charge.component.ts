@@ -8,8 +8,8 @@ import { takeUntil } from 'rxjs/operators';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
 interface Country {
-  value:number, 
-  label:string
+  _id:string,
+  country:string
 }
 
 @Component({
@@ -28,6 +28,7 @@ export class AddDeliveryChargeComponent implements OnInit {
   countries:Country[];
   countryValue: any;
   selectedCountryId: any;
+  deliveryChargeDetailsData: any;
  
   constructor(
     private router: Router,
@@ -49,6 +50,7 @@ export class AddDeliveryChargeComponent implements OnInit {
         if(this.id)
         {
           this.deliveryChargeTitle = "Edit Delivery Charge";
+          this.getAllDeliveryChargedetails(this.id);
         }
          this.initForm()
          this.getCountry(); 
@@ -64,15 +66,25 @@ export class AddDeliveryChargeComponent implements OnInit {
       "countryId":new FormControl(null, Validators.required),
       "minimumOrderAmount": new FormControl(null, Validators.required),
       "deliveryCharge":new FormControl(null, Validators.required),
-      "instruction":new FormControl(null, Validators.required),
+      // "instruction":new FormControl(null, Validators.required),
    });
   }
-  onSubmitDeliveryForm() {
+  onSubmitDeliveryForm() 
+  {
+    event.preventDefault();
+
     this.isSubmittedaddDeliveryForm = true
+    
     if (this.addDeliveryForm.invalid) {
       return
     }
     let data=this.addDeliveryForm.value;
+    if(this.id)
+    {
+      data.id= this.id;
+    }
+    if(!this.id)
+    {
     this.deliveryChargeService.addDelivery(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.toastr.success('Delivery Charge Created Successfully!');
@@ -83,6 +95,22 @@ export class AddDeliveryChargeComponent implements OnInit {
       }
     )
   }
+  if(this.id)
+   {
+    this.deliveryChargeService.updateDeliverycharge(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        // this.addSellerForm.reset();
+        this.toastr.success('Delivery Charge Update Successfully!');
+        this.router.navigate(['/systemsetting/delivery-charge']);
+
+      },
+      error => {
+        this.toastr.error(error.error.message);
+      }
+    )
+   }
+  }
+
   getCountry()
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -121,6 +149,30 @@ export class AddDeliveryChargeComponent implements OnInit {
   getdropdown1(event:any){
     this.selectedCountryId = event.value
     }
+
+    getAllDeliveryChargedetails(id) {
+      this.deliveryChargeService.getAllDeliveryChargedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success:any) => {
+          
+          this.deliveryChargeDetailsData = success.data;
+         
+          this.patchForm(this.deliveryChargeDetailsData);
+         
+    
+        },
+        error => {
+        }
+      )
+    } 
+    patchForm(item)
+{
+  
+  this.addDeliveryForm.controls.title.patchValue(item.title);
+  this.addDeliveryForm.controls.noOfdays.patchValue(item.noOfdays);
+  this.addDeliveryForm.controls.countryId.patchValue(item.countryId);
+  this.addDeliveryForm.controls.minimumOrderAmount.patchValue(item.minimumOrderAmount);
+  this.addDeliveryForm.controls.deliveryCharge.patchValue(item.deliveryCharge);
+}
 
 
 }
