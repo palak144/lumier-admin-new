@@ -1,12 +1,13 @@
 
 import { BannerService } from 'app/shared/services/website-element/banner.service';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject} from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-banner',
@@ -36,7 +37,12 @@ export class AddBannerComponent implements OnInit {
   pages: string[];
   positions: string[];
   url: string | ArrayBuffer;
+  selected_page: any[];
+  selected_position: any[];
+  startDate: any;
+  endDate: any;
   constructor(
+    @Inject(LOCALE_ID) private locale: string,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private commonService: CommonServiceService,
@@ -56,11 +62,15 @@ export class AddBannerComponent implements OnInit {
       }
     )
 
-    this.pages = ['landing page' , 'Get an equipment', 'Group buy Products','Offers', 'Dental', 'Medical', 'My Wallet', 'Lumier32 Loyality Program' ];
+    // this.pages = ['landing page' , 'Get an equipment', 'Group buy Products','Offers', 'Dental', 'Medical', 'My Wallet', 'Lumier32 Loyality Program' ];
     this.positions = ['Main','Inner Page']
     this.initForm()
     this.selected_country = [];
     this.selected_supplyType = [];
+    this.selected_page = [];
+    this.selected_position = [];
+    this.startDate = [];
+    this.endDate = [];
   }
 
   get signUpControls() {
@@ -101,6 +111,9 @@ export class AddBannerComponent implements OnInit {
       if (this.addBannerForm.invalid) {
         return
       }
+
+      let noEndDate = (this.addBannerForm.get('endDate').value != "" && this.addBannerForm.get('endDate').value != undefined) ? this.addBannerForm.get('endDate').value : "2099/12/01"
+debugger
       this.addBannerFormDetails = {
         "name": this.addBannerForm.get('name').value,
         "hyperlink": this.addBannerForm.get('hyperlink').value,
@@ -108,10 +121,10 @@ export class AddBannerComponent implements OnInit {
         "file": this.addBannerForm.get('file').value,
         "supplyTypeId":this.addBannerForm.get('supplyTypeId').value,
         "sequenceNumber": 1,
-        "page":this.addBannerForm.get('page').value,
+        // "page":this.addBannerForm.get('page').value,
         "position":this.addBannerForm.get('position').value,
         "startDate":this.addBannerForm.get('startDate').value,
-        "endDate":this.addBannerForm.get('startDate').value,
+        "endDate":noEndDate,
       }
       debugger
       if (this.id ) {
@@ -149,8 +162,6 @@ export class AddBannerComponent implements OnInit {
     // let sequenceNumber ="";
     let page ="";
     let position ="";
-    let startDate = '';
-    let endDate = ''
 
     this.addBannerForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
@@ -158,10 +169,10 @@ export class AddBannerComponent implements OnInit {
     hyperlink: new FormControl( hyperlink, Validators.required),
       supplyTypeId: new FormControl( null, Validators.required),
       // sequenceNumber: new FormControl( sequenceNumber,[Validators.required, Validators.pattern('^[1-5]{1,1}$')] ),
-      page: new FormControl( page, Validators.required),
+      // page: new FormControl( page, Validators.required),
       position: new FormControl( position, Validators.required),
-      startDate: new FormControl( startDate, Validators.required),
-      endDate: new FormControl( endDate, Validators.required),
+      startDate: new FormControl( null, Validators.required),
+      endDate: new FormControl( null),
 
 
     });
@@ -181,16 +192,25 @@ export class AddBannerComponent implements OnInit {
                 error => {
                 }
               )
+              debugger
               this.addBannerForm.patchValue({
-                "name" : this.banner.manufacturerName,
-            })
-            
+                "name" : this.banner.name,
+                "hyperlink" : this.banner.hyperLink,
+               
+             })
+            console.log(this.addBannerForm.patchValue)
             this.file = this.banner.logoName
             this.companyFlagSize = true;
-            this.companyLogo = this.banner.logo,
+            this.companyLogo = this.banner.image,
             this.selected_country= this.banner.countryId;
             this.selected_supplyType = this.banner.supplyTypeId;
-          },
+            // this.selected_page= this.banner.page;
+            this.selected_position = this.banner.position;
+            this.startDate = formatDate(this.banner.startDate,'MM/dd/yyyy',this.locale),
+           this.endDate = formatDate(this.banner.endDate,'MM/dd/yyyy',this.locale)
+            debugger
+          }
+          ,
             error=>{          
             }
           )

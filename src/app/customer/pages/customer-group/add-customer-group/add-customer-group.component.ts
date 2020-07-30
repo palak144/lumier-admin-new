@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute , Params, Router} from '@angular/router';
-import { CustomerService } from 'app/shared/services/customer.service';
+import { CustomerService } from 'app/shared/services/customers/customer.service';
 import { Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';

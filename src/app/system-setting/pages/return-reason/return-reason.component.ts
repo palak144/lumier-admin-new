@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
-import { ReturnReasonService } from '../../../shared/services/return-reason.service';
+import { ReturnReasonService } from '../../../shared/services/systemSetting/return-reason.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -140,11 +140,6 @@ getDropDownValue(event, id) {
     });
 
   }
-
-  // if (event.currentTarget.firstChild.data === 'Edit') {
-  //   this.router.navigate(['../edit-return', id], { relativeTo: this.activateRoute })
-
-  // }
 }
 
 

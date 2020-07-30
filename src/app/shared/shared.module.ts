@@ -42,7 +42,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PaginatorModule } from 'primeng/paginator';
 import { TimeFormat } from './pipes/convert-time.pipe';
-import { CustomerService } from './services/customer.service';
+import { CustomerService } from './services/customers/customer.service';
 import { ToastrModule } from 'ngx-toastr';
 
 

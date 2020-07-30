@@ -37,7 +37,7 @@
                                         <div class="assign-group-dropdown">
                                         <p-dropdown [options]="countries"  formControlName="countryId"
                                          (onChange)="getdropdown1($event)" styleClass="form-control border-primary" 
-                                         filter="true" placeholder="Select Country"  
+                                         filter="true" placeholder="Select Country"  [(ngModel)]="selected_country" 
                                          [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.countryId.errors }"
                                         >
                                         </p-dropdown>
@@ -67,9 +67,25 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Position</label><span class="asterick">*</span> 
+                                    <select type="text" formControlName="position" placeholder="Position"
+                                     class="form-control border-primary"  [(ngModel)]="selected_position"
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.position.errors }">
+                                     <option value="" >Select Position</option>
+                                        <option value={{_position}} *ngFor="let _position of positions">{{_position}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="isSubmittedaddBannerForm && signUpControls.position.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.position.errors.required">Position is required</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Page</label><span class="asterick">*</span> 
                                     <select type="text" formControlName="page" placeholder="Page"
-                                     class="form-control border-primary" 
+                                     class="form-control border-primary"  [(ngModel)]="selected_page"
                                      [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.page.errors }">
                                      <option value="" >Select Page</option>
                                         <option value={{_page}} *ngFor="let _page of pages">{{_page}}
@@ -80,7 +96,7 @@
                                         
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                            
                         </div>
                         <div class="row">                         
@@ -121,14 +137,13 @@
                         <div class="row">  
                             <div class="col-md-3">
                                 <div class="form-group">
-                                  <label for="issueinput3">Start Date</label>
+                                  <label for="issueinput3">Start Date </label>
                                   <input type="date" id="issueinput3"  name="dateopened" data-toggle="tooltip"
                                     data-trigger="hover" data-placement="top" data-title="Date Opened"
                                     formControlName="startDate" class="form-control border-primary" 
                                         [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.startDate.errors }">
                                         <div *ngIf="isSubmittedaddBannerForm && signUpControls.startDate.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.startDate.errors.required">Start Date is required</div>
-                                            
                                         </div>
                                 </div>
                               </div>
@@ -136,30 +151,13 @@
                                 <div class="form-group">
                                   <label for="issueinput4">End Date</label>
                                   <input type="date" id="issueinput4" name="datefixed" data-toggle="tooltip"
-                                    data-trigger="hover" data-placement="top" data-title="Date Fixed"
-                                    formControlName="endDate" class="form-control border-primary" 
-                                        [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.endDate.errors }">
-                                        <div *ngIf="isSubmittedaddBannerForm && signUpControls.endDate.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.endDate.errors.required">End Date is required</div>
-                                        </div>
+                                    data-trigger="hover" data-placement="top" data-title="Date Fixed" [(ngModel)]="endDate"
+                                    formControlName="endDate" class="form-control border-primary" >
+                                    <input type="checkbox" id="date" name="date" value="">
+                                     <label for="date"> No End Date</label><br>
                                 </div>
                               </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Position</label><span class="asterick">*</span> 
-                                    <select type="text" formControlName="position" placeholder="Position"
-                                     class="form-control border-primary" 
-                                     [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.position.errors }">
-                                     <option value="" >Select Position</option>
-                                        <option value={{_position}} *ngFor="let _position of positions">{{_position}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="isSubmittedaddBannerForm && signUpControls.position.errors" class="invalid-feedback">
-                                        <div *ngIf="signUpControls.position.errors.required">Position is required</div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <!-- <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Sequence Number</label><span class="asterick">*</span> 
