@@ -142,7 +142,7 @@ getlanguage(event:any)
   console.log(this.selectedLanguageId);
  
 }
-getdropdown1(event:any){
+getdropdown1(event:any){ 
   this.selectedCountryId = event.value
 console.log(this.selectedCountryId);
 this.getLanguage();
