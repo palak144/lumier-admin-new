@@ -23,7 +23,7 @@ export class AddCancelComponent implements OnInit {
   isSubmittedaddCancelForm: boolean = false;
   id: number;
   editMode: boolean;
-    countries:Country[];
+  countries:Country[];
   countryValue: any;
   cancelTitle: string;
   currencyValue: any;
@@ -57,8 +57,6 @@ export class AddCancelComponent implements OnInit {
         // }
          this.initForm()
          this.getCountry(); 
-
-
       }
     )
   }
@@ -144,7 +142,7 @@ getlanguage(event:any)
   console.log(this.selectedLanguageId);
  
 }
-getdropdown1(event:any){
+getdropdown1(event:any){ 
   this.selectedCountryId = event.value
 console.log(this.selectedCountryId);
 this.getLanguage();

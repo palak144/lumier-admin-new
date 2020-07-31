@@ -45,7 +45,6 @@ const routes: Routes = [{
         {
           path: ':id',
           component: CustomerListingComponent,
-          
         },
         {
           path: 'edit/:id',

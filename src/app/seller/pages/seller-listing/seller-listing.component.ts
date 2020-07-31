@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild ,  Inject,LOCALE_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
-import { SellerService } from '../../../shared/services/seller.service';
+import { SellerService } from '../../../shared/services/Sellers/seller.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';

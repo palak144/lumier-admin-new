@@ -1,0 +1,97 @@
+<div class="row container">
+  <div class="content-header text-left">Return Reason</div>
+  <p class="content-sub-header"></p>
+</div>
+<div class="row paddingSearch">
+  <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
+      <div class="position-relative has-icon-right">
+          <!-- <input type="text" class="form-control round" placeholder="Search"> -->
+          <input [(ngModel)]="searchBar" [ngModelOptions]="{standalone: true}" type="text"
+              class="form-control round searchBtn" pInputText placeholder="Search"
+              (input)="filterGlobal($event.target.value)" />
+          <div class="form-control-position">
+              <i class="ft-search"></i>
+          </div>
+      </div> 
+  </form>
+  <div class="col-8 text-right pr-0">
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+          
+          <span class="d-lg-block " (click)="onAddReturn()">Add New</span>
+      </button>
+  </div>
+</div>
+<div class="users-wrapper">
+  <div class="table-wrapper vehicle-wrapper">
+      <p-table [value]="returnList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true"
+          [alwaysShowPaginator]="false" [rows]="10" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [totalRecords]="totalCount">
+         
+          <ng-template pTemplate="header">
+              <tr>
+                  <th style="width:6em">S No.</th>
+                  <th style="width:10em">Reason</th>
+                  <th style="width:8em">Country</th>
+                  <!-- <th style="width:6em">Status</th>  -->
+                  <th style="width:6em">Action</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-return>
+              <tr>
+                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{return.id}}</td>
+                  <td><span class="ui-column-title">Reason</span>{{return.reason}}</td>
+                  <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
+                  <!-- <td>
+                    <span class="ui-column-title ">Status</span> 
+                    
+                    <div class="dropdown">
+                    <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
+
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li [hidden]="return.adminStatus == 1"><a (click)="setStatus(return.id ,1, $event)">Active</a></li>
+                            <li [hidden]="return.adminStatus == 0"><a (click)="setStatus(return.id,0, $event)">Inactive</a></li>
+                        </ul>
+                    </div>
+                                          
+                </td>  -->
+                  <!-- <td>
+                      <span class="ui-column-title ">Status</span>
+
+                      <div class="dropdown" style="text-align: center;">
+                          <a class="dropdown-toggle badge colorStatus"
+                              [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }"
+                               type="button"
+                              data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li [hidden]="return.adminStatus == 1"><a
+                                      (click)="setStatus(return.id ,1, $event)">Active</a></li>
+                              <li [hidden]="user.adminStatus == 0"><a
+                                      (click)="setStatus(return.id ,0, $event)">Inactive</a></li>
+                          </ul>
+                      </div>
+                  </td>  -->
+                  <td>
+                      <span class="ui-column-title">Action</span>
+                     
+                      <div class="dropdown">
+                          <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+
+                          </a>
+                          <ul class="dropdown-menu" role="menu">
+                              <!-- <li><a (click)="getDropDownValue($event,return.id)">Edit</a></li> -->
+                              <li>
+                                <a (click)="getDropDownValue($event,return.id)">Delete</a></li>
+                          </ul> 
+                      </div>
+                  </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td class="text-center text-danger font-weight-600" colspan="4">No Records Found.</td>
+              </tr>
+          </ng-template> 
+      </p-table>
+  </div>
+</div>

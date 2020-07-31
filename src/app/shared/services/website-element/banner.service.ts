@@ -24,19 +24,25 @@ export class BannerService {
         dataForm.append('id', data['id']);
       }
       if(data.file != ""){
-        dataForm.append('file', data['file']);
+        dataForm.append('image', data['file']);
       }
       dataForm.append('name', data['name']);
-      dataForm.append('walletDiscount', data['walletDiscount']);
-      dataForm.append('logoName', data['logoName']);
+      dataForm.append('sequenceNumber', data['sequenceNumber']);
+      dataForm.append('page', data['page']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-      
+      dataForm.append('position', data['position']);
+      dataForm.append('hyperLink', data['hyperlink']);
+      dataForm.append('endDate', data['endDate']);
+      dataForm.append('startDate', data['startDate']);
+
+debugger
     return this.http.post(this.baseUrl + 'admin/banner' , dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
+
   getAllBanners(page) {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/banner',
@@ -45,8 +51,17 @@ export class BannerService {
         catchError(this.errorHandler.handleError)
       );
   }
-
+  getAllBannersSearch(page?, searchKey?) {
+    debugger
+    const params = { page: page, searchKey: searchKey }
+    return this.http.get(this.baseUrl + 'admin/banner',
+      { params: params }).pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+  } 
   deleteBanner(id) {
+      debugger
     return this.http.delete(this.baseUrl + 'admin/banner/' + id)
       .pipe(
         retry(3),

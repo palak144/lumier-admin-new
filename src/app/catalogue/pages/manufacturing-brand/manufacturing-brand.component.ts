@@ -3,7 +3,6 @@ import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'app/shared/utility/utility.service';
-import { SellerService } from 'app/shared/services/seller.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';

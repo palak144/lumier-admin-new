@@ -1,26 +1,30 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Table } from 'primeng/table';
 import { UtilityService } from 'app/shared/utility/utility.service';
-import { BannerService } from 'app/shared/services/website-element/banner.service';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ReturnReasonService } from '../../../shared/services/systemSetting/return-reason.service';
+import { Table } from 'primeng/table';
+import { Subject } from 'rxjs';
+import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
+
+interface Action {
+  name: string, 
+  code: string
+}
 
 @Component({
-  selector: 'app-banners',
-  templateUrl: './banners.component.html',
-  styleUrls: ['./banners.component.scss']
+  selector: 'app-return-reason',
+  templateUrl: './return-reason.component.html',
+  styleUrls: ['./return-reason.component.scss']
 })
-export class BannersComponent implements OnInit {
+export class ReturnReasonComponent implements OnInit {
   searchTerms$ = new Subject<string>();
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
   page: number;
-  bannerList: any;
+  returnList: any;
   totalCount: any;
   action: any;
-  Date = new Date();
   @ViewChild(Table) tableComponent: Table; 
   @ViewChild(Table) primeNGTable: Table;
   
@@ -29,22 +33,23 @@ export class BannersComponent implements OnInit {
     private router: Router, 
     private activateRoute : ActivatedRoute,
     private utilityService: UtilityService,
-    private bannerService: BannerService,
+    private returnReasonService: ReturnReasonService,
     private confirmationService: ConfirmationService,
   ) { }
 
-  setStatus(id: Number, adminStatus: Number) {
-    let statusData = { id, adminStatus }
-    this.bannerService.updateBannerStatus(statusData).subscribe(
-      (success: any) => {
-        this.ngOnInit()
-      })
-  }
+  // setStatus(id: Number, adminStatus: Number) {
+  //   let statusData = { id, adminStatus }
+  //   this.returnReasonService.updateReturnStatus(statusData).subscribe(
+  //     (success: any) => {
+  //       this.ngOnInit()
+  //     })
+  // }
   ngOnInit() {
     this.initiateSearch();
+    // this.getCountry();
   }
-  onAddBanner(){
-    this.router.navigate(['../new-banner'],{relativeTo : this.activateRoute})
+  onAddReturn(){
+    this.router.navigate(['../new-return-reason'],{relativeTo : this.activateRoute})
   }
 
   filterGlobal(searchTerm) {
@@ -59,10 +64,10 @@ export class BannersComponent implements OnInit {
     this.page = event.first / 10;
     // if there is a search term present in the search bar, then paginate with the search term
     if (!this.searchBar) {
-      this.getAllBanners(this.page);
+      this.getAllReturn(this.page);
     }
     else {
-      this.getAllBannersSearch(this.page, this.searchBar);
+      this.getAllReturnSearch(this.page, this.searchBar);
     }
   }
   initiateSearch() {
@@ -71,21 +76,21 @@ export class BannersComponent implements OnInit {
     startWith(''),
     distinctUntilChanged(),
     // switch to new search observable each time the term changes
-    switchMap((term: string) => this.bannerService.getAllBannersSearch(this.page, term
+    switchMap((term: string) => this.returnReasonService.getAllReturnSearch(this.page, term
     ))
   )
     .subscribe((success: any) => {
-      this.bannerList = success.data.results;
+      
+      this.returnList = success.data.results;
 
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     })
 }
-getAllBanners(page) {
-  this.bannerService.getAllBanners(page).subscribe(
+getAllReturn(page) {
+  this.returnReasonService.getAllReturn(page).subscribe(
     (success: any) => {
-      
-      this.bannerList = success.data.results;
+      this.returnList = success.data.results;
 
       this.totalCount = success.data.total;
     },
@@ -96,15 +101,15 @@ getAllBanners(page) {
   );
 }
 
-getAllBannersSearch(page, searchBar) {
+getAllReturnSearch(page, searchBar) {
   
-  this.bannerService.getAllBannersSearch(page, searchBar)
+  this.returnReasonService.getAllReturnSearch(page, searchBar)
     .pipe(
       takeUntil(this._unsubscribe)
     )
     .subscribe((success: any) => {
-      
-      this.bannerList = success.data.results;
+      console.log(success);
+      this.returnList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
     })
@@ -112,16 +117,16 @@ getAllBannersSearch(page, searchBar) {
 
 getDropDownValue(event, id) {
   if (event.currentTarget.firstChild.data === 'Delete') {
-debugger
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
-        this.bannerService.deleteBanner(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+        this.returnReasonService.deleteReturn(id).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success: any) => {
 
-            this.getAllBanners(this.page);
+            this.getAllReturn(this.page);
             
-            this.bannerList = this.bannerList.filter((item: any) => {
+            this.returnList = this.returnList.filter((item: any) => {
               return id !== item.countryId
             })
           },
@@ -135,11 +140,7 @@ debugger
     });
 
   }
-
-   if (event.currentTarget.firstChild.data === 'Edit') {
-     this.router.navigate(['../edit-banner', id], { relativeTo: this.activateRoute })
-
-   }
 }
+
 
 }

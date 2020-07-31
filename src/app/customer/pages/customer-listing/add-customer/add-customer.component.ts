@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { CustomerService } from '../../../../shared/services/customer.service';
+import { CustomerService } from '../../../../shared/services/customers/customer.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -195,9 +195,7 @@ export class AddCustomerComponent implements OnInit {
       this.customerTitle = "Edit Customer";
       this.addCustomerForm.addControl(
         "password", new FormControl(password, [
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
-          Validators.maxLength(20)]))
+          Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,20}$')]))
       this.customerService.getCustomerId(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
 
@@ -237,11 +235,7 @@ export class AddCustomerComponent implements OnInit {
 
       this.addCustomerForm.addControl(
         "password", new FormControl(password, [Validators.required,
-        Validators.minLength(8),
-        Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,}$'),
-        Validators.maxLength(20)]))
+        Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,20}$')]))
     }
-
-
   }
 }

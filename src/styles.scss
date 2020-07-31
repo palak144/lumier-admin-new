@@ -820,3 +820,42 @@ body .ui-inputtext{
 .tab-content {
     padding: 1rem 0;
 }
+
+
+body .ui-table .ui-table-thead > tr > th {
+    background-color: #285d91 !important;
+    color: #fff;
+}
+.btn-primary.btn-darken-3 {
+    border-color: #008B8E !important;
+    background-color: #00818400 !important;
+}
+.btn-primary.btn-raised {
+    color: #009DA0 !important;
+}
+.round.searchBtn {
+    border: 1px solid #008B8E !important;
+}
+select#basicSelect {
+    border: 1px solid #39b2b5;
+}
+body .ui-table .ui-table-tbody > tr:nth-child(even) {
+    background-color: #285d910f;
+}
+.round {
+    border-radius: 4px;
+}
+.btn-primary.btn-darken-3:hover {
+    color: #fff !important;
+}
+.bg-color-other {
+    background: #285d91;
+    color: #fff;
+}
+.btn-primary.btn-raised {
+    background-color: #ffffff !important;
+}
+.btn-warning.btn-raised, .btn-warning.btn-fab {
+    background-color: #ffffff !important;
+    color: #FF8D60 !important;
+}

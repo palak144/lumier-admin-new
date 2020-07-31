@@ -5,6 +5,11 @@ import { SystemTypeComponent } from './pages/system-type/system-type.component';
 import { AddSystemSettingComponent } from './pages/system-type/add-system-setting/add-system-setting.component';
 import { CountryComponent } from './pages/country/country.component';
 import { AddCountryComponent } from './pages/country/add-country/add-country.component';
+import { ReturnReasonComponent } from './pages/return-reason/return-reason.component';
+import { AddReturnComponent } from './pages/return-reason/add-return/add-return.component';
+import { DeliveryChargeComponent } from './pages/delivery-charge/delivery-charge.component';
+import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery-charge/add-delivery-charge.component';
+
 import { CancelreasonComponent } from './pages/cancelreason/cancelreason.component';
 import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
 const routes: Routes = [
@@ -64,12 +69,42 @@ const routes: Routes = [
         
       },
       {
-        path: 'edit-cancel/:id',
-        component: AddCancelComponent,
+        path: 'return-reason',
+        component: ReturnReasonComponent,
+        data: {
+          title: 'Return Reason'
+        }
+      },
+      {
+        path: 'new-return-reason',
+        component: AddReturnComponent,
         
       },
+      {
+        path: 'edit-return/:id',
+        component: AddReturnComponent,
+      },
+      {
+        path: 'delivery-charge',
+        component: DeliveryChargeComponent,
+        data: {
+          title: 'Delivery-Charge'
+        }
+      },
+      {
+        path: 'new-delivery-charge',
+        component: AddDeliveryChargeComponent, 
+      },
+      {
+        path: 'edit-delivery-charge/:id',
+        component: AddDeliveryChargeComponent, 
+      },
+      {
+        path: 'edit-cancel/:id',
+        component: AddCancelComponent,
+      }
     ]
-  }
+  } 
 ]; 
 
 @NgModule({

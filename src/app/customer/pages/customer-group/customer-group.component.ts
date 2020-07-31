@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { CustomerService } from '../../../shared/services/customer.service';
+import { CustomerService } from '../../../shared/services/customers/customer.service';
 import { UtilityService } from '../../../shared/utility/utility.service';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { ToastrService } from 'ngx-toastr';

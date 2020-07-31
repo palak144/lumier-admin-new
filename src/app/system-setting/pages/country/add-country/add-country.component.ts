@@ -50,7 +50,7 @@ export class AddCountryComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-
+debugger
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
