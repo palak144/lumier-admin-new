@@ -55,20 +55,36 @@
                               </div>
                           </div> 
                       </div>
-                      <div class="row">
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Delivery Charge</label>
                                 <input type="text" class="form-control border-primary" placeholder="Delivery Charge"  formControlName="deliveryCharge">
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Currency </label><span class="asterick">*</span>
+                                <div class="assign-group-dropdown">
+                                <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control border-primary" (onChange)="getdropdown2($event)"  placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddDeliveryForm && signUpControls.currency.errors }">
+                                </p-dropdown>
+                                <div *ngIf="isSubmittedaddDeliveryForm && signUpControls.currency.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="signUpControls.currency.errors.required">Currency is required
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-md-6">
                           <div class="form-group">
                               <label>Instructions</label>
-                              <input type="text" class="form-control border-primary" placeholder="Instructions" formControlName="instruction">
+                              <input type="text" class="form-control border-primary" placeholder="Instructions" formControlName="instructions">
                           </div>
-                      </div> -->
-                    </div>    
+                      </div>
+                    </div> 
 
                       </div> 
                       <div class="form-actions right">
