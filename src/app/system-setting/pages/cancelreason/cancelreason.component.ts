@@ -111,7 +111,7 @@ export class CancelreasonComponent implements OnInit {
   }
 
   getDropDownValue(event, id) {
-    if (event.currentTarget.firstChild.data === 'Delete') {
+
 
       this.confirmationService.confirm({
         message: 'Are you sure that you want to perform this action?',
@@ -134,10 +134,7 @@ export class CancelreasonComponent implements OnInit {
         }
       });
 
-    }
-    if (event.currentTarget.firstChild.data === 'Edit') {
-      this.router.navigate(['../edit-cancel', id], { relativeTo: this.activateRoute })
-
-    }
+ 
+   
   }
 }
