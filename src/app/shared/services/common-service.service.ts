@@ -79,6 +79,18 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+  getManufacturerList(country) {
+    return this.http.get(this.baseUrl + 'admin/manufacturerList/' + country ).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getSellerList(country) {
+    return this.http.get(this.baseUrl + 'admin/sellerList/' + country ).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getCurrency() {
     
     return this.http.get(this.baseUrl + 'admin/currency').pipe(
