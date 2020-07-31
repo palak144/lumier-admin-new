@@ -4,7 +4,7 @@ import { UtilityService } from 'app/shared/utility/utility.service';
 import { DeliveryChargeService } from '../../../shared/services/delivery-charge.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
-import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 
@@ -23,9 +23,11 @@ export class DeliveryChargeComponent implements OnInit {
   searchBar: any = "";
   private _unsubscribe = new Subject<boolean>();
   page: number = 0;
-  deliverychargeList: any;
+  deliverychargeList: any[];
+  deliverycharge: any;
   totalCount: any;
   action: any;
+  id: number;
   countries:any[];
   countryId : number = null;
 
@@ -57,31 +59,7 @@ export class DeliveryChargeComponent implements OnInit {
     this.initiateSearch();
     this.getCountry();
   }
-  onAddDeliverycharge(){
-    this.router.navigate(['../new-delivery-charge'],{relativeTo : this.activateRoute})
-  }
 
-  filterGlobal(searchTerm) {
-
-    // indexing starts from 0 in primeng
-    this.primeNGTable.first = 0;
-    this.page = 0;
-    this.searchTerms$.next(searchTerm);
-  }
-
-  loadDataLazy(event: LazyLoadEvent) {
-    this.page = event.first / 10;
-    // if there is a search term present in the search bar, then paginate with the search term
-    if (!this.searchBar && !this.countryId) {
-      this.getAllDeliveryCharge(this.page);
-    }
-    else if(!this.countryId){
-      this.getAllDeliveryCharge(this.page);
-          }
-    else {
-      this.getAllDeliveryChargeSearch(this.page, this.searchBar , this.countryId);
-    }
-  } 
   initiateSearch() {
     this.searchTerms$.pipe(
     takeUntil(this._unsubscribe),
@@ -99,6 +77,31 @@ export class DeliveryChargeComponent implements OnInit {
       this.utilityService.resetPage();
     })
 }
+  onAddDeliverycharge(){
+    this.router.navigate(['../new-delivery-charge'],{relativeTo : this.activateRoute})
+  }
+
+
+  loadDataLazy(event: LazyLoadEvent) {
+    this.page = event.first / 10;
+    // if there is a search term present in the search bar, then paginate with the search term
+    if (!this.searchBar && !this.countryId) {
+      this.getAllDeliveryCharge(this.page);
+    }
+    else if(!this.countryId){
+      this.getAllDeliveryCharge(this.page);
+          }
+    else {
+      this.getAllDeliveryChargeSearch(this.page, this.searchBar , this.countryId);
+    }
+  } 
+  
+  filterGlobal(searchTerm) {
+    // indexing starts from 0 in primeng
+    this.primeNGTable.first = 0;
+    this.page = 0;
+    this.searchTerms$.next(searchTerm);
+  }
 
 getAllDeliveryCharge(page) {
   this.deliveryChargeService.getAllDeliveryCharge(page).subscribe(
@@ -141,9 +144,9 @@ getDropDownValue(event, id) {
 
             this.getAllDeliveryCharge(this.page);
 
-            this.deliverychargeList = this.deliverychargeList.filter((item: any) => {
-              return id !== item.countryId
-            })
+            // this.deliverychargeList = this.deliverychargeList.filter((item: any) => {
+            //   return id !== item.countryId
+            // })
           },
           error => {
           }
@@ -161,16 +164,6 @@ getDropDownValue(event, id) {
   }
 }
 
-onChange(deviceValue) {
-  if(deviceValue)
-{ 
-this.countryId=deviceValue;
-}
-else
-{
-}
-  this.getAllDeliveryChargeSearch(this.page, this.searchBar , this.countryId);
-}
 getCountry()
  {
    this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -181,6 +174,14 @@ getCountry()
      }
    )
  }
-  
-
+ 
+onChange(deviceValue) {
+  if(deviceValue)
+  { 
+    this.countryId=deviceValue;
+  }
+  else  {
+  }
+  this.getAllDeliveryChargeSearch(this.page, this.searchBar , this.countryId);
+  }
 }
