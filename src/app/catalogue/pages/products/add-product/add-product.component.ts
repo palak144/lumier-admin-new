@@ -155,6 +155,8 @@ debugger
     this.addProductForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
       name: new FormControl( name, Validators.required),
+      supplyTypeId: new FormControl( name, Validators.required),
+      brandId: new FormControl( name, Validators.required),
 
 
     });
@@ -188,6 +190,15 @@ debugger
                 error => {
                 }
               )
+              this.commonService.getCategory(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+                (success:any) => {
+                  debugger
+                  this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
+                  debugger
+                },
+                error => {
+                }
+              )
               debugger
               this.addProductForm.patchValue({
                 "name" : this.product.name,
@@ -215,6 +226,7 @@ debugger
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
+    this.getCategoryList();
   }
 
   getCountry()
@@ -241,9 +253,12 @@ debugger
   }
   getManufacturerBrands()
   {
+    debugger
     this.commonService.getManufacturerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
         this.manufacturerBrands = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
       },
       error => {
       }
@@ -251,9 +266,21 @@ debugger
   }
   getSellerList()
   {
-    this.commonService.getSupplyType(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
+      },
+      error => {
+      }
+    )
+  }
+  getCategoryList()
+  {
+    this.commonService.getCategory(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
       },
       error => {
       }
