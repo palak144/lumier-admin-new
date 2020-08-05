@@ -1,0 +1,11 @@
+// for component width height
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+// for component same width height
+@mixin square($width, $height: $width) {
+  width: $width;
+  height: $height;
+}

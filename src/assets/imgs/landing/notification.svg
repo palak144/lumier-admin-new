@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-2{fill:#f77e0b;stroke:#f77e0b;stroke-width:.5px}
+        </style>
+    </defs>
+    <g id="Notification" transform="translate(-319.188 -629.188)">
+        <path id="Rectangle_1909" fill="none" d="M0 0H32V32H0z" data-name="Rectangle 1909" transform="translate(319.188 629.188)"/>
+        <g id="Group_7636" data-name="Group 7636" transform="translate(323.047 630.349)">
+            <g id="notification_1_" data-name="notification (1)">
+                <g id="Group_7164" data-name="Group 7164" transform="translate(0 4.328)">
+                    <g id="Group_7163" data-name="Group 7163">
+                        <path id="Path_38451" d="M67.3 95.371l-2.124-3.539a10.52 10.52 0 0 1-1.5-5.409v-3.1a8.656 8.656 0 1 0-17.312 0v3.1a10.52 10.52 0 0 1-1.5 5.409l-2.124 3.539a.618.618 0 0 0 .53.936h23.501a.618.618 0 0 0 .531-.936zm-22.934-.3l1.562-2.6a11.745 11.745 0 0 0 1.672-6.048v-3.1a7.419 7.419 0 0 1 14.839 0v3.1a11.756 11.756 0 0 0 1.673 6.044l1.563 2.6z" class="cls-2" data-name="Path 38451" transform="translate(-42.657 -74.667)"/>
+                    </g>
+                </g>
+                <g id="Group_7166" data-name="Group 7166" transform="translate(9.893)">
+                    <g id="Group_7165" data-name="Group 7165">
+                        <path id="Path_38452" d="M215.806 0a2.476 2.476 0 0 0-2.473 2.473v2.473a.618.618 0 0 0 1.237 0V2.473a1.237 1.237 0 1 1 2.473 0v2.473a.618.618 0 0 0 1.237 0V2.473A2.476 2.476 0 0 0 215.806 0z" class="cls-2" data-name="Path 38452" transform="translate(-213.333)"/>
+                    </g>
+                </g>
+                <g id="Group_7168" data-name="Group 7168" transform="translate(9.275 24.732)">
+                    <g id="Group_7167" data-name="Group 7167">
+                        <path id="Path_38453" d="M208.433 426.984a.619.619 0 1 0-1.068.626 1.855 1.855 0 1 1-3.213 0 .619.619 0 1 0-1.068-.626 3.093 3.093 0 1 0 5.349 0z" class="cls-2" data-name="Path 38453" transform="translate(-202.666 -426.68)"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

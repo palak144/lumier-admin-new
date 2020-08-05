@@ -1,0 +1,123 @@
+// mobile Apps
+.mobile-app-block{
+    @include background('/assets/imgs/landing/mobile_bg.jpg', $size: cover);
+    @include min-height(544px);
+    @include position(relative);
+    @media(max-width: $screen-lg-max) {
+        @include min-height(415px);
+    }
+    @media(max-width: $screen-sm-max) {
+        @include min-height(390px);
+    }
+    .app-content{
+        .app-header{
+            h3{
+                font-size: 40px;
+                font-weight: $regular;
+                color: $white;
+                font-family: 'poppins';
+                line-height: 50px;
+                padding: 86px 0px 28px 0px;
+                @media(max-width: $screen-lg-max) {
+                    font-size: 26px;
+                    line-height: 36px;
+                    padding: 55px 0px 28px 0px;
+                }
+                @media(max-width: $screen-sm-max) {
+                    font-size: 22px;
+                    line-height: 30px;
+                }
+            }
+        }
+        .app-body{
+            display: inline-flex;
+            @media (max-width: 414px) {
+                display: block;
+                width: 100%;
+            }
+            flex-direction: row;
+            .share-app {
+                justify-content: center;
+                line-height: 133px;
+                margin-left: 15px;
+                @media (max-width: 414px) {
+                    line-height: 0px;
+                    margin-left: 0;
+                    margin-bottom: 21px;
+                }
+            }
+            .field-outer{
+                label{
+                    font-size: $f-20 !important;
+                    @media(max-width: $screen-sm-max) {
+                        font-size: $f-17 !important;
+                    }
+                }
+                .form-control {
+                    @media(max-width: $screen-sm-max) {
+                        width: 245px !important;
+                        border-radius: 6px;
+                        margin-right: 0px;
+                    }
+                    @media (max-width: 414px) {
+                        display: block;
+                        width: 100% !important;
+                    }
+                    border-radius: 6px;
+                    // padding-left: 84px;
+    
+                    &::-webkit-input-placeholder,  &:-ms-input-placeholder, &::placeholder{
+                        font-size: $f-16 !important;
+                    }
+                }
+            }
+        }
+        .app-footer{
+            @media (max-width: 414px) {
+                padding-bottom: 50px;
+            }
+            .app-img{
+                display: inline-flex;
+                flex-direction: row;
+                a{
+                    @media(max-width: $screen-sm-max) {
+                        margin-right: 18px;
+                    }
+                }
+                img{
+                    @include size(155px, 49px);
+                    @media(max-width: $screen-sm-max) {
+                        @include size(155px, auto);
+                    }
+                    margin-right: 18px;
+                }
+            }
+            
+    
+        }
+    }
+    .sharing-image{
+        img{
+            position: absolute;
+        }
+        .dcm{
+            @include size(234px, auto);
+            top: -62px;
+            @media(max-width: $screen-lg-max) {
+                left: 66px;
+                width: 198px;
+            }
+        }
+        .homey{
+            @include size(552px, auto);
+            bottom: -144px;
+            z-index: 1;
+            left: 63px;
+            @media(max-width: $screen-lg-max) {
+                bottom: -100px;
+                left: 96px;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,140 @@
+// Main color
+$black:#000000;
+$white:#ffffff;
+$blue: #00A8FF;
+$highlight:#bee9ff;
+$table_bg:#f4fafc;
+$table_col:#221717;
+$shadow_clr:#1793C2;
+$slaty:#697B93;
+$sky:#DCEFF9;
+$gray:#AFB7C1;
+$charcoal:#484848;
+$blue_tick:#0096E3;
+$workFlow_bg:#F2F5F9;
+$field_icon:#9FABBB;
+$red: #ff0000;
+$green:#21DF17;
+$status_green:#30b35a;
+$status_blue:#00a7fe;
+$status_yellow:#F3BB00;
+$pending_red: #FF3923;
+$light_green:#66BB6A;
+$hawkes_blue: #CED9E5;
+$secondary_border_clr:#707070;
+$select_border:#E9F5FB;
+$tags_bg:#F4F6F8;
+$yellow:#F5C959;
+$star:#ffbc00;
+$light_yellow :#f9eb55;
+$star_light:#91DAFF;
+$dark_charcoal:#525252;
+$star_color:#B3BCC8;
+$eb_bg: #0054a5;
+$loader_clr:#708090;
+$header:#323232;
+$orange: #f77e0b;
+$login-content:#cacaca;
+// font weight
+$thin:100;
+$light: 300;
+$regular: 400;
+$medium: 500;
+$bold: 700;
+$extra_bold: 900;
+
+// font-sizes
+$heading1: 5.5rem;
+$heading2: 3.5rem;
+$heading3: 2rem;
+$heading4: 1.6rem;
+$heading5: 1.7rem;
+$heading6: 2rem;
+$font-cont: .875rem;
+$paragraph-size: 1.6rem;
+$paragraph-size-lg: 1.7rem;
+$font-size-xs: 1.2rem;
+$font-size-sm: 1.4rem;
+$font-size-md: 1.6rem;
+$font-size-lg: 1.8rem;
+$font-size-xl: 2rem;
+$font-xs:12px;
+$font-sm: 14px;
+$primary-fs: 16px;
+$font-md: 18px;
+$font-lg: 20px;
+$f-11:11px;
+$f-12:12px;
+$f-13:13px;
+$f-14:14px;
+$f-15:15px;
+$f-16:16px;
+$f-17:17px;
+$f-18:18px;
+$f-20:20px;
+$f-30:30px;
+$f-35:35px;
+$f-55:55px;
+// $baseFontSize: 62.5%;
+$baseFontSize: 62.5%;
+
+// border-radius
+$radius: 5px;
+
+// border
+// Dashed border
+$dash-border: 1px dashed #697B93;
+
+// text-transform
+$capitalize:capitalize;
+$uppercase:uppercase;
+$lowercase:lowercase;
+
+// font-family 
+$ft-icomoon:'icomoon';
+$primary_font: 'Poppins';
+$poppins: 'Poppins';
+$icon-font:'icomoon';
+
+
+
+// spacer
+$ht-lg : 100px;
+$ht-md : 80px;
+$ht-sm : 60px;
+$ht-xs : 50px;
+$global-pd : 75px;
+
+// font-weight
+$thin:100;
+$light:300;
+$regular:400;
+$medium:500;
+$semibold:600;
+$bold:700;
+$wtblack:900;
+
+// Reponsive Grid
+// small size
+$screen-sm-max: 576px;
+$screen-sm-min: ($screen-sm-max - 1px);
+
+// medium size
+$screen-md-max: 768px;
+$screen-md-min: ($screen-md-max - 1px);
+
+// large size
+$screen-lg-max: 992px;
+$screen-lg-min: ($screen-lg-max - 1px);
+
+// xtra-large size
+$screen-xl-max: 1199px;
+$screen-xl-min: ($screen-xl-max - 1px);
+
+// class export
+.before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+}

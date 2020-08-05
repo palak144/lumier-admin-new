@@ -1,0 +1,481 @@
+// container sizes
+// @media(min-width:1200px) {
+//     .container {
+//         max-width: 100%;
+//     }
+// }
+@media (min-width: 1200px) {
+    .container-normal {
+        max-width: 1140px;
+    }
+}
+
+.container-normal {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    @media (min-width: 576px) {
+        max-width: 540px;
+    }
+    @media (min-width: 768px) {
+        max-width: 720px;
+    }
+    @media (min-width: 992px) {
+        max-width: 960px;
+    }
+    @media (min-width: 1200px) {
+        max-width: 1140px;
+    }
+}
+
+.container {
+    max-width: 100% !important;
+}
+
+
+
+// modal css
+.modal {
+    .modal-dialog {
+        .modal-content {
+            border: none !important;
+        }
+    }
+}
+
+
+
+
+
+
+// breadcrumb
+.breadcrumb {
+    padding: 0;
+    background-color: transparent;
+    margin-bottom: 16px;
+    li.breadcrumb-item {
+        margin-right: 9px;
+        position: relative;
+        &:last-child {
+            margin-right: 0;
+        }
+        a {
+            font-size: $paragraph-size;
+            color: $black;
+            &:hover {
+                text-decoration: underline !important;
+            }
+        }
+        span {
+            font-size: $paragraph-size;
+            color: $black;
+        }
+        &.active {
+            span {
+                color: $blue;
+            }
+        }
+        &+.breadcrumb-item {
+            padding-left: 20px;
+            &:before {
+                content: '\e902';
+                font-family: $icon-font;
+                @include square(8px);
+                font-size: 8px;
+                display: block;
+                @include transform(rotate(-90deg));
+                @include position(absolute, $top: 10px, $left: 0);
+            }
+        }
+    }
+}
+
+// modal
+// add-project-modal
+.modal-dialog {
+    &.add-project-modal {
+        @media(min-width: $screen-sm-max) {
+            max-width: 450px;
+        }
+        .modal-content {
+            min-height: 435px;
+            .modal-body {
+                padding: 60px 40px 40px;
+                .content {
+                    @include maxWidth(320px, center);
+                    text-align: center;
+                    img {
+                        margin-bottom: 30px;
+                    }
+                    p {
+                        color: $black;
+                        line-height: 21px;
+                    }
+                    .btn-outer {
+                        padding-top: 28px;
+                        .btn-primary {
+                            min-width: 254px;
+                            margin-bottom: 32px;
+                        }
+                        .btn-skip {
+                            display: block;
+                            margin: auto;
+                            padding: 5px;
+                            color: $slaty;
+                            font-size: $paragraph-size;
+                            &:hover,
+                            &:focus,
+                            &:active,
+                            &:not(:disabled):not(.disabled):active,
+                            &:not(:disabled):not(.disabled):active:focus {
+                                background-color: transparent;
+                                color: $black;
+                                outline: none;
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.feedback {
+            .modal-content {
+                .modal-body {
+                    .content {
+                        max-width: 100%;
+                        p {
+                            font-weight: $regular;
+                            line-height: 24px;
+                        }
+                        .btn-outer {
+                            .btn-primary {
+                                min-width: auto;
+                                max-width: 76px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // delete item modal
+        &.delete-modal {
+            .modal-content {
+                min-height: auto;
+                .modal-body {
+                    padding: 47px 40px;
+                    .content {
+                        .btn-outer {
+                            padding-top: 57px;
+                            .btn {
+                                vertical-align: top;
+                                margin: 0;
+                            }
+                            .btn-light {
+                                min-width: 76px;
+                                margin-right: 42px;
+                            }
+                            .btn-primary {
+                                min-width: auto!important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // login Modal
+    &.signUp{
+        .modal-content {
+            @include maxWidth(450px, center);
+            @media (max-width: $screen-sm-max){
+                @include maxWidth(calc(100% - 5px), center);
+            }
+            @include size(450px, auto)
+            border-radius: 10px;
+            padding: 30px 0px  20px 0px;
+            .modal-block{
+                padding: 0px 5px 25px 0px;
+                .close {
+                    font-size: 2.5rem;
+                    font-weight: 300;
+                    padding: 0 15px;
+                    @include position(absolute, $right: -5px, $top: 0px);
+                }
+            }
+            .modal-body {
+                padding: 0;
+                @include maxWidth(calc(100% - 64px), center);
+                .form-group{
+                    input.form-control {
+                        border-bottom: 1px solid #d8d8d8;
+                        border: none;
+                        background: transparent;
+                    }
+                    input.form-color{
+                        font-size: $f-14;
+                        border: none;
+                        line-height: 23px;
+                        border-bottom: 1px solid #d8d8d8;
+                        color: $login-content;
+                        padding-bottom: 6px;
+                        
+                        &::placeholder{
+                            font-size: $f-14;
+                            font-weight: $regular;
+                            color: $login-content;
+                        }
+                    }
+                    .or{
+                        font-size: $f-12;
+                        font-weight: $regular;
+                        color: $login-content;
+                        line-height: 19px;
+                        position: relative;
+
+                        &:before{
+                            content: '';
+                            width: 100%;
+                            height: 1px;
+                            border: 1px solid #cacaca;
+                            display: block;
+                            position: absolute;
+                            top: 8px;
+                            right: 20px;
+                            opacity: 0.5;
+                        }
+
+                        &:after{
+                            content: '';
+                            width: 100%;
+                            height: 1px;
+                            border: 1px solid #cacaca;
+                            display: block;
+                            position: absolute;
+                            top: 8px;
+                            right: -20px;
+                            opacity: 0.5;
+                        }
+                    }
+                    .social-icon{
+                        li{
+                            a{
+                                width: 39px;
+                                height: 39px;
+                                background: #475993;
+                                margin: 12px;
+                                display: inline-block;
+                                border-radius: 50%;
+                                line-height: 39px;
+                                font-size: 17px;
+                                i{
+                                    color: #fff;
+                                }
+                            }
+                            .google{
+                                background: #F34A38;
+                            }
+                        }
+                    }
+                    .signup{
+                        font-size: $f-15;
+                        font-weight: $regular;
+                        color: #181818;
+                        line-height: 25px;
+                        cursor: pointer;
+                        a{
+                            color: $orange !important;
+                        }
+                    }
+                }
+            }
+        }           
+    }
+    // Fav restaurant Modal
+    &.fav-res{
+        .modal-content {
+            @include maxWidth(450px, center);
+            @media (max-width: $screen-sm-max){
+                @include maxWidth(calc(100% - 5px), center);
+            }
+            @include size(450px, auto)
+            border-radius: 10px;
+            padding: 30px 0px  20px 0px;
+            .modal-block{
+
+                button.close.pull-right {
+                    font-size: 2.5rem;
+                    font-weight: 300;
+                    padding: 0 15px;
+                    @include position(absolute, $right: -5px, $top: 0px);
+                }
+                .upload-title{
+                    h3{
+                        color: $orange;
+                        font-weight: $medium;
+                        font-size: 23px;
+                        line-height: 38px;
+                        margin-bottom: 31px;
+                    }
+                }
+            }
+            .modal-body {
+                
+            }
+        }
+        ul{
+            li{
+                float: left;
+                margin-right: 29px;
+                margin-left: 31px;
+                text-align: center;
+
+                
+            }
+        }
+        .fav-name{
+            span{
+                font-weight: $regular;
+                font-size: $f-14;
+                line-height: 23px;
+            }
+        }
+    }
+}
+
+// pagination-outer
+.pagination-outer {
+    padding: 60px 0 80px;
+    text-align: center;
+    .pagination {
+        display: inline-block;
+        .page-item {
+            display: inline-block;
+            margin-right: 12px;
+            vertical-align: top;
+            .page-link {
+                @include square(35px);
+                border-color: $gray;
+                border-radius: 5px;
+                color: $slaty;
+                position: relative;
+            }
+            &.active {
+                .page-link {
+                    background-color: $blue;
+                    color: $white;
+                    border-color: $blue;
+                }
+            }
+            &.action {
+                .page-link {
+                    border: none;
+                    padding: 9px 5px;
+                    outline: none;
+                    i {
+                        display: block;
+                        @include transform(rotate(90deg));
+                        color: $slaty;
+                    }
+                    &:hover {
+                        background-color: transparent;
+                        outline: none;
+                    }
+                }
+                &.next {
+                    .page-link {
+                        i {
+                            @include transform(rotate(-90deg));
+                        }
+                    }
+                }
+            }
+            &.dots {
+                .page-link {
+                    span {
+                        position: relative;
+                        top: -4px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ui-breadcrumb{
+    border: 0px solid transparent !important;
+    padding: 6px 0em 30px 0px !important;
+    ul{
+        li{
+            margin: 0;
+
+            .ui-menuitem-link {
+                font-size: $f-14;
+                color: #89959b !important;
+                font-weight: $medium !important;
+                line-height: 25px;
+                font-family: 'poppins';
+
+                &:hover span {
+                    color: $orange;
+                    transition: all 0.25s ease-in;
+                }
+                
+            }
+            span.ui-menuitem-text{
+                &:active {
+                    color: $orange;
+                    transition: all 0.25s ease-in;
+                }
+            }
+        }
+        li.ui-breadcrumb-chevron{
+            font-weight: $medium !important;
+            line-height: 25px;
+            font-size: $f-14;
+        }
+    }
+}
+
+// breadcrumb
+.breadcrumb {
+    padding: 0;
+    background-color: transparent;
+    margin-bottom: 16px;
+    li.breadcrumb-item {
+        margin-right: 9px;
+        position: relative;
+        &:last-child {
+            margin-right: 0;
+        }
+        a {
+            font-size: $paragraph-size;
+            color: $black;
+            &:hover {
+                text-decoration: underline !important;
+            }
+        }
+        span {
+            font-size: $paragraph-size;
+            color: $black;
+        }
+        &.active {
+            span {
+                color: $blue;
+            }
+        }
+        &+.breadcrumb-item {
+            padding-left: 20px;
+            &:before {
+                content: '\e902';
+                font-family: $icon-font;
+                @include square(8px);
+                font-size: 8px;
+                display: block;
+                @include transform(rotate(-90deg));
+                @include position(absolute, $top: 10px, $left: 0);
+            }
+        }
+    }
+}
