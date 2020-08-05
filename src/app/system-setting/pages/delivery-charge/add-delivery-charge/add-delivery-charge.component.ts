@@ -94,7 +94,7 @@ export class AddDeliveryChargeComponent implements OnInit {
       return
     }
     this.addDeliveryFormDetails = {
-      "currency": this.select(this.addDeliveryForm.get('currency').value , this.currencyValue),
+      "currency": this.currencyValue,
     }
     let data=this.addDeliveryForm.value;
     if(this.id)
