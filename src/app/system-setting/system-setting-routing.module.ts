@@ -12,6 +12,8 @@ import { AddDeliveryChargeComponent } from './pages/delivery-charge/add-delivery
 
 import { CancelreasonComponent } from './pages/cancelreason/cancelreason.component';
 import { AddCancelComponent } from './pages/cancelreason/add-cancel/add-cancel.component';
+import { TaxComponent } from './pages/tax/tax.component';
+import { AddTaxComponent } from './pages/tax/add-tax/add-tax.component';
 const routes: Routes = [
   {
     path: '',
@@ -102,7 +104,22 @@ const routes: Routes = [
       {
         path: 'edit-cancel/:id',
         component: AddCancelComponent,
-      }
+      },
+      {
+        path: 'tax',
+        component: TaxComponent,
+        data: {
+          title: 'Tax'
+        }
+      },
+      {
+        path: 'new-tax',
+        component: AddTaxComponent, 
+      },
+      {
+        path: 'edit-tax/:id',
+        component: AddTaxComponent,
+      },
     ]
   } 
 ]; 

@@ -19,6 +19,7 @@ export class CommonServiceService {
   ) {
     this.baseUrl = this.baseSevice.baseUrl;
   }
+
   getCountry()
   {
     return this.http.get(this.baseUrl + 'admin/country')
@@ -28,6 +29,7 @@ export class CommonServiceService {
       );
     
   }
+
   getparentCategory(languageId)
   {
     const params = { languageId: languageId }
@@ -38,6 +40,7 @@ export class CommonServiceService {
       );
     
   }
+
   getCategory(languageId)
   {
     const params = { languageId: languageId }
@@ -57,6 +60,7 @@ export class CommonServiceService {
         catchError(this.errorHandler.handleError)
       );
   }
+
   getAllCountries()
   {
     return this.http.get(this.baseUrl + 'web/countries')
@@ -66,6 +70,7 @@ export class CommonServiceService {
       );
     
   }
+
   getLanguage() {
     
     return this.http.get(this.baseUrl + 'admin/language').pipe(
@@ -73,6 +78,7 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+
   getCountryLanguage(country) {
     debugger
     return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
@@ -80,6 +86,7 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+
   getManufacturerList(country) {
     const params = { countryId: country }
 
@@ -88,6 +95,7 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+
   getSellerList(country) {
     const params = { countryId: country }
 
@@ -96,12 +104,13 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+
+
   getCurrency() {
-    
     return this.http.get(this.baseUrl + 'admin/currency').pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
-    );
+    );  
   }
   getSpeciality(){
     debugger

@@ -288,10 +288,12 @@ debugger
   }
   getManufacturerBrands()
   {
+    debugger
     this.commonService.getManufacturerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         debugger
         this.manufacturerBrands = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
       },
       error => {
       }
@@ -299,7 +301,7 @@ debugger
   }
   getSellerList()
   {
-    this.commonService.getSupplyType(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         debugger
         this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);

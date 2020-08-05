@@ -6,7 +6,7 @@ import { retry, catchError } from 'rxjs/operators';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class DeliveryChargeService {
 
