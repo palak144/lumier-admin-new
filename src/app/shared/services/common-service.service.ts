@@ -74,19 +74,24 @@ export class CommonServiceService {
     );
   }
   getCountryLanguage(country) {
+    debugger
     return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
   getManufacturerList(country) {
-    return this.http.get(this.baseUrl + 'admin/manufacturerList/' + country ).pipe(
+    const params = { countryId: country }
+
+    return this.http.get(this.baseUrl + 'admin/manufacturerList/' , { params: params }).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
   }
   getSellerList(country) {
-    return this.http.get(this.baseUrl + 'admin/sellerList/' + country ).pipe(
+    const params = { countryId: country }
+
+    return this.http.get(this.baseUrl + 'admin/sellerList/' , { params: params } ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -98,4 +103,12 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+  getSpeciality(){
+    debugger
+    return this.http
+    .get(this.baseUrl + 'customer/speciality')
+    .pipe(
+      retry(3)
+    );
+   }
 }

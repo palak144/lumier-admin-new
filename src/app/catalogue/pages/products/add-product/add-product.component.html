@@ -59,7 +59,7 @@
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                     
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
@@ -76,7 +76,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Select Language</label><span class="asterick">*</span>
+                                    <div class="assign-group-dropdown">
+                                       <p-dropdown [options]="languages" formControlName="languageId" 
+                                       styleClass="form-control border-primary" (onChange)="getlanguage($event)" 
+                                        filter="true" placeholder="Select language" 
+                               [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.languageId.errors }"  
+                                    >
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.languageId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.languageId.errors.required"> Language is required</div>
+                                        </div> 
+                                </div>
+                              </div>
+                              </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Is Sale</label>
                                     <div class="issale-check">
@@ -139,15 +155,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Supply Type</label><span class="asterick">*</span>
+                                    <label>Manufacturer/ Brands </label><span class="asterick">*</span>
                                        <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
-                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                        <p-dropdown [options]="manufacturerBrands"  [(ngModel)]="selected_supplyType"
+                                         formControlName="brandId" styleClass="form-control border-primary"
                                          filter="true" placeholder="Select Supply Type"
-                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyTypeId.errors }">
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.brandId.errors }">
                                          </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.brandId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.brandId.errors.required">Supply Type is required</div>
                                         </div>
                                     </div>
                                 </div>
@@ -251,11 +267,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Category</label><span class="asterick">*</span> 
-                                    <select formControlName="category" placeholder="Supply Type" class="form-control border-primary">
-                                         <option value="" >Select Supply Type</option>
-                                         <option value={{category}} *ngFor="let category of categories">{{category}}
-                                        </option>
-                                    </select>  
+                                    <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="categories"  [(ngModel)]="selected_category"
+                                         formControlName="categoryId" styleClass="form-control border-primary"
+                                         filter="true" placeholder="Select Supply Type"
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.categoryId.errors }">
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.categoryId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.categoryId.errors.required">Supply Type is required</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -269,11 +290,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Speciality Type</label>
-                                    <select formControlName="specialityType" placeholder="Speciality Type" class="form-control border-primary">
-                                         <option value="" >Select Supply Type</option>
-                                         <option value={{specialityType}} *ngFor="let specialityType of specialityTypes">{{specialityType}}
-                                        </option>
-                                    </select>  
+                                    <div class="assign-group-dropdown">
+                                    <p-dropdown [options]="specialities" formControlName="speciality"
+                                     filter="true" placeholder="Select Speciality" 
+                                     styleClass="form-control" 
+                                     [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.speciality.errors }">
+                                    </p-dropdown>
+                                    </div> 
                                 </div>
                             </div>
                             <div class="col-md-6">

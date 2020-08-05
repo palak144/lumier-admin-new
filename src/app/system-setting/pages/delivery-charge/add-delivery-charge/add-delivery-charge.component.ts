@@ -66,13 +66,13 @@ export class AddDeliveryChargeComponent implements OnInit {
   initForm()
   {
     this.addDeliveryForm = new FormGroup({
-      "title": new FormControl(null, Validators.required),
-      "noOfdays": new FormControl(null, Validators.required),
-      "countryId":new FormControl(null, Validators.required),
-      "minimumOrderAmount": new FormControl(null, Validators.required),
-      "deliveryCharge":new FormControl(null, Validators.required),
-      "currency":new FormControl(null, Validators.required),
-      "instructions":new FormControl(null, Validators.required),
+      title: new FormControl(null, Validators.required),
+      noOfdays: new FormControl(null, Validators.required),
+      countryId:new FormControl(null, Validators.required),
+      minimumOrderAmount: new FormControl(null, Validators.required),
+      deliveryCharge:new FormControl(null, Validators.required),
+      currency:new FormControl(null, Validators.required),
+      instructions:new FormControl(null)
    });
   }
   select(criteriaId: any , criteriaName:any) {
@@ -93,10 +93,11 @@ export class AddDeliveryChargeComponent implements OnInit {
     if (this.addDeliveryForm.invalid) {
       return
     }
-    this.addDeliveryFormDetails = {
-      "currency": this.select(this.addDeliveryForm.get('currency').value , this.currencyValue),
-    }
+    // this.addDeliveryFormDetails = {
+    //   "currency": this.currencyValue
+    // }
     let data=this.addDeliveryForm.value;
+    debugger
     if(this.id)
     {
       data.id= this.id;
