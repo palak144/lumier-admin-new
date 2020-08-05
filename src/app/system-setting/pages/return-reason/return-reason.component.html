@@ -31,7 +31,6 @@
                   <th style="width:6em">S No.</th>
                   <th style="width:10em">Reason</th>
                   <th style="width:8em">Country</th>
-                  <!-- <th style="width:6em">Status</th>  -->
                   <th style="width:6em">Action</th>
               </tr>
           </ng-template>
@@ -40,46 +39,13 @@
                   <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{return.id}}</td>
                   <td><span class="ui-column-title">Reason</span>{{return.reason}}</td>
                   <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
-                  <!-- <td>
-                    <span class="ui-column-title ">Status</span> 
-                    
-                    <div class="dropdown">
-                    <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
-
-                    </a>
-                        <ul class="dropdown-menu">
-                            <li [hidden]="return.adminStatus == 1"><a (click)="setStatus(return.id ,1, $event)">Active</a></li>
-                            <li [hidden]="return.adminStatus == 0"><a (click)="setStatus(return.id,0, $event)">Inactive</a></li>
-                        </ul>
-                    </div>
-                                          
-                </td>  -->
-                  <!-- <td>
-                      <span class="ui-column-title ">Status</span>
-
-                      <div class="dropdown" style="text-align: center;">
-                          <a class="dropdown-toggle badge colorStatus"
-                              [ngClass]="{ 'badge-primary': return.adminStatus === 1 , 'badge-danger': return.adminStatus === 0 }"
-                               type="button"
-                              data-toggle="dropdown">{{(return.adminStatus === 1) ? 'Active' : 'Inactive'}}
-                          </a>
-                          <ul class="dropdown-menu">
-                              <li [hidden]="return.adminStatus == 1"><a
-                                      (click)="setStatus(return.id ,1, $event)">Active</a></li>
-                              <li [hidden]="user.adminStatus == 0"><a
-                                      (click)="setStatus(return.id ,0, $event)">Inactive</a></li>
-                          </ul>
-                      </div>
-                  </td>  -->
                   <td>
                       <span class="ui-column-title">Action</span>
                      
                       <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
-
-                          </a>
+                          </a> 
                           <ul class="dropdown-menu" role="menu">
-                              <!-- <li><a (click)="getDropDownValue($event,return.id)">Edit</a></li> -->
                               <li>
                                 <a (click)="getDropDownValue($event,return.id)">Delete</a></li>
                           </ul> 

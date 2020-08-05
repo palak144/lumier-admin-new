@@ -1,0 +1,61 @@
+span.ng-star-inserted {
+    display: block;
+}
+.btn[class*="btn-"] {
+    margin-left: 1rem;
+}
+.paddingSearch{
+    padding: 20px 0;
+}
+p-dropdown.icons {
+    font-family: FontAwesome !important;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.widthMin {
+    min-width: 1em !important;
+}
+.searchBtn{
+    width: 100%;
+}
+.glyphicon-cog:before {
+    content: "\e019";
+    padding-right: 10px;
+}
+.colorStatus{
+    color: white !important;
+}
+
+ngb-modal-window.modal.fade.show.d-block {
+    opacity: 1 !important;
+}
+div#ngb-panel-0{
+    padding-bottom: 20px !important;
+    background-color: rgb(238, 238, 238) !important;
+
+}
+div#ngb-panel-0-header {
+    padding: 10px 10px 0px 10px !important;
+}
+.btn[class*="btn-"] {
+    margin-bottom: 0 !important;
+}
+button.btn.btn-link {
+    color: white !important;
+}
+ngb-accordion [role=tabpanel]{
+    padding: 1rem 2.5rem !important;
+    padding-top: 10px !important;
+}
+div#ngb-panel-0-header {
+    background-color: #3A496A !important;
+}
+.dropdown-menu{
+    left: -70%;
+    margin: 0.550rem 0 0;
+
+}
+span.c-remove.clear-all.ng-star-inserted {
+    visibility: hidden !important;
+}

@@ -56,7 +56,7 @@
                                        <div class="assign-group-dropdown">
                                         <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
                                          formControlName="supplyTypeId" styleClass="form-control border-primary"
-                                         (onChange)="getdropdown($event)" filter="true" placeholder="Select Supply Type"
+                                         filter="true" placeholder="Select Supply Type"
                                            [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.supplyTypeId.errors }">
                                          </p-dropdown>
                                         <div *ngIf="isSubmittedaddBannerForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
@@ -154,8 +154,8 @@
                                     data-trigger="hover" data-placement="top" data-title="Date Fixed" [(ngModel)]="endDate"
                                     formControlName="endDate" class="form-control border-primary" >
                                     <input type="checkbox" id="date" name="date" value="">
-                                     <label for="date"> No End Date</label><br>
-                                </div>
+                                     <label class="endDate" for="date"> No End Date</label><br>
+                                </div> 
                               </div>
                            
                             <!-- <div class="col-md-2">

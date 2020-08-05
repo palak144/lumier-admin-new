@@ -20,6 +20,7 @@ interface Country {
 export class AddDeliveryChargeComponent implements OnInit {
   deliveryChargeTitle:string; 
   addDeliveryForm :FormGroup;
+  addDeliveryFormDetails: any;
   country: any;
   private _unsubscribe = new Subject<boolean>();
   isSubmittedaddDeliveryForm: boolean = false;
@@ -29,6 +30,9 @@ export class AddDeliveryChargeComponent implements OnInit {
   countryValue: any;
   selectedCountryId: any;
   deliveryChargeDetailsData: any;
+  currencyValue: any;
+  selectedCriteria: any;
+  currencies: any[];
  
   constructor(
     private router: Router,
@@ -53,7 +57,8 @@ export class AddDeliveryChargeComponent implements OnInit {
           this.getAllDeliveryChargedetails(this.id);
         }
          this.initForm()
-         this.getCountry(); 
+         this.getCountry();
+         this.getCurrency(); 
       }
     )
   }
@@ -66,8 +71,18 @@ export class AddDeliveryChargeComponent implements OnInit {
       "countryId":new FormControl(null, Validators.required),
       "minimumOrderAmount": new FormControl(null, Validators.required),
       "deliveryCharge":new FormControl(null, Validators.required),
-      // "instruction":new FormControl(null, Validators.required),
+      "currency":new FormControl(null, Validators.required),
+      "instructions":new FormControl(null, Validators.required),
    });
+  }
+  select(criteriaId: any , criteriaName:any) {
+    
+    this.selectedCriteria = {
+                "id" : criteriaName,
+          "itemName" : criteriaName
+    
+    }
+    return this.selectedCriteria;
   }
   onSubmitDeliveryForm() 
   {
@@ -77,6 +92,9 @@ export class AddDeliveryChargeComponent implements OnInit {
     
     if (this.addDeliveryForm.invalid) {
       return
+    }
+    this.addDeliveryFormDetails = {
+      "currency": this.currencyValue,
     }
     let data=this.addDeliveryForm.value;
     if(this.id)
@@ -121,6 +139,28 @@ export class AddDeliveryChargeComponent implements OnInit {
       }
     )
   } 
+  getCurrency()
+{
+  this.commonService.getCurrency().pipe(takeUntil(this._unsubscribe)).subscribe(
+    (success:any) => {
+      
+      this.currencies = this.arrayOfStringsToArrayOfObjectsCurrency(success.data);
+    },
+    error => {
+    }
+  )
+}
+arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
+  const newArray = [];
+  arr.forEach(element => {
+    newArray.push({
+      label: element.itemName +" - "+ element.currencyCode,
+      value: element.itemName
+    });
+  });
+  
+  return newArray;
+}
   get signUpControls() {
     return this.addDeliveryForm.controls;
   }
@@ -149,6 +189,9 @@ export class AddDeliveryChargeComponent implements OnInit {
   getdropdown1(event:any){
     this.selectedCountryId = event.value
     }
+  getdropdown2(event:any) {
+    this.currencyValue = event.value;
+    }
 
     getAllDeliveryChargedetails(id) {
       this.deliveryChargeService.getAllDeliveryChargedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -158,7 +201,7 @@ export class AddDeliveryChargeComponent implements OnInit {
          
           this.patchForm(this.deliveryChargeDetailsData);
          
-    
+         
         },
         error => {
         }
@@ -172,6 +215,8 @@ export class AddDeliveryChargeComponent implements OnInit {
   this.addDeliveryForm.controls.countryId.patchValue(item.countryId);
   this.addDeliveryForm.controls.minimumOrderAmount.patchValue(item.minimumOrderAmount);
   this.addDeliveryForm.controls.deliveryCharge.patchValue(item.deliveryCharge);
+  this.addDeliveryForm.controls.currency.patchValue(item.currency);
+  this.addDeliveryForm.controls.instructions.patchValue(item.instructions);
 }
 
 
