@@ -132,7 +132,7 @@ debugger
       }
       if (this.editMode) {
         
-        this.bannerService.addBanner(this.addBannerForm ).subscribe(
+        this.bannerService.addBanner(this.addBannerFormDetails ).subscribe(
           data => {
           this.toastr.success("Banner Edited Successfully")
             this.router.navigate(['/website-elements/banners'],{relativeTo : this.activatedRoute})
