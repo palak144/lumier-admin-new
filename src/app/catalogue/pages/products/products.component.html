@@ -5,7 +5,7 @@
 <div class="row paddingSearch">
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
-          <!-- <input type="text" class="form-control round" placeholder="Search"> -->
+     
         
           <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
           <div class="form-control-position">
@@ -14,8 +14,7 @@
       </div>
   </form>
 </div>
-<!-- <h3 class="first">Default</h3>
-<p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu> -->
+
 <div class="row">
     <div class="col-xl-2 col-lg-6 col-md-12">
         <fieldset class="form-group">
@@ -45,10 +44,7 @@
       </fieldset>    
   </div>
   <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
-    <!-- <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/variant']">
-      
-        <span class="d-lg-block " >Variant name </span>
-      </button> -->
+  
     <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
       
       <span class="d-lg-block " >Import</span>
