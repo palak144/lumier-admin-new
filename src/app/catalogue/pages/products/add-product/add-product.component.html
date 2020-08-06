@@ -12,7 +12,7 @@
   <div class="content-header text-left">Add New Product</div>
 </div>
 <div class="copy-data">
-    <form class="form" >
+    <form class="form">
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
@@ -22,14 +22,13 @@
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-raised btn-primary btn-darken-3 white copy-product">
-                
-                <span class="d-lg-block " >Copy product data</span>
+                <span class="d-lg-block">Copy product data</span>
             </button>
         </div>
     </div>
 </form>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-6 imp-exp-buttons">
         <div class="text-left">
             <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
@@ -46,7 +45,7 @@
             </button>
         </div>
     </div>
-  </div>
+  </div> -->
 
 
 <div class="row ">
@@ -57,7 +56,6 @@
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
-                    
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -66,12 +64,10 @@
                                         <p-dropdown [options]="countries"  formControlName="countryId"
                                          (onChange)="getdropdown1($event)" styleClass="form-control border-primary" 
                                          filter="true" placeholder="Select Country"  [(ngModel)]="selected_country" 
-                                         [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.countryId.errors }"
-                                        >
+                                         [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.countryId.errors }">
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.countryId.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.countryId.errors.required">Country is required</div>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -92,6 +88,29 @@
                                 </div>
                               </div>
                               </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Name</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
+                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.fname.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.fname.errors.required"> Name is required</div>
+                                    </div> 
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>No Discount</label>
+                                    <input class="form-check-input" type="checkbox" value="" id="isSale">
+                                    <label class="issale" for="isSale">
+                                        No Discount
+                                    </label>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Is Sale</label>
@@ -100,30 +119,8 @@
                                         <label class="issale" for="isSale">
                                             Is Sale
                                         </label>
-                                      </div>  
-                                    <!-- <label>Is Sale</label>
-                                    <input type="text" formControlName="isSale" class="form-control border-primary" placeholder="Is Sale">  -->
-                                </div>
+                                      </div>  </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Name</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
-                        
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>No Discount</label>
-                                    <input type="text" class="form-control border-primary" placeholder="No Discount"> 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Related Products</label>

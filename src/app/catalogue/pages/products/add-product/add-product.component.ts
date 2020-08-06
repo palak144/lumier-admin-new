@@ -153,7 +153,7 @@ debugger
   }
 
   private initForm(){
-    let name = "";
+    let fname = "";
     let hyperlink = "";
     let file ="";
     // let sequenceNumber ="";
@@ -162,7 +162,7 @@ debugger
 
     this.addProductForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
-      name: new FormControl( name, Validators.required),
+      fname: new FormControl( fname, Validators.required),
       supplyTypeId: new FormControl( null, Validators.required),
       brandId: new FormControl( null, Validators.required),
       languageId:new FormControl(null, Validators.required),

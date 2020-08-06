@@ -96,12 +96,14 @@ export class AddTaxComponent implements OnInit {
   initForm()
   {
     this.addTaxForm = new FormGroup({
-      "taxCode": new FormControl(null, Validators.required),
-      "countryId":new FormControl(null, Validators.required),
-      "taxRate": new FormControl(null, Validators.required),
+      taxCode: new FormControl(null, Validators.required),
+      countryId:new FormControl(null, Validators.required),
+      taxRate: new FormControl(null, Validators.required),
    });
   }
-
+  get signUpControls() {
+    return this.addTaxForm.controls;
+  }
   onSubmitTaxForm() 
   {
   
