@@ -80,6 +80,7 @@ export class CommonServiceService {
   }
 
   getCountryLanguage(country) {
+    debugger
     return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -89,7 +90,7 @@ export class CommonServiceService {
   getManufacturerList(country) {
     const params = { countryId: country }
 
-    return this.http.get(this.baseUrl + 'admin/manufacturerList/' ,{ params: params }).pipe(
+    return this.http.get(this.baseUrl + 'admin/manufacturerList/' , { params: params }).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -98,7 +99,7 @@ export class CommonServiceService {
   getSellerList(country) {
     const params = { countryId: country }
 
-    return this.http.get(this.baseUrl + 'admin/sellerList/',{ params: params } ).pipe(
+    return this.http.get(this.baseUrl + 'admin/sellerList/' , { params: params } ).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -111,4 +112,12 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );  
   }
+  getSpeciality(){
+    debugger
+    return this.http
+    .get(this.baseUrl + 'customer/speciality')
+    .pipe(
+      retry(3)
+    );
+   }
 }

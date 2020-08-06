@@ -52,7 +52,7 @@ const routes: Routes = [
         path: 'cancel',
         component: CancelreasonComponent,
         data: {
-          title: 'cancel'
+          title: 'Cancel Reason'
         }
       },
       {
@@ -90,7 +90,7 @@ const routes: Routes = [
         path: 'delivery-charge',
         component: DeliveryChargeComponent,
         data: {
-          title: 'Delivery-Charge'
+          title: 'Delivery Charge'
         }
       },
       {
