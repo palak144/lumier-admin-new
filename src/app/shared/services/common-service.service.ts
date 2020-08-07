@@ -104,7 +104,23 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
+  getSeller() {
+   
 
+    return this.http.get(this.baseUrl + 'admin/sellerList'  ).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+  getCategoryList()
+  {
+   
+    return this.http.get(this.baseUrl + 'admin/categoryList' )
+    .pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
 
   getCurrency() {
     return this.http.get(this.baseUrl + 'admin/currency').pipe(
