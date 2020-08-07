@@ -87,10 +87,6 @@ export class ProductsComponent implements OnInit {
     config.type = 'pills';
   }
 
-
-
-  
-
   ngOnInit() {
     this.exportData = [];
     this.exportAllData = [];

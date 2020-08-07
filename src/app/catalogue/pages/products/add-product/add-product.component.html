@@ -57,7 +57,7 @@
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Country</label><span class="asterick">*</span>
                                         <div class="assign-group-dropdown">
@@ -72,15 +72,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Select Language</label><span class="asterick">*</span>
                                     <div class="assign-group-dropdown">
                                        <p-dropdown [options]="languages" formControlName="languageId" 
                                        styleClass="form-control border-primary" (onChange)="getlanguage($event)" 
                                         filter="true" placeholder="Select language" 
-                               [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.languageId.errors }"  
-                                    >
+                               [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.languageId.errors }">
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.languageId.errors" class="invalid-feedback">
                                             <div *ngIf="signUpControls.languageId.errors.required"> Language is required</div>
@@ -88,7 +87,9 @@
                                 </div>
                               </div>
                               </div>
-                              <div class="col-md-4">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="fname" class="form-control border-primary" placeholder="Name">
@@ -97,55 +98,72 @@
                                     </div> 
                                 </div>
                             </div>
-                           
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>No Discount</label>
-                                    <input class="form-check-input" type="checkbox" value="" id="isSale">
-                                    <label class="issale" for="isSale">
-                                        No Discount
-                                    </label>
-                              </div>
+                                    <label>Related Products</label>
+                                    <input type="text" class="form-control border-primary" placeholder="Related Products" formControlName="relatedProducts"> 
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>PN CDE</label><span class="asterick">*</span> 
+                                    <input type="text" formControlName="pnCode" class="form-control border-primary" placeholder="PN CDE" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>UOM</label>
+                                    <input type="text" formControlName="UOM"  class="form-control border-primary" placeholder="UOM"> 
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>No Discount</label>
+                                    <div class="issale-check">
+                                    <input class="form-check-input" formControlName="noDiscount" type="checkbox" value="" id="isDiscount">
+                                    <label class="issale" for="isSale">
+                                        No Discount
+                                    </label>
+                                    </div>
+                              </div>
+                            </div>
+                            
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Is Sale</label>
                                     <div class="issale-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="isSale">
+                                        <input class="form-check-input" formControlName="isSale" type="checkbox" value="" id="isSale">
                                         <label class="issale" for="isSale">
                                             Is Sale
                                         </label>
                                       </div>  </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Related Products</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Related Products"> 
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Package Content</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Package Content"> 
-                                </div>
+                                    <label>Is Quote only?</label>
+                                    <div class="issale-check">
+                                        <input class="form-check-input" formControlName="isQuote" type="checkbox" value="" id="isQuote">
+                                        <label class="isSale" for="isQuote">
+                                            Is Quote only?
+                                        </label>
+                                      </div>                           
+                               </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="pnCde" class="form-control border-primary" placeholder="PN CDE" >
-                                  
+                                    <label>Short Description</label>
+                                    <textarea type="text" cols="30" rows="3" class="form-control border-primary" formControlName="shortDiscription" placeholder="Short Description"> </textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Short Description</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Short Description"> 
+                                    <label>Package Content</label>
+                                    <textarea type="text"  cols="30" rows="3" class="form-control border-primary" formControlName="packageContent" placeholder="Package Content"> </textarea>
                                 </div>
                             </div>
                         </div>
@@ -156,42 +174,69 @@
                                        <div class="assign-group-dropdown">
                                         <p-dropdown [options]="manufacturerBrands"  [(ngModel)]="selected_supplyType"
                                          formControlName="brandId" styleClass="form-control border-primary"
-                                         filter="true" placeholder="Select Supply Type"
+                                         filter="true" placeholder="Select Manufacturer/ Brands"
                                            [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.brandId.errors }">
-                                         </p-dropdown>
+                                        </p-dropdown>
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.brandId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.brandId.errors.required">Supply Type is required</div>
+                                            <div *ngIf="signUpControls.brandId.errors.required">Manufacturer/ Brands is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supply Type</label><span class="asterick">*</span>
+                                       <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
+                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                         filter="true" placeholder="Select Supply Type"
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyTypeId.errors }">
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Price</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" >
                                      
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Wallet Price</label>
+                                    <input type="text"  class="form-control border-primary" formControlName="walletPrice"  placeholder="Wallet Price"> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Country Origin</label>
+                                    <select placeholder="country Origin" class="form-control border-primary">
+                                         <option value="" >Select country Origin</option>
+                                         <option value={{countryOrigin}} *ngFor="let countryOrigin of countryOrigins">{{countryOrigin}}
+                                        </option>
+                                    </select>  
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Title</label>
-                                    <input type="text"  class="form-control border-primary" placeholder="Meta Title"> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Is Quote only?</label>
-                                    <input type="text"  class="form-control border-primary" placeholder="Is Quote only?"> 
+                                    <input type="text" formControlName="metaTag" class="form-control border-primary" placeholder="Meta Title"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>UOM</label>
-                                    <input type="text"  class="form-control border-primary" placeholder="UOM"> 
+                                    <label>Meta Description</label>
+                                    <input type="text" class="form-control border-primary" formControlName="metaDesc" placeholder="Meta Description"> 
                                 </div>
                             </div>
                         </div>
@@ -211,47 +256,10 @@
                                 </div>
                                 </div>
                               </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Country Origin</label>
-                                    <select placeholder="country Origin" class="form-control border-primary">
-                                         <option value="" >Select country Origin</option>
-                                         <option value={{countryOrigin}} *ngFor="let countryOrigin of countryOrigins">{{countryOrigin}}
-                                        </option>
-                                    </select>  
-                                </div>
-                            </div>
+                           
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Wallet Price</label>
-                                    <input type="text"  class="form-control border-primary" placeholder="Wallet Price"> 
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Meta Description</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Meta Description"> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Supply Type</label><span class="asterick">*</span>
-                                       <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
-                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
-                                         filter="true" placeholder="Select Supply Type"
-                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyTypeId.errors }">
-                                         </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Keyword</label><span class="asterick">*</span> 
@@ -267,11 +275,11 @@
                                     <div class="assign-group-dropdown">
                                         <p-dropdown [options]="categories"  [(ngModel)]="selected_category"
                                          formControlName="categoryId" styleClass="form-control border-primary"
-                                         filter="true" placeholder="Select Supply Type"
+                                         filter="true" placeholder="Select Category"
                                            [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.categoryId.errors }">
                                         </p-dropdown>
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.categoryId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.categoryId.errors.required">Supply Type is required</div>
+                                            <div *ngIf="signUpControls.categoryId.errors.required">Category is required</div>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +287,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Ribbon Text</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Ribbon Text"> 
+                                    <input type="text" class="form-control border-primary" formControlName="ribbonText" placeholder="Ribbon Text"> 
                                 </div>
                             </div>
                         </div>
@@ -299,8 +307,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Is Package</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Is Package"> 
-                                </div>
+                                    <div class="issale-check">
+                                        <input class="form-check-input" formControlName="isPackage" type="checkbox" value="" id="isPackage">
+                                        <label class="isSale" for="isPackage">
+                                            Is Package
+                                        </label>
+                                      </div>                                   </div>
                             </div>
                         </div>
                         <div class="row">

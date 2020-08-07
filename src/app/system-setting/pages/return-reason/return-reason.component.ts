@@ -116,31 +116,33 @@ getAllReturnSearch(page, searchBar) {
 }
 
 getDropDownValue(event, id) {
-  if (event.currentTarget.firstChild.data === 'Delete') {
 
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to perform this action?',
-      accept: () => {
-        this.returnReasonService.deleteReturn(id).pipe(takeUntil(this._unsubscribe)).subscribe(
-          (success: any) => {
 
-            this.getAllReturn(this.page);
-            
-            this.returnList = this.returnList.filter((item: any) => {
-              return id !== item.countryId
-            })
-          },
-          error => {
-          }
-        )
-      },
-      reject: () => {
-        this.action = null;
-      }
-    });
+  this.confirmationService.confirm({
+    message: 'Are you sure that you want to perform this action?',
+    accept: () => {
+      this.returnReasonService.deleteReturn(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success: any) => {
 
-  }
+          this.getAllReturn(this.page);
+          
+          this.returnList = this.returnList.filter((item: any) => {
+            return id !== item.countryId
+          })
+        },
+        error => {
+        }
+      )
+    },
+    reject: () => {
+      this.action = null;
+    }
+  });
+
+
 }
+
+
 
 
 }

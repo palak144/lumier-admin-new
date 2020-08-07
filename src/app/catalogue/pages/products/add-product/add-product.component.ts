@@ -166,8 +166,23 @@ debugger
       supplyTypeId: new FormControl( null, Validators.required),
       brandId: new FormControl( null, Validators.required),
       languageId:new FormControl(null, Validators.required),
-
-
+      relatedProducts : new FormControl(null, Validators.required),
+      pnCode: new FormControl(null, Validators.required),
+      noDiscount : new FormControl(null, Validators.required),
+      isSale : new FormControl(null, Validators.required),
+      shortDiscription : new FormControl(null, Validators.required),
+      packageContent : new FormControl(null, Validators.required),
+      price : new FormControl(null, Validators.required),
+      metaTag : new FormControl(null, Validators.required),
+      isQuote : new FormControl(null, Validators.required),
+      UOM : new FormControl(null, Validators.required),
+      walletPrice : new FormControl(null, Validators.required),
+      metaDesc : new FormControl(null, Validators.required),
+      metaKeyword : new FormControl(null, Validators.required),
+      categoryId : new FormControl(null, Validators.required),
+      ribbonText : new FormControl(null, Validators.required),
+      speciality : new FormControl(null, Validators.required),
+      isPackage : new FormControl(null, Validators.required),
     });
     
         if(this.editMode){

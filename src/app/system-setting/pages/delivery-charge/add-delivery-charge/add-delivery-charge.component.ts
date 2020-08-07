@@ -27,12 +27,11 @@ export class AddDeliveryChargeComponent implements OnInit {
   id: number;
   editMode: boolean;
   countries:Country[];
-  countryValue: any;
   selectedCountryId: any;
   deliveryChargeDetailsData: any;
-  currencyValue: any;
   selectedCriteria: any;
   currencies: any[];
+  currencyValue: any;
  
   constructor(
     private router: Router,
@@ -58,7 +57,6 @@ export class AddDeliveryChargeComponent implements OnInit {
         }
          this.initForm()
          this.getCountry();
-         this.getCurrency(); 
       }
     )
   }
@@ -93,10 +91,9 @@ export class AddDeliveryChargeComponent implements OnInit {
     if (this.addDeliveryForm.invalid) {
       return
     }
-    // this.addDeliveryFormDetails = {
-    //   "currency": this.currencyValue
-    // }
     let data=this.addDeliveryForm.value;
+    
+    data.currency = this.currencyValue
     debugger
     if(this.id)
     {
@@ -134,7 +131,9 @@ export class AddDeliveryChargeComponent implements OnInit {
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
       },
       error => {
       }
@@ -142,41 +141,23 @@ export class AddDeliveryChargeComponent implements OnInit {
   } 
   getCurrency()
 {
-  this.commonService.getCurrency().pipe(takeUntil(this._unsubscribe)).subscribe(
+  this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      
-      this.currencies = this.arrayOfStringsToArrayOfObjectsCurrency(success.data);
+      debugger
+      this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+      debugger
     },
     error => {
     }
   )
 }
-arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
-  const newArray = [];
-  arr.forEach(element => {
-    newArray.push({
-      label: element.itemName +" - "+ element.currencyCode,
-      value: element.itemName
-    });
-  });
-  
-  return newArray;
-}
+
   get signUpControls() {
     return this.addDeliveryForm.controls;
   }
-  arrayOfStringsToArrayOfObjectsCountry(arr: any[]) {
-    const newArray = [];
-    arr.forEach(element => {
-      newArray.push({
-        label: element.country,
-        value: element.id
-      });
-    });
-    return newArray;
-  }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
+    debugger
     const newArray = [];
     arr.forEach(element => {
       newArray.push({
@@ -189,17 +170,30 @@ arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
 
   getdropdown1(event:any){
     this.selectedCountryId = event.value
+    this.getCurrency(); 
+
     }
   getdropdown2(event:any) {
-    this.currencyValue = event.value;
-    }
+    debugger
+  this.currencyValue = this.currencies.find( item => item.value === event.value).label;
+
+}
 
     getAllDeliveryChargedetails(id) {
       this.deliveryChargeService.getAllDeliveryChargedetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
         (success:any) => {
           
           this.deliveryChargeDetailsData = success.data;
-         
+         debugger
+         this.commonService.getCountryCurrency(this.deliveryChargeDetailsData.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (success:any) => {
+            debugger
+            this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+            debugger
+          },
+          error => {
+          }
+        )
           this.patchForm(this.deliveryChargeDetailsData);
          
          
