@@ -28,10 +28,10 @@
          
           <ng-template pTemplate="header">
               <tr>
-                  <th style="width:6em">S No.</th>
-                  <th style="width:10em">Reason</th>
-                  <th style="width:8em">Country</th>
-                  <th style="width:6em">Action</th>
+                  <th style="width:5em">S No.</th>
+                  <th >Reason</th>
+                  <th style="width:12em">Country</th>
+                  <th style="width:5em">Action</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-return>
@@ -41,15 +41,16 @@
                   <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
                   <td>
                       <span class="ui-column-title">Action</span>
-                     
-                      <div class="dropdown">
+                      <i (click)="getDropDownValue($event,return.id)" class="fa fa-trash" aria-hidden="true"></i>
+
+                      <!-- <div class="dropdown">
                           <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
                           </a> 
                           <ul class="dropdown-menu" role="menu">
                               <li>
                                 <a (click)="getDropDownValue($event,return.id)">Delete</a></li>
                           </ul> 
-                      </div>
+                      </div> -->
                   </td>
               </tr>
           </ng-template>

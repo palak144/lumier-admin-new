@@ -80,8 +80,16 @@ export class CommonServiceService {
   }
 
   getCountryLanguage(country) {
-    debugger
+    
     return this.http.get(this.baseUrl + 'admin/getCountryLanguage/' + country ).pipe(
+      retry(3),
+      catchError(this.errorHandler.handleError)
+    );
+  }
+
+  getCountryCurrency(country) {
+debugger
+    return this.http.get(this.baseUrl + 'admin/getCountryCurrency/'+ country).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
     );
@@ -104,7 +112,6 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
-
 
   getCurrency() {
     return this.http.get(this.baseUrl + 'admin/currency').pipe(

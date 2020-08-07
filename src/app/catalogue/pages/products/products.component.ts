@@ -81,10 +81,6 @@ export class ProductsComponent implements OnInit {
     config.type = 'pills';
   }
 
-
-
-  
-
   ngOnInit() {
 
       this.initiateSearch();

@@ -139,13 +139,13 @@ onSubmitCountryForm() {
      }
 }
 
-
 patchForm(item) {
-  
+  debugger
    this.addCountryForm.controls.countryName.patchValue(item.countryName);
    this.addCountryForm.controls.languages.patchValue(item.languages);
   this.addCountryForm.controls.currency.patchValue(item.currency);
-}
+} 
+
 getCountrydetails(id) {
   this.systemSettingsService.getCountrydetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
@@ -156,6 +156,7 @@ getCountrydetails(id) {
     }
   ) 
 } 
+
 get signUpControls() {
   return this.addCountryForm.controls;
 }
@@ -209,9 +210,10 @@ arrayOfStringsToArrayOfObjectsCurrency(arr: any[]) {
       value: element.id
     });
   });
-  
   return newArray;
+
 }
+
 arrayOfStringsToArrayOfObjects(arr: any[]) {
   const newArray = [];
   arr.forEach(element => {
@@ -222,6 +224,7 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
   });
   return newArray;
 }
+
 arrayOfStringsToArrayOfObjectsCountry(arr: any[]) {
   const newArray = [];
   arr.forEach(element => {

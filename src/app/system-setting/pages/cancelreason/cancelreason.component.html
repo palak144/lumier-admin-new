@@ -31,12 +31,10 @@
             <p-table [value]="cancelList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"[lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"  [totalRecords]="totalCount">
           <ng-template pTemplate="header"> 
               <tr>
-                  <th>S. No.</th>
+                  <th style="width:5em">S. No.</th>
                   <th>Reason</th>
-                  <th>Country</th>
-             
-                  <!-- <th>Status</th> -->
-                  <th>Action</th>
+                  <th style="width:12em">Country</th>
+                  <th style="width:5em">Action</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-cancel>

@@ -50,7 +50,7 @@ export class DeliveryChargeComponent implements OnInit {
     this.deliveryChargeService.updateDeliveryChargeStatus(statusData).subscribe(
       
       (success: any) => {
-
+       debugger
         this.ngOnInit() 
       }) 
   }
