@@ -2,7 +2,7 @@
   <div class="content-header text-left">Return Reason</div>
   <p class="content-sub-header"></p>
 </div>
-<div class="row paddingSearch">
+<div class="row paddingSearch"> 
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
           <!-- <input type="text" class="form-control round" placeholder="Search"> -->
@@ -40,17 +40,9 @@
                   <td><span class="ui-column-title">Reason</span>{{return.reason}}</td>
                   <td><span class="ui-column-title">Country</span>{{return.country.countryName}}</td>
                   <td>
-                      <span class="ui-column-title">Action</span>
-                     
-                      <div class="dropdown">
-                          <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
-                          </a> 
-                          <ul class="dropdown-menu" role="menu">
-                              <li>
-                                <a (click)="getDropDownValue($event,return.id)">Delete</a></li>
-                          </ul> 
-                      </div>
-                  </td>
+                    <span class="ui-column-title">Action</span>
+                    <i (click)="getDropDownValue($event,return.id)" class="fa fa-trash" aria-hidden="true"></i>
+               </td>
               </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">
