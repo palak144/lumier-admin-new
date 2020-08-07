@@ -16,18 +16,22 @@ import { ProductService } from 'app/shared/services/prod.service';
 })
 export class AddProductComponent implements OnInit {
 
+  languages = [];
+  selectedCategoryLanguages:any;
+  language: any;
+  countryLanguage: any;
+  selectedLanguageId: any;
   productTitle:string;
   addProductForm: FormGroup; 
   isSubmittedaddProductForm: boolean = false;
   permissions: any;
   closeResult: string;
-  languages: string[];
   fieldArray: Array<any> = [];
    newAttribute: any = {};
    basedArray: Array<any> = [];
   manufacturerBrands: any[];
   countryOrigins: string[];
-  categories: string[];
+  categories: any[];
   specialityTypes: string[];
   countries: any[];
   private _unsubscribe = new Subject<boolean>();
@@ -45,6 +49,8 @@ export class AddProductComponent implements OnInit {
   url: string | ArrayBuffer;
   product: any;
   sellerLists: any[];
+  specialities : any = [];
+
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private router: Router,
@@ -63,6 +69,8 @@ export class AddProductComponent implements OnInit {
         this.id = +id['id']
         this.editMode = id['id'] != null
         this.getCountry();
+        this.getSpecialities();
+
       }
     )
 
@@ -145,7 +153,7 @@ debugger
   }
 
   private initForm(){
-    let name = "";
+    let fname = "";
     let hyperlink = "";
     let file ="";
     // let sequenceNumber ="";
@@ -154,9 +162,10 @@ debugger
 
     this.addProductForm = new FormGroup({
       countryId:new FormControl(null,[Validators.required]),
-      name: new FormControl( name, Validators.required),
-      supplyTypeId: new FormControl( name, Validators.required),
-      brandId: new FormControl( name, Validators.required),
+      fname: new FormControl( fname, Validators.required),
+      supplyTypeId: new FormControl( null, Validators.required),
+      brandId: new FormControl( null, Validators.required),
+      languageId:new FormControl(null, Validators.required),
 
 
     });
@@ -169,6 +178,7 @@ debugger
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{          
               this.product=success.data
+              debugger
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -190,11 +200,17 @@ debugger
                 error => {
                 }
               )
-              this.commonService.getCategory(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+              this.commonService.getCountryLanguage(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+                (success:any) => {
+                  this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+                },
+                error => {
+                }
+              )
+              this.commonService.getCategory(this.product.languageId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   debugger
                   this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
-                  debugger
                 },
                 error => {
                 }
@@ -226,6 +242,13 @@ debugger
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
+    this.getLanguage();
+  }
+
+  getlanguage(event:any)
+  {
+    debugger
+    this.selectedLanguageId = event.value ;
     this.getCategoryList();
   }
 
@@ -240,7 +263,19 @@ debugger
       }
     )
   }
-
+  getLanguage()
+  {
+   
+    this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
+      },
+      error => {
+      }
+    )
+  }
   getSupplyType()
   {
     this.commonService.getSupplyType(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -268,23 +303,39 @@ debugger
   {
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+        debugger
         this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
       }
     )
   }
-  getCategoryList()
-  {
-    this.commonService.getCategory(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+  getCategoryList(){
+    this.commonService.getCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         debugger
         this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
       },
       error => {
       }
     )
+  }
+  getSpecialities(){
+    this.commonService.getSpeciality().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        success.data.result.forEach(element => {
+          this.specialities.push({
+            label: element.specialityName,
+            value: element.specialityName
+          });
+    
+        });
+      },
+      error => {
+      }
+    )
+    debugger
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
     const newArray = [];

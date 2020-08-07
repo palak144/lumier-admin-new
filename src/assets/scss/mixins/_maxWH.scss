@@ -1,0 +1,16 @@
+// for max-width
+@mixin maxWidth($width, $alignment) {
+    max-width: $width;
+
+    @if $alignment=='right' {
+        margin-right: auto;
+    }
+
+    @else if $alignment=='center' {
+        margin: 0 auto;
+    }
+
+    @else if $alignment=='left' {
+        margin-left: auto;
+    }
+}

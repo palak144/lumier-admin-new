@@ -15,6 +15,7 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
 import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { VariantComponent } from './pages/products/variant/variant.component';
 
  
 @NgModule({
@@ -25,6 +26,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     CKEditorModule,
     AngularMultiSelectModule
   ],
-  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent]
+  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
 })
 export class CatalogueModule {  }

@@ -64,10 +64,10 @@ export const ROUTES: RouteInfo[] = [
             { path: '/systemsetting/supplytype', title:'Supply Type', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/country', title: 'Country', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/return-reason', title: 'Return Reason', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/systemsetting/delivery-charge', title: 'Delivery-Charge', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/systemsetting/cancel', title: 'Cancel', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/delivery-charge', title: 'Delivery Charge', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/systemsetting/cancel', title: 'Cancel Reason', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/systemsetting/tax', title: 'Tax', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-          
+
            ]},
           { 
             path: '/users',

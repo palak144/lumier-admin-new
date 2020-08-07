@@ -43,12 +43,12 @@ export class AddNewCategoryComponent implements OnInit {
   selectedFile: any;
   selectedCountryId: any[];
   selected_countries:any;
-  selectedCategoryLanguages:any;
-  languages = [];
   categoryNameLang = []
+  languages = [];
+  selectedCategoryLanguages:any;
   language: any;
   countryLanguage: any;
- countries:Country[];
+  countries:Country[];
   url: any;
   base64result: string;
   filenew: any;
@@ -67,13 +67,10 @@ export class AddNewCategoryComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private manufactureService: ManufactureService,
     private commonService: CommonServiceService,
     private toastr: ToastrService,
     private categoryService:CategoryService,
-    private categoriesService: CategoriesService
   ) { }
-
 
 
   ngOnInit(): void {
@@ -238,7 +235,6 @@ getCountry()
     this.commonService.getCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.category = this.arrayOfStringsToArrayOfObjects(success.data);
-        console.log(this.category);
       },
       error => {
       }
@@ -370,9 +366,7 @@ getLanguage()
   )
 }
 getdropdown(event:any){
- console.log(event.value);
   this.selectedCountryId = event.value;
-  console.log( this.selectedCountryId);
   this.getLanguage();
 
   

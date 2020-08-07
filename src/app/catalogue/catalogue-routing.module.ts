@@ -12,6 +12,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
 import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
+import { VariantComponent } from './pages/products/variant/variant.component';
 const routes: Routes = [{
 
   path: '',
@@ -68,6 +69,11 @@ const routes: Routes = [{
         {
           path: 'new-product',
           component: AddProductComponent,
+          
+        },
+        {
+          path: 'variant',
+          component: VariantComponent,
           
         },
         {

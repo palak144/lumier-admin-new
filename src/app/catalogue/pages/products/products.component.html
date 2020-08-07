@@ -5,16 +5,16 @@
 <div class="row paddingSearch">
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
-          <!-- <input type="text" class="form-control round" placeholder="Search"> -->
-          <input   type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" />
+     
+        
+          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
       </div>
   </form>
 </div>
-<!-- <h3 class="first">Default</h3>
-<p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu> -->
+
 <div class="row">
     <div class="col-xl-2 col-lg-6 col-md-12">
         <fieldset class="form-group">
@@ -44,10 +44,12 @@
       </fieldset>    
   </div>
   <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
+  
     <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
       
       <span class="d-lg-block " >Import</span>
     </button>
+    
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
         
         <span class="d-lg-block " >Export</span>
@@ -66,6 +68,7 @@
   </button>
   </div>
 </div>
+
 <ngb-tabset>
     <ngb-tab title="Products">
       <ng-template ngbTabContent>
@@ -73,38 +76,42 @@
             <div class="heading-wrapper">
             </div>
             <div class="table-wrapper vehiclwrappere- ">
-              <p-table [value]="brandList" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount">
+              <p-table [value]="productList"  dataKey="id" styleClass="table-list-wrapper" [responsive]="true" rowExpandMode="single" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  [totalRecords]="totalCount" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)">
                   <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                   <ng-template pTemplate="header">
                         <tr class="table-coustom-style">
+                            <th style="width: 3rem"></th>
                             <th>S No.</th>
                             <th>Product Code</th>
                             <th>Name</th>
-                            <th>Child Category</th> 
+                            <th>Category</th> 
                             <th>Seller</th>
                             <th>Country</th> 
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-brand >
+                    <ng-template pTemplate="body" let-product let-expanded="expanded" >
                         <tr>
-                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
-                            <td><span class="ui-column-title">Product Code</span>{{brand.manufacturerName}}</td>
-                            <td><span class="ui-column-title">Name</span>{{brand.supplyType.name}}</td>
-                            <td><span class="ui-column-title">Child Category</span></td>
-                            <td><span class="ui-column-title">Seller</span>{{brand.walletDiscount}}</td>
-                            <td><span class="ui-column-title">Country</span>{{brand.sort}}</td>
+                            <td>
+                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{product.id}}</td>
+                            <td><span class="ui-column-title">Product Code</span>{{product.PNCDE}}</td>
+                            <td><span class="ui-column-title">Name</span>{{product.productName}}</td>
+                            <td><span class="ui-column-title">Category</span>{{product.productName}}</td>
+                            <td><span class="ui-column-title">Seller</span>{{product.productName}}</td>
+                            <td><span class="ui-column-title">Country</span>{{product.country.countryName}}</td>
                              <td >
                                 <span class="ui-column-title ">Status</span> 
                                 
                                 <div class="dropdown">
-                                <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': brand.adminStatus === 1 , 'badge-danger': brand.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(brand.adminStatus === 1) ? 'Active' : 'Inactive'}}
+                                <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': product.adminStatus === 1 , 'badge-danger': product.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(product.adminStatus === 1) ? 'Active' : 'Inactive'}}
           
                                 </a>
                                     <ul class="dropdown-menu">
-                                        <li [hidden]="brand.adminStatus == 1"><a (click)="setStatus(brand.id ,1, $event)">Active</a></li>
-                                        <li [hidden]="brand.adminStatus == 0"><a (click)="setStatus(brand.id,0, $event)">Inactive</a></li>
+                                        <li [hidden]="product.adminStatus == 1"><a (click)="setStatus(product.id ,1, $event)">Active</a></li>
+                                        <li [hidden]="product.adminStatus == 0"><a (click)="setStatus(product.id,0, $event)">Inactive</a></li>
                                     </ul>
                                 </div>
                                                       
@@ -117,17 +124,50 @@
           
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
-                                        <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
+                                        <li><a (click)="getDropDownValue($event,product.id)">Edit</a></li>
+                                        <li><a (click)="getDropDownValue($event,product.id)">Delete</a></li>
           
                                     </ul>
                                 </div>
                             </td>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="emptymessage">
+                    <ng-template pTemplate="rowexpansion" let-product>
                         <tr>
-                            <td class="text-center text-danger font-weight-600" colspan="8">No Records Found.</td>
+                            <td colspan="9">
+                                <div class="p-p-3">
+                                    <p-table  dataKey="id">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>S No. </th>
+                                                <th>Variant</th>
+                                                <th>Pacakage </th>
+                                                <th>Quantity </th>
+                                                <th>Sale Price </th>
+                                                <th >price</th>
+                                                <th >Wallet Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </ng-template>
+                                        <!-- <ng-template pTemplate="body" let-order>
+                                            <tr>
+                                                <td>{{order.id}}</td>
+                                                <td>{{order.customer}}</td>
+                                                <td>{{order.id}}</td>
+                                                <td>{{order.amount | currency:'USD'}}</td>
+                                                <td><span [class]="'order-badge order-' + order.status.toLowerCase()">{{order.status}}</span></td>
+                                                <td><p-button type="button" icon="pi pi-search"></p-button></td>
+                                            </tr>
+                                        </ng-template> -->
+                                        <ng-template pTemplate="emptymessage">
+                                            <tr>
+                                                <td colspan="9">There are no order for this product yet.</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </td>
                         </tr>
                     </ng-template>
                 </p-table>
