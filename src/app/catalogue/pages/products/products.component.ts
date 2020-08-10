@@ -13,6 +13,7 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
+import { CompaniesModule } from 'app/companies/companies.module';
 interface Country {
   _id:string, 
   country:string
@@ -74,6 +75,8 @@ export class ProductsComponent implements OnInit {
   exportAllData: any[];
   productListExport: any;
   action: any;
+  variantlist: any;
+  providers: any;
   constructor(config: NgbTabsetConfig, private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
@@ -86,7 +89,17 @@ export class ProductsComponent implements OnInit {
     // config.justify = 'center';
     config.type = 'pills';
   }
+  setStatus(id:Number,adminStatus:Number){
 
+    let statusData = {id,adminStatus}
+    
+ this.ProductService.updateproductStatus(statusData).subscribe(
+   (success:any)=>
+   {
+  
+    this.ngOnInit()
+} )
+  }
   ngOnInit() {
     this.exportData = [];
     this.exportAllData = [];
@@ -106,9 +119,9 @@ export class ProductsComponent implements OnInit {
         switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId , this.sellerId, this.categoryId
         ))
       ).subscribe((success: any) => {
-       console.log(success);
+   
         this.productList = success.data.results;
-        console.log(this.productList);
+    
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
       })
@@ -153,14 +166,14 @@ export class ProductsComponent implements OnInit {
         })
     }
     getAllproduct(page) { 
-
+      var data=[];
       this.ProductService.getAllproduct(page).subscribe(
         (success: any) => {
       
-          
+          console.log(success);
           this.productList = success.data.results;
-          console.log(this.productList);
-          this.totalCount = success.data.total;
+            
+      
         },
         error => {
         
@@ -197,16 +210,14 @@ export class ProductsComponent implements OnInit {
   }
     loadDataLazy(event: LazyLoadEvent) {
       this.page = event.first / 10;
-      console.log(this.page);
-      console.log(this.searchBar);
-      console.log(this.countryId);
+ 
       //if there is a search term present in the search bar, then paginate with the search term
       if (!this.searchBar && !this.countryId) {
-        console.log("page");
+
         this.getAllproduct(this.page);
       }
       else if (!this.countryId) {
-        console.log("page123");
+   
         this.getAllproduct(this.page);
       }
       else {

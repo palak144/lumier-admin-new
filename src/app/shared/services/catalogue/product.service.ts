@@ -29,6 +29,13 @@ getAllproductSearch(page?, searchKey?, exportAll?, countryId?, sellerId?, catego
         catchError(this.errorHandler.handleError)
       );
 }
+updateproductStatus(statusData: {id: Number; adminStatus: Number }){
+  return this.http.put(this.baseUrl + 'admin/product', statusData)
+  .pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
+}
 deleteProduct(id) {
   return this.http.delete(this.baseUrl + 'admin/product/' + id)
   .pipe(

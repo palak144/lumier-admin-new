@@ -148,15 +148,15 @@
                                                 <th>Action</th>
                                             </tr>
                                         </ng-template>
-                                        <ng-template pTemplate="body" let-productVariants>
-                                            <tr >
+                                        <ng-template pTemplate="body" let-productVariants >
+                                            <tr *ngIf="product.id==productVariants.productId">
                                                 <td>{{productVariants.id}}</td>
                                                 <td>{{productVariants.variant}}</td>
                                           
                                                 <td>{{productVariants.quantity}}</td>
-                                                <td>{{productVariants.sellPrice}}}</td>
-                                                <td>{{productVariants.sellerFee}}}</td>
-                                                <td>{{productVariants.walletPrice}}}</td>
+                                                <td>{{productVariants.sellPrice}}</td>
+                                                <td>{{productVariants.sellerFee}}</td>
+                                                <td>{{productVariants.walletPrice}}</td>
                                                 <td>{{productVariants.adminStatus}}</td>
                                                 <td><p-button type="button" icon="pi pi-search"></p-button></td>
                                             </tr>
