@@ -16,7 +16,8 @@ import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { VariantComponent } from './pages/products/variant/variant.component';
-
+import { FileSelectDirective } from 'ng2-file-upload';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
  
 @NgModule({
   imports: [
@@ -24,8 +25,9 @@ import { VariantComponent } from './pages/products/variant/variant.component';
     SharedModule,
     CatalogueRoutingModule,
     CKEditorModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
+    NgxDatatableModule
   ],
-  declarations: [CatalogueLayoutComponent, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
+  declarations: [CatalogueLayoutComponent, FileSelectDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
 })
 export class CatalogueModule {  }

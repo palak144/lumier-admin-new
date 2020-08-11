@@ -52,7 +52,7 @@
     <div class="col-md-12">
         <div class="card-content">
             <div class="">
-                <form class="form" >
+                <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitAddProductForm($event)">
                     <div class="form-body">
                         <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
@@ -102,6 +102,38 @@
                                 <div class="form-group">
                                     <label>Related Products</label>
                                     <input type="text" class="form-control border-primary" placeholder="Related Products" formControlName="relatedProducts"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Manufacturer/ Brands </label><span class="asterick">*</span>
+                                       <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="manufacturerBrands"  [(ngModel)]="selected_supplyType"
+                                         formControlName="brandId" styleClass="form-control border-primary"
+                                         filter="true" placeholder="Select Manufacturer/ Brands"
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.brandId.errors }">
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.brandId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.brandId.errors.required">Manufacturer/ Brands is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Supply Type</label><span class="asterick">*</span>
+                                       <div class="assign-group-dropdown">
+                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
+                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
+                                         filter="true" placeholder="Select Supply Type"
+                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyTypeId.errors }">
+                                        </p-dropdown>
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
+                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -167,38 +199,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Manufacturer/ Brands </label><span class="asterick">*</span>
-                                       <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="manufacturerBrands"  [(ngModel)]="selected_supplyType"
-                                         formControlName="brandId" styleClass="form-control border-primary"
-                                         filter="true" placeholder="Select Manufacturer/ Brands"
-                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.brandId.errors }">
-                                        </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.brandId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.brandId.errors.required">Manufacturer/ Brands is required</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Supply Type</label><span class="asterick">*</span>
-                                       <div class="assign-group-dropdown">
-                                        <p-dropdown [options]="supplyTypes"  [(ngModel)]="selected_supplyType"
-                                         formControlName="supplyTypeId" styleClass="form-control border-primary"
-                                         filter="true" placeholder="Select Supply Type"
-                                           [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.supplyTypeId.errors }">
-                                        </p-dropdown>
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.supplyTypeId.errors" class="invalid-feedback">
-                                            <div *ngIf="signUpControls.supplyTypeId.errors.required">Supply Type is required</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -241,31 +242,71 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label>Images</label>
-                                  <div class="row ">
-                                    <div class="col-md-2 form-group center">
-                                        <label for="file">
-                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
-                                    </div>
-                                    <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="images" class="form-control border-primary">
-                                        <span id="sizeValidations">File size should not exceed 200kb</span>
-                                    </div>
-                                </div>
-                                </div>
+                            <div class="col-md-3">
+                              <h4>Images</h4>
+                              <div>Multiple</div>
+                              <label class="custom-file mb-3">
+                                <input type="file" ng2FileSelect [uploader]="uploader" multiple (change)="fileChangeEvent(uploader)" >
+                                <span class="custom-file-control"></span>
+                              </label>
+                            </div>
+                    
+                            <div class="col-md-9">
+                              <h4>Upload queue</h4>
+                              <p>Queue length: {{ uploader?.queue?.length }}</p>
+                    
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th width="50%">Name</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of uploader.queue">
+                                    <td><strong>{{ item?.file?.name }}</strong></td>
+                                    <td class="text-center">
+                                      <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
+                                      <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
+                                      <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                      <button type="button" class="btn btn-raised btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="fa fa-upload"></span> Upload
+                                      </button>
+                                      <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                        <span class="fa fa-ban"></span> Cancel
+                                      </button>
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm" (click)="item.remove()">
+                                        <span class="fa fa-trash"></span> Remove
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <div>
+                                <p>Queue progress:
+                                  <ngb-progressbar type="primary" [value]="uploader.progress"></ngb-progressbar>
+                                </p>
+                                <button type="button" class="btn btn-raised mr-1 btn-success" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                  <span class="fa fa-upload"></span> Upload all
+                                </button>
+                                <button type="button" class="btn btn-raised mr-1 btn-warning" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                  <span class="fa fa-ban"></span> Cancel all
+                                </button>
+                                <button type="button" class="btn btn-raised btn-danger" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                  <span class="fa fa-trash"></span> Remove all
+                                </button>
                               </div>
-                           
-                        </div>
+                            </div>
+                          </div>
                         <div class="row">
-                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Meta Keyword</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" >
-                          
-                                </div>
+                            </div>
                             </div>
                         </div>
                         <div class="row">
@@ -318,15 +359,18 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                  <label>Catalogue</label>
-                                  <div class="row ">
+                                  <label>Catelogue</label>
+                                  <div class="row">
                                     <div class="col-md-2 form-group center">
                                         <label for="file">
-                                          <img width="80px" height="80px" class="ImgIcon" /> </label>
+                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input type="file" accept="image/*" id="chooseFile"  formControlName="catalogue" class="form-control border-primary">
+                                        <input  type="file" accept="image/*" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
+                                        <div *ngIf="isSubmittedaddBrandForm && signUpControls.file.errors" class="invalid-feedback mt-0">
+                                          <div *ngIf="signUpControls.file.errors.required">Logo is required</div>
+                                      </div> 
                                     </div>
                                 </div>
                                 </div>
@@ -340,51 +384,43 @@
                 </form> 
                 
                 <div class="product-page-listing">
+                    <h4 class="form-section">Sellers</h4>
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere- ">
-                        <p-table [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
-                            <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
-                            <ng-template pTemplate="header">
-                                    <tr class="table-coustom-style">
-                                        <th style="width:5em">S. No.</th>
-                                        <th style="width: 16em;">Seller Name</th>
-                                        <th style="width: 14em;">Seller Fee</th>
-                                        <th style="width: 15em;">Quantity</th> 
-                                        <th style="width: 16em;">Delivery Within Days</th>
-                                        <th style="width: 8em;">Action</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-brand >
-                                    <tr>
-                                        <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
-                                        <td><span class="ui-column-title">Seller Name</span>{{brand.manufacturerName}}</td>
-                                        <td><span class="ui-column-title">Seller Fee</span>{{brand.supplyType.name}}</td>
-                                        <td><span class="ui-column-title">Quantity</span></td>
-                                        <td><span class="ui-column-title">Delivery Within Days</span>{{brand.walletDiscount}}</td>
-                                        <!-- <td>
-                                            <span class="ui-column-title">Action</span>
-                                        
-                                            <div class="dropdown">
-                                                <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
-                    
-                                                </a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Edit</a></li>
-                                                    <li><a (click)="getDropDownValue1($event,brand.id)">Delete</a></li>
-                    
-                                                </ul>
-                                            </div>
-                                        </td> -->
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="emptymessage">
-                                    <tr>
-                                        <td class="text-center text-danger font-weight-600" colspan="6">No Records Found.</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
+                   
+                                <ngx-datatable #mydatatable class="bootstrap" [headerHeight]="50" [columnMode]="'force'"
+                                 [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
+                                    <ngx-datatable-column name="S. No.">
+                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" 
+                                        let-row="row">
+                                            <input autofocus  type="text"/>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Seller Name">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            <p-dropdown [options]="sellerLists" 
+                                            placeholder="Select Seller">
+                                           </p-dropdown>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Seller Fee">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            <input autofocus  type="text"/>
+                                        </ng-template>
+                                    </ngx-datatable-column> 
+                                    <ngx-datatable-column name="Quantity">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            <input autofocus  type="text"/>
+                                        </ng-template>
+                                    </ngx-datatable-column> 
+                                    <ngx-datatable-column name="Delivery Within Days">
+                                        <ng-template ngx-datatable-cell-template let-value="value">
+                                            <input autofocus  type="text"/>
+                                        </ng-template>
+                                    </ngx-datatable-column> 
+                                </ngx-datatable>
                         </div>
                     </div>
                 </div>
@@ -403,9 +439,6 @@
                                    <th style="width:4em">S. No.</th>
                                    <th style="width: 4em;">Varient</th>
                                    <th style="width: 4em;">Package</th>
-                                   <th style="width: 3em;"></th> 
-                                   <th style="width: 3em;"></th> 
-                                   <th style="width: 3em;"></th> 
                                    <th style="width: 4em;">Quantity</th>
                                    <th style="width: 4em;">Is Sale?</th>
                                    <th style="width: 6em;">Sale Price</th>
@@ -419,9 +452,6 @@
                                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
                                    <td><span class="ui-column-title">Varient</span>{{brand.manufacturerName}}</td>
                                    <td><span class="ui-column-title">Package</span>{{brand.supplyType.name}}</td>
-                                   <td><span class="ui-column-title"></span></td>
-                                   <td><span class="ui-column-title"></span></td>
-                                   <td><span class="ui-column-title"></span></td>
                                    <td><span class="ui-column-title">Quantity</span></td>
                                    <td><span class="ui-column-title">Is Sale?</span></td>
                                    <td><span class="ui-column-title">Sale Price</span></td>
@@ -445,7 +475,7 @@
                            </ng-template>
                            <ng-template pTemplate="emptymessage">
                                <tr>
-                                    <td class="text-center text-danger font-weight-600" colspan="12">No Records Found.</td>
+                                    <td class="text-center text-danger font-weight-600" colspan="9">No Records Found.</td>
                                </tr>
                            </ng-template>
                        </p-table>
@@ -460,9 +490,6 @@
                                         <th style="width:4em">S. No.</th>
                                         <th style="width: 4em;">Varient</th> 
                                         <th style="width: 4em;">Package</th>
-                                        <th style="width: 3em;"></th> 
-                                        <th style="width: 3em;"></th> 
-                                        <th style="width: 3em;"></th> 
                                         <th style="width: 4em;">Quantity</th>
                                         <th style="width: 4em;">Is Sale?</th>
                                         <th style="width: 6em;">Sale Price</th>
@@ -476,9 +503,6 @@
                                         <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
                                         <td><span class="ui-column-title">Varient</span>{{brand.manufacturerName}}</td>
                                         <td><span class="ui-column-title">Package</span>{{brand.supplyType.name}}</td>
-                                        <td><span class="ui-column-title"></span></td>
-                                        <td><span class="ui-column-title"></span></td>
-                                        <td><span class="ui-column-title"></span></td>
                                         <td><span class="ui-column-title">Quantity</span></td>
                                         <td><span class="ui-column-title">Is Sale?</span></td>
                                         <td><span class="ui-column-title">Sale Price</span></td>

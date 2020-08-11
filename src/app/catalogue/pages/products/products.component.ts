@@ -63,8 +63,8 @@ export class ProductsComponent implements OnInit {
   totalCount: any;
   productList: any;
   exportData: any[];
-  exportAll: string;
-  countryId: any;
+  exportAll = "false"
+  countryId : number = null;
   exportAllData: any[];
   productListExport: any;
   action: any;
@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
       this.getCountry();
   }
   filterGlobal(searchTerm) {
-    console.log(searchTerm);
+debugger
        this.primeNGTable.first = 0;
        this.page = 0; 
        this.searchTerms$.next(searchTerm);
@@ -202,6 +202,7 @@ export class ProductsComponent implements OnInit {
     }
   }
     loadDataLazy(event: LazyLoadEvent) {
+      debugger
       this.page = event.first / 10;
       // if there is a search term present in the search bar, then paginate with the search term
       if (!this.searchBar && !this.countryId) {
@@ -234,6 +235,7 @@ export class ProductsComponent implements OnInit {
       this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId);
     }
      initiateSearch() {
+       debugger
       this.searchTerms$.pipe(
         takeUntil(this._unsubscribe),
         startWith(''),
@@ -242,7 +244,7 @@ export class ProductsComponent implements OnInit {
         switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId
         ))
       ).subscribe((success: any) => {
-        console.log(success);
+debugger
         this.productList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
