@@ -13,11 +13,15 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
+import { CompaniesModule } from 'app/companies/companies.module';
 interface Country {
   _id:string, 
   country:string
 }
-
+interface seller {
+  _id:string, 
+  seller:string
+}
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -51,7 +55,8 @@ export class ProductsComponent implements OnInit {
   addProductFormDetails: any;
   product: any;
   countries:Country[];
-
+  sellerList:any[];
+  CategoryListdata:any[];
   @ViewChild(Table) tableComponent: Table;
   @ViewChild(Table) primeNGTable: Table;
 
@@ -63,11 +68,15 @@ export class ProductsComponent implements OnInit {
   totalCount: any;
   productList: any;
   exportData: any[];
-  exportAll = "false"
-  countryId : number = null;
+  exportAll = "false";
+    countryId : number = null;
+    sellerId : number =null;
+    categoryId : number =null;
   exportAllData: any[];
   productListExport: any;
   action: any;
+  variantlist: any;
+  providers: any;
   constructor(config: NgbTabsetConfig, private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
@@ -80,54 +89,52 @@ export class ProductsComponent implements OnInit {
     // config.justify = 'center';
     config.type = 'pills';
   }
+  setStatus(id:Number,adminStatus:Number){
 
+    let statusData = {id,adminStatus}
+    
+ this.ProductService.updateproductStatus(statusData).subscribe(
+   (success:any)=>
+   {
+  
+    this.ngOnInit()
+} )
+  }
   ngOnInit() {
-
+    this.exportData = [];
+    this.exportAllData = [];
       this.initiateSearch();
       this.getCountry();
+      this.getSeller();
+      this.getCategoryList();
   }
-  filterGlobal(searchTerm) {
-debugger
-       this.primeNGTable.first = 0;
-       this.page = 0; 
-       this.searchTerms$.next(searchTerm);
 
-     }
-     exportAsXLSX(id: number) {
 
-      if (id == 0) {
+    initiateSearch() {
+      this.searchTerms$.pipe(
+        takeUntil(this._unsubscribe),
+        startWith(''),
+        distinctUntilChanged(),
+        // switch to new search observable each time the term changes
+        switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId , this.sellerId, this.categoryId
+        ))
+      ).subscribe((success: any) => {
+   
+        this.productList = success.data.results;
     
-    this.productList.forEach(element=>{
-      this.exportData.push({
-        Id:element.id,
-        Admin_Status : element.adminStatus,
-        Category_Name : element.categoryName,
-        Country : element.country.countryName,
-        isDelete : element.isDelete,
-        Language : element.language.language,
-        Parent_Category : element.parentCategory.categoryName,
-        Parent_Child_Category : element.parentChildCategory
+        this.totalCount = success.data.total;
+        this.utilityService.resetPage();
       })
-    })
-        this.excelService.exportAsExcelFile(this.exportData, 'Category List')
-        this.exportData = [];
-    
-      }
-      else {
-    
-        this.exportAll = "true"
-        this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId);
-      }
     }
-    getAllproductSearch(page, searchBar , exportAll,countryId) {
+    getAllproductSearch(page, searchBar , exportAll,countryId,sellerId,categoryId) {
     
-      
-      this.ProductService.getAllproductSearch(page, searchBar , exportAll ,countryId )
+      console.log(page,searchBar,exportAll,countryId);
+      this.ProductService.getAllproductSearch(page, searchBar , exportAll ,countryId ,sellerId,categoryId)
         .pipe(
           takeUntil(this._unsubscribe)
         )
         .subscribe((success: any) => {
-  console.log(success);
+
          
           if(exportAll == "true"){
             this.productListExport = [];
@@ -136,15 +143,15 @@ debugger
               this.exportAllData.push({
                 Id:element.id,
                 Admin_Status : element.adminStatus,
-                Category_Name : element.categoryName,
+                Category_Name : element.category.categoryName,
                 Country : element.country.countryName,
                 isDelete : element.isDelete,
-                Language : element.language.language,
-                Parent_Category : element.parentCategory.categoryName,
-                Parent_Child_Category : element.parentChildCategory
+                Product_Code : element.PNCDE,
+                Product_Name : element.productName,
+                Seller : element.country.countryName
               })
             })
-            this.excelService.exportAsExcelFile(this.exportAllData, 'Category List')
+            this.excelService.exportAsExcelFile(this.exportAllData, 'Product List')
             this.exportAll = "false"
             this.exportAllData = [];
           }
@@ -159,14 +166,14 @@ debugger
         })
     }
     getAllproduct(page) { 
-
+      var data=[];
       this.ProductService.getAllproduct(page).subscribe(
         (success: any) => {
+      
           console.log(success);
-          
           this.productList = success.data.results;
-          console.log(this.productList);
-          this.totalCount = success.data.total;
+            
+      
         },
         error => {
         
@@ -204,15 +211,19 @@ debugger
     loadDataLazy(event: LazyLoadEvent) {
       debugger
       this.page = event.first / 10;
-      // if there is a search term present in the search bar, then paginate with the search term
+ 
+      //if there is a search term present in the search bar, then paginate with the search term
       if (!this.searchBar && !this.countryId) {
+
         this.getAllproduct(this.page);
       }
       else if (!this.countryId) {
+   
         this.getAllproduct(this.page);
       }
       else {
-        this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId);
+        console.log("page124");
+        this.getAllproductSearch(this.page,this.searchBar,this.exportAll, this.countryId, this.sellerId, this.categoryId);
       }
     }
 
@@ -220,34 +231,103 @@ debugger
       this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
         (success: any) => {
           this.countries = success.data;
+          console.log(this.countries);
+
+        },
+        error => {
+        }
+      )
+    }
+    getSeller() {
+      this.commonService.getSeller().pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success: any) => {
+          console.log(success);
+          this.sellerList = success.data;
+          console.log(this.sellerList);
+
+        },
+        error => {
+        }
+      )
+    }
+    getCategoryList() {
+      this.commonService.getCategoryList().pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success: any) => {
+          console.log(success);
+          this.CategoryListdata = success.data;
+          console.log(this.CategoryListdata);
+
         },
         error => {
         }
       )
     }
     onChange(deviceValue) {
+      console.log(deviceValue);
       if (deviceValue) {
         this.countryId = deviceValue;
+        console.log(this.countryId);
       }
       else {
       }
     
-      this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId);
+      this.getAllproductSearch(this.page,this.searchBar,this.exportAll,this.countryId,this.sellerId, this.categoryId);
     }
-     initiateSearch() {
-       debugger
-      this.searchTerms$.pipe(
-        takeUntil(this._unsubscribe),
-        startWith(''),
-        distinctUntilChanged(),
-        // switch to new search observable each time the term changes
-        switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId
-        ))
-      ).subscribe((success: any) => {
-debugger
-        this.productList = success.data.results;
-        this.totalCount = success.data.total;
-        this.utilityService.resetPage();
+    onChangeseller(deviceValue) {
+      console.log(deviceValue);
+      if (deviceValue) {
+        this.sellerId = deviceValue;
+        console.log(this.sellerId);
+      }
+      else {
+      }
+    
+      this.getAllproductSearch(this.page,this.searchBar,this.exportAll,this.countryId,this.sellerId,this.categoryId);
+    }
+    onChangecategory(deviceValue)
+    {
+      console.log(deviceValue);
+      if (deviceValue) {
+        this.categoryId = deviceValue;
+        console.log(this.categoryId);
+      }
+      else {
+      }
+    
+      this.getAllproductSearch(this.page,this.searchBar,this.exportAll,this.countryId,this.sellerId,this.categoryId);
+    }
+    filterGlobal(searchTerm) {
+      console.log(searchTerm);
+         this.primeNGTable.first = 0;
+         this.page = 0; 
+         this.searchTerms$.next(searchTerm);
+  
+       }
+  exportAsXLSX(id: number) {
+
+      if (id == 0) {
+    
+    this.productList.forEach(element=>{
+    console.log( this.productList);
+      this.exportData.push({
+        Id:element.id,
+        Admin_Status : element.adminStatus,
+        Category_Name : element.category.categoryName,
+        Country : element.country.countryName,
+        isDelete : element.isDelete,
+        Product_Code : element.PNCDE,
+        Product_Name : element.productName,
+        Seller : element.country.countryName
       })
+    })
+        this.excelService.exportAsExcelFile(this.exportData, 'product List')
+        this.exportData = [];
+    
+      }
+      else {
+    
+        this.exportAll = "true"
+        this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId, this.sellerId, this.categoryId);
+      }
     }
 }

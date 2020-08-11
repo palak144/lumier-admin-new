@@ -19,15 +19,22 @@ export class ProductService {
   ) {
     this.baseUrl = this.baseService.baseUrl;
    }
-   getAllproductSearch(page?, searchKey?, exportAll?, countryId?) 
+getAllproductSearch(page?, searchKey?, exportAll?, countryId?, sellerId?, categoryId?) 
   {
-    debugger
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId,sellerId: sellerId, categoryId: categoryId }
+    console.log(params);
     return this.http.get(this.baseUrl + 'admin/product',
       { params: params }).pipe(
         retry(3),
         catchError(this.errorHandler.handleError)
       );
+}
+updateproductStatus(statusData: {id: Number; adminStatus: Number }){
+  return this.http.put(this.baseUrl + 'admin/product', statusData)
+  .pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
 }
 deleteProduct(id) {
   return this.http.delete(this.baseUrl + 'admin/product/' + id)
