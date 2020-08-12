@@ -59,6 +59,9 @@ export class AddProductComponent implements OnInit {
   url: string | ArrayBuffer;
   product: any;
   sellerLists: any[];
+  dropdowns: any[];
+  currencies: any[];
+  currencyValue: any;
   specialities : any = [];
   editing = {};
   rows = [];
@@ -105,6 +108,7 @@ export class AddProductComponent implements OnInit {
       this.files.push(e.queue[i]);
     }
     console.log(this.files)
+    debugger
     if(this.file.type == "pdf")
     if (this.file.size < 200000) {
     {
@@ -193,6 +197,11 @@ debugger
       ribbonText : new FormControl(null, Validators.required),
       speciality : new FormControl(null, Validators.required),
       isPackage : new FormControl(null, Validators.required),
+      sellerFee : new FormControl(null, Validators.required),
+      quantity : new FormControl(null, Validators.required),
+      deliveryWithinDays : new FormControl(null, Validators.required),
+      currency:new FormControl(null, Validators.required),
+
     });
     
         if(this.editMode){
@@ -221,7 +230,8 @@ debugger
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   debugger
-                  this.rows = success.data;
+                  this.rows = [{id : 21,
+                    itemName: "Seller New Palak"}]
                   console.log("rows",success.data)
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
                   console.log("success.data",success.data)
@@ -268,13 +278,26 @@ debugger
     }
 
   getdropdown1(event:any){
+    this.rows = []
     this.selectedCountryId = event.value
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
     this.getLanguage();
+    this.getCurrency();
   }
-
+  getCurrency()
+  {
+    this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
+      },
+      error => {
+      }
+    )
+  }
   getlanguage(event:any)
   {
     debugger
@@ -333,10 +356,13 @@ debugger
   {
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        this.rows = success.data;
-        console.log("rows",success.data)
-        this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
-        console.log("success.data",this.sellerLists)
+        debugger
+        if(success.data != []) {
+        this.rows = [{id : 21,
+          itemName: "Seller New Palak"}]
+        }
+        this.sellerLists = success.data
+        this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
       }
