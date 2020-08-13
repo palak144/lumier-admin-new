@@ -14,6 +14,7 @@ import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
 import { CompaniesModule } from 'app/companies/companies.module';
+import { NgbModal, ModalDismissReasons, NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 interface Country {
   _id:string, 
   country:string
@@ -39,13 +40,14 @@ interface seller {
           transition('* <=> *', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
       ])
   ],
-  providers: [NgbTabsetConfig]
+  providers: [NgbTabsetConfig,NgbAccordionConfig]
 })
 
 export class ProductsComponent implements OnInit {
 
   productTitle:string;
   addProductForm: FormGroup; 
+  VariantForm:FormGroup;
   isSubmittedaddProductForm: boolean = false;
   productValue: any;
   // private _unsubscribe = new Subject<boolean>();
@@ -77,11 +79,15 @@ export class ProductsComponent implements OnInit {
   action: any;
   variantlist: any;
   providers: any;
+  closeResult: string;
+  display: boolean =false;
+  VariantData: any;
   constructor(config: NgbTabsetConfig, private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
     private categoryService:CategoryService,
     private ProductService:ProductService,
+    private modalService: NgbModal,
     private confirmationService: ConfirmationService,
     private commonService : CommonServiceService,
     private excelService:ExcelServiceService,) {
@@ -101,6 +107,15 @@ export class ProductsComponent implements OnInit {
 } )
   }
   ngOnInit() {
+     
+  this.VariantForm = new FormGroup({
+    "variant": new FormControl(null, Validators.required),
+    "quantity": new FormControl(null, Validators.required),
+    "sellPrice": new FormControl(null, Validators.required),
+    "sellerFee":new FormControl(null, Validators.required),
+    "walletPrice": new FormControl(null),
+  
+ });
     this.exportData = [];
     this.exportAllData = [];
       this.initiateSearch();
@@ -109,7 +124,10 @@ export class ProductsComponent implements OnInit {
       this.getCategoryList();
   }
 
-
+  onVariantFormSubmit()
+  {
+    console.log(this.VariantForm.value);
+  }
     initiateSearch() {
       this.searchTerms$.pipe(
         takeUntil(this._unsubscribe),
@@ -329,4 +347,69 @@ export class ProductsComponent implements OnInit {
         this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId, this.sellerId, this.categoryId);
       }
     }
+    getDropDownvariantValue(event, id) {
+console.log(event);
+console.log(id);
+      if(event.currentTarget.firstChild.data === 'Delete') {
+
+        this.confirmationService.confirm({ 
+          message: 'Are you sure that you want to perform this action?',
+          accept: () => {
+            console.log(id);
+            this.ProductService.deletevariant(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+              (success: any) => {
+                console.log(success);
+                this.getAllproduct(this.page);
+                this.productList = this.productList.filter((item: any) => {
+                  console.log(this.productList);
+                  return id !== item.countryId
+                }) 
+              },
+              error => {
+              }
+            )
+          },
+          reject: () => {
+            this.action = null;
+          }
+      });
+    }
+    if(event.currentTarget.firstChild.data === 'Edit'){
+      this.display =true;
+      console.log(id);
+      this.ProductService.getvariantDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+        (success:any) => {
+          console.log(success);
+          this.VariantData = success.data;
+          console.log(this.VariantData);
+        },
+        error => {
+        }
+      ) 
+      // this.patchForm(this.VariantData); 
+
+    }
+    
+      
+ 
+   
+  }
+  patchForm(item)
+  {
+  console.log(item);
+  // this.VariantForm.controls.variant.patchValue(item.variant);  
+  // this.VariantForm.controls.quantity.patchValue(item.quantity);
+  // this.VariantForm.controls.sellPrice.patchValue(item.sellPrice);
+  // this.VariantForm.controls.sellerFee.patchValue(item.sellerFee);
+  // this.VariantForm.controls.walletPrice.patchValue(item.walletPrice);
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+    } else {
+        return `with: ${reason}`;
+    }
+  }
 }
