@@ -227,6 +227,7 @@ export class ProductsComponent implements OnInit {
     }
   }
     loadDataLazy(event: LazyLoadEvent) {
+      debugger
       this.page = event.first / 10;
  
       //if there is a search term present in the search bar, then paginate with the search term

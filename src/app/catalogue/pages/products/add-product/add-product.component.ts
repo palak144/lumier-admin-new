@@ -7,6 +7,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'app/shared/services/prod.service';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
   selector: 'app-add-product',
@@ -15,6 +18,12 @@ import { ProductService } from 'app/shared/services/prod.service';
   
 })
 export class AddProductComponent implements OnInit {
+
+  public uploader: FileUploader = new FileUploader({
+    url: URL,
+    isHTML5: true
+  });
+  
 
   languages = [];
   selectedCategoryLanguages:any;
@@ -41,6 +50,7 @@ export class AddProductComponent implements OnInit {
   id: number;
   editMode: boolean;
   file: any;
+  files: Array<any> = [];
   companyFlagSize: boolean = false;
   companyLogo: any;
   selected_supplyType: any;
@@ -49,8 +59,12 @@ export class AddProductComponent implements OnInit {
   url: string | ArrayBuffer;
   product: any;
   sellerLists: any[];
+  dropdowns: any[];
+  currencies: any[];
+  currencyValue: any;
   specialities : any = [];
-
+  editing = {};
+  rows = [];
   constructor(
     @Inject(LOCALE_ID) private locale: string,
     private router: Router,
@@ -59,9 +73,12 @@ export class AddProductComponent implements OnInit {
     private toastr: ToastrService,
     private productService:ProductService,
 
-  ) { }
-
+  ) {    
+    
+  }
   ngOnInit() {
+    debugger
+    console.log(this.uploader)
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
@@ -70,7 +87,6 @@ export class AddProductComponent implements OnInit {
         this.editMode = id['id'] != null
         this.getCountry();
         this.getSpecialities();
-
       }
     )
 
@@ -83,42 +99,40 @@ export class AddProductComponent implements OnInit {
       return this.addProductForm.controls
   }
 
-  fileChangeEvent(fileInput : any){
-  
-    this.file = fileInput.target.files[0];
-    
-    var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
-    if(this.file.type == "image/jpeg" || this.file.type == "image/jpg" || this.file.type == "image/png")
+  fileChangeEvent(e : any){
+    this.file = e.queue[0];
+    this.file = this.file.file 
+    debugger
+
+    for (var i = 0; i < e.queue.length; i++) { 
+      this.files.push(e.queue[i]);
+    }
+    console.log(this.files)
+    debugger
+    if(this.file.type == "pdf")
     if (this.file.size < 200000) {
     {
       this.companyFlagSize = true;
        let reader = new FileReader();      
-        reader.readAsDataURL(this.file);      
-        reader.onload = (event) => {
-           this.url = reader.result;
-          this.companyLogo = this.url;        
-          document.getElementById('sizeValidations').style.color = 'black';
-        }
+       debugger
         this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
-        this.file = this.file.name
+        // this.file = this.file.name
       }
+      
     }
       else {
         this.companyFlagSize = false;
-        
         document.getElementById('sizeValidations').style.color = '#ffae42';
         this.addProductForm.controls['file'].setValue(this.file ? '' : '');
       }
   }
-  onSubmitProductForm(){
+  onSubmitAddProductForm(){
       event.preventDefault();
-  
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
         return
       }
 
-      let noEndDate = (this.addProductForm.get('endDate').value != "" && this.addProductForm.get('endDate').value != undefined) ? this.addProductForm.get('endDate').value : "2099/12/01"
 debugger
       this.addProductFormDetails = {
         "name": this.addProductForm.get('name').value,
@@ -183,6 +197,11 @@ debugger
       ribbonText : new FormControl(null, Validators.required),
       speciality : new FormControl(null, Validators.required),
       isPackage : new FormControl(null, Validators.required),
+      sellerFee : new FormControl(null, Validators.required),
+      quantity : new FormControl(null, Validators.required),
+      deliveryWithinDays : new FormControl(null, Validators.required),
+      currency:new FormControl(null, Validators.required),
+
     });
     
         if(this.editMode){
@@ -210,7 +229,13 @@ debugger
               )
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
+                  debugger
+                  this.rows = [{id : 21,
+                    itemName: "Seller New Palak"}]
+                  console.log("rows",success.data)
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
+                  console.log("success.data",success.data)
+
                 },
                 error => {
                 }
@@ -253,13 +278,26 @@ debugger
     }
 
   getdropdown1(event:any){
+    this.rows = []
     this.selectedCountryId = event.value
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
     this.getLanguage();
+    this.getCurrency();
   }
-
+  getCurrency()
+  {
+    this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
+      },
+      error => {
+      }
+    )
+  }
   getlanguage(event:any)
   {
     debugger
@@ -319,7 +357,12 @@ debugger
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         debugger
-        this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
+        if(success.data != []) {
+        this.rows = [{id : 21,
+          itemName: "Seller New Palak"}]
+        }
+        this.sellerLists = success.data
+        this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
       }
