@@ -22,6 +22,7 @@ import { TableModule } from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import {ButtonModule} from 'primeng/button';
 import { AddRowDirective } from './pages/products/add-product/add-row.directive';
+import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { AddRowDirective } from './pages/products/add-product/add-row.directive'
     NgxDatatableModule,
     TableModule,
     DropdownModule,
+    TagInputModule,
     ButtonModule
   ],
   declarations: [CatalogueLayoutComponent, AddRowDirective, FileSelectDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]

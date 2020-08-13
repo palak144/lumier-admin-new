@@ -39,10 +39,11 @@ export class AddProductComponent implements OnInit {
    newAttribute: any = {};
    basedArray: Array<any> = [];
   manufacturerBrands: any[];
-  countryOrigins: string[];
   categories: any[];
   specialityTypes: string[];
   countries: any[];
+  autocompleteItemsAsObjects:any[]
+  c_origins:any[];
   private _unsubscribe = new Subject<boolean>();
   supplyTypes: any[];
   selectedCountryId: any[];
@@ -54,7 +55,9 @@ export class AddProductComponent implements OnInit {
   companyFlagSize: boolean = false;
   companyLogo: any;
   selected_supplyType: any;
+  selected_brand:any;
   selected_country: any;
+  selected_cOrigin: any;
   addProductFormDetails: any;
   url: string | ArrayBuffer;
   product: any;
@@ -65,14 +68,13 @@ export class AddProductComponent implements OnInit {
   specialities : any = [];
   editing = {};
   rows = [];
+
   constructor(
-    @Inject(LOCALE_ID) private locale: string,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private commonService: CommonServiceService,
     private toastr: ToastrService,
     private productService:ProductService,
-
   ) {    
     
   }
@@ -86,15 +88,18 @@ export class AddProductComponent implements OnInit {
         this.id = +id['id']
         this.editMode = id['id'] != null
         this.getCountry();
+        this.getCountryOrigin();
         this.getSpecialities();
+      
       }
     )
 
     this.initForm()
     this.selected_country = [];
+    this.selected_cOrigin = [];
     this.selected_supplyType = [];
+    this.selected_brand = [];
   }
-
   get signUpControls() {
       return this.addProductForm.controls
   }
@@ -175,33 +180,34 @@ debugger
     let position ="";
 
     this.addProductForm = new FormGroup({
-      countryId:new FormControl(null,[Validators.required]),
-      fname: new FormControl( fname, Validators.required),
-      supplyTypeId: new FormControl( null, Validators.required),
-      brandId: new FormControl( null, Validators.required),
-      languageId:new FormControl(null, Validators.required),
-      relatedProducts : new FormControl(null, Validators.required),
-      pnCode: new FormControl(null, Validators.required),
-      noDiscount : new FormControl(null, Validators.required),
-      isSale : new FormControl(null, Validators.required),
-      shortDiscription : new FormControl(null, Validators.required),
-      packageContent : new FormControl(null, Validators.required),
-      price : new FormControl(null, Validators.required),
-      metaTag : new FormControl(null, Validators.required),
-      isQuote : new FormControl(null, Validators.required),
-      UOM : new FormControl(null, Validators.required),
-      walletPrice : new FormControl(null, Validators.required),
-      metaDesc : new FormControl(null, Validators.required),
-      metaKeyword : new FormControl(null, Validators.required),
-      categoryId : new FormControl(null, Validators.required),
-      ribbonText : new FormControl(null, Validators.required),
-      speciality : new FormControl(null, Validators.required),
-      isPackage : new FormControl(null, Validators.required),
-      sellerFee : new FormControl(null, Validators.required),
-      quantity : new FormControl(null, Validators.required),
-      deliveryWithinDays : new FormControl(null, Validators.required),
-      currency:new FormControl(null, Validators.required),
-
+      "countryId":new FormControl(null,[Validators.required]),
+      "fname": new FormControl( fname, Validators.required),
+      "supplyTypeId": new FormControl( null, Validators.required),
+      "brandId": new FormControl( null, Validators.required),
+      "languageId":new FormControl(null, Validators.required),
+      "relatedProducts" : new FormControl(null, Validators.required),
+      "pnCode": new FormControl(null, Validators.required),
+      "noDiscount" : new FormControl(null, Validators.required),
+      "isSale" : new FormControl(null, Validators.required),
+      "shortDiscription" : new FormControl(null, Validators.required),
+      "packageContent" : new FormControl(null, Validators.required),
+      "price" : new FormControl(null, Validators.required),
+      "metaTag" : new FormControl(null, Validators.required),
+      "isQuote" : new FormControl(null, Validators.required),
+      "UOM" : new FormControl(null, Validators.required),
+      "walletPrice" : new FormControl(null, Validators.required),
+      "metaDesc" : new FormControl(null, Validators.required),
+      "metaKeyword" : new FormControl(null, Validators.required),
+      "categoryId" : new FormControl(null, Validators.required),
+      "ribbonText" : new FormControl(null, Validators.required),
+      "speciality" : new FormControl(null, Validators.required),
+      "isPackage" : new FormControl(null, Validators.required),
+      "sellerFee" : new FormControl(null, Validators.required),
+      "quantity" : new FormControl(null, Validators.required),
+      "deliveryWithinDays" : new FormControl(null, Validators.required),
+      "currency":new FormControl(null, Validators.required),
+      "c_origin" : new FormControl(null, Validators.required),
+      "relatedItem": new FormControl(null, Validators.required),
     });
     
         if(this.editMode){
@@ -303,6 +309,7 @@ debugger
     debugger
     this.selectedLanguageId = event.value ;
     this.getCategoryList();
+    this.getRelatedProducts();
   }
 
   getCountry()
@@ -311,6 +318,16 @@ debugger
       (success:any) => {
         
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
+      },
+      error => {
+      }
+    )
+  }
+  getCountryOrigin(){
+    this.commonService.getCountryOrigin().pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        
+        this.c_origins = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
       }
@@ -371,8 +388,18 @@ debugger
   getCategoryList(){
     this.commonService.getCategory(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
         this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
+      },
+      error => {
+      }
+    )
+  }
+  getRelatedProducts(){
+    debugger
+    this.commonService.getRelatedProducts(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        debugger
+        this.autocompleteItemsAsObjects = success.data;
       },
       error => {
       }
@@ -396,13 +423,16 @@ debugger
     debugger
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
+    debugger
     const newArray = [];
+    if (arr != []) {
     arr.forEach(element => {
       newArray.push({
         label: element.itemName,
         value: element.id
       });
     });
+  }
     return newArray;
   }
 //   addFieldValue() {

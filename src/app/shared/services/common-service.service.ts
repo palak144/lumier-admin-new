@@ -29,7 +29,15 @@ export class CommonServiceService {
       );
     
   }
-
+  getCountryOrigin()
+  {
+    return this.http.get(this.baseUrl + 'admin/getCountryOrigin')
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler.handleError)
+      );
+    
+  }
   getparentCategory(languageId)
   {
     const params = { languageId: languageId }
@@ -50,7 +58,15 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
- 
+  getRelatedProducts(languageId)
+  {
+    const params = { languageId: languageId }
+    return this.http.get(this.baseUrl + 'admin/productList' ,{ params: params })
+    .pipe(
+      retry(),
+      catchError(this.errorHandler.handleError)
+    );
+  }
   getSupplyType(country){
     
     const params = { countryId: country }

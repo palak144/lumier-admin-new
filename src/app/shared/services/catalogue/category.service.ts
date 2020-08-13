@@ -73,8 +73,7 @@ addcategory(data)
     if(data.file != ""){
       dataForm.append('image', data['file']);
     }
-    if(data.categoryId != null){
-      
+    if(data.categoryId != ""){
       dataForm.append('categoryId', data['categoryId']);
     }
     dataForm.append('categoryName', data['categoryName']);
