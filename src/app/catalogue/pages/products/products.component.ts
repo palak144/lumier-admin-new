@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from 'app/shared/utility/utility.service'; 
 import { CategoryService } from '../../../shared/services/catalogue/category.service';
 import { ProductService } from '../../../shared/services/catalogue/product.service';
@@ -88,6 +88,7 @@ export class ProductsComponent implements OnInit {
     private categoryService:CategoryService,
     private ProductService:ProductService,
     private modalService: NgbModal,
+    private toastr: ToastrService,
     private confirmationService: ConfirmationService,
     private commonService : CommonServiceService,
     private excelService:ExcelServiceService,) {
@@ -127,6 +128,20 @@ export class ProductsComponent implements OnInit {
   onVariantFormSubmit()
   {
     console.log(this.VariantForm.value);
+    let data=  this.VariantForm.value;
+    data.id=this.id;
+    this.ProductService.updateVariant(data).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+     console.log(success);
+        this.toastr.success('Variant Updated Successfully!');
+        this.router.navigate(['/catalogues/products']);
+this.display=false;
+this.getAllproduct(this.page);
+      },
+      error => {
+        this.toastr.error(error.error.message);
+      }
+    )
   }
     initiateSearch() {
       this.searchTerms$.pipe(
@@ -348,10 +363,8 @@ export class ProductsComponent implements OnInit {
         this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId, this.sellerId, this.categoryId);
       }
     }
-    getDropDownvariantValue(event, id) {
-console.log(event);
-console.log(id);
-      if(event.currentTarget.firstChild.data === 'Delete') {
+    getDropDownvariantValue1(event, id) {
+      this.id=id;
 
         this.confirmationService.confirm({ 
           message: 'Are you sure that you want to perform this action?',
@@ -374,35 +387,40 @@ console.log(id);
             this.action = null;
           }
       });
-    }
-    if(event.currentTarget.firstChild.data === 'Edit'){
-      this.display =true;
-      console.log(id);
-      this.ProductService.getvariantDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
-        (success:any) => {
-          console.log(success);
-          this.VariantData = success.data;
-          console.log(this.VariantData);
-        },
-        error => {
-        }
-      ) 
-      // this.patchForm(this.VariantData); 
-
-    }
-    
+  
+  
       
  
    
   }
+  getDropDownvariantValue2(event, id) {
+    this.id=id;
+console.log(event);
+console.log(id);
+    this.display =true;
+    console.log(id);
+    this.ProductService.getvariantDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+      (success:any) => {
+        console.log(success);
+        this.VariantData = success.data;
+        console.log(this.VariantData);
+          this.patchForm(this.VariantData); 
+      },
+      error => {
+      }
+    ) 
+  
+    }
+  
+  
   patchForm(item)
   {
   console.log(item);
-  // this.VariantForm.controls.variant.patchValue(item.variant);  
-  // this.VariantForm.controls.quantity.patchValue(item.quantity);
-  // this.VariantForm.controls.sellPrice.patchValue(item.sellPrice);
-  // this.VariantForm.controls.sellerFee.patchValue(item.sellerFee);
-  // this.VariantForm.controls.walletPrice.patchValue(item.walletPrice);
+  this.VariantForm.controls.variant.patchValue(item.variant);  
+  this.VariantForm.controls.quantity.patchValue(item.quantity);
+  this.VariantForm.controls.sellPrice.patchValue(item.sellPrice);
+  this.VariantForm.controls.sellerFee.patchValue(item.sellerFee);
+  this.VariantForm.controls.walletPrice.patchValue(item.walletPrice);
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

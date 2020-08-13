@@ -37,6 +37,12 @@ getvariantDetails(id)
     catchError(this.errorHandler.handleError)
   );
 }
+updateVariant(data){
+  return this.http.put(this.baseUrl + 'admin/productVariant', data).pipe(
+    retry(3),
+    catchError(this.errorHandler.handleError)
+  );
+}
 deletevariant(id) {
   return this.http.delete(this.baseUrl + 'admin/productVariant/' + id)
   .pipe(
