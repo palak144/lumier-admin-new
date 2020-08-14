@@ -1,11 +1,11 @@
 export class DynamicGrid{   
-    id:number;
+    id:string;
     Varient:string;
-    pcode:number;
-    quantity:number;
-    is_sale:number;
-    sale_price:number;
-    price:number;
-    wallet:number;
+    pcode:string;
+    quantity:string;
+    is_sale:string;
+    sale_price:string;
+    price:string;
+    wallet:string;
   
 }

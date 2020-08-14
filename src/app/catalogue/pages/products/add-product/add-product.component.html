@@ -530,28 +530,28 @@
                              <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                             
                                 <td>
-                                  <input [(ngModel)]="dynamicArray[i].id" class="form-control" type="text" />
+                                  <input [(ngModel)]="dynamicArray[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                 </td>
                                 <td>
-                                  <input [(ngModel)]="dynamicArray[i].Varient" class="form-control" type="text" />
+                                  <input [(ngModel)]="dynamicArray[i].Varient"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                 </td>
                                 <td>
-                                  <input [(ngModel)]="dynamicArray[i].pcode" class="form-control" type="text"/>
+                                  <input [(ngModel)]="dynamicArray[i].pcode"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                 </td>
                                 <td>
-                                    <input [(ngModel)]="dynamicArray[i].quantity" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].is_sale" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicArray[i].is_sale"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].sale_price" class="form-control" type="text"/>
+                                    <input [(ngModel)]="dynamicArray[i].sale_price"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].price" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicArray[i].price"  [ngModelOptions]="{standalone: true}"  class="form-control" type="text" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].wallet" class="form-control" type="text"/>
+                                    <input [(ngModel)]="dynamicArray[i].wallet"   [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                   </td>
                                 <td >
                                     <i (click)="deleteRow(i)" class="fa fa-trash fa-2x"></i>
