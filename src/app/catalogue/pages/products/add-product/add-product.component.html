@@ -395,15 +395,15 @@
                         <button type="submit" class="btn btn-raised btn-primary">Submit</button>
                     </div>-->
                 
-                <div class="product-page-listing">
+                <!-- <div class="product-page-listing">
                     <h4 class="form-section">Sellers</h4>
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere- ">
                         <p-table #df [value]="rows" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
-                            <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
-                            <ng-template pTemplate="header">
+                            [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                            <!-- <ng-template pTemplate="header">
                                     <tr class="table-coustom-style">
                                         <th style="width:5em">S. No.</th>
                                         <th >Seller Name</th>
@@ -440,8 +440,57 @@
 
                         </div>
                     </div>
+                </div>  -->
+                <div class="product-page-listing">
+                    <h4 class="form-section"> Sellers</h4>
+                    <div class="customer-wrapper">
+                        <div class="heading-wrapper">
+                        </div>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr class="table-coustom-style">
+                                <th >S. No.</th>
+                                <th >Seller Name</th>
+                                <th >Seller Fee</th>`
+                                <th >Quantity</th> 
+                                <th >Delivery Within Days</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr *ngFor="let dynamic of dynamicSeller; let i = index;">
+                            
+                                <td>
+                                  <input [(ngModel)]="dynamicSeller[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicSeller[i].sellerName"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicSeller[i].sellerFees"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="dynamicSeller[i].Quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicSeller[i].Delivery"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                  </td>
+                                 
+                                <td >
+                                    <i (click)="deletesellerRow(i)" class="fa fa-trash fa-2x"></i>
+                                    <i (click)="addsellerRow(i)" class="fa fa-plus fa-2x"></i>
+                                  </td>
+                               
+                            </tr>
+                            <!-- <tr>
+                              <td (click)="addRow(i)">
+                                <i class="fa fa-plus fa-2x"></i>
+                              </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                  </div>
                 </div>
-
                   
                 <!-- <div class="product-page-listing">
                     <h4 class="form-section"> Varients</h4>

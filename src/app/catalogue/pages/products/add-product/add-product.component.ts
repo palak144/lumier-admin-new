@@ -20,6 +20,8 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 export class AddProductComponent implements OnInit {
   dynamicArray: Array<DynamicGrid> = [];
   newDynamic: any = {};
+  dynamicSeller: Array<DynamicGrid> = [];
+  newSeller: any = {};
   public uploader: FileUploader = new FileUploader({
     url: URL,
     isHTML5: true
@@ -69,6 +71,7 @@ export class AddProductComponent implements OnInit {
   specialities : any = [];
   editing = {};
   rows = [];
+ 
 
   constructor(
     private router: Router,
@@ -82,6 +85,8 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
     this.newDynamic = {id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
     this.dynamicArray.push(this.newDynamic);
+    this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
+    this.dynamicSeller.push(this.newSeller);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
@@ -543,5 +548,22 @@ deleteRow(index) {
       return true;
   }
 }
+addsellerRow(index) {  
+  this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
+  this.dynamicSeller.push(this.newSeller);
+  this.toastr.success('New row added successfully', 'New Row');
+  console.log(this.dynamicSeller);
+  return true;
+}
 
+deletesellerRow(index) {
+  if(this.dynamicSeller.length ==1) {
+    this.toastr.error("Can't delete the row when there is only one row", 'Warning');
+      return false;
+  } else {
+      this.dynamicSeller.splice(index, 1);
+      this.toastr.warning('Row deleted successfully', 'Delete row');
+      return true;
+  }
+}
 }
