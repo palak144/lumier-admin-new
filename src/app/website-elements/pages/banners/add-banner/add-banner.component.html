@@ -138,7 +138,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                   <label for="issueinput3">Start Date </label>
-                                  <input type="date" id="issueinput3"  name="dateopened" data-toggle="tooltip"
+                                  <input type="date" id="issueinput3"  name="dateopened" data-toggle="tooltip" [(ngModel)]="selected_startDate"
                                     data-trigger="hover" data-placement="top" data-title="Date Opened"
                                     formControlName="startDate" class="form-control border-primary" 
                                         [ngClass]="{ 'is-invalid': isSubmittedaddBannerForm && signUpControls.startDate.errors }">
@@ -151,10 +151,10 @@
                                 <div class="form-group">
                                   <label for="issueinput4">End Date</label>
                                   <input type="date" id="issueinput4" name="datefixed" data-toggle="tooltip"
-                                    data-trigger="hover" data-placement="top" data-title="Date Fixed" [(ngModel)]="endDate"
+                                    data-trigger="hover" data-placement="top" data-title="Date Fixed" [(ngModel)]="selected_endDate"
                                     formControlName="endDate" class="form-control border-primary" >
-                                    <input type="checkbox" id="date" name="date" value="">
-                                     <label class="endDate" for="date"> No End Date</label><br>
+                                    <input type="checkbox" formControlName="noEndDate" id="date" name="date" value="">
+                                     <label class="endDate"  for="date"> No End Date</label><br>
                                 </div> 
                               </div>
                            

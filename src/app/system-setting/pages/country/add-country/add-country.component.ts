@@ -40,6 +40,7 @@ export class AddCountryComponent implements OnInit {
   selectedCriteria: any;
   languageData =[];
   selectedCriteriaId = [];
+  countryId: any;
  
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -50,7 +51,7 @@ export class AddCountryComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-debugger
+
     this.activatedRoute.params.subscribe(
       (id: Params) => {
         this.id = +id['id']
@@ -104,6 +105,8 @@ onSubmitCountryForm() {
       "languages": this.multiSelectedList(this.addCountryForm.get('languages').value),
       "currency": this.select(this.addCountryForm.get('currency').value , this.currencyValue),
       "countryName": this.countryValue,
+      "countryId": this.countryId,
+
     }
     
     if(this.id)
@@ -140,10 +143,9 @@ onSubmitCountryForm() {
 }
 
 patchForm(item) {
-  debugger
-   this.addCountryForm.controls.countryName.patchValue(item.countryName);
+   this.addCountryForm.controls.countryName.patchValue(item.countryId);
    this.addCountryForm.controls.languages.patchValue(item.languages);
-  this.addCountryForm.controls.currency.patchValue(item.currency);
+  this.addCountryForm.controls.currency.patchValue(item.currency.id);
 } 
 
 getCountrydetails(id) {
@@ -237,17 +239,12 @@ arrayOfStringsToArrayOfObjectsCountry(arr: any[]) {
 }
 getdropdown(event) 
 {
-
   this.countryValue = this.countries.find( item => item.value === event.value).label;
-}
-getdropdown1(event) 
-{
-  
-  this.languageValue = this.languages.find( item => item.value === event.value).label;
+  this.countryId = this.countries.find( item => item.value === event.value).value;
+
 }
 getdropdown2(event) 
 {
-  
   this.currencyValue = this.currencies.find( item => item.value === event.value).label;
 }
 }

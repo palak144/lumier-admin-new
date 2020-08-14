@@ -46,11 +46,11 @@ export class DeliveryChargeComponent implements OnInit {
   setStatus(id: Number, adminStatus: Number) {
 
     let statusData = { id, adminStatus }
-    debugger
+    
     this.deliveryChargeService.updateDeliveryChargeStatus(statusData).subscribe(
       
       (success: any) => {
-       debugger
+       
         this.ngOnInit() 
       }) 
   }

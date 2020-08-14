@@ -79,8 +79,6 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
-    debugger
-    console.log(this.uploader)
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
@@ -103,18 +101,42 @@ export class AddProductComponent implements OnInit {
   get signUpControls() {
       return this.addProductForm.controls
   }
-
+  editorValidation(event)
+  {
+  }
+  fileChangeEvent1(fileInput : any){
+  
+    this.file = fileInput.target.files[0];
+    
+    var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
+    if (this.file.size < 200000) {
+    {
+      this.companyFlagSize = true;
+       let reader = new FileReader();      
+        reader.readAsDataURL(this.file);      
+        reader.onload = (event) => {
+           this.url = reader.result;
+          this.companyLogo = this.url;        
+          document.getElementById('sizeValidations').style.color = 'black';
+        }
+        this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
+        this.file = this.file.name
+      }
+    }
+      else {
+        this.companyFlagSize = false;
+        
+        document.getElementById('sizeValidations').style.color = '#ffae42';
+        this.addProductForm.controls['file'].setValue(this.file ? '' : '');
+      }
+  }
   fileChangeEvent(e : any){
     this.file = e.queue[0];
     this.file = this.file.file 
-    debugger
-
     for (var i = 0; i < e.queue.length; i++) { 
       this.files.push(e.queue[i]);
     }
     console.log(this.files)
-    debugger
-    if(this.file.type == "pdf")
     if (this.file.size < 200000) {
     {
       this.companyFlagSize = true;
@@ -132,6 +154,7 @@ export class AddProductComponent implements OnInit {
       }
   }
   onSubmitAddProductForm(){
+    debugger
       event.preventDefault();
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
@@ -175,6 +198,7 @@ debugger
     let fname = "";
     let hyperlink = "";
     let file ="";
+     let fileCatelogue = ""
     // let sequenceNumber ="";
     let page ="";
     let position ="";
@@ -185,8 +209,8 @@ debugger
       "supplyTypeId": new FormControl( null, Validators.required),
       "brandId": new FormControl( null, Validators.required),
       "languageId":new FormControl(null, Validators.required),
-      "relatedProducts" : new FormControl(null, Validators.required),
       "pnCode": new FormControl(null, Validators.required),
+      "pncdecvarient" : new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(null, Validators.required),
       "isSale" : new FormControl(null, Validators.required),
       "shortDiscription" : new FormControl(null, Validators.required),
@@ -203,17 +227,35 @@ debugger
       "speciality" : new FormControl(null, Validators.required),
       "isPackage" : new FormControl(null, Validators.required),
       "sellerFee" : new FormControl(null, Validators.required),
+      "isSaleSeller" : new FormControl (null,  Validators.required),
       "quantity" : new FormControl(null, Validators.required),
       "deliveryWithinDays" : new FormControl(null, Validators.required),
       "currency":new FormControl(null, Validators.required),
       "c_origin" : new FormControl(null, Validators.required),
-      "relatedItem": new FormControl(null, Validators.required),
+      "relatedItem": new FormControl(null),
+      "sellerName": new FormControl(null, Validators.required),
+      "varient": new FormControl(null, Validators.required),
+      "quantitySeller": new FormControl(null, Validators.required),
+      "salePrice" : new FormControl(null, Validators.required),
+      "priceSeller": new FormControl(null, Validators.required),
+      "walletSeller" : new FormControl(null, Validators.required),
+      "description": new FormControl(null, Validators.required),
+      "warranty": new FormControl(null, Validators.required),
+      "features": new FormControl(null, Validators.required),
+       "embedeVideo" : new FormControl(null, Validators.required),
+       "minQuantity" : new FormControl(null, Validators.required),
+       "maxQuantity" : new FormControl(null, Validators.required),
+       "priceQuantity" : new FormControl(null, Validators.required),
+       "walletQuantity" : new FormControl(null, Validators.required),
     });
     
         if(this.editMode){
           this.productTitle = "Edit Product"
           this.addProductForm.addControl(
             "file", new FormControl( file,),
+          );
+          this.addProductForm.addControl(
+            "fileCatelogue",new FormControl( fileCatelogue,),
           );
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{          
@@ -279,10 +321,17 @@ debugger
             this.addProductForm.addControl(
               "file", new FormControl( file,Validators.required),
             );
+            this.addProductForm.addControl(
+              "fileCatelogue", new FormControl( file,Validators.required),
+            );
           }
     
     }
-
+    // newRow() {
+    //   debugger
+    //   return { varient: '', pncdecvarient: '', quantitySeller: '', isSaleSeller: '',
+    //   salePrice: '', priceSeller: '', walletSeller: '' };
+    // }
   getdropdown1(event:any){
     this.rows = []
     this.selectedCountryId = event.value

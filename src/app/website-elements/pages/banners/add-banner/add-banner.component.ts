@@ -33,6 +33,8 @@ export class AddBannerComponent implements OnInit {
   companyLogo: any;
   selected_supplyType: any;
   selected_country: any;
+  selected_endDate :any
+  selected_startDate :any
   addBannerFormDetails: any;
   pages: string[];
   positions: string[];
@@ -112,8 +114,8 @@ export class AddBannerComponent implements OnInit {
         return
       }
 
-      let noEndDate = (this.addBannerForm.get('endDate').value != "" && this.addBannerForm.get('endDate').value != undefined) ? this.addBannerForm.get('endDate').value : "2099/12/01"
-debugger
+      let noEndDate = (this.addBannerForm.get('endDate').value == true) ? this.addBannerForm.get('endDate').value : "2099/12/01"
+
       this.addBannerFormDetails = {
         "name": this.addBannerForm.get('name').value,
         "hyperlink": this.addBannerForm.get('hyperlink').value,
@@ -126,7 +128,7 @@ debugger
         "startDate":this.addBannerForm.get('startDate').value,
         "endDate":noEndDate,
       }
-      debugger
+      
       if (this.id ) {
         this.addBannerFormDetails.id = this.id;
       }
@@ -173,8 +175,7 @@ debugger
       position: new FormControl( position, Validators.required),
       startDate: new FormControl( null, Validators.required),
       endDate: new FormControl( null),
-
-
+      noEndDate: new FormControl('')
     });
     
         if(this.editMode){
@@ -192,12 +193,13 @@ debugger
                 error => {
                 }
               )
-              debugger
+              
               this.addBannerForm.patchValue({
                 "name" : this.banner.name,
                 "hyperlink" : this.banner.hyperLink,
                
              })
+             
             console.log(this.addBannerForm.patchValue)
             this.file = this.banner.logoName
             this.companyFlagSize = true;
@@ -206,9 +208,9 @@ debugger
             this.selected_supplyType = this.banner.supplyTypeId;
             // this.selected_page= this.banner.page;
             this.selected_position = this.banner.position;
-            this.startDate = formatDate(this.banner.startDate,'MM/dd/yyyy',this.locale),
-           this.endDate = formatDate(this.banner.endDate,'MM/dd/yyyy',this.locale)
-            debugger
+            this.selected_startDate = formatDate(this.banner.startDate,'yyyy-MM-dd',this.locale),
+           this.selected_endDate = formatDate(this.banner.endDate,'yyyy-MM-dd',this.locale)
+            
           }
           ,
             error=>{          

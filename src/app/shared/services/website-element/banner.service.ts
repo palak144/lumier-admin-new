@@ -36,7 +36,7 @@ export class BannerService {
       dataForm.append('endDate', data['endDate']);
       dataForm.append('startDate', data['startDate']);
 
-debugger
+
     return this.http.post(this.baseUrl + 'admin/banner' , dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -52,7 +52,7 @@ debugger
       );
   }
   getAllBannersSearch(page?, searchKey?) {
-    debugger
+    
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/banner',
       { params: params }).pipe(
@@ -61,7 +61,7 @@ debugger
       );
   } 
   deleteBanner(id) {
-      debugger
+      
     return this.http.delete(this.baseUrl + 'admin/banner/' + id)
       .pipe(
         retry(3),

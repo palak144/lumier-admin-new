@@ -32,6 +32,7 @@ export class AddDeliveryChargeComponent implements OnInit {
   selectedCriteria: any;
   currencies: any[];
   currencyValue: any;
+  currencyId: any;
  
   constructor(
     private router: Router,
@@ -92,10 +93,10 @@ export class AddDeliveryChargeComponent implements OnInit {
       return
     }
     let data=this.addDeliveryForm.value;
-    
+    data.currencyId = this.currencyId
     data.currency = this.currencyValue
-    debugger
-    if(this.id)
+    
+    if(this.id) 
     {
       data.id= this.id;
     }
@@ -131,9 +132,9 @@ export class AddDeliveryChargeComponent implements OnInit {
   {
     this.commonService.getCountry().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.countries = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
+        
       },
       error => {
       }
@@ -143,9 +144,9 @@ export class AddDeliveryChargeComponent implements OnInit {
 {
   this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
-      debugger
+      
       this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-      debugger
+      
     },
     error => {
     }
@@ -157,7 +158,7 @@ export class AddDeliveryChargeComponent implements OnInit {
   }
 
   arrayOfStringsToArrayOfObjects(arr: any[]) {
-    debugger
+    
     const newArray = [];
     arr.forEach(element => {
       newArray.push({
@@ -174,9 +175,9 @@ export class AddDeliveryChargeComponent implements OnInit {
 
     }
   getdropdown2(event:any) {
-    debugger
+    
   this.currencyValue = this.currencies.find( item => item.value === event.value).label;
-
+  this.currencyId = this.currencies.find( item => item.value === event.value).value;
 }
 
     getAllDeliveryChargedetails(id) {
@@ -184,12 +185,12 @@ export class AddDeliveryChargeComponent implements OnInit {
         (success:any) => {
           
           this.deliveryChargeDetailsData = success.data;
-         debugger
+         
          this.commonService.getCountryCurrency(this.deliveryChargeDetailsData.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
           (success:any) => {
-            debugger
+            
             this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-            debugger
+            
           },
           error => {
           }
@@ -210,7 +211,7 @@ export class AddDeliveryChargeComponent implements OnInit {
   this.addDeliveryForm.controls.countryId.patchValue(item.countryId);
   this.addDeliveryForm.controls.minimumOrderAmount.patchValue(item.minimumOrderAmount);
   this.addDeliveryForm.controls.deliveryCharge.patchValue(item.deliveryCharge);
-  this.addDeliveryForm.controls.currency.patchValue(item.currency);
+  this.addDeliveryForm.controls.currency.patchValue(item.currencyId);
   this.addDeliveryForm.controls.instructions.patchValue(item.instructions);
 }
 

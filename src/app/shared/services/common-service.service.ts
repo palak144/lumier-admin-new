@@ -104,7 +104,7 @@ export class CommonServiceService {
   }
 
   getCountryCurrency(country) {
-debugger
+
     return this.http.get(this.baseUrl + 'admin/getCountryCurrency/'+ country).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)
@@ -154,7 +154,7 @@ debugger
     );  
   }
   getSpeciality(){
-    debugger
+    
     return this.http
     .get(this.baseUrl + 'customer/speciality')
     .pipe(

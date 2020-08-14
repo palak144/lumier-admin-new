@@ -28,7 +28,7 @@ export class DeliveryChargeService {
   }
 
   updateDeliveryChargeStatus(statusData: {id: Number; adminStatus: Number }){
-    debugger
+    
     return this.http.put(this.baseUrl + 'admin/deliveryCharge', statusData)
     .pipe(
       retry(3),

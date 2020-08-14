@@ -116,7 +116,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToggleFullscreenDirective,
     FileUploadComponent,
     SafeHtmlPipe,
-    TimeFormat
+    TimeFormat,
     //FrameFrontFaceUploadComponent
   ]
 })

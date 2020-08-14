@@ -36,7 +36,7 @@ export class ProductService {
       dataForm.append('endDate', data['endDate']);
       dataForm.append('startDate', data['startDate']);
 
-debugger
+
     return this.http.post(this.baseUrl + 'admin/product' , dataForm).pipe(
       retry(3),
       catchError(this.errorHandler.handleError)

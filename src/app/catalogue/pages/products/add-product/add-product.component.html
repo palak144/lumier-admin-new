@@ -243,13 +243,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Price</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="price" class="form-control border-primary" placeholder="Price" numbersOnly>
+                                    <input type="number" formControlName="price" class="form-control border-primary" placeholder="Price" numbersOnly>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Wallet Price</label>
-                                    <input type="text"  class="form-control border-primary" formControlName="walletPrice"  placeholder="Wallet Price" numbersOnly> 
+                                    <input type="number"  class="form-control border-primary" formControlName="walletPrice"  placeholder="Wallet Price" numbersOnly> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -339,7 +339,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Related Products</label>
-                                    <tag-input formControlName="relatedItem" [onlyFromAutocomplete]="true">
+                                    <tag-input formControlName="relatedItem" lass="form-control border-primary" [onlyFromAutocomplete]="true">
                                         <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
                                         [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
                                           <ng-template let-item="item" let-index="index">
@@ -359,10 +359,11 @@
                                           <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
                                     </div>
                                     <div class="col-md-10 ">
-                                        <input  type="file" accept="application/pdf" id="chooseFile" (change)="fileChangeEvent($event)"   formControlName="file" class="form-control border-primary">
+                                        <input  type="file" accept="application/pdf" id="chooseFile" (change)="fileChangeEvent1($event)" 
+                                          formControlName="fileCatelogue" class="form-control border-primary">
                                         <span id="sizeValidations">File size should not exceed 200kb</span>
                                         <div *ngIf="isSubmittedaddBrandForm && signUpControls.file.errors" class="invalid-feedback mt-0">
-                                          <div *ngIf="signUpControls.file.errors.required">Logo is required</div>
+                                          <div *ngIf="signUpControls.file.errors.required">Catelogue is required</div>
                                       </div> 
                                     </div>
                                 </div>
@@ -393,7 +394,6 @@
                         <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
                         <button type="submit" class="btn btn-raised btn-primary">Submit</button>
                     </div>-->
-                </form> 
                 
                 <div class="product-page-listing">
                     <h4 class="form-section">Sellers</h4>
@@ -416,7 +416,7 @@
                                     <tr>
                                        <td class="order-date-wrapper"><span class="ui-column-title">S No</span>1</td>
                                        <td >
-                                                <p-dropdown [options]="dropdowns"  filter="true"
+                                                <p-dropdown [options]="dropdowns"  filter="true" formControlName="sellerName"
                                                  [style]="{'width':'100%'}"></p-dropdown>
                                     </td>                                       
                                     <td >  <input pInputText type="number" formControlName="sellerFee" placeholder="Seller Fee" numbersOnly>
@@ -449,18 +449,20 @@
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
-                            <p-table #dt [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
+                            <p-table #dt [value]="" styleClass="table-list-wrapper" [responsive]="true" editMode="row">
                        <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                        <ng-template pTemplate="header">
                                <tr class="table-coustom-style">
                                    <th style="width: 2em">S. No.</th>
-                                   <th style="width: 4em;">Varient</th>
+                                   <th style="width: 4em;" >Varient</th>
                                    <th style="width: 4em;">PN CDE</th>
                                    <th style="width: 4em;">Quantity</th>
                                    <th style="width: 4em;">Is Sale?</th>
                                    <th style="width: 6em;">Sale Price</th>
                                    <th style="width: 4em;">Price</th>
                                    <th style="width: 6em;">Wallet Price</th>
+                                   <th style="width: 6em;">Action</th>
+
                                </tr>
                            </ng-template>
                            <ng-template pTemplate="body" let-product >
@@ -470,22 +472,22 @@
                                     <input pInputText type="text" formControlName="varient"  placeholder="Varient" >
                                 </td>
                                   <td><span class="ui-column-title">PN CDE</span>
-                                    <input pInputText type="text" formControlName="pncde"  placeholder="PN CDE" >
+                                    <input pInputText type="text" formControlName="pncdecvarient"  placeholder="PN CDE" >
                                 </td>
                                    <td><span class="ui-column-title">Quantity</span>
-                                    <input pInputText type="text" formControlName="varient1"  placeholder="Quantity" >
+                                    <input pInputText type="text" formControlName="quantitySeller"  placeholder="Quantity" >
                                 </td>
                                    <td><span class="ui-column-title">Is Sale?</span>
-                                    <input pInputText type="text" formControlName="varient2"  placeholder="Quantity" >
+                                    <input class="form-check-input" type="checkbox" formControlName="isSaleSeller"  placeholder="Is Sale?" >
                                 </td>
                                    <td><span class="ui-column-title">Sale Price</span>
-                                    <input pInputText type="number" formControlName="varient3"  placeholder="Quantity" numbersOnly>
+                                    <input pInputText type="number" formControlName="salePrice"  placeholder="Sale Price" numbersOnly>
                                 </td>
                                    <td><span class="ui-column-title">Price</span>
-                                    <input pInputText type="number" formControlName="varient4"  placeholder="Quantity" numbersOnly>
+                                    <input pInputText type="number" formControlName="priceSeller"  placeholder="Price" numbersOnly>
                                 </td>
                                    <td><span class="ui-column-title">Wallet Price</span>
-                                    <input pInputText type="number" formControlName="varient5"  placeholder="Quantity" numbersOnly>
+                                    <input pInputText type="number" formControlName="walletSeller"  placeholder="Wallet Price" numbersOnly>
                                 </td>
         
                                </tr>
@@ -498,29 +500,28 @@
                        </p-table>
                        <div class="text-right">
                         <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'"
-                        pAddRow [table]="dt"></button>
+                        pAddRow [table]="dt" ></button>
                       </div>
                    </div>
                     </div>
                   </div>
                  
 
-                  <form class="form" >
-                    <div class="form-body">
+                    <div class="">
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Description</label>
-                                  <ckeditor class="border-primary"></ckeditor>
-                                  <!-- (change)="editorValidation(3)" -->
+                                  <ckeditor class="border-primary" formControlName="description" 
+                                      (change)="editorValidation(3)"></ckeditor>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Warranty</label>
-                                  <ckeditor class="border-primary"></ckeditor>
-                                  <!-- (change)="editorValidation(3)" -->
+                                  <ckeditor class="border-primary" formControlName="warranty" 
+                                  (change)="editorValidation(3)"></ckeditor>
                                 </div>
                             </div>
                         </div>
@@ -528,24 +529,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Features</label>
-                                  <ckeditor class="border-primary"></ckeditor>
-                                  <!-- (change)="editorValidation(3)" -->
+                                  <ckeditor class="border-primary" formControlName="features" 
+                                  (change)="editorValidation(3)"></ckeditor>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Embeded Video</label>
-                                    <input type="text" class="form-control border-primary" placeholder="Embeded Video"> 
+                                    <input type="text" formControlName="embedeVideo" class="form-control border-primary" placeholder="Embeded Video"> 
                                 </div>
                                 <span id="sizeValidations">Paste Embeded Code Only.</span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-actions right">
-                        <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
-                        <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-                    </div>
-                </form>
+                   
 
                 <div class="product-page-listing">
                     <h4 class="form-section"> Quantity Based Discount</h4>
@@ -563,28 +560,31 @@
                                             <th style="width: 16em;">Maximum Quantity</th>
                                             <th style="width: 13em;">Price</th> 
                                             <th style="width: 13em;">Wallet Price</th> 
-                                            <th style="width: 4em;">Action</th>
+                                            <!-- <th style="width: 4em;">Action</th> -->
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-product >
                                         <tr>
                                          <td ><span class="ui-column-title">S No</span>1</td>
                                          <td><span class="ui-column-title">Minimum Quantity</span>
-                                             <input pInputText type="text" formControlName="varient"  placeholder="Varient" >
+                                             <input pInputText type="text" formControlName="minQuantity" 
+                                              placeholder="Minimum Quantity">
                                          </td>
                                            <td><span class="ui-column-title">Maximum Quantity</span>
-                                             <input pInputText type="text" formControlName="pncde"  placeholder="PN CDE" >
+                                             <input pInputText type="text" formControlName="maxQuantity" 
+                                              placeholder="Maximum Quantity" >
                                          </td>
                                             <td><span class="ui-column-title">Price</span>
-                                             <input pInputText type="text" formControlName="varient1"  placeholder="Quantity" >
+                                             <input pInputText type="number" formControlName="priceQuantity" 
+                                              placeholder="Price" numbersOnly>
                                          </td>
                                             <td><span class="ui-column-title">Wallet Price</span>
-                                             <input pInputText type="text" formControlName="varient2"  placeholder="Quantity" >
+                                             <input pInputText type="number" formControlName="walletQuantity"
+                                               placeholder="Wallet Price" numbersOnly>
                                          </td>
-                                            <td><span class="ui-column-title">Action</span>
+                                            <!-- <td><span class="ui-column-title">Action</span>
                                              <input pInputText type="number" formControlName="varient3"  placeholder="Quantity" numbersOnly>
-                                         </td>
-                 
+                                         </td> -->
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
@@ -600,12 +600,17 @@
                     <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'"
                         pAddRow [table]="dtQuantity"></button>
                   </div>
+                  <div class="form-actions right">
+                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                    <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                </div>
+                </form> 
             </div>
         </div>
     </div>
 </div>
 
-<ng-template #content let-c="close" let-d="dismiss">
+<!-- <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h3 class="modal-title title">Add Language</h3>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -623,17 +628,8 @@
             </select>
         </div>
     </div>
-        <!-- <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let permission of permissions">
-            <ngb-panel class="p-0" id="ngb-panel-0" title={{permission.menuName}} >
-              <ng-template ngbPanelContent>
-                  <div *ngFor="let childMenu of permission.childMenu">
-                    <span>{{childMenu.itemName}}</span>
-                  </div>
-            </ng-template>
-            </ngb-panel>
-            </ngb-accordion> -->
     
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
     </div>
-  </ng-template>
+  </ng-template> -->

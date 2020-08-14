@@ -112,7 +112,7 @@ getAllBannersSearch(page, searchBar) {
 
 getDropDownValue(event, id) {
   if (event.currentTarget.firstChild.data === 'Delete') {
-debugger
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to perform this action?',
       accept: () => {
