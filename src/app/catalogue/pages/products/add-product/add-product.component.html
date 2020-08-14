@@ -443,14 +443,14 @@
                 </div>
 
                   
-                <div class="product-page-listing">
+                <!-- <div class="product-page-listing">
                     <h4 class="form-section"> Varients</h4>
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
                         </div>
                         <div class="table-wrapper vehiclwrappere varient">
                             <p-table #dt [value]="" styleClass="table-list-wrapper" [responsive]="true" editMode="row">
-                       <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                      
                        <ng-template pTemplate="header">
                                <tr class="table-coustom-style">
                                    <th style="width: 2em">S. No.</th>
@@ -489,7 +489,9 @@
                                    <td><span class="ui-column-title">Wallet Price</span>
                                     <input pInputText type="number" formControlName="walletSeller"  placeholder="Wallet Price" numbersOnly>
                                 </td>
-        
+                                <td (click)="deleteRow(i)">
+                                    <i class="fa fa-trash fa-2x"></i>
+                                  </td>                     
                                </tr>
                            </ng-template>
                            <ng-template pTemplate="emptymessage">
@@ -504,9 +506,68 @@
                       </div>
                    </div>
                     </div>
+                  </div> -->
+                  <div class="product-page-listing">
+                    <h4 class="form-section"> Varients</h4>
+                    <div class="customer-wrapper">
+                        <div class="heading-wrapper">
+                        </div>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr class="table-coustom-style">
+                                <th >S. No.</th>
+                                <th >Varient</th>
+                                <th >PN CDE</th>
+                                <th >Quantity</th>
+                                <th>Is Sale?</th>
+                                <th>Sale Price</th>
+                                <th >Price</th>
+                                <th>Wallet Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr *ngFor="let dynamic of dynamicArray; let i = index;">
+                            
+                                <td>
+                                  <input [(ngModel)]="dynamicArray[i].id" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicArray[i].Varient" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicArray[i].pcode" class="form-control" type="text"/>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="dynamicArray[i].quantity" class="form-control" type="text" />
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicArray[i].is_sale" class="form-control" type="text" />
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicArray[i].sale_price" class="form-control" type="text"/>
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicArray[i].price" class="form-control" type="text" />
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicArray[i].wallet" class="form-control" type="text"/>
+                                  </td>
+                                <td >
+                                    <i (click)="deleteRow(i)" class="fa fa-trash fa-2x"></i>
+                                    <i (click)="addRow(i)" class="fa fa-plus fa-2x"></i>
+                                  </td>
+                               
+                            </tr>
+                            <!-- <tr>
+                              <td (click)="addRow(i)">
+                                <i class="fa fa-plus fa-2x"></i>
+                              </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
                   </div>
-                 
-
+                </div>
                     <div class="">
                         <!-- <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4> -->
                         <div class="row">

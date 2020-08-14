@@ -8,7 +8,7 @@ import { CommonServiceService } from 'app/shared/services/common-service.service
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'app/shared/services/prod.service';
 import { FileUploader } from 'ng2-file-upload';
-
+import { DynamicGrid } from '../../../../grid.model';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
@@ -18,7 +18,8 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   
 })
 export class AddProductComponent implements OnInit {
-
+  dynamicArray: Array<DynamicGrid> = [];
+  newDynamic: any = {};
   public uploader: FileUploader = new FileUploader({
     url: URL,
     isHTML5: true
@@ -79,6 +80,8 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
+    this.newDynamic = {id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
+    this.dynamicArray.push(this.newDynamic);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
@@ -341,6 +344,7 @@ debugger
     this.getLanguage();
     this.getCurrency();
   }
+
   getCurrency()
   {
     this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -521,6 +525,23 @@ debugger
 //       return `with: ${reason}`;
 //   }
 // }
+addRow(index) {  
+  this.newDynamic ={id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
+  this.dynamicArray.push(this.newDynamic);
+  this.toastr.success('New row added successfully', 'New Row');
+  console.log(this.dynamicArray);
+  return true;
+}
 
+deleteRow(index) {
+  if(this.dynamicArray.length ==1) {
+    this.toastr.error("Can't delete the row when there is only one row", 'Warning');
+      return false;
+  } else {
+      this.dynamicArray.splice(index, 1);
+      this.toastr.warning('Row deleted successfully', 'Delete row');
+      return true;
+  }
+}
 
 }
