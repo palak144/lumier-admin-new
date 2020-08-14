@@ -451,7 +451,7 @@
                             <tr class="table-coustom-style">
                                 <th >S. No.</th>
                                 <th >Seller Name</th>
-                                <th >Seller Fee</th>`
+                                <th >Seller Fee</th>
                                 <th >Quantity</th> 
                                 <th >Delivery Within Days</th>
                                 <th>Action</th>
@@ -654,7 +654,7 @@
                     </div>
                    
 
-                <div class="product-page-listing">
+                <!-- <div class="product-page-listing">
                     <h4 class="form-section"> Quantity Based Discount</h4>
                     <div class="customer-wrapper">
                         <div class="heading-wrapper">
@@ -662,16 +662,16 @@
                         <div class="table-wrapper vehiclwrappere varient">
                             <p-table #dtQuantity [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" 
                             [alwaysShowPaginator]="false" [rows]="10">
-                                <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
-                                <ng-template pTemplate="header">
+                               [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
+                                <!-- <ng-template pTemplate="header">
                                         <tr class="table-coustom-style">
                                             <th style="width:6em">S. No.</th>
                                             <th style="width: 16em;">Minimum Quantity</th>
                                             <th style="width: 16em;">Maximum Quantity</th>
                                             <th style="width: 13em;">Price</th> 
-                                            <th style="width: 13em;">Wallet Price</th> 
+                                            <th style="width: 13em;">Wallet Price</th>  -->
                                             <!-- <th style="width: 4em;">Action</th> -->
-                                        </tr>
+                                        <!-- </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-product >
                                         <tr>
@@ -691,11 +691,11 @@
                                             <td><span class="ui-column-title">Wallet Price</span>
                                              <input pInputText type="number" formControlName="walletQuantity"
                                                placeholder="Wallet Price" numbersOnly>
-                                         </td>
+                                         </td> -->
                                             <!-- <td><span class="ui-column-title">Action</span>
                                              <input pInputText type="number" formControlName="varient3"  placeholder="Quantity" numbersOnly>
                                          </td> -->
-                                        </tr>
+                                        <!-- </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
                                         <tr>
@@ -705,11 +705,61 @@
                                 </p-table>
                             </div>
                     </div>
+                  </div> --> 
+                  <div class="product-page-listing">
+                    <h4 class="form-section">  Quantity Based Discount</h4>
+                    <div class="customer-wrapper">
+                        <div class="heading-wrapper">
+                        </div>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr class="table-coustom-style">
+                                <th>S. No.</th>
+                                <th>Minimum Quantity</th>
+                                <th>Maximum Quantity</th>
+                                <th>Price</th> 
+                                <th>Wallet Price</th> 
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr *ngFor="let dynamic of dynamicQuantity; let i = index;">
+                            
+                                <td>
+                                  <input [(ngModel)]="dynamicQuantity[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicQuantity[i].min_qunatity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                </td>
+                                <td>
+                                  <input [(ngModel)]="dynamicQuantity[i].max_qunatity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="dynamicQuantity[i].price"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                  </td>
+                                  <td>
+                                    <input [(ngModel)]="dynamicQuantity[i].wallet"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                  </td>
+                               
+                                <td >
+                                    <i (click)="deleteQuantity(i)" class="fa fa-trash fa-2x"></i>
+                                    <i (click)="addQuantity(i)" class="fa fa-plus fa-2x"></i>
+                                  </td>
+                               
+                            </tr>
+                            <!-- <tr>
+                              <td (click)="addRow(i)">
+                                <i class="fa fa-plus fa-2x"></i>
+                              </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
                   </div>
-                  <div class="text-right">
+                </div>
+                  <!-- <div class="text-right">
                     <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'"
                         pAddRow [table]="dtQuantity"></button>
-                  </div>
+                  </div> -->
                   <div class="form-actions right">
                     <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
                     <button type="submit" class="btn btn-raised btn-primary">Submit</button>

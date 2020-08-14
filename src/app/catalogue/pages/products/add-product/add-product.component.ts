@@ -22,6 +22,8 @@ export class AddProductComponent implements OnInit {
   newDynamic: any = {};
   dynamicSeller: Array<DynamicGrid> = [];
   newSeller: any = {};
+  dynamicQuantity: Array<DynamicGrid> = [];
+  newQuantity: any = {};
   public uploader: FileUploader = new FileUploader({
     url: URL,
     isHTML5: true
@@ -87,6 +89,8 @@ export class AddProductComponent implements OnInit {
     this.dynamicArray.push(this.newDynamic);
     this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
     this.dynamicSeller.push(this.newSeller);
+    this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
+    this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
     this.activatedRoute.params.subscribe(
@@ -562,6 +566,24 @@ deletesellerRow(index) {
       return false;
   } else {
       this.dynamicSeller.splice(index, 1);
+      this.toastr.warning('Row deleted successfully', 'Delete row');
+      return true;
+  }
+}
+addQuantity(index) {  
+  this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
+  this.dynamicQuantity.push(this.newQuantity);
+  this.toastr.success('New row added successfully', 'New Row');
+  console.log(this.dynamicQuantity);
+  return true;
+}
+
+deleteQuantity(index) {
+  if(this.dynamicQuantity.length ==1) {
+    this.toastr.error("Can't delete the row when there is only one row", 'Warning');
+      return false;
+  } else {
+      this.dynamicQuantity.splice(index, 1);
       this.toastr.warning('Row deleted successfully', 'Delete row');
       return true;
   }
