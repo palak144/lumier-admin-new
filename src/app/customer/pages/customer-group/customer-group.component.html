@@ -105,9 +105,31 @@
       </button>
     </div>
 <div class="container pt-3">
-    <div *ngFor="let group of groups">
-      <ul><li>{{group.firstName}} {{group.lastName}}</li> </ul>
-      </div>
+      <p-table [value]="groups">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5em;">Id</th>
+                <th>Customer Name</th>
+                 <th style="width:7em;">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-group >
+            <tr >
+                <td>{{group.customerId}}</td>
+                <td>{{group.firstName}} {{group.lastName}}</td>
+                <td>
+                    <span class="ui-column-title"></span>
+                    <i (click)="getDropDownValue($event,group.customerId, 'Edit')" (click)="c('Close click')" style="cursor: pointer;" class="fa fa-pencil " aria-hidden="true"></i>
+                    <i (click)="getDropDownValue($event,group.customerId , 'Delete')" (click)="c('Close click')" style="cursor: pointer;" class="fa fa-trash spaceDelete" aria-hidden="true"></i>
+               </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">No Records Found</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>

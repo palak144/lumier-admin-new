@@ -16,7 +16,7 @@ import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { VariantComponent } from './pages/products/variant/variant.component';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TableModule } from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
@@ -35,8 +35,9 @@ import { TagInputModule } from 'ngx-chips';
     TableModule,
     DropdownModule,
     TagInputModule,
-    ButtonModule
+    ButtonModule,
+    FileUploadModule
   ],
-  declarations: [CatalogueLayoutComponent, AddRowDirective, FileSelectDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
+  declarations: [CatalogueLayoutComponent, AddRowDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
 })
 export class CatalogueModule {  }

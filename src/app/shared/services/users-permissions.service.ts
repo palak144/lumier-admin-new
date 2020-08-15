@@ -23,20 +23,20 @@ export class UsersPermissionsService {
 
   getPermissionGroupList(){
     return this.http.get(this.baseUrl +'admin/permissionGroupList').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   getMenuList(){
     return this.http.get(this.baseUrl +'admin/getMenu').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   addUser(data) {
     
     return this.http.post(this.baseUrl + 'admin/employee', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -44,7 +44,7 @@ export class UsersPermissionsService {
   addPermissionGroup(data) {
     
     return this.http.post(this.baseUrl + 'admin/permissionGroup', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -52,7 +52,7 @@ export class UsersPermissionsService {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/employee',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -61,7 +61,7 @@ export class UsersPermissionsService {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/permissionGroup',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -70,7 +70,7 @@ export class UsersPermissionsService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/permissionGroup',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -79,7 +79,7 @@ export class UsersPermissionsService {
     
     return this.http.put(this.baseUrl + 'admin/employee', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -87,7 +87,7 @@ export class UsersPermissionsService {
   updateCustomer(data) {
     
     return this.http.put(this.baseUrl + 'admin/customer', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -96,14 +96,14 @@ export class UsersPermissionsService {
   getUserId(id) {
     
     return this.http.get(this.baseUrl + 'admin/employee/' + id).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   getPerGroupId(id){
     
     return this.http.get(this.baseUrl + 'admin/permissionGroup/' + id).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -113,7 +113,7 @@ export class UsersPermissionsService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/employee' ,  
     { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -122,7 +122,7 @@ export class UsersPermissionsService {
     
     return this.http.delete(this.baseUrl + 'admin/employee/' +id)	
     .pipe(	
-       retry(3),	
+       	
        catchError(this.errorHandler.handleError)	
      );	
   }
@@ -131,7 +131,7 @@ export class UsersPermissionsService {
     
     return this.http.delete(this.baseUrl + 'admin/permissionGroup/' +id)	
     .pipe(	
-       retry(3),	
+       	
        catchError(this.errorHandler.handleError)	
      );	
   }

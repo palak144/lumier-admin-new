@@ -22,7 +22,7 @@ export class DeliveryChargeService {
 
   addDelivery(data) {
     return this.http.post(this.baseUrl + 'admin/deliveryCharge', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -31,7 +31,7 @@ export class DeliveryChargeService {
     
     return this.http.put(this.baseUrl + 'admin/deliveryCharge', statusData)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -40,7 +40,7 @@ export class DeliveryChargeService {
     const params = { page: page, searchKey: searchKey  ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/deliveryCharge', { params: params })
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -49,7 +49,7 @@ export class DeliveryChargeService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/deliveryCharge',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -57,7 +57,7 @@ export class DeliveryChargeService {
   getAllDeliveryChargedetails(id) {
     return this.http.get(this.baseUrl + 'admin/deliveryCharge/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       ); 
   }
@@ -65,7 +65,7 @@ export class DeliveryChargeService {
   deleteDeliveryCharge(id){ 
     return this.http.delete(this.baseUrl + 'admin/deliveryCharge/' + id)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -73,7 +73,7 @@ export class DeliveryChargeService {
   updateDeliverycharge(data)
   {
     return this.http.post(this.baseUrl + 'admin/deliveryCharge', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

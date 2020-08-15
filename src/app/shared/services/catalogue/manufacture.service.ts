@@ -35,7 +35,7 @@ export class ManufactureService {
       dataForm.append('supplyTypeId', data['supplyTypeId']);
       
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -45,7 +45,7 @@ export class ManufactureService {
   {
     
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -53,7 +53,7 @@ export class ManufactureService {
   {
     
     return this.http.post(this.baseUrl + 'admin/parentCategory', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -62,7 +62,7 @@ export class ManufactureService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -70,7 +70,7 @@ export class ManufactureService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -79,7 +79,7 @@ export class ManufactureService {
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/manufacturer',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -87,14 +87,14 @@ export class ManufactureService {
     const params = { page: page, searchKey: searchKey ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/parentCategory',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   getBrandDetails(id) {
     return this.http.get(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -102,7 +102,7 @@ export class ManufactureService {
   {
     return this.http.get(this.baseUrl + 'admin/parentCategory/' + id)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -111,7 +111,7 @@ export class ManufactureService {
     
     return this.http.delete(this.baseUrl + 'admin/manufacturer/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -119,7 +119,7 @@ export class ManufactureService {
     
     return this.http.delete(this.baseUrl + 'admin/parentCategory/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -127,7 +127,7 @@ export class ManufactureService {
     
     return this.http.put(this.baseUrl + 'admin/manufacturer', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -135,7 +135,7 @@ export class ManufactureService {
     
     return this.http.put(this.baseUrl + 'admin/parentCategory', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }

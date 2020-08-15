@@ -24,7 +24,7 @@ export class CategoriesService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'categories',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -33,28 +33,28 @@ export class CategoriesService {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'categories',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   // update category
   updateCategory(data, categoryId) {
     return this.http.put(this.baseUrl + 'category/' + categoryId, data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
 
   createCategory(data) {
     return this.http.post(this.baseUrl + 'category', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
 
   updateStatus(data) {
     return this.http.put(this.baseUrl + 'categoryStatus/', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -63,7 +63,7 @@ export class CategoriesService {
     const d = new FormData();
     d.append('category_file', file);
     return this.http.post(this.baseUrl + 'import-category/', d).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
     );
   }

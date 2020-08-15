@@ -51,7 +51,7 @@ export class SellerService {
       dataForm.append('userName', data['userName']);
       
     return this.http.post(this.baseUrl + 'admin/seller', dataForm).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -60,7 +60,7 @@ export class SellerService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -71,14 +71,14 @@ export class SellerService {
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/seller',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   getSellerdetails(id) {
     return this.http.get(this.baseUrl + 'admin/seller/detail/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -86,7 +86,7 @@ export class SellerService {
   deleteSeller(id) {
     return this.http.delete(this.baseUrl + 'admin/seller/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -95,7 +95,7 @@ export class SellerService {
     
     return this.http.put(this.baseUrl + 'admin/seller', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }

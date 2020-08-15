@@ -21,7 +21,7 @@ export class ReturnReasonService {
 
   addReturn(data) {
     return this.http.post(this.baseUrl + 'admin/returnReason', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -29,7 +29,7 @@ export class ReturnReasonService {
   updateReturnStatus(statusData: {id: Number; adminStatus: Number }){
     return this.http.put(this.baseUrl + 'admin/returnReason', statusData)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -38,7 +38,7 @@ export class ReturnReasonService {
     const params = { page: page, searchKey: searchKey  }
     return this.http.get(this.baseUrl + 'admin/returnReason', { params: params })
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   } 
@@ -47,7 +47,7 @@ export class ReturnReasonService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/returnReason',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -55,7 +55,7 @@ export class ReturnReasonService {
   deleteReturn(id){ 
     return this.http.delete(this.baseUrl + 'admin/returnReason/' + id)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

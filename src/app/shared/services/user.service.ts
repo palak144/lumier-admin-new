@@ -23,7 +23,7 @@ export class UserService {
 
         const params = { page: page }
         return this.http.get(this.baseUrl + 'experts', { params: params }).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
@@ -31,7 +31,7 @@ export class UserService {
     getAllExpertSearch(page, searchKey) {
         const params = { page: page, searchKey: searchKey }
         return this.http.get(this.baseUrl + 'experts', { params: params }).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
@@ -41,7 +41,7 @@ export class UserService {
         return this.http.get(this.baseUrl + 'professionals', {
             params: params
         }).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
@@ -50,28 +50,28 @@ export class UserService {
     getAllProfessionalSearch(page, searchKey) {
         const params = { page: page, searchKey: searchKey }
         return this.http.get(this.baseUrl + 'professionals', { params: params }).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
     // update category
     updateCategory(data, categoryId) {
         return this.http.put(this.baseUrl + 'category/' + categoryId, data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     createCategory(data) {
         return this.http.post(this.baseUrl + 'category', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     updateStatus(data) {
         return this.http.put(this.baseUrl + 'changeStatus/', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
@@ -79,7 +79,7 @@ export class UserService {
     // get user detail
     getUserDetailByUserId(userId) {
         return this.http.post(this.baseUrl + 'getUserDataById', userId).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }

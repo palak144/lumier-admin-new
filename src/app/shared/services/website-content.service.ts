@@ -23,7 +23,7 @@ export class WebsiteContentService {
   // get all banners
   getAllBanners() {
     return this.http.get(this.baseUrl + 'banner').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -31,7 +31,7 @@ export class WebsiteContentService {
   // add banner
   addEditBanner(data) {
     return this.http.post(this.baseUrl + 'addUpdateBanner', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -39,7 +39,7 @@ export class WebsiteContentService {
   // delete banner
   deleteBanner(id) {
     return this.http.get(this.baseUrl + 'deleteBanner/' + id).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -50,21 +50,21 @@ export class WebsiteContentService {
 
   getTestimonial() {
     return this.http.get(this.baseUrl + 'testimonial').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
 
   addUpdateTestimonial(data) {
     return this.http.post(this.baseUrl + 'addUpdateTestimonial', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
 
   deleteTestimonial(data) {
     return this.http.post(this.baseUrl + 'activeDeleteTestimonial', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -76,7 +76,7 @@ export class WebsiteContentService {
   // get t&c
   getTermsAndConditions() {
     return this.http.get(this.baseUrl + 'termsCondition').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -84,7 +84,7 @@ export class WebsiteContentService {
   // update t&C
   updateTermsAndConditions(data) {
     return this.http.post(this.baseUrl + 'saveTermsAndConditions', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -95,7 +95,7 @@ export class WebsiteContentService {
   // get privacy policy
   getPrivacyPolicy() {
     return this.http.get(this.baseUrl + 'privacyPolicy').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -103,7 +103,7 @@ export class WebsiteContentService {
   // update privacy policy
   updatePrivacyPolicy(data) {
     return this.http.post(this.baseUrl + 'savePrivacyPolicy', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -115,7 +115,7 @@ export class WebsiteContentService {
   // get contact information
   getContactInformation() {
     return this.http.get(this.baseUrl + 'contact').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -123,7 +123,7 @@ export class WebsiteContentService {
   // update contact information
   updateContactInformation(data) {
     return this.http.post(this.baseUrl + 'saveContactDetails', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -135,7 +135,7 @@ export class WebsiteContentService {
   // get faq
   getFaq() {
     return this.http.get(this.baseUrl + 'faq').pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -143,7 +143,7 @@ export class WebsiteContentService {
   // add and update faq
   addUpdateFaq(data) {
     return this.http.post(this.baseUrl + 'addUpdateFaq', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -151,7 +151,7 @@ export class WebsiteContentService {
   // delete faq
   deleteFaq(data) {
     return this.http.get(this.baseUrl + 'deleteFaq/' + data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

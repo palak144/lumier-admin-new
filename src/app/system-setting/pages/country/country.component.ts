@@ -83,6 +83,7 @@ export class CountryComponent implements OnInit {
     )
       .subscribe((success: any) => {
         
+
         this.countriesList = success.data.results;
 
         this.totalCount = success.data.total;
@@ -115,6 +116,7 @@ export class CountryComponent implements OnInit {
       )
       .subscribe((success: any) => {
         
+
         this.countriesList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();

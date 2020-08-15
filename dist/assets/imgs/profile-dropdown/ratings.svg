@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+    <g id="Ratings" transform="translate(-912 -349)">
+        <path id="Rectangle_7209" fill="none" d="M0 0H25V25H0z" data-name="Rectangle 7209" transform="translate(912 349)"/>
+        <path id="star" fill="#f77e0b" d="M17.883 6.989a.952.952 0 0 0-.82-.654l-5.176-.47-2.045-4.79a.953.953 0 0 0-1.754 0L6.043 5.864l-5.177.47A.954.954 0 0 0 .324 8l3.913 3.431-1.153 5.083a.953.953 0 0 0 1.416 1.03l4.463-2.669 4.463 2.669a.954.954 0 0 0 1.419-1.03l-1.154-5.081L17.606 8a.954.954 0 0 0 .278-1.013zm-8.832 7.835" transform="translate(916 352.504)"/>
+    </g>
+</svg>

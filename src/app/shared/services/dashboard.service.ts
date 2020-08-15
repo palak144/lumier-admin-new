@@ -22,7 +22,7 @@ export class DashboardService {
     // get all stats
     dashboard() {
         return this.http.get(this.baseUrl + 'dashboard').pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }

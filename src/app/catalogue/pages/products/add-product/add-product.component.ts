@@ -63,6 +63,7 @@ export class AddProductComponent implements OnInit {
   selected_brand:any;
   selected_country: any;
   selected_cOrigin: any;
+  selected_category :any;
   addProductFormDetails: any;
   url: string | ArrayBuffer;
   product: any;
@@ -109,6 +110,7 @@ export class AddProductComponent implements OnInit {
     this.selected_cOrigin = [];
     this.selected_supplyType = [];
     this.selected_brand = [];
+    this.selected_category =[];
   }
   get signUpControls() {
       return this.addProductForm.controls
@@ -153,7 +155,7 @@ export class AddProductComponent implements OnInit {
     {
       this.companyFlagSize = true;
        let reader = new FileReader();      
-       debugger
+       
         this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
         // this.file = this.file.name
       }
@@ -173,11 +175,12 @@ export class AddProductComponent implements OnInit {
         return
       }
 
-debugger
+
       this.addProductFormDetails = {
         "name": this.addProductForm.get('name').value,
+        
       }
-      debugger
+      
       if (this.id ) {
         this.addProductFormDetails.id = this.id;
       }
@@ -207,43 +210,44 @@ debugger
   }
 
   private initForm(){
-    let fname = "";
+    let productName = "";
     let hyperlink = "";
     let file ="";
-     let fileCatelogue = ""
+     let catelogue = ""
     // let sequenceNumber ="";
     let page ="";
     let position ="";
 
-    this.addProductForm = new FormGroup({
+this.addProductForm = new FormGroup({
       "countryId":new FormControl(null,[Validators.required]),
-      "fname": new FormControl( fname, Validators.required),
+      "productName": new FormControl( productName, Validators.required),
       "supplyTypeId": new FormControl( null, Validators.required),
-      "brandId": new FormControl( null, Validators.required),
+      "manufactureId": new FormControl( null, Validators.required),
       "languageId":new FormControl(null, Validators.required),
-      "pnCode": new FormControl(null, Validators.required),
+      "PNCDE": new FormControl(null, Validators.required),
+      "code": new FormControl(null, Validators.required),
       "pncdecvarient" : new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(null, Validators.required),
       "isSale" : new FormControl(null, Validators.required),
       "shortDiscription" : new FormControl(null, Validators.required),
       "packageContent" : new FormControl(null, Validators.required),
-      "price" : new FormControl(null, Validators.required),
-      "metaTag" : new FormControl(null, Validators.required),
+      "MRP" : new FormControl(null, Validators.required),
+      "metaTitle" : new FormControl(null, Validators.required),
       "isQuote" : new FormControl(null, Validators.required),
       "UOM" : new FormControl(null, Validators.required),
       "walletPrice" : new FormControl(null, Validators.required),
-      "metaDesc" : new FormControl(null, Validators.required),
+      "metaDescription" : new FormControl(null, Validators.required),
       "metaKeyword" : new FormControl(null, Validators.required),
       "categoryId" : new FormControl(null, Validators.required),
-      "ribbonText" : new FormControl(null, Validators.required),
-      "speciality" : new FormControl(null, Validators.required),
+      "ribbenText" : new FormControl(null),
+      "specialityId" : new FormControl(null, Validators.required),
       "isPackage" : new FormControl(null, Validators.required),
       "sellerFee" : new FormControl(null, Validators.required),
       "isSaleSeller" : new FormControl (null,  Validators.required),
       "quantity" : new FormControl(null, Validators.required),
       "deliveryWithinDays" : new FormControl(null, Validators.required),
       "currency":new FormControl(null, Validators.required),
-      "c_origin" : new FormControl(null, Validators.required),
+      "countryOriginId" : new FormControl(null, Validators.required),
       "relatedItem": new FormControl(null),
       "sellerName": new FormControl(null, Validators.required),
       "varient": new FormControl(null, Validators.required),
@@ -254,11 +258,13 @@ debugger
       "description": new FormControl(null, Validators.required),
       "warranty": new FormControl(null, Validators.required),
       "features": new FormControl(null, Validators.required),
-       "embedeVideo" : new FormControl(null, Validators.required),
+       "video" : new FormControl(null, Validators.required),
        "minQuantity" : new FormControl(null, Validators.required),
        "maxQuantity" : new FormControl(null, Validators.required),
        "priceQuantity" : new FormControl(null, Validators.required),
        "walletQuantity" : new FormControl(null, Validators.required),
+       "price" : new FormControl(null, Validators.required),
+
     });
     
         if(this.editMode){
@@ -267,12 +273,12 @@ debugger
             "file", new FormControl( file,),
           );
           this.addProductForm.addControl(
-            "fileCatelogue",new FormControl( fileCatelogue,),
+            "catelogue",new FormControl( catelogue,),
           );
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{          
               this.product=success.data
-              debugger
+              
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -289,7 +295,7 @@ debugger
               )
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
-                  debugger
+                  
                   this.rows = [{id : 21,
                     itemName: "Seller New Palak"}]
                   console.log("rows",success.data)
@@ -309,20 +315,20 @@ debugger
               )
               this.commonService.getCategory(this.product.languageId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
-                  debugger
+                  
                   this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
                 },
                 error => {
                 }
               )
-              debugger
+              
               this.addProductForm.patchValue({
                 "name" : this.product.name,
                
              })
             console.log(this.addProductForm.patchValue)
             this.file = this.product.logoName
-            debugger
+            
           }
           ,
             error=>{          
@@ -334,16 +340,11 @@ debugger
               "file", new FormControl( file,Validators.required),
             );
             this.addProductForm.addControl(
-              "fileCatelogue", new FormControl( file,Validators.required),
+              "catelogue", new FormControl( file,Validators.required),
             );
           }
     
     }
-    // newRow() {
-    //   debugger
-    //   return { varient: '', pncdecvarient: '', quantitySeller: '', isSaleSeller: '',
-    //   salePrice: '', priceSeller: '', walletSeller: '' };
-    // }
   getdropdown1(event:any){
     this.rows = []
     this.selectedCountryId = event.value
@@ -358,9 +359,9 @@ debugger
   {
     this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
+        
       },
       error => {
       }
@@ -368,7 +369,7 @@ debugger
   }
   getlanguage(event:any)
   {
-    debugger
+    
     this.selectedLanguageId = event.value ;
     this.getCategoryList();
     this.getRelatedProducts();
@@ -400,9 +401,9 @@ debugger
    
     this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
+        
       },
       error => {
       }
@@ -420,12 +421,12 @@ debugger
   }
   getManufacturerBrands()
   {
-    debugger
+    
     this.commonService.getManufacturerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.manufacturerBrands = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
+        
       },
       error => {
       }
@@ -435,7 +436,7 @@ debugger
   {
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         if(success.data != []) {
         this.rows = [{id : 21,
           itemName: "Seller New Palak"}]
@@ -457,10 +458,10 @@ debugger
     )
   }
   getRelatedProducts(){
-    debugger
+    
     this.commonService.getRelatedProducts(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.autocompleteItemsAsObjects = success.data;
       },
       error => {
@@ -470,7 +471,7 @@ debugger
   getSpecialities(){
     this.commonService.getSpeciality().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         success.data.result.forEach(element => {
           this.specialities.push({
             label: element.specialityName,
@@ -482,10 +483,10 @@ debugger
       error => {
       }
     )
-    debugger
+    
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
-    debugger
+    
     const newArray = [];
     if (arr != []) {
     arr.forEach(element => {
@@ -537,6 +538,7 @@ debugger
 addRow(index) {  
   this.newDynamic ={id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
   this.dynamicArray.push(this.newDynamic);
+  
   this.toastr.success('New row added successfully', 'New Row');
   console.log(this.dynamicArray);
   return true;
@@ -555,6 +557,7 @@ deleteRow(index) {
 addsellerRow(index) {  
   this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
   this.dynamicSeller.push(this.newSeller);
+  
   this.toastr.success('New row added successfully', 'New Row');
   console.log(this.dynamicSeller);
   return true;
@@ -573,6 +576,7 @@ deletesellerRow(index) {
 addQuantity(index) {  
   this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
   this.dynamicQuantity.push(this.newQuantity);
+  debugger
   this.toastr.success('New row added successfully', 'New Row');
   console.log(this.dynamicQuantity);
   return true;

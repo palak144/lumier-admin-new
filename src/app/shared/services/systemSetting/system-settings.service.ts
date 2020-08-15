@@ -22,21 +22,21 @@ export class SystemSettingsService {
   addCountry(data) {
     
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   addCancel(data) {
     
     return this.http.post(this.baseUrl + 'admin/cancelReason', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   updateCountry(data)
   {
     return this.http.post(this.baseUrl + 'admin/countrySetting', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -45,7 +45,7 @@ export class SystemSettingsService {
     
     return this.http.get(this.baseUrl + 'admin/countrySetting/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -53,7 +53,7 @@ export class SystemSettingsService {
   getSupplyTypedetails(id) {
     return this.http.get(this.baseUrl + 'admin/supplyType/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -61,7 +61,7 @@ export class SystemSettingsService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/supplyType',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -71,7 +71,7 @@ export class SystemSettingsService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/countrySetting',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -80,7 +80,7 @@ export class SystemSettingsService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/cancelReason',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -89,7 +89,7 @@ export class SystemSettingsService {
     
     return this.http.get(this.baseUrl + 'admin/countrySetting')
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -99,7 +99,7 @@ export class SystemSettingsService {
     const params = { page: page, searchKey: searchKey  }
     return this.http.get(this.baseUrl + 'admin/countrySetting', { params: params })
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
 }  
@@ -108,13 +108,13 @@ getAllCancelSearch(page?, searchKey?) {
   const params = { page: page, searchKey: searchKey  }
   return this.http.get(this.baseUrl + 'admin/cancelReason', { params: params })
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 } 
 addSupply(data) {
     return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -123,14 +123,14 @@ addSupply(data) {
     const params = { page: page, searchKey: searchKey  ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/supplyType',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
 deleteCountry(id) {
   return this.http.delete(this.baseUrl + 'admin/countrySetting/' + id)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
@@ -138,7 +138,7 @@ deleteCountry(id) {
 deleteCancel(id)
 { return this.http.delete(this.baseUrl + 'admin/cancelReason/' + id)
 .pipe(
-  retry(3),
+  
   catchError(this.errorHandler.handleError)
 );
 
@@ -146,7 +146,7 @@ deleteCancel(id)
   deleteSupply(id) {
     return this.http.delete(this.baseUrl + 'admin/supplyType/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -155,14 +155,14 @@ deleteCancel(id)
   updateCountryStatus(statusData: {id: Number; adminStatus: Number }){
     return this.http.put(this.baseUrl + 'admin/countrySetting', statusData)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
 }
 updateCancelStatus(statusData: {id: Number; adminStatus: Number }){
   return this.http.put(this.baseUrl + 'admin/cancelReason', statusData)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
@@ -170,7 +170,7 @@ getCancelDetails(id)
 {
   return this.http.get(this.baseUrl + 'admin/cancelReason/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       ); 
 }
@@ -178,14 +178,14 @@ getCancelDetails(id)
     
     return this.http.put(this.baseUrl + 'admin/supplyType', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   updateSupply(data)
   {
     return this.http.post(this.baseUrl + 'admin/supplyType', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

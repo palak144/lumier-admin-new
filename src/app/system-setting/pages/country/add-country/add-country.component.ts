@@ -35,13 +35,15 @@ export class AddCountryComponent implements OnInit {
   countryValue: any;
   currencies: any[];
   languages = [];
+  currency =[];
   languageValue: any;
   currencyValue: any;
   selectedCriteria: any;
   languageData =[];
   selectedCriteriaId = [];
   countryId: any;
- 
+  dropdownSettings = {}
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -71,7 +73,15 @@ export class AddCountryComponent implements OnInit {
   this.getCountry(); 
   this.getLanguage();
   this.getCurrency();
-
+   this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: "myclass custom-class",
+      position: "bottom",
+      maxHeight: 250,
+    };
       }
     )
   }
@@ -86,11 +96,12 @@ export class AddCountryComponent implements OnInit {
 }
 select(criteriaId: any , criteriaName:any) {
     
-  this.selectedCriteria = {
+  this.selectedCriteria = [{
               "id" : criteriaId,
         "itemName" : criteriaName
   
-  }
+  }]
+  
   return this.selectedCriteria;
 }
 onSubmitCountryForm() {
@@ -145,7 +156,7 @@ onSubmitCountryForm() {
 patchForm(item) {
    this.addCountryForm.controls.countryName.patchValue(item.countryId);
    this.addCountryForm.controls.languages.patchValue(item.languages);
-  this.addCountryForm.controls.currency.patchValue(item.currency.id);
+  this.addCountryForm.controls.currency.patchValue(item.currency[0].id);
 } 
 
 getCountrydetails(id) {

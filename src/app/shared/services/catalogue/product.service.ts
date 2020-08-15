@@ -25,7 +25,7 @@ getAllproductSearch(page?, searchKey?, exportAll?, countryId?, sellerId?, catego
     console.log(params);
     return this.http.get(this.baseUrl + 'admin/product',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
 }
@@ -33,34 +33,34 @@ getvariantDetails(id)
 {
   return this.http.get(this.baseUrl + 'admin/productVariant/' + id)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
 updateVariant(data){
   return this.http.put(this.baseUrl + 'admin/productVariant', data).pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
 deletevariant(id) {
   return this.http.delete(this.baseUrl + 'admin/productVariant/' + id)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 } 
 updateproductStatus(statusData: {id: Number; adminStatus: Number }){
   return this.http.put(this.baseUrl + 'admin/product', statusData)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
 deleteProduct(id) {
   return this.http.delete(this.baseUrl + 'admin/product/' + id)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 } 
@@ -70,7 +70,7 @@ getAllproduct(page)
   const params = { page: page }
   return this.http.get(this.baseUrl + 'admin/product',
     { params: params }).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
 }

@@ -38,7 +38,7 @@ export class BannerService {
 
 
     return this.http.post(this.baseUrl + 'admin/banner' , dataForm).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -47,7 +47,7 @@ export class BannerService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/banner',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -56,7 +56,7 @@ export class BannerService {
     const params = { page: page, searchKey: searchKey }
     return this.http.get(this.baseUrl + 'admin/banner',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   } 
@@ -64,14 +64,14 @@ export class BannerService {
       
     return this.http.delete(this.baseUrl + 'admin/banner/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
 getBannerDetails(id) {
     return this.http.get(this.baseUrl + 'admin/banner/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -79,7 +79,7 @@ getBannerDetails(id) {
     
     return this.http.put(this.baseUrl + 'admin/banner', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }

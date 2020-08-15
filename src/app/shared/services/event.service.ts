@@ -23,7 +23,7 @@ export class EventService {
         const params = { page: page }
         return this.http.get(this.baseUrl + 'eventList',
             { params: params }).pipe(
-                retry(3),
+                
                 catchError(this.errorHandler.handleError)
             );
     }
@@ -32,14 +32,14 @@ export class EventService {
         const params = { page: page, searchKey: searchKey }
         return this.http.get(this.baseUrl + 'eventList',
             { params: params }).pipe(
-                retry(3),
+                
                 catchError(this.errorHandler.handleError)
             );
     }
 
     updateStatus(data) {
         return this.http.put(this.baseUrl + 'eventStatus/', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }

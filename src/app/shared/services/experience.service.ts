@@ -21,28 +21,28 @@ export class ExperienceService {
 
     getExperience() {
         return this.http.get(this.baseUrl + 'AdminexperienceList').pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     update(data, experienceId) {
         return this.http.put(this.baseUrl + 'experience/' + experienceId, data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     add(data) {
         return this.http.post(this.baseUrl + 'AddExperience', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     updateStatus(data) {
         return this.http.put(this.baseUrl + 'experienceStatus/', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }

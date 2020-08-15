@@ -21,7 +21,7 @@ export class TaxService {
 
   addtax(data) {
     return this.http.post(this.baseUrl + 'admin/tax', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -29,7 +29,7 @@ export class TaxService {
   updateTaxStatus(statusData: {id: Number; adminStatus: Number }){
     return this.http.put(this.baseUrl + 'admin/tax', statusData)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -38,7 +38,7 @@ export class TaxService {
     const params = { page: page, searchKey: searchKey ,countryId: countryId }
     return this.http.get(this.baseUrl + 'admin/tax', { params: params })
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   } 
@@ -47,7 +47,7 @@ export class TaxService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/tax',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -55,7 +55,7 @@ export class TaxService {
   deleteTax(id){ 
     return this.http.delete(this.baseUrl + 'admin/tax/' + id)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -64,7 +64,7 @@ export class TaxService {
     
     return this.http.get(this.baseUrl + 'admin/tax/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -72,7 +72,7 @@ export class TaxService {
   updateTax(data)
   {
     return this.http.post(this.baseUrl + 'admin/tax', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

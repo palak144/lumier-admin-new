@@ -23,7 +23,7 @@ export class CompaniesService {
         const params = { page: page }
         return this.http.get(this.baseUrl + 'companyList',
             { params: params }).pipe(
-                retry(3),
+                
                 catchError(this.errorHandler.handleError)
             );
     }
@@ -33,28 +33,28 @@ export class CompaniesService {
         const params = { page: page, searchKey: searchKey }
         return this.http.get(this.baseUrl + 'companyList',
             { params: params }).pipe(
-                retry(3),
+                
                 catchError(this.errorHandler.handleError)
             );
     }
     // update category
     update(data, companyId) {
         return this.http.put(this.baseUrl + 'company/' + companyId, data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     add(data) {
         return this.http.post(this.baseUrl + 'company', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
 
     updateStatus(data) {
         return this.http.put(this.baseUrl + 'companyStatus/', data).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }
@@ -63,7 +63,7 @@ export class CompaniesService {
         const d = new FormData();
         d.append('company_file', file);
         return this.http.post(this.baseUrl + 'import-company/', d).pipe(
-            retry(3),
+            
             catchError(this.errorHandler.handleError)
         );
     }

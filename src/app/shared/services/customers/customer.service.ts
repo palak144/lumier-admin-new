@@ -22,7 +22,7 @@ export class CustomerService {
 
   addCustomer(data) {
     return this.http.post(this.baseUrl + 'admin/customer', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -30,7 +30,7 @@ export class CustomerService {
   addCustomerGroup(data) {
     
     return this.http.post(this.baseUrl + 'admin/customerGroup', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -38,7 +38,7 @@ export class CustomerService {
   updateCustomer(data) {
     
     return this.http.put(this.baseUrl + 'admin/customer', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }c
@@ -47,7 +47,7 @@ export class CustomerService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/customer',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   } 
@@ -57,21 +57,21 @@ export class CustomerService {
     const params = { page: page, searchKey: searchKey, exportAll: exportAll }
     return this.http.get(this.baseUrl + 'admin/customer',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   } 
   getCustomerId(id) {
     
     return this.http.get(this.baseUrl + 'admin/getCustomerDetail/' + id).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
   getCustomerGroupId(id) {
     
     return this.http.get(this.baseUrl + 'admin/getCustomerGroupDetail/' + id).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -80,7 +80,7 @@ export class CustomerService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/customerGroup' ,  
     { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -89,22 +89,23 @@ export class CustomerService {
     const params = { page: page, searchKey: searchKey, exportAll:exportAll }
     return this.http.get(this.baseUrl + 'admin/customerGroup',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
 
   deleteCustomer(id) {
+    debugger
     return this.http.delete(this.baseUrl + 'admin/customer/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   deleteCustomerGroup(id) {	
     return this.http.delete(this.baseUrl + 'admin/deleteGroup/' +id)	
     .pipe(	
-       retry(3),	
+       	
        catchError(this.errorHandler.handleError)	
      );	
   }
@@ -112,7 +113,7 @@ export class CustomerService {
     
     return this.http.get(this.baseUrl + 'admin/getCustomerGroup')
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -120,7 +121,7 @@ export class CustomerService {
     
     return this.http.put(this.baseUrl + 'admin/customerStatus', statusData)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }

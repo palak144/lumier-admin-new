@@ -25,7 +25,7 @@ export class CategoryService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/category',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -34,7 +34,7 @@ export class CategoryService {
   {
     return this.http.get(this.baseUrl + 'admin/category')
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -44,21 +44,21 @@ export class CategoryService {
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId}
     return this.http.get(this.baseUrl + 'admin/category',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
 }
 deleteCategory(id) {
   return this.http.delete(this.baseUrl + 'admin/category/' + id)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 } 
 updateCategoryStatus(statusData: {id: Number; adminStatus: Number }){
   return this.http.put(this.baseUrl + 'admin/category', statusData)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
@@ -87,7 +87,7 @@ addcategory(data)
     dataForm.append('description', data['description']);
   
   return this.http.post(this.baseUrl + 'admin/category' , dataForm).pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   ); 
 }
@@ -95,7 +95,7 @@ addcategory(data)
   {
     return this.http.get(this.baseUrl + 'admin/category/' + id)
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }

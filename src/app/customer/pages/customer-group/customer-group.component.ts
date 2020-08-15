@@ -171,6 +171,34 @@ export class CustomerGroupComponent implements OnInit {
           this.customerService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               this.getAllCustomers(this.page);
+              this.toastr.success("Customer deleted successfully")
+            },
+            error => {
+              this.toastr.error(error.message)
+            }
+          )
+        },
+        reject: () => {
+          this.action = null;
+        }
+      });
+    }
+    if (event.currentTarget.firstChild.data === 'Edit') {
+      this.router.navigate(['../', 'editGroup', id], { relativeTo: this.route })
+
+    }
+  }
+  getDropDownValue(event, id , action) {
+    
+    if (action == 'Delete') {
+
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to perform this action?',
+        accept: () => {
+          this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success: any) => {
+              this.getAllCustomers(this.page);
+
               // this.initiateSearch();
             },
             error => {
@@ -181,17 +209,13 @@ export class CustomerGroupComponent implements OnInit {
         reject: () => {
           this.action = null;
         }
-
       });
-
     }
-    if (event.currentTarget.firstChild.data === 'Edit') {
-
-      this.router.navigate(['../', 'editGroup', id], { relativeTo: this.route })
+    if (action == 'Edit') {
+      this.router.navigate(['../', 'edit', id], { relativeTo: this.route })
 
     }
   }
-
   exportAsXLSX(id: number) {
 
     if (id == 0) {

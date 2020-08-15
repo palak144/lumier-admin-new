@@ -1,0 +1,97 @@
+// For padding
+@mixin padding($vertical, $horizontal) {
+    padding: $vertical $horizontal;
+}
+
+//overlay
+@mixin overlay($color, $opacity) {
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        @include square(100%);
+        background-color: $color;
+        opacity: $opacity;
+        left: 0;
+        top: 0;
+    }
+}
+
+// border-radius
+@mixin border-radius($radius) {
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+}
+
+// element position mixin
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin flexBox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin alignItem($value) {
+    -webkit-box-align: $value;
+    -ms-flex-align: $value;
+    align-items: $value;
+}
+
+// Background Gradient
+
+@mixin gradient($start-color, $end-color, $orientation) {
+    background: $start-color;
+    @if $orientation == 'vertical' {
+      background: -webkit-linear-gradient(top, $start-color, $end-color);
+      background: linear-gradient(to bottom, $start-color, $end-color);
+    } @else if $orientation == 'horizontal' {
+      background: -webkit-linear-gradient(left, $start-color, $end-color);
+      background: linear-gradient(to right, $start-color, $end-color);
+    } @else {
+      background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
+      background: radial-gradient(ellipse at center, $start-color, $end-color);
+    }
+  }
+
+  // .gradient {
+  //   @include gradient(#07c, #06f, vertical);
+  // }
+
+// Background Image
+
+@mixin background($imgpath,$position:0 0,$repeat: no-repeat, $color: unset, $size: unset) {
+  background: {
+      image: url($imgpath);
+      position: $position;
+      repeat: $repeat;
+      color: $color;
+      size: $size;
+  }
+}
+// .testing {
+//   @include background('/my/img/path.png');
+// }
+
+/**
+ * Min-height cross-browser mixin
+ */
+ @mixin min-height($min-height) {
+	min-height: $min-height;
+	height: auto !important;
+	height: $min-height;
+}
+
+/*
+Usage example:
+.class {
+	@include min-height(100%);
+}
+*/

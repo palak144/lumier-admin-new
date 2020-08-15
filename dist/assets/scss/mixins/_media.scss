@@ -1,0 +1,30 @@
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Media Queries
+
+
+// Custom devices
+@mixin rwd($screen) {
+  @media (min-width: $screen+'px') {
+      @content;
+  }
+}
+
+// For Max Custom devices
+
+// Custom devices
+@mixin rwdm($screen) {
+  @media (max-width: $screen+'px') {
+      @content;
+  }
+}

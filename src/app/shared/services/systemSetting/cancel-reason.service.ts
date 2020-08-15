@@ -22,7 +22,7 @@ export class CancelReasonService {
   addCancel(data) {
     
     return this.http.post(this.baseUrl + 'admin/cancelReason', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -31,7 +31,7 @@ export class CancelReasonService {
     const params = { page: page }
     return this.http.get(this.baseUrl + 'admin/cancelReason',
       { params: params }).pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -40,14 +40,14 @@ export class CancelReasonService {
     const params = { page: page, searchKey: searchKey  }
     return this.http.get(this.baseUrl + 'admin/cancelReason', { params: params })
     .pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   } 
   deleteCancel(id)
 { return this.http.delete(this.baseUrl + 'admin/cancelReason/' + id)
 .pipe(
-  retry(3),
+  
   catchError(this.errorHandler.handleError)
 );
 
@@ -55,7 +55,7 @@ export class CancelReasonService {
 updateCancelStatus(statusData: {id: Number; adminStatus: Number }){
   return this.http.put(this.baseUrl + 'admin/cancelReason', statusData)
   .pipe(
-    retry(3),
+    
     catchError(this.errorHandler.handleError)
   );
 }
@@ -63,7 +63,7 @@ getCancelDetails(id)
 {
   return this.http.get(this.baseUrl + 'admin/cancelReason/' + id)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       ); 
 }

@@ -23,7 +23,7 @@ export class AuthService {
     return this.http
       .post(this.baseUrl + 'admin/login', data, { observe: 'response' })
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
@@ -35,7 +35,7 @@ export class AuthService {
 
   recoverPassword(data) {
     return this.http.post(this.baseUrl + 'requestForPassword', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
@@ -44,13 +44,13 @@ export class AuthService {
     return this.http
       .post(this.baseUrl + 'verify/' + verificationLink, data)
       .pipe(
-        retry(3),
+        
         catchError(this.errorHandler.handleError)
       );
   }
   changePassword(data) {
     return this.http.post(this.baseUrl + 'admin/changePassword', data).pipe(
-      retry(3),
+      
       catchError(this.errorHandler.handleError)
     );
   }
