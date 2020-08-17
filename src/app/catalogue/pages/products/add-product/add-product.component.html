@@ -77,7 +77,7 @@
                                       <div class="assign-group-dropdown">
                                          <p-dropdown [options]="languages" formControlName="languageId" 
                                          styleClass="form-control border-primary" (onChange)="getlanguage($event)" 
-                                          filter="true" placeholder="Select language" 
+                                          filter="true" placeholder="Select language" [(ngModel)]="selected_languageId" 
                                  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.languageId.errors }">
                                           </p-dropdown>
                                           <div *ngIf="isSubmittedaddProductForm && signUpControls.languageId.errors" class="invalid-feedback">
@@ -92,7 +92,8 @@
                                   <div class="form-group">
                                       <label>Currency </label><span class="asterick">*</span>
                                       <div class="assign-group-dropdown">
-                                      <p-dropdown [options]="currencies" formControlName="currency" styleClass="form-control border-primary" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.currency.errors }">
+                                      <p-dropdown [options]="currencies" formControlName="currency" [(ngModel)]="selected_currencyId" 
+                                      styleClass="form-control border-primary" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.currency.errors }">
                                       </p-dropdown>
                                       <div *ngIf="isSubmittedaddProductForm && signUpControls.currency.errors"
                                           class="invalid-feedback">
@@ -202,42 +203,67 @@
                                     </div> -->
                                     </div>
                               </div>
-                             
-                              <div class="col-md-2">
-                                  <div class="form-group">
-                                      <label></label>
-                                      <div class="issale-check">
-                                      <input class="form-check-input" formControlName="noDiscount" type="checkbox" value="" id="isDiscount">
-                                      <label class="issale" for="isSale">
-                                          No Discount
-                                      </label>
-                                      </div>
-                                </div>
-                              </div>
-                              
-                              <div class="col-md-2">
-                                  <div class="form-group">
-                                      <label></label>
-                                      <div class="issale-check">
-                                          <input class="form-check-input" formControlName="isSale" type="checkbox" value="" id="isSale">
-                                          <label class="issale" for="isSale">
-                                              Is Sale
-                                          </label>
-                                        </div>  </div>
-                              </div>
-                              <div class="col-md-2">
-                                  <div class="form-group">
-                                      <label></label>
-                                      <div class="issale-check">
-                                          <input class="form-check-input" formControlName="isQuote" type="checkbox" value="" id="isQuote">
-                                          <label class="isSale" for="isQuote">
-                                              Is Quote only?
-                                          </label>
-                                        </div>                           
-                                 </div>
-                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Is Variant</label>
+                                    <div class="issale-check">
+                                        <input class="form-check-input" (change)='onSelect($event)' formControlName="isPackage"
+                                        type="checkbox" >
+                                        <label class="isSale" >
+                                            Is Variant
+                                        </label>
+                                      </div>                                   </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label></label>
+                                    <div class="issale-check">
+                                        <input class="form-check-input" formControlName="isSale" type="checkbox" value="" id="isSale">
+                                        <label class="issale" for="isSale">
+                                            Is Sale
+                                        </label>
+                                      </div>  </div>
+                            </div>
+                           
                           </div>
-  
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sell Price</label><span class="asterick">*</span> 
+                                    <input type="number" min="0" formControlName="sellPrice" class="form-control border-primary"
+                                     placeholder="Sell Price" 
+                                    numbersOnly>
+                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.sellPrice.errors" class="invalid-feedback">
+                                      <div *ngIf="signUpControls.sellPrice.errors.required">Sell Price is required</div>
+                                  </div>
+                                  </div>
+                            </div>
+                       
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label></label>
+                                    <div class="issale-check">
+                                    <input class="form-check-input" formControlName="noDiscount" type="checkbox" value="" id="isDiscount">
+                                    <label class="issale" for="isSale">
+                                        No Discount
+                                    </label>
+                                    </div>
+                              </div>
+                            </div>
+                            
+                         
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label></label>
+                                    <div class="issale-check">
+                                        <input class="form-check-input" formControlName="isQuote" type="checkbox" value="" id="isQuote">
+                                        <label class="isSale" for="isQuote">
+                                            Is Quote only?
+                                        </label>
+                                      </div>                           
+                               </div>
+                            </div>
+                        </div>
                           <div class="row">
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -393,31 +419,7 @@
                               </div>
                           </div>
                          
-                          <div class="row">
-                            
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label>Is Varient</label>
-                                      <div class="issale-check">
-                                          <input class="form-check-input" (change)='onSelect($event)' formControlName="isPackage"
-                                          type="checkbox" >
-                                          <label class="isSale" >
-                                              Is Varient
-                                          </label>
-                                        </div>                                   </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Sell Price</label><span class="asterick">*</span> 
-                                    <input type="number" min="0" formControlName="sellPrice" class="form-control border-primary"
-                                     placeholder="Sell Price" 
-                                    numbersOnly>
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.sellPrice.errors" class="invalid-feedback">
-                                      <div *ngIf="signUpControls.sellPrice.errors.required">Sell Price is required</div>
-                                  </div>
-                                  </div>
-                            </div>
-                          </div>
+                      
                       </div>
                   
                   <div class="product-page-listing">
@@ -428,7 +430,6 @@
                       <table class="table table-striped table-bordered">
                           <thead>
                               <tr class="table-coustom-style">
-                                  <th >S. No.</th>
                                   <th >Seller Name</th>
                                   <th >Seller Fee</th>
                                   <th >Quantity</th> 
@@ -439,21 +440,19 @@
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicSeller; let i = index;">
                               
-                                  <td>
-                                    <input [(ngModel)]="dynamicSeller[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
-                                  </td>
+                                  
                                   <td>
                                     <p-dropdown [options]="dropdowns"  filter="true" [(ngModel)]="dynamicSeller[i].sellerId" 
                                      [ngModelOptions]="{standalone: true}" [style]="{'width':'100%'}"></p-dropdown>
                                 </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicSeller[i].sellerFees"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                    <input [(ngModel)]="dynamicSeller[i].sellerFee"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                   </td>
                                   <td>
-                                      <input [(ngModel)]="dynamicSeller[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicSeller[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
                                     </td>
                                    
                                   <td>
@@ -466,49 +465,58 @@
                       </table>
                     </div>
                   </div>
-                    <div *ngIf="isVarient" class="product-page-listing">
-                      <h4 class="form-section"> Varients</h4>
+                    <div *ngIf="isVariant" class="product-page-listing">
+                      <h4 class="form-section"> Variants</h4>
                       <div class="customer-wrapper">
                           <div class="heading-wrapper">
                           </div>
                       <table class="table table-striped table-bordered">
                           <thead>
                               <tr class="table-coustom-style">
-                                  <th >S. No.</th>
-                                  <th >Varient</th>
+                                  <th >Variant</th>
                                   <th >PN CDE</th>
                                   <th >Quantity</th>
                                   <th>Sale Price</th>
                                   <th >Price</th>
                                   <th>Wallet Price</th>
+                                  <th>Is Quote?</th>
+                                  <th >Seller Fee</th>
+                                  <th>Delivery Time</th>
                                   <th>Action</th>
                               </tr>
                           </thead>
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                               
+                                  
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].Varient"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicArray[i].PNCDE"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicArray[i].pcode"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
-                                  </td>
-                                  <td>
-                                      <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
                                     </td>
                                  
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].MRP"  [ngModelOptions]="{standalone: true}"  class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicArray[i].MRP"  [ngModelOptions]="{standalone: true}"  class="form-control"  type="number" numbersOnly min="0" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].walletPrice"   [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
-                                    </td>
+                                      <input [(ngModel)]="dynamicArray[i].walletPrice"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
+                                    </td>  
+                                    <td>
+                                        <input [(ngModel)]="dynamicArray[i].isQuote"   [ngModelOptions]="{standalone: true}" class="form-control"  type="checkbox" />
+                                      </td> 
+                                      <td>
+                                        <input [(ngModel)]="dynamicArray[i].sellerFee"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
+                                      </td> 
+                                      <td>
+                                        <input [(ngModel)]="dynamicArray[i].deliveryTime"   [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
+                                      </td> 
                                   <td >
                                       <i (click)="deleteRow(i)" class="fa fa-trash fa-2x"></i>
                                       <i (click)="addRow(i)" class="fa fa-plus fa-2x"></i>
@@ -563,7 +571,6 @@
                       <table class="table table-striped table-bordered">
                           <thead>
                               <tr class="table-coustom-style">
-                                  <th>S. No.</th>
                                   <th>Minimum Quantity</th>
                                   <th>Maximum Quantity</th>
                                   <th>Price</th> 
@@ -574,20 +581,18 @@
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicQuantity; let i = index;">
                               
+                                 
                                   <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicQuantity[i].minQuantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].min_qunatity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                    <input [(ngModel)]="dynamicQuantity[i].maxQuantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].max_qunatity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
-                                  </td>
-                                  <td>
-                                      <input [(ngModel)]="dynamicQuantity[i].price"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicQuantity[i].price"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicQuantity[i].wallet"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicQuantity[i].walletPrice"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0"/>
                                     </td>
                                  
                                   <td >

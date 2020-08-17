@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { ToastrService } from 'ngx-toastr';
-import { ProductService } from 'app/shared/services/prod.service';
+import { ProductService } from 'app/shared/services/catalogue/product-add.service';
 import { FileUploader } from 'ng2-file-upload';
 import { DynamicGrid } from '../../../../grid.model';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
@@ -61,6 +61,8 @@ export class AddProductComponent implements OnInit {
   companyLogo: any;
   selected_supplyType: any;
   selected_brand:any;
+  selected_languageId:any;
+  selected_currencyId:any;
   selected_country: any;
   selected_cOrigin: any;
   selected_category :any;
@@ -74,7 +76,7 @@ export class AddProductComponent implements OnInit {
   specialities : any = [];
   editing = {};
   rows = [];
-  isVarient: boolean = false;
+  isVariant: boolean = false;
   countryIdData: any = "";
   productNameData: any = "";
   languageIdData: any = "";
@@ -90,11 +92,12 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
-    this.newDynamic = {id: "", Varient: "",pcode:"",quantity: "",sellPrice:"",MRP:"",walletPrice:""};
+    this.newDynamic = { variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
+    isQuote:false,deliveryTime:"",sellerFee : ""};
     this.dynamicArray.push(this.newDynamic);
-    this.newSeller = {id: "",sellerId:[],sellerFee:"",quantity: "", deliveryTime: ""};
+    this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
     this.dynamicSeller.push(this.newSeller);
-    this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
+    this.newQuantity = {minQuantity:"",maxQuantity:"",price: "", walletPrice: ""};
     this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
@@ -111,6 +114,8 @@ export class AddProductComponent implements OnInit {
 
     this.initForm()
     this.selected_country = [];
+    this.selected_currencyId = [];
+    this.selected_languageId = [];
     this.selected_cOrigin = [];
     this.selected_supplyType = [];
     this.selected_brand = [];
@@ -121,7 +126,7 @@ export class AddProductComponent implements OnInit {
     return this.addProductForm.controls
   }
   onSelect(event) {
-   ( event.target.checked ) ?  this.isVarient = true :  this.isVarient = false
+   ( event.target.checked ) ?  this.isVariant = true :  this.isVariant = false
    
 }
   editorValidation(event)
@@ -130,13 +135,6 @@ export class AddProductComponent implements OnInit {
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
     
-      // this.companyFlagSize = true;
-      //  let reader = new FileReader();      
-      //   reader.readAsDataURL(this.file);      
-      //   reader.onload = (event) => {
-      //      this.url = reader.result;
-      //     this.companyLogo = this.url;        
-      //   }
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
         this.file = this.file.name
       
@@ -144,26 +142,12 @@ export class AddProductComponent implements OnInit {
   }
   fileChangeEvent(e : any){
     (this.files.length != 0) ? this.files = [] : ''
-    // this.file = e.queue[0];
-    // this.file = this.file.file 
-  
-    // if (this.file.size < 200000) { 
         e.queue.forEach(element => {
           this.files.push(
            element._file
           );
         });
         console.log(this.files)
-        // this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
-        // this.file = this.file.name
-      
-      
-    // }
-      // else {
-      //   this.companyFlagSize = false;
-      //   document.getElementById('sizeValidations').style.color = '#ffae42';
-      //   this.addProductForm.controls['file'].setValue(this.file ? '' : '');
-      // }
   }
   scrollToElement(element) {
     if (element) {
@@ -189,7 +173,7 @@ export class AddProductComponent implements OnInit {
       data.productsRelated = this.dataFormat(this.addProductForm.get('relatedItem').value)
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
-      data.quantityDiscount = this.dynamicQuantity
+      data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
       if (this.id ) {
        data.id = this.id;
@@ -222,12 +206,8 @@ export class AddProductComponent implements OnInit {
 
   private initForm(){
     let productName = "";
-    let hyperlink = "";
     let file ="";
      let catelogue = ""
-    // let sequenceNumber ="";
-    let page ="";
-    let position ="";
 
 this.addProductForm = new FormGroup({
 
@@ -275,7 +255,6 @@ this.addProductForm = new FormGroup({
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{          
               this.product=success.data
-              
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -292,9 +271,6 @@ this.addProductForm = new FormGroup({
               )
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
-                  
-                  // this.rows = [{id : 21,
-                  //   itemName: "Seller New Palak"}]
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
 
                 },
@@ -316,13 +292,58 @@ this.addProductForm = new FormGroup({
                 error => {
                 }
               )
+              this.commonService.getCountryCurrency(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
+                (success:any) => {
+                  this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
+                  
+                },
+                error => {
+                }
+              )
               
               this.addProductForm.patchValue({
-                "name" : this.product.name,
+                "MRP" : this.product.MRP,
+                "PNCDE" : this.product.PNCDE,
+                "UOM" : this.product.UOM,
+                "code" : this.product.code,
+                "description" : this.product.description,
+                "features" : this.product.features,
+                "isPackage" : this.product.isPackage,
+                "isQuote" : this.product.isQuote,
+                "isSale" : this.product.isSale,
+                "metaDescription" : this.product.metaDescription,
+                "metaKeyword" : this.product.metaKeyword,
+                "metaTitle" : this.product.metaTitle,
+                "noDiscount" : this.product.noDiscount,
+                "packageContent" : this.product.packageContent,
+                "productName" : this.product.productName,
+                "ribbenText" : this.product.ribbenText,
+                "sellPrice" : this.product.noDiscsellPriceount,
+                "shortDiscription" : this.product.shortDiscription,
+                "video" : this.product.video,
+                "walletPrice" : this.product.walletPrice,
+                "warranty" : this.product.warranty,
+
+                // dataForm.append('productVariants', data['productVariants']);
+                // dataForm.append('productsRelated', data['productsRelated']);
+                // dataForm.append('quantityDiscount', data['quantityDiscount']);
+                // dataForm.append('sellerProducts', data['sellerProducts']);
+                // dataForm.append('specialityId', data['specialityId']);
                
              })
             console.log(this.addProductForm.patchValue)
-            this.file = this.product.logoName
+            this.selected_country= this.product.countryId;
+            this.selected_supplyType = this.product.supplyTypeId;
+            this.selected_category = this.product.categoryId;
+            this.selected_currencyId = this.product.currency;
+            this.selected_cOrigin = this.product.countryOriginId;
+            this.selected_languageId = this.product.languageId;
+            this.selected_brand = this.product.manufactureId;
+
+
+
+
+
             
           }
           ,
@@ -432,10 +453,6 @@ this.addProductForm = new FormGroup({
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         
-        // if(success.data != []) {
-        // this.rows = [{id : 21,
-        //   itemName: "Seller New Palak"}]
-        // }
         this.sellerLists = success.data
         this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
       },
@@ -530,13 +547,11 @@ this.addProductForm = new FormGroup({
     return result;
   }
 addRow(index) {  
-  this.newDynamic ={id: "", Varient: "",pcode:"",quantity: "",sellPrice:"",MRP:"",walletPrice:""};
+  this.newDynamic ={ variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
+  isQuote:false,deliveryTime:"",sellerFee : ""};
   this.dynamicArray.push(this.newDynamic);
   return true;
 }
-//       [{"variant":"Coronamask1","countryId":25,"languageId":1,"quantity":10,"MRP":200,"sellPrice":150,"walletPrice":0,"isQuote":"No","deliveryTime":10,"sellerFee":150}]
-// sellerProducts:{"productName":"Medicine","quantity":20,"price":200,"countryId":25,"languageId":1,"sellerId":17, "sellerFee":200,"deliveryTime":10,"billingAddress":"Address1"}
-     
 deleteRow(index) {
   if(this.dynamicArray.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');
@@ -547,7 +562,7 @@ deleteRow(index) {
   }
 }
 addsellerRow(index) {  
-  this.newSeller = {id: "",sellerId:[],sellerFee:"",quantity: "", deliveryTime: ""};
+  this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
   this.dynamicSeller.push(this.newSeller);
   return true;
 }
@@ -562,7 +577,7 @@ deletesellerRow(index) {
   }
 }
 addQuantity(index) {  
-  this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
+  this.newQuantity = {minQuantity:"",maxQuantity:"",price:"", walletPrice:""};
   this.dynamicQuantity.push(this.newQuantity);
   return true;
 }
