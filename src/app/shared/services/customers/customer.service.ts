@@ -95,7 +95,7 @@ export class CustomerService {
   }
 
   deleteCustomer(id) {
-    debugger
+    
     return this.http.delete(this.baseUrl + 'admin/customer/' + id)
       .pipe(
         

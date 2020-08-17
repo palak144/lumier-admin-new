@@ -130,10 +130,10 @@
                               </div>
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <label>specialityId Type</label>
+                                      <label>speciality Type</label>
                                       <div class="assign-group-dropdown">
                                       <p-dropdown [options]="specialities" formControlName="specialityId"
-                                       filter="true" placeholder="Select specialityId" 
+                                       filter="true" placeholder="Select speciality" 
                                        styleClass="form-control" 
                                        [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityId.errors }">
                                       </p-dropdown>
@@ -179,24 +179,33 @@
                                   <div class="form-group">
                                       <label>Code</label><span class="asterick">*</span> 
                                       <input type="text" formControlName="code" class="form-control border-primary" placeholder="PN CDE" >
-                                  </div>
+                                      <div *ngIf="isSubmittedaddProductForm && signUpControls.code.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.code.errors.required">Code is required</div>
+                                    </div>
+                                    </div>
                               </div>
                               <div class="col-md-2">
                                   <div class="form-group">
                                       <label>PN CDE</label><span class="asterick">*</span> 
                                       <input type="text" formControlName="PNCDE" class="form-control border-primary" placeholder="PN CDE" >
-                                  </div>
+                                      <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.PNCDE.errors.required">PN CDE is required</div>
+                                    </div>
+                                    </div>
                               </div>
                               <div class="col-md-2">
                                   <div class="form-group">
                                       <label>UOM</label>
                                       <input type="text" formControlName="UOM"  class="form-control border-primary" placeholder="UOM"> 
-                                  </div>
+                                      <!-- <div *ngIf="isSubmittedaddProductForm && signUpControls.UOM.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.UOM.errors.required">UOM is required</div>
+                                    </div> -->
+                                    </div>
                               </div>
                              
                               <div class="col-md-2">
                                   <div class="form-group">
-                                      <label>No Discount</label>
+                                      <label></label>
                                       <div class="issale-check">
                                       <input class="form-check-input" formControlName="noDiscount" type="checkbox" value="" id="isDiscount">
                                       <label class="issale" for="isSale">
@@ -208,7 +217,7 @@
                               
                               <div class="col-md-2">
                                   <div class="form-group">
-                                      <label>Is Sale</label>
+                                      <label></label>
                                       <div class="issale-check">
                                           <input class="form-check-input" formControlName="isSale" type="checkbox" value="" id="isSale">
                                           <label class="issale" for="isSale">
@@ -218,7 +227,7 @@
                               </div>
                               <div class="col-md-2">
                                   <div class="form-group">
-                                      <label>Is Quote only?</label>
+                                      <label></label>
                                       <div class="issale-check">
                                           <input class="form-check-input" formControlName="isQuote" type="checkbox" value="" id="isQuote">
                                           <label class="isSale" for="isQuote">
@@ -248,14 +257,45 @@
                               <div class="col-md-3">
                                   <div class="form-group">
                                       <label>Price</label><span class="asterick">*</span> 
-                                      <input type="number" formControlName="price" class="form-control border-primary" placeholder="Price" numbersOnly>
-                                  </div>
+                                      <input type="number" min="0" formControlName="MRP" class="form-control border-primary" placeholder="Price" 
+                                      numbersOnly>
+                                      <div *ngIf="isSubmittedaddProductForm && signUpControls.MRP.errors" class="invalid-feedback">
+                                        <div *ngIf="signUpControls.MRP.errors.required">Price is required</div>
+                                    </div>
+                                    </div>
                               </div>
                               <div class="col-md-3">
                                   <div class="form-group">
                                       <label>Wallet Price</label>
-                                      <input type="number"  class="form-control border-primary" formControlName="walletPrice"  placeholder="Wallet Price" numbersOnly> 
-                                  </div>
+                                      <input type="number" min="0" class="form-control border-primary" formControlName="walletPrice"  placeholder="Wallet Price" numbersOnly> 
+                                      
+                                    </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ribbon Text</label>
+                                    <input type="text" class="form-control border-primary" formControlName="ribbenText" placeholder="Ribbon Text"> 
+                                </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Catelogue</label><span class="asterick">*</span> 
+                                  <div class="row">
+                                    <!-- <div class="col-md-2 form-group center">
+                                        <label for="file">
+                                          <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
+                                    </div> -->
+                                    <div class="col-md-12">
+                                        <input  type="file" accept="application/pdf" id="chooseFile" (change)="fileChangeEvent1($event)" 
+                                          formControlName="catelogue" class="form-control border-primary">
+                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.catelogue.errors" class="invalid-feedback mt-0">
+                                          <div *ngIf="signUpControls.catelogue.errors.required">Catelogue is required</div>
+                                      </div> 
+                                    </div>
+                                </div>
+                                </div>
                               </div>
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -272,22 +312,20 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
+                        </div>
                           
                           <div class="row">
                               <div class="col-md-3">
                                 <h4>Images</h4>
                                 <div>Multiple</div>
                                 <label class="custom-file mb-3">
-                                  <input type="file" ng2FileSelect [uploader]="uploader" multiple (change)="fileChangeEvent(uploader)" >
+                                  <input type="file" ng2FileSelect [uploader]="uploader" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
                                   <span class="custom-file-control"></span>
                                 </label>
                               </div>
-                      
                               <div class="col-md-9">
                                 <h4>Upload queue</h4>
                                 <p>Queue length: {{ uploader?.queue?.length }}</p>
-                      
                                 <table class="table">
                                   <thead>
                                     <tr>
@@ -337,7 +375,7 @@
                           <div class="row">
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <label>Meta Keyword</label><span class="asterick">*</span> 
+                                      <label>Meta Keyword</label>
                                       <input type="text" formControlName="metaKeyword" class="form-control border-primary" placeholder="Meta Keyword" >
                               </div>
                               </div>
@@ -354,94 +392,34 @@
                                         </tag-input>  </div>
                               </div>
                           </div>
-                          <div class="row">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label>Catelogue</label>
-                                    <div class="row">
-                                      <div class="col-md-2 form-group center">
-                                          <label for="file">
-                                            <img width="80px" height="80px" [src]="companyFlagSize ? companyLogo : dLogo" class="ImgIcon" /> </label>
-                                      </div>
-                                      <div class="col-md-10 ">
-                                          <input  type="file" accept="application/pdf" id="chooseFile" (change)="fileChangeEvent1($event)" 
-                                            formControlName="catelogue" class="form-control border-primary">
-                                          <span id="sizeValidations">File size should not exceed 200kb</span>
-                                          <div *ngIf="isSubmittedaddProductForm && signUpControls.file.errors" class="invalid-feedback mt-0">
-                                            <div *ngIf="signUpControls.file.errors.required">Catelogue is required</div>
-                                        </div> 
-                                      </div>
-                                  </div>
-                                  </div>
-                                </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label>Ribbon Text</label>
-                                      <input type="text" class="form-control border-primary" formControlName="ribbenText" placeholder="Ribbon Text"> 
-                                  </div>
-                              </div>
-                          </div>
+                         
                           <div class="row">
                             
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <label>Is Package</label>
+                                      <label>Is Varient</label>
                                       <div class="issale-check">
-                                          <input class="form-check-input" formControlName="isPackage" type="checkbox" value="" id="isPackage">
-                                          <label class="isSale" for="isPackage">
-                                              Is Package
+                                          <input class="form-check-input" (change)='onSelect($event)' formControlName="isPackage"
+                                          type="checkbox" >
+                                          <label class="isSale" >
+                                              Is Varient
                                           </label>
                                         </div>                                   </div>
                               </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sell Price</label><span class="asterick">*</span> 
+                                    <input type="number" min="0" formControlName="sellPrice" class="form-control border-primary"
+                                     placeholder="Sell Price" 
+                                    numbersOnly>
+                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.sellPrice.errors" class="invalid-feedback">
+                                      <div *ngIf="signUpControls.sellPrice.errors.required">Sell Price is required</div>
+                                  </div>
+                                  </div>
+                            </div>
                           </div>
                       </div>
                   
-                  <!-- <div class="product-page-listing">
-                      <h4 class="form-section">Sellers</h4>
-                      <div class="customer-wrapper">
-                          <div class="heading-wrapper">
-                          </div>
-                          <div class="table-wrapper vehiclwrappere- ">
-                          <p-table #df [value]="rows" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10" >
-                              [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
-                              <!-- <ng-template pTemplate="header">
-                                      <tr class="table-coustom-style">
-                                          <th style="width:5em">S. No.</th>
-                                          <th >Seller Name</th>
-                                          <th style="width: 10em;">Seller Fee</th>
-                                          <th style="width: 10em;">Quantity</th> 
-                                          <th style="width: 16em;">Delivery Within Days</th>
-                                      </tr>
-                                  </ng-template>
-                                  <ng-template pTemplate="body" let-seller >
-                                      <tr>
-                                         <td class="order-date-wrapper"><span class="ui-column-title">S No</span>1</td>
-                                         <td >
-                                                  <p-dropdown [options]="dropdowns"  filter="true" formControlName="sellerName"
-                                                   [style]="{'width':'100%'}"></p-dropdown>
-                                      </td>                                       
-                                      <td >  <input pInputText type="number" formControlName="sellerFee" placeholder="Seller Fee" numbersOnly>
-                                      </td>                             
-                                                     <td><span class="ui-column-title">Quantity</span>
-                                                      <input pInputText type="number" formControlName="quantity"  placeholder="Quantity" numbersOnly>
-                                                  </td>
-                                          <td><span class="ui-column-title">Delivery Within Days</span>
-                                              <input pInputText type="number" formControlName="deliveryWithinDays" placeholder="Delivery Within Days" numbersOnly>
-                                          </td> 
-                                         
-                                          
-                                      </tr>
-                                  </ng-template>
-                                  <ng-template pTemplate="emptymessage">
-                                      <tr>
-                                          <td class="text-center text-danger font-weight-600" colspan="5">No Records Found.</td>
-                                      </tr>
-                                  </ng-template>
-                              </p-table>
-  
-                          </div>
-                      </div>
-                  </div>  -->
                   <div class="product-page-listing">
                       <h4 class="form-section"> Sellers</h4>
                       <div class="customer-wrapper">
@@ -465,99 +443,30 @@
                                     <input [(ngModel)]="dynamicSeller[i].id"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicSeller[i].sellerName"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
-                                  </td>
+                                    <p-dropdown [options]="dropdowns"  filter="true" [(ngModel)]="dynamicSeller[i].sellerId" 
+                                     [ngModelOptions]="{standalone: true}" [style]="{'width':'100%'}"></p-dropdown>
+                                </td>
                                   <td>
                                     <input [(ngModel)]="dynamicSeller[i].sellerFees"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                   </td>
                                   <td>
-                                      <input [(ngModel)]="dynamicSeller[i].Quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicSeller[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicSeller[i].Delivery"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                    
-                                  <td >
+                                  <td>
                                       <i (click)="deletesellerRow(i)" class="fa fa-trash fa-2x"></i>
                                       <i (click)="addsellerRow(i)" class="fa fa-plus fa-2x"></i>
                                     </td>
                                  
                               </tr>
-                              <!-- <tr>
-                                <td (click)="addRow(i)">
-                                  <i class="fa fa-plus fa-2x"></i>
-                                </td>
-                              </tr> -->
                           </tbody>
                       </table>
                     </div>
                   </div>
-                    
-                  <!-- <div class="product-page-listing">
-                      <h4 class="form-section"> Varients</h4>
-                      <div class="customer-wrapper">
-                          <div class="heading-wrapper">
-                          </div>
-                          <div class="table-wrapper vehiclwrappere varient">
-                              <p-table #dt [value]="" styleClass="table-list-wrapper" [responsive]="true" editMode="row">
-                        
-                         <ng-template pTemplate="header">
-                                 <tr class="table-coustom-style">
-                                     <th style="width: 2em">S. No.</th>
-                                     <th style="width: 4em;" >Varient</th>
-                                     <th style="width: 4em;">PN CDE</th>
-                                     <th style="width: 4em;">Quantity</th>
-                                     <th style="width: 4em;">Is Sale?</th>
-                                     <th style="width: 6em;">Sale Price</th>
-                                     <th style="width: 4em;">Price</th>
-                                     <th style="width: 6em;">Wallet Price</th>
-                                     <th style="width: 6em;">Action</th>
-  
-                                 </tr>
-                             </ng-template>
-                             <ng-template pTemplate="body" let-product >
-                                 <tr>
-                                  <td ><span class="ui-column-title">S No</span>1</td>
-                                  <td><span class="ui-column-title">Varient</span>
-                                      <input pInputText type="text" formControlName="varient"  placeholder="Varient" >
-                                  </td>
-                                    <td><span class="ui-column-title">PN CDE</span>
-                                      <input pInputText type="text" formControlName="pncdecvarient"  placeholder="PN CDE" >
-                                  </td>
-                                     <td><span class="ui-column-title">Quantity</span>
-                                      <input pInputText type="text" formControlName="quantitySeller"  placeholder="Quantity" >
-                                  </td>
-                                     <td><span class="ui-column-title">Is Sale?</span>
-                                      <input class="form-check-input" type="checkbox" formControlName="isSaleSeller"  placeholder="Is Sale?" >
-                                  </td>
-                                     <td><span class="ui-column-title">Sale Price</span>
-                                      <input pInputText type="number" formControlName="salePrice"  placeholder="Sale Price" numbersOnly>
-                                  </td>
-                                     <td><span class="ui-column-title">Price</span>
-                                      <input pInputText type="number" formControlName="priceSeller"  placeholder="MRP" numbersOnly>
-                                  </td>
-                                     <td><span class="ui-column-title">Wallet Price</span>
-                                      <input pInputText type="number" formControlName="walletSeller"  placeholder="Wallet Price" numbersOnly>
-                                  </td>
-                                  <td (click)="deleteRow(i)">
-                                      <i class="fa fa-trash fa-2x"></i>
-                                    </td>                     
-                                 </tr>
-                             </ng-template>
-                             <ng-template pTemplate="emptymessage">
-                                 <tr>
-                                      <td class="text-center text-danger font-weight-600" colspan="9">No Records Found.</td>
-                                 </tr>
-                             </ng-template>
-                         </p-table>
-                         <div class="text-right">
-                          <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'"
-                          pAddRow [table]="dt" ></button>
-                        </div>
-                     </div>
-                      </div>
-                    </div> -->
-                    <div class="product-page-listing">
+                    <div *ngIf="isVarient" class="product-page-listing">
                       <h4 class="form-section"> Varients</h4>
                       <div class="customer-wrapper">
                           <div class="heading-wrapper">
@@ -569,7 +478,6 @@
                                   <th >Varient</th>
                                   <th >PN CDE</th>
                                   <th >Quantity</th>
-                                  <th>Is Sale?</th>
                                   <th>Sale Price</th>
                                   <th >Price</th>
                                   <th>Wallet Price</th>
@@ -591,17 +499,15 @@
                                   <td>
                                       <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
+                                 
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].is_sale"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].sale_price"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].MRP"  [ngModelOptions]="{standalone: true}"  class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].price"  [ngModelOptions]="{standalone: true}"  class="form-control" type="text" />
-                                    </td>
-                                    <td>
-                                      <input [(ngModel)]="dynamicArray[i].wallet"   [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].walletPrice"   [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                   <td >
                                       <i (click)="deleteRow(i)" class="fa fa-trash fa-2x"></i>
@@ -609,11 +515,6 @@
                                     </td>
                                  
                               </tr>
-                              <!-- <tr>
-                                <td (click)="addRow(i)">
-                                  <i class="fa fa-plus fa-2x"></i>
-                                </td>
-                              </tr> -->
                           </tbody>
                       </table>
                     </div>
@@ -653,60 +554,7 @@
                               </div>
                           </div>
                       </div>
-                     
-  
-                  <!-- <div class="product-page-listing">
-                      <h4 class="form-section"> Quantity Based Discount</h4>
-                      <div class="customer-wrapper">
-                          <div class="heading-wrapper">
-                          </div>
-                          <div class="table-wrapper vehiclwrappere varient">
-                              <p-table #dtQuantity [value]="" styleClass="table-list-wrapper" [responsive]="true" [paginator]="true" 
-                              [alwaysShowPaginator]="false" [rows]="10">
-                                 [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
-                                  <!-- <ng-template pTemplate="header">
-                                          <tr class="table-coustom-style">
-                                              <th style="width:6em">S. No.</th>
-                                              <th style="width: 16em;">Minimum Quantity</th>
-                                              <th style="width: 16em;">Maximum Quantity</th>
-                                              <th style="width: 13em;">Price</th> 
-                                              <th style="width: 13em;">Wallet Price</th>  -->
-                                              <!-- <th style="width: 4em;">Action</th> -->
-                                          <!-- </tr>
-                                      </ng-template>
-                                      <ng-template pTemplate="body" let-product >
-                                          <tr>
-                                           <td ><span class="ui-column-title">S No</span>1</td>
-                                           <td><span class="ui-column-title">Minimum Quantity</span>
-                                               <input pInputText type="text" formControlName="minQuantity" 
-                                                placeholder="Minimum Quantity">
-                                           </td>
-                                             <td><span class="ui-column-title">Maximum Quantity</span>
-                                               <input pInputText type="text" formControlName="maxQuantity" 
-                                                placeholder="Maximum Quantity" >
-                                           </td>
-                                              <td><span class="ui-column-title">Price</span>
-                                               <input pInputText type="number" formControlName="priceQuantity" 
-                                                placeholder="Price" numbersOnly>
-                                           </td>
-                                              <td><span class="ui-column-title">Wallet Price</span>
-                                               <input pInputText type="number" formControlName="walletQuantity"
-                                                 placeholder="Wallet Price" numbersOnly>
-                                           </td> -->
-                                              <!-- <td><span class="ui-column-title">Action</span>
-                                               <input pInputText type="number" formControlName="varient3"  placeholder="Quantity" numbersOnly>
-                                           </td> -->
-                                          <!-- </tr>
-                                      </ng-template>
-                                      <ng-template pTemplate="emptymessage">
-                                          <tr>
-                                              <td class="text-center text-danger font-weight-600" colspan="6">No Records Found.</td>
-                                          </tr>
-                                      </ng-template>
-                                  </p-table>  
-                              </div>
-                      </div>
-                    </div> --> 
+               
                     <div class="product-page-listing">
                       <h4 class="form-section">  Quantity Based Discount</h4>
                       <div class="customer-wrapper">

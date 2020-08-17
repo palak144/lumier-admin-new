@@ -74,6 +74,10 @@ export class AddProductComponent implements OnInit {
   specialities : any = [];
   editing = {};
   rows = [];
+  isVarient: boolean = false;
+  countryIdData: any = "";
+  productNameData: any = "";
+  languageIdData: any = "";
  
 
   constructor(
@@ -86,9 +90,9 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
-    this.newDynamic = {id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
+    this.newDynamic = {id: "", Varient: "",pcode:"",quantity: "",sellPrice:"",MRP:"",walletPrice:""};
     this.dynamicArray.push(this.newDynamic);
-    this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
+    this.newSeller = {id: "",sellerId:[],sellerFee:"",quantity: "", deliveryTime: ""};
     this.dynamicSeller.push(this.newSeller);
     this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
     this.dynamicQuantity.push(this.newQuantity);
@@ -113,80 +117,87 @@ export class AddProductComponent implements OnInit {
     this.selected_category =[];
   }
   get signUpControls() {
-      return this.addProductForm.controls
+    
+    return this.addProductForm.controls
   }
+  onSelect(event) {
+   ( event.target.checked ) ?  this.isVarient = true :  this.isVarient = false
+   
+}
   editorValidation(event)
   {
   }
   fileChangeEvent1(fileInput : any){
-  
     this.file = fileInput.target.files[0];
     
-    var last = this.file.name.substring(this.file.name.lastIndexOf(".") + 1, this.file.name.length); 
-    if (this.file.size < 200000) {
-    {
-      this.companyFlagSize = true;
-       let reader = new FileReader();      
-        reader.readAsDataURL(this.file);      
-        reader.onload = (event) => {
-           this.url = reader.result;
-          this.companyLogo = this.url;        
-          document.getElementById('sizeValidations').style.color = 'black';
-        }
-        this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
+      // this.companyFlagSize = true;
+      //  let reader = new FileReader();      
+      //   reader.readAsDataURL(this.file);      
+      //   reader.onload = (event) => {
+      //      this.url = reader.result;
+      //     this.companyLogo = this.url;        
+      //   }
+        this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
         this.file = this.file.name
-      }
-    }
-      else {
-        this.companyFlagSize = false;
-        
-        document.getElementById('sizeValidations').style.color = '#ffae42';
-        this.addProductForm.controls['file'].setValue(this.file ? '' : '');
-      }
+      
+    
   }
   fileChangeEvent(e : any){
-    this.file = e.queue[0];
-    this.file = this.file.file 
-    for (var i = 0; i < e.queue.length; i++) { 
-      this.files.push(e.queue[i]);
-    }
-    console.log(this.files)
-    if (this.file.size < 200000) {
-    {
-      this.companyFlagSize = true;
-       let reader = new FileReader();      
-       
-        this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
+    (this.files.length != 0) ? this.files = [] : ''
+    // this.file = e.queue[0];
+    // this.file = this.file.file 
+  
+    // if (this.file.size < 200000) { 
+        e.queue.forEach(element => {
+          this.files.push(
+           element._file
+          );
+        });
+        console.log(this.files)
+        // this.addProductForm.controls['file'].setValue(this.file ? this.file : '');
         // this.file = this.file.name
-      }
       
+      
+    // }
+      // else {
+      //   this.companyFlagSize = false;
+      //   document.getElementById('sizeValidations').style.color = '#ffae42';
+      //   this.addProductForm.controls['file'].setValue(this.file ? '' : '');
+      // }
+  }
+  scrollToElement(element) {
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-      else {
-        this.companyFlagSize = false;
-        document.getElementById('sizeValidations').style.color = '#ffae42';
-        this.addProductForm.controls['file'].setValue(this.file ? '' : '');
-      }
   }
   onSubmitAddProductForm(){
-    debugger
+      
+    console.log(this.dynamicSeller);
+
       event.preventDefault();
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
+        let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
+        this.scrollToElement(invalidFields[1]);
         return
       }
+      this.countryIdData = this.addProductForm.get('countryId').value,
+      this.productNameData = this.addProductForm.get('productName').value,
+      this.languageIdData = this.addProductForm.get('languageId').value    
+      let data=this.addProductForm.value;
 
-
-      this.addProductFormDetails = {
-        "name": this.addProductForm.get('name').value,
-        
-      }
-      
+      data.productsRelated = this.dataFormat(this.addProductForm.get('relatedItem').value)
+      data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
+      data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
+      data.quantityDiscount = this.dynamicQuantity
+      data.file = this.files
       if (this.id ) {
-        this.addProductFormDetails.id = this.id;
-      }
+       data.id = this.id;
+      }   
+      
       if (this.editMode) {
         
-        this.productService.addProduct(this.addProductFormDetails ).subscribe(
+        this.productService.addProduct(data).subscribe(
           data => {
           this.toastr.success("Product Edited Successfully")
             this.router.navigate(['/catalogues/products'],{relativeTo : this.activatedRoute})
@@ -196,7 +207,7 @@ export class AddProductComponent implements OnInit {
           });
       }
       else{
-      this.productService.addProduct(this.addProductFormDetails).subscribe(
+      this.productService.addProduct(data).subscribe(
         data => {
           this.toastr.success("Product Added Successfully")
           this.router.navigate(['/catalogues/products'],{relativeTo : this.activatedRoute})
@@ -219,6 +230,7 @@ export class AddProductComponent implements OnInit {
     let position ="";
 
 this.addProductForm = new FormGroup({
+
       "countryId":new FormControl(null,[Validators.required]),
       "productName": new FormControl( productName, Validators.required),
       "supplyTypeId": new FormControl( null, Validators.required),
@@ -226,44 +238,29 @@ this.addProductForm = new FormGroup({
       "languageId":new FormControl(null, Validators.required),
       "PNCDE": new FormControl(null, Validators.required),
       "code": new FormControl(null, Validators.required),
-      "pncdecvarient" : new FormControl(null, Validators.required),
-      "noDiscount" : new FormControl(null, Validators.required),
-      "isSale" : new FormControl(null, Validators.required),
-      "shortDiscription" : new FormControl(null, Validators.required),
-      "packageContent" : new FormControl(null, Validators.required),
+      "noDiscount" : new FormControl(null),
+      "isSale" : new FormControl(null),
+      "shortDiscription" : new FormControl(null),
+      "packageContent" : new FormControl(null),
       "MRP" : new FormControl(null, Validators.required),
-      "metaTitle" : new FormControl(null, Validators.required),
-      "isQuote" : new FormControl(null, Validators.required),
-      "UOM" : new FormControl(null, Validators.required),
-      "walletPrice" : new FormControl(null, Validators.required),
-      "metaDescription" : new FormControl(null, Validators.required),
-      "metaKeyword" : new FormControl(null, Validators.required),
+      "sellPrice" : new FormControl(null, Validators.required),
+      "metaTitle" : new FormControl(null),
+      "isQuote" : new FormControl(null),
+      "UOM" : new FormControl(null),
+      "walletPrice" : new FormControl(null),
+      "metaDescription" : new FormControl(null),
+      "metaKeyword" : new FormControl(null),
       "categoryId" : new FormControl(null, Validators.required),
       "ribbenText" : new FormControl(null),
-      "specialityId" : new FormControl(null, Validators.required),
-      "isPackage" : new FormControl(null, Validators.required),
-      "sellerFee" : new FormControl(null, Validators.required),
-      "isSaleSeller" : new FormControl (null,  Validators.required),
-      "quantity" : new FormControl(null, Validators.required),
-      "deliveryWithinDays" : new FormControl(null, Validators.required),
+      "specialityId" : new FormControl(null),
       "currency":new FormControl(null, Validators.required),
       "countryOriginId" : new FormControl(null, Validators.required),
       "relatedItem": new FormControl(null),
-      "sellerName": new FormControl(null, Validators.required),
-      "varient": new FormControl(null, Validators.required),
-      "quantitySeller": new FormControl(null, Validators.required),
-      "salePrice" : new FormControl(null, Validators.required),
-      "priceSeller": new FormControl(null, Validators.required),
-      "walletSeller" : new FormControl(null, Validators.required),
-      "description": new FormControl(null, Validators.required),
-      "warranty": new FormControl(null, Validators.required),
-      "features": new FormControl(null, Validators.required),
-       "video" : new FormControl(null, Validators.required),
-       "minQuantity" : new FormControl(null, Validators.required),
-       "maxQuantity" : new FormControl(null, Validators.required),
-       "priceQuantity" : new FormControl(null, Validators.required),
-       "walletQuantity" : new FormControl(null, Validators.required),
-       "price" : new FormControl(null, Validators.required),
+      "isPackage": new FormControl(null),
+      "description": new FormControl(null),
+      "warranty": new FormControl(null),
+      "features": new FormControl(null),
+       "video" : new FormControl(null),
 
     });
     
@@ -296,11 +293,9 @@ this.addProductForm = new FormGroup({
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   
-                  this.rows = [{id : 21,
-                    itemName: "Seller New Palak"}]
-                  console.log("rows",success.data)
+                  // this.rows = [{id : 21,
+                  //   itemName: "Seller New Palak"}]
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
-                  console.log("success.data",success.data)
 
                 },
                 error => {
@@ -437,10 +432,10 @@ this.addProductForm = new FormGroup({
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         
-        if(success.data != []) {
-        this.rows = [{id : 21,
-          itemName: "Seller New Palak"}]
-        }
+        // if(success.data != []) {
+        // this.rows = [{id : 21,
+        //   itemName: "Seller New Palak"}]
+        // }
         this.sellerLists = success.data
         this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
       },
@@ -498,68 +493,62 @@ this.addProductForm = new FormGroup({
   }
     return newArray;
   }
-//   addFieldValue() {
-//     this.fieldArray.push(this.newAttribute)
-//     this.newAttribute = {};
-// }
-
-// addBasedValue() {
-//   this.basedArray.push(this.newAttribute)
-//   this.newAttribute = {};
-// }
-
-// // deleteFieldValue(index) {
-// //     this.fieldArray.splice(index, 1);
-// // }
-
-
-
-//   open(content , permission) {
+  dataFormat(arr: any[]) {
     
-//     this.permissions = permission
-//     this.modalService.open(content).result.then((result) => {
-//         this.closeResult = `Closed with: ${result}`;
-        
-//     }, (reason) => {
-//       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-//   });
-// }
-
-//   // This function is used in open
-// private getDismissReason(reason: any): string {
-//   if (reason === ModalDismissReasons.ESC) {
-//       return 'by pressing ESC';
-//   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-//       return 'by clicking on a backdrop';
-//   } else {
-//       return `with: ${reason}`;
-//   }
-// }
+    const newArray = [];
+    if (arr != null) {
+    arr.forEach(element => {
+      newArray.push({
+        relatedId: element.id,
+      });
+    });
+  }
+    return newArray;
+  }
+  addOtherKeysToVarient(arr: any[] ,  countryIdData : string ,  languageIdData : string) {
+    if (arr != []) {
+    var result = arr.map(function(el) {
+      var element = Object.assign({}, el);
+      element.countryId = countryIdData,
+      element.languageId = languageIdData    
+       return element;
+    })
+  }
+    return result;
+  }
+  addOtherKeysToSeller(arr: any[], countryIdData : string ,  productNameData : string , languageIdData : string ) {
+    
+    if (arr != []) {
+    var result = arr.map(function(el) {
+      var element = Object.assign({}, el);
+      element.countryId = countryIdData,
+      element.productName= productNameData,
+      element.languageId = languageIdData   
+       return element;
+    })
+  }
+    return result;
+  }
 addRow(index) {  
-  this.newDynamic ={id: "", Varient: "",pcode:"",quantity: "", is_sale: "",sale_price:"",price:"",wallet:""};
+  this.newDynamic ={id: "", Varient: "",pcode:"",quantity: "",sellPrice:"",MRP:"",walletPrice:""};
   this.dynamicArray.push(this.newDynamic);
-  
-  this.toastr.success('New row added successfully', 'New Row');
-  console.log(this.dynamicArray);
   return true;
 }
-
+//       [{"variant":"Coronamask1","countryId":25,"languageId":1,"quantity":10,"MRP":200,"sellPrice":150,"walletPrice":0,"isQuote":"No","deliveryTime":10,"sellerFee":150}]
+// sellerProducts:{"productName":"Medicine","quantity":20,"price":200,"countryId":25,"languageId":1,"sellerId":17, "sellerFee":200,"deliveryTime":10,"billingAddress":"Address1"}
+     
 deleteRow(index) {
   if(this.dynamicArray.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');
       return false;
   } else {
       this.dynamicArray.splice(index, 1);
-      this.toastr.warning('Row deleted successfully', 'Delete row');
       return true;
   }
 }
 addsellerRow(index) {  
-  this.newSeller = {id: "",sellerName:"",sellerFees:"",Quantity: "", Delivery: ""};
+  this.newSeller = {id: "",sellerId:[],sellerFee:"",quantity: "", deliveryTime: ""};
   this.dynamicSeller.push(this.newSeller);
-  
-  this.toastr.success('New row added successfully', 'New Row');
-  console.log(this.dynamicSeller);
   return true;
 }
 
@@ -569,16 +558,12 @@ deletesellerRow(index) {
       return false;
   } else {
       this.dynamicSeller.splice(index, 1);
-      this.toastr.warning('Row deleted successfully', 'Delete row');
       return true;
   }
 }
 addQuantity(index) {  
   this.newQuantity = {id: "",min_qunatity:"",max_qunatity:"",price: "", wallet: ""};
   this.dynamicQuantity.push(this.newQuantity);
-  debugger
-  this.toastr.success('New row added successfully', 'New Row');
-  console.log(this.dynamicQuantity);
   return true;
 }
 
@@ -588,7 +573,6 @@ deleteQuantity(index) {
       return false;
   } else {
       this.dynamicQuantity.splice(index, 1);
-      this.toastr.warning('Row deleted successfully', 'Delete row');
       return true;
   }
 }

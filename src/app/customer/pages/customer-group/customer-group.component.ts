@@ -171,7 +171,7 @@ export class CustomerGroupComponent implements OnInit {
           this.customerService.deleteCustomerGroup(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               this.getAllCustomers(this.page);
-              this.toastr.success("Customer deleted successfully")
+              this.toastr.success("Customer-Group deleted successfully")
             },
             error => {
               this.toastr.error(error.message)
@@ -198,7 +198,7 @@ export class CustomerGroupComponent implements OnInit {
           this.customerService.deleteCustomer(id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success: any) => {
               this.getAllCustomers(this.page);
-
+              this.toastr.success("Customer deleted successfully")
               // this.initiateSearch();
             },
             error => {
@@ -210,7 +210,7 @@ export class CustomerGroupComponent implements OnInit {
           this.action = null;
         }
       });
-    }
+    } 
     if (action == 'Edit') {
       this.router.navigate(['../', 'edit', id], { relativeTo: this.route })
 
