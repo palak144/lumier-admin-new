@@ -92,7 +92,7 @@
                                   <div class="form-group">
                                       <label>Currency </label><span class="asterick">*</span>
                                       <div class="assign-group-dropdown">
-                                      <p-dropdown [options]="currencies" formControlName="currency" [(ngModel)]="selected_currencyId" 
+                                      <p-dropdown [options]="currencies" formControlName="currency" [(ngModel)]="selected_currencyId" (onChange)="getdropdown2($event)" 
                                       styleClass="form-control border-primary" placeholder="Select Currency"  [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.currency.errors }">
                                       </p-dropdown>
                                       <div *ngIf="isSubmittedaddProductForm && signUpControls.currency.errors"
@@ -207,7 +207,7 @@
                                 <div class="form-group">
                                     <label>Is Variant</label>
                                     <div class="issale-check">
-                                        <input class="form-check-input" (change)='onSelect($event)' formControlName="isPackage"
+                                        <input class="form-check-input" (change)='onSelect($event)' formControlName="isVariant"
                                         type="checkbox" >
                                         <label class="isSale" >
                                             Is Variant
@@ -434,7 +434,7 @@
                                   <th >Seller Fee</th>
                                   <th >Quantity</th> 
                                   <th >Delivery Within Days</th>
-                                  <th>Action</th>
+                                  <!-- <th>Action</th> -->
                               </tr>
                           </thead>
                           <tbody>
@@ -455,10 +455,10 @@
                                       <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
                                     </td>
                                    
-                                  <td>
+                                  <!-- <td>
                                       <i (click)="deletesellerRow(i)" class="fa fa-trash fa-2x"></i>
                                       <i (click)="addsellerRow(i)" class="fa fa-plus fa-2x"></i>
-                                    </td>
+                                    </td> -->
                                  
                               </tr>
                           </tbody>

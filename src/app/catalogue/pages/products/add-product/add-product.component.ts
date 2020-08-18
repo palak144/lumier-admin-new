@@ -75,11 +75,11 @@ export class AddProductComponent implements OnInit {
   currencyValue: any;
   specialities : any = [];
   editing = {};
-  rows = [];
   isVariant: boolean = false;
   countryIdData: any = "";
   productNameData: any = "";
   languageIdData: any = "";
+  selectedCriteria: any;
  
 
   constructor(
@@ -175,6 +175,7 @@ export class AddProductComponent implements OnInit {
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
+      data.currency = this.select(this.addProductForm.get('currency').value , this.currencyValue)
       if (this.id ) {
        data.id = this.id;
       }   
@@ -210,7 +211,6 @@ export class AddProductComponent implements OnInit {
      let catelogue = ""
 
 this.addProductForm = new FormGroup({
-
       "countryId":new FormControl(null,[Validators.required]),
       "productName": new FormControl( productName, Validators.required),
       "supplyTypeId": new FormControl( null, Validators.required),
@@ -218,14 +218,14 @@ this.addProductForm = new FormGroup({
       "languageId":new FormControl(null, Validators.required),
       "PNCDE": new FormControl(null, Validators.required),
       "code": new FormControl(null, Validators.required),
-      "noDiscount" : new FormControl(null),
+      "noDiscount" : new FormControl(false),
       "isSale" : new FormControl(null),
       "shortDiscription" : new FormControl(null),
       "packageContent" : new FormControl(null),
       "MRP" : new FormControl(null, Validators.required),
       "sellPrice" : new FormControl(null, Validators.required),
       "metaTitle" : new FormControl(null),
-      "isQuote" : new FormControl(null),
+      "isQuote" : new FormControl(false),
       "UOM" : new FormControl(null),
       "walletPrice" : new FormControl(null),
       "metaDescription" : new FormControl(null),
@@ -236,11 +236,11 @@ this.addProductForm = new FormGroup({
       "currency":new FormControl(null, Validators.required),
       "countryOriginId" : new FormControl(null, Validators.required),
       "relatedItem": new FormControl(null),
-      "isPackage": new FormControl(null),
+      "isVariant": new FormControl(false),
       "description": new FormControl(null),
       "warranty": new FormControl(null),
-      "features": new FormControl(null),
-       "video" : new FormControl(null),
+      "features": new FormControl(''),
+       "video" : new FormControl(''),
 
     });
     
@@ -308,7 +308,7 @@ this.addProductForm = new FormGroup({
                 "code" : this.product.code,
                 "description" : this.product.description,
                 "features" : this.product.features,
-                "isPackage" : this.product.isPackage,
+                "isVariant" : this.product.isVariant,
                 "isQuote" : this.product.isQuote,
                 "isSale" : this.product.isSale,
                 "metaDescription" : this.product.metaDescription,
@@ -339,11 +339,6 @@ this.addProductForm = new FormGroup({
             this.selected_cOrigin = this.product.countryOriginId;
             this.selected_languageId = this.product.languageId;
             this.selected_brand = this.product.manufactureId;
-
-
-
-
-
             
           }
           ,
@@ -362,7 +357,6 @@ this.addProductForm = new FormGroup({
     
     }
   getdropdown1(event:any){
-    this.rows = []
     this.selectedCountryId = event.value
     this.getSupplyType();  
     this.getManufacturerBrands();
@@ -370,14 +364,21 @@ this.addProductForm = new FormGroup({
     this.getLanguage();
     this.getCurrency();
   }
-
+  select(criteriaId: any , criteriaName:any) {
+    
+    this.selectedCriteria = [{
+                "id" : criteriaId,
+          "itemName" : criteriaName
+    
+    }]
+    
+    return this.selectedCriteria;
+  }
   getCurrency()
   {
     this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-        
       },
       error => {
       }
@@ -412,6 +413,10 @@ this.addProductForm = new FormGroup({
       }
     )
   }
+  getdropdown2(event) 
+{
+  this.currencyValue = this.currencies.find( item => item.value === event.value).label;
+}
   getLanguage()
   {
    
