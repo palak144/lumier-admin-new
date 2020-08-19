@@ -43,14 +43,12 @@
   </div>
   <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
   
-    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
-      
-      <span class="d-lg-block " >Import</span>
+    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+        <input type="file" class="importFile pl-0" id="custom-input"  (change)="onFileChange($event)" placeholder="Upload file" accept=".xlsx">   
+      <span class="d-lg-block">Import</span>
     </button>
-    
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" >
-        
-        
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+
     <div class="dropdown">
         <a class="d-lg-block  dropdown-toggle" data-toggle="dropdown" >Export</a>
         <ul class="dropdown-menu" role="menu">

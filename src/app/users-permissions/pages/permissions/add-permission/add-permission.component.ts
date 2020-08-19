@@ -104,7 +104,7 @@ export class AddPermissionComponent implements OnInit {
     return this.selectedCountryId;
   }
   multiSelectedListPermission(criteriaArray: any) {
-    
+    debugger
     this.selectedPermissionId = []
     if (criteriaArray != null){
       this.selectedPermissionId = _.chain(criteriaArray)
@@ -115,7 +115,7 @@ export class AddPermissionComponent implements OnInit {
       .value();
       
   }
-  
+  debugger
     return this.selectedPermissionId;
   }
   get signUpControls() {

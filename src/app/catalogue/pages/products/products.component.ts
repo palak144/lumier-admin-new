@@ -13,8 +13,9 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
 import { ExcelServiceService } from 'app/shared/services/excel-service.service';
 import { CommonServiceService } from 'app/shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
-import { CompaniesModule } from 'app/companies/companies.module';
 import { NgbModal, ModalDismissReasons, NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
+import * as XLSX from 'xlsx';
+
 interface Country {
   _id:string, 
   country:string
@@ -82,6 +83,8 @@ export class ProductsComponent implements OnInit {
   closeResult: string;
   display: boolean =false;
   VariantData: any;
+  willDownload = false;
+
   constructor(config: NgbTabsetConfig, private router:Router, 
     private activateRoute : ActivatedRoute,
     private utilityService:UtilityService,
@@ -124,6 +127,41 @@ export class ProductsComponent implements OnInit {
       this.getSeller();
       this.getCategoryList();
   }
+  onFileChange(ev) {
+    debugger
+let workBook = null;
+let jsonData = null;
+const reader = new FileReader();
+const file = ev.target.files[0];
+reader.onload = (event) => {
+  const data = reader.result;
+  workBook = XLSX.read(data, { type: 'binary' });
+  jsonData = workBook.SheetNames.reduce((initial, name) => {
+    const sheet = workBook.Sheets[name];
+    initial[name] = XLSX.utils.sheet_to_json(sheet);
+    return initial;
+  }, {});
+  var counter = 0;
+var tempArr =[]
+debugger
+for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
+    if (jsonData.Sheet1[i].package === 'P'){
+        counter ++ 
+        jsonData.Sheet1[i].elemID = counter
+        tempArr.push(jsonData.Sheet1[i])
+        
+    } 
+    else if (jsonData.Sheet1[i].package ==='V') {
+      jsonData.Sheet1[i].elemID = counter
+        tempArr.push(jsonData.Sheet1[i])
+    }
+}
+debugger
+  const dataString = JSON.stringify(jsonData.Sheet1);
+  console.log(dataString)
+}
+reader.readAsBinaryString(file);
+  }
 
   onVariantFormSubmit()
   {
@@ -152,7 +190,7 @@ this.getAllproduct(this.page);
         switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId , this.sellerId, this.categoryId
         ))
       ).subscribe((success: any) => {
-   
+   debugger
         this.productList = success.data.results;
     
         this.totalCount = success.data.total;
@@ -189,6 +227,7 @@ this.getAllproduct(this.page);
             this.exportAllData = [];
           }
           else{
+            debugger
           this.productList = success.data.results;
           this.totalCount = success.data.total;
           this.utilityService.resetPage();
@@ -204,6 +243,7 @@ this.getAllproduct(this.page);
         (success: any) => {
       
           console.log(success);
+          debugger
           this.productList = success.data.results;
             
       
@@ -223,6 +263,7 @@ this.getAllproduct(this.page);
             this.ProductService.deleteProduct(id).pipe(takeUntil(this._unsubscribe)).subscribe(
               (success: any) => {
                 this.getAllproduct(this.page);
+                debugger
                 this.productList = this.productList.filter((item: any) => {
                   return id !== item.countryId
                 }) 
