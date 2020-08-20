@@ -19,6 +19,7 @@ export class ProductService {
   } 
 
   addProduct(data ) {
+    console.log("dataForm" , data)
     const dataForm = new FormData();
       if(data.id != null){
         dataForm.append('id', data['id']);
@@ -36,7 +37,7 @@ export class ProductService {
       dataForm.append('supplyTypeId', data['supplyTypeId']); 
       dataForm.append('categoryId', data['categoryId']); 
       dataForm.append('currency', data['currency']); 
-      dataForm.append('code', data['code']); 
+      dataForm.append('code', data['PNCDE']); 
       dataForm.append('countryOriginId', data['countryOriginId']);
        dataForm.append('description', data['description']);
       dataForm.append('features', data['features']); 
@@ -64,6 +65,7 @@ export class ProductService {
       dataForm.append('warranty', data['warranty']); 
 
 debugger
+console.log("dataForm" , dataForm)
 // productVariants:[{"variant":"Coronamask1","countryId":25,"languageId":1,"quantity":10,"MRP":200,"sellPrice":150,"walletPrice":0,"isQuote":"No","deliveryTime":10,"sellerFee":150}]
 // sellerProducts:[{"productName":"Medicine","quantity":20,"price":200,"countryId":25,"languageId":1,"sellerId":17,"sellerFee":200,"deliveryTime":10,"billingAddress":"Address1"}]
 // productsRelated:[{"relatedId":2}]

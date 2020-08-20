@@ -80,6 +80,8 @@ export class AddProductComponent implements OnInit {
   productNameData: any = "";
   languageIdData: any = "";
   selectedCriteria: any;
+  priceZero: string;
+  public disable: boolean = false;
  
 
   constructor(
@@ -126,8 +128,18 @@ export class AddProductComponent implements OnInit {
     return this.addProductForm.controls
   }
   onSelect(event) {
+    
    ( event.target.checked ) ?  this.isVariant = true :  this.isVariant = false
    
+}
+onSelectQuote(event){
+  if(event.target.checked){
+    this.disable = true
+  }
+  else{
+    this.disable = false
+  }
+  ( event.target.checked ) ?  this.priceZero = "0.0" :  this.priceZero = ''
 }
   editorValidation(event)
   {
@@ -217,7 +229,6 @@ this.addProductForm = new FormGroup({
       "manufactureId": new FormControl( null, Validators.required),
       "languageId":new FormControl(null, Validators.required),
       "PNCDE": new FormControl(null, Validators.required),
-      "code": new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(false),
       "isSale" : new FormControl(null),
       "shortDiscription" : new FormControl(null),
@@ -305,7 +316,6 @@ this.addProductForm = new FormGroup({
                 "MRP" : this.product.MRP,
                 "PNCDE" : this.product.PNCDE,
                 "UOM" : this.product.UOM,
-                "code" : this.product.code,
                 "description" : this.product.description,
                 "features" : this.product.features,
                 "isVariant" : this.product.isVariant,

@@ -42,11 +42,11 @@
       </fieldset>    
   </div>
   <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
-  
-    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-        <input type="file" class="importFile pl-0" id="custom-input"  (change)="onFileChange($event)" placeholder="Upload file" accept=".xlsx">   
+    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white"
+    (click)="open(content)" >
       <span class="d-lg-block">Import</span>
     </button>
+  
       <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
 
     <div class="dropdown">
@@ -63,7 +63,30 @@
   </button>
   </div>
 </div>
-
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title title"><b>Import</b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ngb-panel class="p-0">
+              <ng-template ngbPanelContent>
+                  <div >
+              <label class="text" >Import File :</label>
+              <input type="file" class="importFile pl-0" id="custom-input"  (change)="onFileChange($event)" 
+              placeholder="Upload file" accept=".xlsx">
+</div>
+            </ng-template>
+            </ngb-panel>
+            </ngb-accordion>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-raised btn-success">Upload</button>
+    </div>
+  </ng-template>
 <ngb-tabset>
     <ngb-tab title="Products">
       <ng-template ngbTabContent>

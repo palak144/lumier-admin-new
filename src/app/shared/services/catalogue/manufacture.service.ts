@@ -33,7 +33,6 @@ export class ManufactureService {
       dataForm.append('logoName', data['logoName']);
       dataForm.append('countryId', data['countryId']);
       dataForm.append('supplyTypeId', data['supplyTypeId']);
-      
     return this.http.post(this.baseUrl + 'admin/manufacturer' , dataForm).pipe(
       
       catchError(this.errorHandler.handleError)

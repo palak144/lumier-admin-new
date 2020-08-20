@@ -279,9 +279,9 @@ this.getAllproduct(this.page);
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
           this.router.navigate(['../edit-category',id], {relativeTo: this.activateRoute})
-          
     }
   }
+  
     loadDataLazy(event: LazyLoadEvent) {
       
       this.page = event.first / 10;
@@ -463,6 +463,15 @@ console.log(id);
   this.VariantForm.controls.sellerFee.patchValue(item.sellerFee);
   this.VariantForm.controls.walletPrice.patchValue(item.walletPrice);
   }
+  open(content ) {
+    
+    this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+        
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
         return 'by pressing ESC';
