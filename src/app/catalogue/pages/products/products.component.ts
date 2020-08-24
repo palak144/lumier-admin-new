@@ -278,7 +278,7 @@ this.getAllproduct(this.page);
       });
     }
     if(event.currentTarget.firstChild.data === 'Edit'){
-          this.router.navigate(['../edit-category',id], {relativeTo: this.activateRoute})
+          this.router.navigate(['../edit-product',id], {relativeTo: this.activateRoute})
     }
   }
   
