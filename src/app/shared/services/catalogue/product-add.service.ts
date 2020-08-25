@@ -34,12 +34,19 @@ export class ProductService {
       if(data.catelogue != ""){
         dataForm.append('catelogue', data['catelogue']);
       }
+      debugger
       if(data.countryOriginId.length != 0){
         dataForm.append('countryOriginId', data['countryOriginId']);
       }
       var sellerDetails = JSON.stringify(data.sellerProducts);
       var productVariantsDetails = JSON.stringify(data.productVariants);
       var quantityDiscountsDetails = JSON.stringify(data.quantityDiscounts);
+      if(data.isQuantityDiscount == false){
+        quantityDiscountsDetails = undefined
+      }
+      if(data.isVariant == false){
+        productVariantsDetails = undefined
+      }
       debugger
       dataForm.append('sellerId', data.sellerProducts[0].sellerId); 
       dataForm.append('MRP', data['MRP']); 
@@ -61,6 +68,7 @@ export class ProductService {
       dataForm.append('metaTitle', data['metaTitle']);
       dataForm.append('noDiscount', data['noDiscount']);
       dataForm.append('isPackage', data['isVariant']); 
+      dataForm.append('isQuantityDiscount', data['isQuantityDiscount']); 
       // dataForm.append('packageContent', data['packageContent']);
       dataForm.append('productName', data['productName']); 
       dataForm.append('productVariants', productVariantsDetails);
@@ -81,7 +89,15 @@ debugger
       catchError(this.errorHandler.handleError)
     );
   }
-
+  onCheckPncode(countryId?, PNCDE?) 
+  {
+    debugger
+    const params = { countryId: countryId, PNCDE: PNCDE }
+    return this.http.get(this.baseUrl + 'admin/checkPncode',
+      { params: params }).pipe(
+        catchError(this.errorHandler.handleError)
+      );
+}
 getProductDetails(id) {
     return this.http.get(this.baseUrl + 'admin/product/' + id)
       .pipe(

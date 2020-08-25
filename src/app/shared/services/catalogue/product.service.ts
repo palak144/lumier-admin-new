@@ -22,7 +22,6 @@ export class ProductService {
 getAllproductSearch(page?, searchKey?, exportAll?, countryId?, sellerId?, categoryId?) 
   {
     const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId,sellerId: sellerId, categoryId: categoryId }
-    console.log(params);
     return this.http.get(this.baseUrl + 'admin/product',
       { params: params }).pipe(
         

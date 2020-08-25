@@ -101,7 +101,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>SKU/ PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="PNCDE" class="form-control border-primary" placeholder="PN CDE" >
+                                    <input type="text" formControlName="PNCDE" class="form-control border-primary" 
+                                    (blur)="PNCDE_Value($event)" placeholder="PN CDE" >
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
                                       <div *ngIf="signUpControls.PNCDE.errors.required">PN CDE is required</div>
                                   </div>
@@ -195,7 +196,7 @@
                               </div>
                           </div>
                       </div>
-                      <h4 class="form-section"><i class="ft-user"></i> Price</h4>
+                      <h4 class="form-section mb-0"><i class="ft-user"></i> Price</h4>
                           <div class="row">
                               <div class="col">
                                 <div class="form-group">
@@ -203,7 +204,7 @@
                                     <div class="issale-check">
                                         <input class="form-check-input" (change)='onSelectQuote($event)' formControlName="isQuote" type="checkbox" value="" 
                                         id="isQuote">
-                                        <label class="isSale" for="isQuote">
+                                        <label class="isSale ml-3" for="isQuote">
                                             Quote only?
                                         </label>
                                       </div>                           
@@ -213,18 +214,18 @@
                           <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Price</label><span class="asterick">*</span> 
+                                    <label>Price</label><span class="asterick">*</span>
                                     <input type="number" min="0" formControlName="MRP" class="form-control border-primary" 
                                     placeholder="Price" value={{priceZero}} [attr.disabled]="disable ? '' : null"
                                     numbersOnly>
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.MRP.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf= "priceZero != ''" class="invalid-feedback">
                                       <div *ngIf="signUpControls.MRP.errors.required">Price is required</div>
-                                  </div>
+                                  </div> -->
                                   </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Campare at Price</label>
+                                    <label>Compare at Price</label>
                             <fieldset>
                                 <div class="input-group">
                                   <div class="input-group-prepend">
@@ -310,7 +311,7 @@
                                   <label>Catelogue</label>
                                   <div class="row">
                                     <div class="col-md-12">
-                                        <input  type="file" id="chooseFile" (change)="fileChangeEvent1($event)" 
+                                        <input  type="file" id="chooseFile" accept="application/pdf" (change)="fileChangeEvent1($event)" 
                                           formControlName="catelogue" class="form-control border-primary">
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.catelogue.errors" class="invalid-feedback mt-0">
                                           <div *ngIf="signUpControls.catelogue.errors.required">Catelogue is required</div>
@@ -422,7 +423,7 @@
                                 <div class="issale-check">
                                     <input class="form-check-input" (change)='onSelect($event)' formControlName="isVariant"
                                     type="checkbox" >
-                                    <label class="isSale" >
+                                    <label class="isSale ml-3" >
                                         This product has multiple options
                                     </label>
                                   </div>                                   </div>
@@ -487,10 +488,14 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="text-right form-section">
-                          <button pButton type="button" icon="pi pi-plus" class="ui-button-info"
-                          (click)="addRow(i)"></button>
+                        <div class="text-right">
+                          <button type="button" (click)="addRow(i)" class="btn btn-raised btn-primary btn-darken-3 white">
+                            <span class="d-lg-block">Add another option</span>
+                        </button>
                         </div> 
+                        <div class="col-md-3">
+                            
+                        </div>
                       </div>
                     </div>
                           <h4 class="form-section"><i class="ft-user"></i>Upsell</h4> 
@@ -539,7 +544,19 @@
                
                     <div class="product-page-listing">
                       <h4 class="form-section">  Quantity Based Discount</h4>
-                      <div class="customer-wrapper">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <div class="issale-check">
+                                  <input class="form-check-input" (change)='onSelectDiscount($event)' formControlName="isQuantityDiscount"
+                                  type="checkbox" >
+                                  <label class="isSale ml-3" >
+                                      This product has Quantity Based Discount
+                                  </label>
+                                </div>                                   </div>
+                      </div>
+                  </div>
+                      <div *ngIf="isQuantityDiscount" class="customer-wrapper">
                           <div class="heading-wrapper">
                           </div>
                       <table class="table table-striped table-bordered">
@@ -579,16 +596,17 @@
                           </tbody>
 
                       </table>
-                      <div class="text-right form-section">
-                        <button pButton type="button" icon="pi pi-plus" class="ui-button-info"
-                        (click)="addQuantity(i)"></button>
+                      <div class="text-right">
+                        <button type="button" (click)="addQuantity(i)" class="btn btn-raised btn-primary btn-darken-3 white">
+                            <span class="d-lg-block">Add another option</span>
+                        </button>
                       </div> 
                     </div>
                   </div>
                     
                     <div class="form-actions right">
                       <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
-                      <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                      <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addProductForm.dirty">Submit</button>
                   </div>
                   </form> 
               </div>

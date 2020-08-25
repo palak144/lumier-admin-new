@@ -74,6 +74,7 @@ export class AddProductComponent implements OnInit {
   specialities : any = [];
   editing = {};
   isVariant: boolean = false;
+  isQuantityDiscount : boolean = false;
   countryIdData: any = "";
   productNameData: any = "";
   languageIdData: any = "";
@@ -120,6 +121,18 @@ export class AddProductComponent implements OnInit {
     this.selected_brand = [];
     this.selected_category =[];
   }
+  PNCDE_Value(e){
+ console.log(e.target.value)
+ debugger
+ this.productService.onCheckPncode(this.selectedCountryId,e.target.value).subscribe(
+  (success:any)=>
+  {
+ debugger
+} ,
+(error)=>{
+  debugger
+})
+  }
   get signUpControls() {
     
     return this.addProductForm.controls
@@ -128,6 +141,12 @@ export class AddProductComponent implements OnInit {
     
    ( event.target.checked ) ?  this.isVariant = true :  this.isVariant = false
    
+}
+
+onSelectDiscount(event) {
+    
+  ( event.target.checked ) ?  this.isQuantityDiscount = true :  this.isQuantityDiscount = false
+  
 }
 onSelectQuote(event){
   if(event.target.checked){
@@ -145,7 +164,7 @@ onSelectQuote(event){
     this.file = fileInput.target.files[0];
     
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
-        this.file = this.file.name
+        // this.file = this.file.name
       
     
   }
@@ -184,9 +203,9 @@ onSelectQuote(event){
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
-      
+      data.catelogue = this.file
       if (this.editMode) {
-        
+        debugger
         this.productService.addProduct(data).subscribe(
           data => {
           this.toastr.success("Product Edited Successfully")
@@ -224,7 +243,7 @@ this.addProductForm = new FormGroup({
       "PNCDE": new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(false),
       "isSale" : new FormControl(false),
-      "MRP" : new FormControl(null, Validators.required),
+      "MRP" : new FormControl(null),
       "sellPrice" : new FormControl(null),
       "metaTitle" : new FormControl(null),
       "isQuote" : new FormControl(false),
@@ -238,6 +257,7 @@ this.addProductForm = new FormGroup({
       "countryOriginId" : new FormControl(null),
       "relatedItem": new FormControl(null),
       "isVariant": new FormControl(false),
+      "isQuantityDiscount" : new FormControl(false),
       "description": new FormControl(null),
       "warranty": new FormControl(null),
       "features": new FormControl(''),
@@ -255,7 +275,8 @@ this.addProductForm = new FormGroup({
             "catelogue",new FormControl( catelogue,),
           );
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
-            (success:any)=>{          
+            (success:any)=>{     
+              debugger     
               this.product=success.data
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
