@@ -79,8 +79,10 @@ export class AddProductComponent implements OnInit {
   productNameData: any = "";
   languageIdData: any = "";
   selectedCriteria: any;
-  priceZero: string;
+  priceZero: string = "";
   public disable: boolean = false;
+  PNCDE_value: any = "";
+  searchRelatedItem: any;
  
 
   constructor(
@@ -121,17 +123,27 @@ export class AddProductComponent implements OnInit {
     this.selected_brand = [];
     this.selected_category =[];
   }
-  PNCDE_Value(e){
+  PNCDE_Check(e){
+    debugger
+    if(e != ""){
  console.log(e.target.value)
- debugger
- this.productService.onCheckPncode(this.selectedCountryId,e.target.value).subscribe(
+ this.PNCDE_value = e.target.value
+ if(this.PNCDE_value != "" && this.selectedCountryId != undefined ){
+ this.productService.onCheckPncode(this.selectedCountryId, this.PNCDE_value).subscribe(
   (success:any)=>
   {
+    document.getElementById('Validations').innerHTML = 'SKU/ PN CDE must be unique'
+    document.getElementById('Validations').style.color = 'black';
  debugger
 } ,
 (error)=>{
+  this.addProductForm.controls['PNCDE'].setValue('');
+  document.getElementById('Validations').innerHTML = 'Entered SKU/ PN CDE already exists'
+  document.getElementById('Validations').style.color = 'red';
   debugger
 })
+ }
+}
   }
   get signUpControls() {
     
@@ -151,6 +163,7 @@ onSelectDiscount(event) {
 onSelectQuote(event){
   if(event.target.checked){
     this.disable = true
+    this.addProductForm.controls['MRP'].setValue(0)
   }
   else{
     this.disable = false
@@ -162,15 +175,12 @@ onSelectQuote(event){
   }
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
-    
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
         // this.file = this.file.name
-      
-    
   }
   fileChangeEvent(e : any){
     (this.files.length != 0) ? this.files = [] : ''
-        e.queue.forEach(element => {
+        e.queue.forEach(element => {  
           this.files.push(
            element._file
           );
@@ -233,6 +243,9 @@ onSelectQuote(event){
     let productName = "";
     let file ="";
      let catelogue = ""
+     let sellPrice = 0.00
+     let walletPrice = 0.00
+     let MRP = 0.00
 
 this.addProductForm = new FormGroup({
       "countryId":new FormControl(null,[Validators.required]), 
@@ -243,14 +256,14 @@ this.addProductForm = new FormGroup({
       "PNCDE": new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(false),
       "isSale" : new FormControl(false),
-      "MRP" : new FormControl(null),
-      "sellPrice" : new FormControl(null),
-      "metaTitle" : new FormControl(null),
-      "isQuote" : new FormControl(false),
+      
+      "sellPrice" : new FormControl(sellPrice),
+      "metaTitle" : new FormControl(),
+      "isQuote" : new FormControl(false,),
       "UOM" : new FormControl(null),
-      "walletPrice" : new FormControl(null),
-      "metaDescription" : new FormControl(null),
-      "metaKeyword" : new FormControl(null),
+      "walletPrice" : new FormControl(walletPrice),
+      "metaDescription" : new FormControl(),
+      "metaKeyword" : new FormControl(),
       "categoryId" : new FormControl(null, Validators.required),
       // "ribbenText" : new FormControl(null),
       "specialityId" : new FormControl(null),
@@ -258,13 +271,23 @@ this.addProductForm = new FormGroup({
       "relatedItem": new FormControl(null),
       "isVariant": new FormControl(false),
       "isQuantityDiscount" : new FormControl(false),
-      "description": new FormControl(null),
-      "warranty": new FormControl(null),
-      "features": new FormControl(''),
-       "video" : new FormControl(''),
-       "shortDiscription" : new FormControl(null),
-
+      "description": new FormControl(),
+      "warranty": new FormControl(),
+      "features": new FormControl(),
+       "video" : new FormControl(),
+       "shortDiscription" : new FormControl(),
     });
+    if(this.priceZero != "" ){
+      debugger
+      this.addProductForm.addControl(
+        "MRP",new FormControl( MRP,),
+      );
+    }
+    else{
+      this.addProductForm.addControl(
+        "MRP",new FormControl( MRP,Validators.required),
+      );
+    }
     
         if(this.editMode){
           this.productTitle = "Edit Product"
@@ -371,6 +394,7 @@ this.addProductForm = new FormGroup({
     }
   getdropdown1(event:any){
     this.selectedCountryId = event.value
+   this.PNCDE_Check(this.PNCDE_value)
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
@@ -391,7 +415,6 @@ this.addProductForm = new FormGroup({
     
     this.selectedLanguageId = event.value ;
     this.getCategoryList();
-    this.getRelatedProducts();
   }
 
   getCountry()
@@ -408,7 +431,6 @@ this.addProductForm = new FormGroup({
   getCountryOrigin(){
     this.commonService.getCountryOrigin().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         this.c_origins = this.arrayOfStringsToArrayOfObjects(success.data);
       },
       error => {
@@ -417,12 +439,9 @@ this.addProductForm = new FormGroup({
   }
   getLanguage()
   {
-   
     this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
-        
       },
       error => {
       }
@@ -472,11 +491,14 @@ this.addProductForm = new FormGroup({
       }
     )
   }
+  filterRelatedProducts(e){
+    this.searchRelatedItem = e
+    this.getRelatedProducts()
+  }
   getRelatedProducts(){
-    
-    this.commonService.getRelatedProducts(this.selectedLanguageId).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getRelatedProducts(this.selectedLanguageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
+        debugger
         this.autocompleteItemsAsObjects = success.data;
       },
       error => {
@@ -552,6 +574,7 @@ this.addProductForm = new FormGroup({
 addRow(index) {  
   this.newDynamic ={ variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
   isQuote:false,deliveryTime:"",sellerFee : ""};
+  debugger
   this.dynamicArray.push(this.newDynamic);
   return true;
 }
@@ -561,15 +584,27 @@ deleteRow(index) {
       return false;
   } else {
       this.dynamicArray.splice(index, 1);
+      debugger
       return true;
   }
+}
+Varient_PNCDE(e){
+  debugger
+  const newa = this.dynamicArray
+  const found = this.dynamicArray.find(el => el.PNCDE == e);
+  debugger
+  if (found) {
+    this.toastr.error("PN CDE can not be same", 'Warning');
+  }
+
+
 }
 addsellerRow(index) {  
   this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
   this.dynamicSeller.push(this.newSeller);
+  debugger
   return true;
 }
-
 deletesellerRow(index) {
   if(this.dynamicSeller.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');

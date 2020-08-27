@@ -9,6 +9,7 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class ProductService {
     baseUrl: string;
+  files: any;
 
   constructor(    
     private baseService: BaseService,
@@ -17,18 +18,23 @@ export class ProductService {
   ) {
     this.baseUrl = this.baseService.baseUrl;
   } 
-
   addProduct(data ) {
     console.log("dataForm" , data)
     const dataForm = new FormData();
+    const dataFormFile = new FormData();
+
       if(data.id != null){
         dataForm.append('id', data['id']);
       }
       if(data.file != ""){
+        this.files = []
         for(let i=0 ; i < data.file.length ; i++){
           debugger
-          dataForm.append('file[]', data.file[i])
+          var file = JSON.stringify(data.file[i])
+          dataFormFile.append('file[]',file)
+          this.files.push(dataFormFile)
         }
+        dataForm.append('file[]',this.files)
       }
       debugger
       if(data.catelogue != ""){
@@ -37,6 +43,12 @@ export class ProductService {
       debugger
       if(data.countryOriginId.length != 0){
         dataForm.append('countryOriginId', data['countryOriginId']);
+      }
+      if(data.productsRelated.length != 0){
+        dataForm.append('productsRelated', JSON.stringify(data.productsRelated));
+      }
+      else{
+        dataForm.append('productsRelated', undefined);
       }
       var sellerDetails = JSON.stringify(data.sellerProducts);
       var productVariantsDetails = JSON.stringify(data.productVariants);
@@ -72,7 +84,6 @@ export class ProductService {
       // dataForm.append('packageContent', data['packageContent']);
       dataForm.append('productName', data['productName']); 
       dataForm.append('productVariants', productVariantsDetails);
-      dataForm.append('productsRelated', data['productsRelated']);
       dataForm.append('quantityDiscounts', quantityDiscountsDetails);
       // dataForm.append('ribbenText', data['ribbenText']);
       dataForm.append('sellPrice', data['sellPrice']); 
