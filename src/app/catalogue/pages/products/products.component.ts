@@ -57,6 +57,7 @@ export class ProductsComponent implements OnInit {
   id: number;
   addProductFormDetails: any;
   product: any;
+  variantDetails:any;
   countries:Country[];
   sellerList:any[];
   CategoryListdata:any[];
@@ -84,6 +85,10 @@ export class ProductsComponent implements OnInit {
   display: boolean =false;
   VariantData: any;
   willDownload = false;
+  variants: any;
+  valueList: any;
+  adminStatus: string;
+  list: any;
 
   constructor(config: NgbTabsetConfig, private router:Router, 
     private activateRoute : ActivatedRoute,
@@ -190,9 +195,9 @@ this.getAllproduct(this.page);
         switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId , this.sellerId, this.categoryId
         ))
       ).subscribe((success: any) => {
-   debugger
+        console.log(success);
         this.productList = success.data.results;
-    
+
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
       })
@@ -204,30 +209,70 @@ this.getAllproduct(this.page);
         .pipe(
           takeUntil(this._unsubscribe)
         )
-        .subscribe((success: any) => {
-
-         
+        .subscribe((success: any) => {  
+          console.log(success);
+        
           if(exportAll == "true"){
             this.productListExport = [];
+         
             this.productListExport = success.data.results;
+         console.log(this.productListExport.length);
             this.productListExport.forEach(element=>{
-              this.exportAllData.push({
-                Id:element.id,
-                Admin_Status : element.adminStatus,
-                Category_Name : element.category.categoryName,
-                Country : element.country.countryName,
-                isDelete : element.isDelete,
-                Product_Code : element.PNCDE,
-                Product_Name : element.productName,
-                Seller : element.country.countryName
-              })
+              console.log(element.productVariants);
+                console.log(element);
+              this.variants=element.productVariants;
+           
+              
+          this.list=  this.variants.filter(x => x.productId == element.id);
+          
+              if(element.adminStatus=='1')
+              {
+                this.adminStatus="Active";
+              }
+              else
+
+              {
+                this.adminStatus="Inactive";
+              }
+              console.log(this.list.length);
+              for(var i=0; i<this.list.length; i++)
+              {
+                console.log(this.list[i]);
+                this.valueList=this.list[i];
+                console.log(this.valueList);
+                this.exportAllData.push({
+               
+                  Sno:i,
+                  ProductCode : element.PNCDE,
+                  ProductId:element.id,
+                  Product_Name : element.productName,
+                  price:element.MRP,
+                  Brand_name:element.manufactureDetail.manufacturerName,
+                  Seller : element.sellerDetail.sellerName,
+                  Variant_parent:this.valueList.isSale,
+                  variant_price:this.valueList.MRP,
+                Variant:this.valueList.variant,
+                Stock:this.valueList.quantity,
+                variant_Refrence:this.valueList.PNCDE,
+                  Admin_Status :  this.adminStatus,
+                  
+              
+                })
+              }
             })
+         
+            console.log(this.list.length);
+             
+        
+                
+           
+           
             this.excelService.exportAsExcelFile(this.exportAllData, 'Product List')
             this.exportAll = "false"
             this.exportAllData = [];
           }
           else{
-            debugger
+           
           this.productList = success.data.results;
           this.totalCount = success.data.total;
           this.utilityService.resetPage();
@@ -243,7 +288,7 @@ this.getAllproduct(this.page);
         (success: any) => {
       
           console.log(success);
-          debugger
+    
           this.productList = success.data.results;
             
       
@@ -263,7 +308,7 @@ this.getAllproduct(this.page);
             this.ProductService.deleteProduct(id).pipe(takeUntil(this._unsubscribe)).subscribe(
               (success: any) => {
                 this.getAllproduct(this.page);
-                debugger
+              
                 this.productList = this.productList.filter((item: any) => {
                   return id !== item.countryId
                 }) 
@@ -384,14 +429,19 @@ this.getAllproduct(this.page);
     this.productList.forEach(element=>{
     console.log( this.productList);
       this.exportData.push({
-        Id:element.id,
+        Sno:element.id,
+        ProductCode : element.PNCDE,
+        ProductId:element.id,
+        Product_Name : element.productName,
+        price:element.MRP,
+        Seller : element.sellerDetail.sellerName,
         Admin_Status : element.adminStatus,
         Category_Name : element.category.categoryName,
         Country : element.country.countryName,
         isDelete : element.isDelete,
-        Product_Code : element.PNCDE,
-        Product_Name : element.productName,
-        Seller : element.country.countryName
+       
+       
+    
       })
     })
         this.excelService.exportAsExcelFile(this.exportData, 'product List')

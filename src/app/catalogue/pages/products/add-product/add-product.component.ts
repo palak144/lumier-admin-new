@@ -167,7 +167,7 @@ onSelectQuote(event){
     }
   }
   onSubmitAddProductForm(){
-      
+      console.log("mayuri");
     console.log(this.dynamicSeller);
 
       event.preventDefault();
@@ -181,7 +181,7 @@ onSelectQuote(event){
       this.productNameData = this.addProductForm.get('productName').value,
       this.languageIdData = this.addProductForm.get('languageId').value    
       let data=this.addProductForm.value;
-
+console.log(data);
       data.productsRelated = this.dataFormat(this.addProductForm.get('relatedItem').value)
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
@@ -191,11 +191,12 @@ onSelectQuote(event){
       if (this.id ) {
        data.id = this.id;
       }   
-      
+      console.log(data);
       if (this.editMode) {
         
         this.productService.addProduct(data).subscribe(
           data => {
+            console.log(data);
           this.toastr.success("Product Edited Successfully")
             this.router.navigate(['/catalogues/products'],{relativeTo : this.activatedRoute})
           },
