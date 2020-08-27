@@ -62,7 +62,6 @@ export class AddProductComponent implements OnInit {
   selected_supplyType: any;
   selected_brand:any;
   selected_languageId:any;
-  selected_currencyId:any;
   selected_country: any;
   selected_cOrigin: any;
   selected_category :any;
@@ -72,10 +71,10 @@ export class AddProductComponent implements OnInit {
   sellerLists: any[];
   dropdowns: any[];
   currencies: any[];
-  currencyValue: any;
   specialities : any = [];
   editing = {};
   isVariant: boolean = false;
+  isQuantityDiscount : boolean = false;
   countryIdData: any = "";
   productNameData: any = "";
   languageIdData: any = "";
@@ -116,12 +115,23 @@ export class AddProductComponent implements OnInit {
 
     this.initForm()
     this.selected_country = [];
-    this.selected_currencyId = [];
     this.selected_languageId = [];
     this.selected_cOrigin = [];
     this.selected_supplyType = [];
     this.selected_brand = [];
     this.selected_category =[];
+  }
+  PNCDE_Value(e){
+ console.log(e.target.value)
+ debugger
+ this.productService.onCheckPncode(this.selectedCountryId,e.target.value).subscribe(
+  (success:any)=>
+  {
+ debugger
+} ,
+(error)=>{
+  debugger
+})
   }
   get signUpControls() {
     
@@ -131,6 +141,12 @@ export class AddProductComponent implements OnInit {
     
    ( event.target.checked ) ?  this.isVariant = true :  this.isVariant = false
    
+}
+
+onSelectDiscount(event) {
+    
+  ( event.target.checked ) ?  this.isQuantityDiscount = true :  this.isQuantityDiscount = false
+  
 }
 onSelectQuote(event){
   if(event.target.checked){
@@ -148,7 +164,7 @@ onSelectQuote(event){
     this.file = fileInput.target.files[0];
     
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
-        this.file = this.file.name
+        // this.file = this.file.name
       
     
   }
@@ -187,13 +203,17 @@ console.log(data);
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
+<<<<<<< HEAD
       data.currency = this.select(this.addProductForm.get('currency').value , this.currencyValue)
       if (this.id ) {
        data.id = this.id;
       }   
       console.log(data);
+=======
+      data.catelogue = this.file
+>>>>>>> 0639411e6ff02b665aae86af1e4d989484d6ce7b
       if (this.editMode) {
-        
+        debugger
         this.productService.addProduct(data).subscribe(
           data => {
             console.log(data);
@@ -224,18 +244,16 @@ console.log(data);
      let catelogue = ""
 
 this.addProductForm = new FormGroup({
-      "countryId":new FormControl(null,[Validators.required]),
-      "productName": new FormControl( productName, Validators.required),
+      "countryId":new FormControl(null,[Validators.required]), 
+      "productName": new FormControl( productName, Validators.required), 
       "supplyTypeId": new FormControl( null, Validators.required),
       "manufactureId": new FormControl( null, Validators.required),
-      "languageId":new FormControl(null, Validators.required),
+      "languageId":new FormControl(null, Validators.required), 
       "PNCDE": new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(false),
-      "isSale" : new FormControl(null),
-      "shortDiscription" : new FormControl(null),
-      "packageContent" : new FormControl(null),
-      "MRP" : new FormControl(null, Validators.required),
-      "sellPrice" : new FormControl(null, Validators.required),
+      "isSale" : new FormControl(false),
+      "MRP" : new FormControl(null),
+      "sellPrice" : new FormControl(null),
       "metaTitle" : new FormControl(null),
       "isQuote" : new FormControl(false),
       "UOM" : new FormControl(null),
@@ -243,16 +261,17 @@ this.addProductForm = new FormGroup({
       "metaDescription" : new FormControl(null),
       "metaKeyword" : new FormControl(null),
       "categoryId" : new FormControl(null, Validators.required),
-      "ribbenText" : new FormControl(null),
+      // "ribbenText" : new FormControl(null),
       "specialityId" : new FormControl(null),
-      "currency":new FormControl(null, Validators.required),
-      "countryOriginId" : new FormControl(null, Validators.required),
+      "countryOriginId" : new FormControl(null),
       "relatedItem": new FormControl(null),
       "isVariant": new FormControl(false),
+      "isQuantityDiscount" : new FormControl(false),
       "description": new FormControl(null),
       "warranty": new FormControl(null),
       "features": new FormControl(''),
        "video" : new FormControl(''),
+       "shortDiscription" : new FormControl(null),
 
     });
     
@@ -265,7 +284,8 @@ this.addProductForm = new FormGroup({
             "catelogue",new FormControl( catelogue,),
           );
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
-            (success:any)=>{          
+            (success:any)=>{     
+              debugger     
               this.product=success.data
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
@@ -304,14 +324,6 @@ this.addProductForm = new FormGroup({
                 error => {
                 }
               )
-              this.commonService.getCountryCurrency(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
-                (success:any) => {
-                  this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-                  
-                },
-                error => {
-                }
-              )
               
               this.addProductForm.patchValue({
                 "MRP" : this.product.MRP,
@@ -346,7 +358,6 @@ this.addProductForm = new FormGroup({
             this.selected_country= this.product.countryId;
             this.selected_supplyType = this.product.supplyTypeId;
             this.selected_category = this.product.categoryId;
-            this.selected_currencyId = this.product.currency;
             this.selected_cOrigin = this.product.countryOriginId;
             this.selected_languageId = this.product.languageId;
             this.selected_brand = this.product.manufactureId;
@@ -362,7 +373,7 @@ this.addProductForm = new FormGroup({
               "file", new FormControl( file,Validators.required),
             );
             this.addProductForm.addControl(
-              "catelogue", new FormControl( file,Validators.required),
+              "catelogue", new FormControl( catelogue),
             );
           }
     
@@ -373,7 +384,6 @@ this.addProductForm = new FormGroup({
     this.getManufacturerBrands();
     this.getSellerList();
     this.getLanguage();
-    this.getCurrency();
   }
   select(criteriaId: any , criteriaName:any) {
     
@@ -384,16 +394,6 @@ this.addProductForm = new FormGroup({
     }]
     
     return this.selectedCriteria;
-  }
-  getCurrency()
-  {
-    this.commonService.getCountryCurrency(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
-      (success:any) => {
-        this.currencies = this.arrayOfStringsToArrayOfObjects(success.data);
-      },
-      error => {
-      }
-    )
   }
   getlanguage(event:any)
   {
@@ -424,10 +424,6 @@ this.addProductForm = new FormGroup({
       }
     )
   }
-  getdropdown2(event) 
-{
-  this.currencyValue = this.currencies.find( item => item.value === event.value).label;
-}
   getLanguage()
   {
    

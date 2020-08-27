@@ -123,6 +123,16 @@ const routes: Routes = [{
           component: AddParentCategoryComponent,
           
         },
+        {
+          path: ':id',
+          component: AddProductComponent,
+          
+        },
+        {
+          path: 'edit-product/:id',
+          component: AddProductComponent,
+          
+        },
       
         
         
