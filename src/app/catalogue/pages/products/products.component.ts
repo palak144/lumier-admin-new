@@ -221,7 +221,7 @@ this.getAllproduct(this.page);
               console.log(element.productVariants);
                 console.log(element);
               this.variants=element.productVariants;
-           
+           console.log(this.variants.length);
               
           this.list=  this.variants.filter(x => x.productId == element.id);
           
@@ -242,7 +242,7 @@ this.getAllproduct(this.page);
                 console.log(this.valueList);
                 this.exportAllData.push({
                
-                  Sno:i,
+                  // Sno:i,
                   ProductCode : element.PNCDE,
                   ProductId:element.id,
                   Product_Name : element.productName,
@@ -262,7 +262,7 @@ this.getAllproduct(this.page);
             })
          
             console.log(this.list.length);
-             
+            console.log(this.variants.length);
         
                 
            

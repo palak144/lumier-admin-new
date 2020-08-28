@@ -203,15 +203,12 @@ console.log(data);
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
-<<<<<<< HEAD
-      data.currency = this.select(this.addProductForm.get('currency').value , this.currencyValue)
+      // data.currency = this.select(this.addProductForm.get('currency').value , this.currencyValue)
       if (this.id ) {
        data.id = this.id;
       }   
       console.log(data);
-=======
       data.catelogue = this.file
->>>>>>> 0639411e6ff02b665aae86af1e4d989484d6ce7b
       if (this.editMode) {
         debugger
         this.productService.addProduct(data).subscribe(
