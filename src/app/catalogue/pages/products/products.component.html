@@ -5,7 +5,11 @@
 <div class="row paddingSearch">
   <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
       <div class="position-relative has-icon-right">
-          <input [ngModelOptions]="{standalone: true}"  type="text" class="form-control round searchBtn" pInputText placeholder="Search Name/Code" [(ngModel)]="searchBar"  (input)="filterGlobal($event.target.value)"/>
+          <input [ngModelOptions]="{standalone: true}"  
+          type="text" class="form-control round searchBtn"
+           pInputText placeholder="Search Name/Code" 
+           [(ngModel)]="searchBar" 
+            (input)="filterGlobal($event.target.value)"/>
           <div class="form-control-position">
               <i class="ft-search"></i>
           </div>
@@ -162,7 +166,6 @@
                                             <tr>
                                                 <th>S No.</th>
                                                 <th>Variant</th>
-                                              
                                                 <th>Quantity </th>
                                                 <th>Sale Price </th>
                                                 <th >price</th>
@@ -190,7 +193,7 @@
                                         </ng-template>
                                         <ng-template pTemplate="emptymessage">
                                             <tr>
-                                                <td colspan="9">There are no order for this product yet.</td>
+                                                <td colspan="7">There are no order for this product yet.</td>
                                             </tr>
                                         </ng-template>
                                     </p-table>

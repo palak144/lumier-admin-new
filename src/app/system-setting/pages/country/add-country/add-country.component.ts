@@ -256,6 +256,7 @@ getdropdown(event)
 }
 getdropdown2(event) 
 {
+  debugger
   this.currencyValue = this.currencies.find( item => item.value === event.value).label;
 }
 }

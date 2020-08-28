@@ -102,9 +102,11 @@
                                 <div class="form-group">
                                     <label>SKU/ PN CDE</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="PNCDE" class="form-control border-primary" 
-                                    (blur)="PNCDE_Value($event)" placeholder="PN CDE" >
+                                    (blur)="PNCDE_Check($event)" placeholder="PN CDE" >
+                                    <span id="Validations">SKU/ PN CDE must be unique</span>
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
-                                      <div *ngIf="signUpControls.PNCDE.errors.required">PN CDE is required</div>
+                                      <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
+
                                   </div>
                                   </div>
                             </div>
@@ -202,7 +204,8 @@
                                 <div class="form-group">
                                     <label></label>
                                     <div class="issale-check">
-                                        <input class="form-check-input" (change)='onSelectQuote($event)' formControlName="isQuote" type="checkbox" value="" 
+                                        <input class="form-check-input" (change)='onSelectQuote($event)' 
+                                        formControlName="isQuote" type="checkbox" value="" 
                                         id="isQuote">
                                         <label class="isSale ml-3" for="isQuote">
                                             Quote only?
@@ -218,9 +221,11 @@
                                     <input type="number" min="0" formControlName="MRP" class="form-control border-primary" 
                                     placeholder="Price" value={{priceZero}} [attr.disabled]="disable ? '' : null"
                                     numbersOnly>
-                                    <!-- <div *ngIf= "priceZero != ''" class="invalid-feedback">
-                                      <div *ngIf="signUpControls.MRP.errors.required">Price is required</div>
-                                  </div> -->
+                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.MRP.errors"  
+                                    class="invalid-feedback">
+                                      <div *ngIf="signUpControls.MRP.errors.required">
+                                          Price is required</div>
+                                  </div>
                                   </div>
                             </div>
                             <div class="col-md-6">
@@ -269,6 +274,9 @@
                                 <input type="file" ng2FileSelect [uploader]="uploader" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
                                 <span class="custom-file-control"></span>
                               </label>
+                              <div *ngIf="isSubmittedaddProductForm && signUpControls.file.errors" class="invalid-feedback mt-0">
+                                <div *ngIf="signUpControls.file.errors.required">Image is required</div>
+                            </div> 
                             </div>
                             <div class="col-md-9">
                               <h4>Upload queue</h4>
@@ -277,25 +285,21 @@
                                 <thead>
                                   <tr>
                                     <th width="50%">Name</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Actions</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr *ngFor="let item of uploader.queue">
-                                    <td><strong>{{ item?.file?.name }}</strong></td>
-                                    <td class="text-center">
-                                      <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
+                                    <td class="text-left"><strong>{{ item?.file?.name }}</strong></td>
+                                    <!-- <td class="text-left">
                                       <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
                                       <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
-                                    </td>
-                                    <td nowrap>
-                                      <button type="button" class="btn btn-raised btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                                        <span class="fa fa-upload"></span> Upload
-                                      </button>
-                                      <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                    </td> -->
+                                    <td nowrap class="text-left">
+                                      <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
                                         <span class="fa fa-ban"></span> Cancel
-                                      </button>
+                                      </button> -->
                                       <button type="button" class="btn btn-raised btn-danger btn-sm" (click)="item.remove()">
                                         <span class="fa fa-trash"></span> Remove
                                       </button>
@@ -321,7 +325,7 @@
                                 </div>
                               </div>
                         </div>
-                        <h4 class="form-section"><i class="ft-user"></i>Seller Details</h4> 
+                        <h4 class="form-section"><i class="ft-user"></i>Seller Details *</h4> 
                         <div class="product-page-listing">
                             <div class="customer-wrapper">
                                 <div class="heading-wrapper">
@@ -353,12 +357,10 @@
                                           <td>
                                             <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
                                           </td>
-                                         
                                         <!-- <td>
                                             <i (click)="deletesellerRow(i)" class="fa fa-trash fa-2x"></i>
                                             <i (click)="addsellerRow(i)" class="fa fa-plus fa-2x"></i>
                                           </td> -->
-                                       
                                     </tr>
                                 </tbody>
                             </table>
@@ -456,7 +458,7 @@
                                       <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  (input)="Varient_PNCDE($event.target.value)" [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                     <td>
                                         <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
@@ -503,14 +505,17 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label>Related Products</label>
-                                     <tag-input formControlName="relatedItem" lass="form-control border-primary" [onlyFromAutocomplete]="true">
+                                     <tag-input formControlName="relatedItem" lass="form-control border-primary" [onlyFromAutocomplete]="true"
+                                    
+                                     (input)="filterRelatedProducts($event.target.value)">
                                          <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
                                          [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
                                            <ng-template let-item="item" let-index="index">
                                             {{ item.itemName }}
                                            </ng-template>
                                          </tag-input-dropdown>
-                                       </tag-input>  </div>
+                                       </tag-input> 
+                                     </div>
                              </div>
                           </div>
                           <h4 class="form-section"><i class="ft-user"></i>SEO</h4> 

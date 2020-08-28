@@ -9,9 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductService {
-
   baseUrl: string;
-
   constructor(
     private baseService: BaseService,
     private errorHandler: ErrorHandlerService,
@@ -21,10 +19,10 @@ export class ProductService {
    }
 getAllproductSearch(page?, searchKey?, exportAll?, countryId?, sellerId?, categoryId?) 
   {
-    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId,sellerId: sellerId, categoryId: categoryId }
+    const params = { page: page, searchKey: searchKey , exportAll: exportAll ,countryId: countryId
+      ,sellerId: sellerId, categoryId: categoryId }
     return this.http.get(this.baseUrl + 'admin/product',
       { params: params }).pipe(
-        
         catchError(this.errorHandler.handleError)
       );
 }

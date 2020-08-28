@@ -58,12 +58,12 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getRelatedProducts(languageId)
+  getRelatedProducts(languageId?, searchKey?)
   {
-    const params = { languageId: languageId }
+    const params = { languageId: languageId , searchKey:searchKey}
+    debugger
     return this.http.get(this.baseUrl + 'admin/productList' ,{ params: params })
     .pipe(
-      retry(),
       catchError(this.errorHandler.handleError)
     );
   }

@@ -1,7 +1,7 @@
 export class DynamicGrid{   
     id:string;
     Varient:string;
-    pcode:string;
+    PNCDE:string;
     quantity:string;
     is_sale:string;
     sale_price:string;
