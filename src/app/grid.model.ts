@@ -7,5 +7,5 @@ export class DynamicGrid{
     sale_price:string;
     price:string;
     wallet:string;
-  
+    seller_Id : number;
 }

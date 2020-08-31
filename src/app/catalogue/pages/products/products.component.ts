@@ -163,6 +163,7 @@ for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
 }
 debugger
   const dataString = JSON.stringify(jsonData.Sheet1);
+  debugger
   console.log(dataString)
 }
 reader.readAsBinaryString(file);

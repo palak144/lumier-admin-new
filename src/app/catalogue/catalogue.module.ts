@@ -22,6 +22,7 @@ import { TableModule } from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import {ButtonModule} from 'primeng/button';
 import { AddRowDirective } from './pages/products/add-product/add-row.directive';
+import { RequiredIfDirective } from './pages/products/add-product/required-if.directive';
 import { TagInputModule } from 'ngx-chips';
 
 @NgModule({
@@ -38,6 +39,6 @@ import { TagInputModule } from 'ngx-chips';
     ButtonModule,
     FileUploadModule
   ],
-  declarations: [CatalogueLayoutComponent, AddRowDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
+  declarations: [CatalogueLayoutComponent,RequiredIfDirective, AddRowDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
 })
 export class CatalogueModule {  }
