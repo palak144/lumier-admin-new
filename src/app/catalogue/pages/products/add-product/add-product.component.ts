@@ -20,7 +20,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 export class AddProductComponent implements OnInit {
   dynamicArray: Array<DynamicGrid> = [];
   newDynamic: any = {};
-  dynamicSeller: any = {};
+  dynamicSeller: Array<DynamicGrid> = [];
   newSeller: any = {};
   dynamicQuantity: Array<DynamicGrid> = [];
   newQuantity: any = {};
@@ -58,6 +58,7 @@ export class AddProductComponent implements OnInit {
   files: Array<any> = [];
   companyFlagSize: boolean = false;
   companyLogo: any;
+  selected_catelogue : string = ""
   selected_supplyType: any;
   selected_brand:any;
   selected_sellerId:any;
@@ -84,15 +85,16 @@ export class AddProductComponent implements OnInit {
   variantPriceZero: string = ""
   public disable: boolean = false;
   public disableSale: boolean = true;
-  PNCDE_value: any = "";
   searchRelatedItem: any;
   public toggleButton: boolean = false;
   AllItemsRemoved: boolean = true;
   sellerDetail : boolean = true;
   PNSKU_id : string ;
+  PNSKU_CDE : string
   load_copiedData: any;
   isValid: boolean = false;
   image_Links: any;
+  validatePN: boolean = true;
 
   constructor(
     private router: Router,
@@ -108,7 +110,7 @@ export class AddProductComponent implements OnInit {
     isQuote:false,deliveryTime:"",sellerFee : ""};
     this.dynamicArray.push(this.newDynamic);
     this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
-    this.dynamicSeller = this.newSeller
+    this.dynamicSeller.push(this.newSeller)
     this.newQuantity = {minQuantity:"",maxQuantity:"",price: "", walletPrice: ""};
     this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
@@ -135,17 +137,19 @@ export class AddProductComponent implements OnInit {
 
   checkSellerDetailValidation(){
 
-    return this.checkIfValid(this.dynamicSeller.sellerFee ) || this.checkIfValid(this.dynamicSeller.sellerId ) || this.checkIfValid(this.dynamicSeller.quantity ) || this.checkIfValid(this.dynamicSeller.deliveryTime )
-    // sellerId: NaN, sellerFee: "", quantity: "", deliveryTime: ""
+    return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
   }
   checkVariantValidation(){
-    debugger
+    
     return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity )
 
   }
+  checkQuantityValidation(){
+    return this.checkIfValid(this.newQuantity.minQuantity ) || this.checkIfValid(this.newQuantity.maxQuantity ) ||
+     this.checkIfValid(this.newQuantity.price ) || this.checkIfValid(this.newQuantity.walletPrice )
+  }
   checkIfValid(dataToBeValidated){
-    if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != '' &&
-     dataToBeValidated != '' ){
+    if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != ''){
       return false
     }
     return true
@@ -161,30 +165,39 @@ export class AddProductComponent implements OnInit {
     return false
   }
   
-  PNCDE_Check(e){
+  PNCDE_Check(){
     debugger
-    if(e != ""){
- this.PNCDE_value = e
- if(this.PNCDE_value != "" && this.selectedCountryId != undefined ){
- this.productService.onCheckPncode(this.selectedCountryId, this.PNCDE_value).subscribe(
+    if(this.PNSKU_CDE != "" && this.PNSKU_CDE != undefined){
+      debugger
+ if(this.PNSKU_CDE != "" && this.selectedCountryId != undefined ){
+ this.productService.onCheckPncode(this.selectedCountryId, this.PNSKU_CDE).subscribe(
   (success:any)=>
   {
-    document.getElementById('Validations').innerHTML = 'SKU/ PN CDE must be unique'
+    this.validatePN = false;
+    document.getElementById('Validations').innerHTML = 'Entered SKU/ PN CDE is valid'
     document.getElementById('Validations').style.color = 'black';
- debugger
+ 
 } ,
 (error)=>{
+  this.validatePN = true;
   this.addProductForm.controls['PNCDE'].setValue('');
   document.getElementById('Validations').innerHTML = 'Entered SKU/ PN CDE already exists'
-  document.getElementById('Validations').style.color = 'red';
-  debugger
+  document.getElementById('Validations').style.color = '#FF586B';
+  
 })
  }
+ else{
+  this.addProductForm.controls['PNCDE'].setValue('');
+  document.getElementById('Validations').innerHTML = 'Select Country First'
+  document.getElementById('Validations').style.color = '#FF586B'; }
+}
+else{
+  this.validatePN = true;
 }
   }
   load_data(){
-    debugger
-    if(this.PNSKU_id != undefined){
+    
+    if(this.PNSKU_id != undefined && this.PNSKU_id != "") {
       this.productService.copyProductInfo(this.PNSKU_id).subscribe(
         (success:any)=>
         {
@@ -205,13 +218,12 @@ export class AddProductComponent implements OnInit {
           )
           this.commonService.getSellerList(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any) => {
-              debugger
+              
               this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
               this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
               debugger
-              if(this.dropdowns != []){
-                this.sellerDetail = false
-              }
+              (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
+
             },
             error => {
             }
@@ -262,7 +274,7 @@ export class AddProductComponent implements OnInit {
 
       } ,
       (error)=>{
-        debugger
+        
         this.toastr.error(error.error.message)
       })
     }
@@ -309,7 +321,7 @@ onSelectSale(event){
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
-        // this.file = this.file.name
+        //this.catelogue = this.file.name
   }
   fileChangeEvent(e : any){
     (this.files.length != 0) ? this.files = [] : ''
@@ -326,6 +338,9 @@ onSelectSale(event){
   }
   onSubmitAddProductForm(){
       event.preventDefault();
+      debugger
+      (this.editMode)? '' : this.PNCDE_Check();
+      debugger
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
         let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
@@ -337,7 +352,12 @@ onSelectSale(event){
       this.languageIdData = this.addProductForm.get('languageId').value    
       let data=this.addProductForm.value;
        debugger
-      data.productsRelated = this.dataFormat(this.addProductForm.get('relatedItem').value )
+       if (this.editMode) {
+        data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
+       }
+       else{
+        data.productsRelated = this.productsRelated(this.addProductForm.get('relatedItem').value )
+       }
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
@@ -347,7 +367,7 @@ onSelectSale(event){
       }
       data.catelogue = this.file
       if (this.editMode) {
-        debugger
+        
         this.productService.addProduct(data).subscribe(
           data => {
           this.toastr.success("Product Edited Successfully")
@@ -417,7 +437,7 @@ this.addProductForm = new FormGroup({
           this.productTitle = "Edit Product"
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{     
-              debugger     
+                   
               this.product=success.data
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
@@ -435,25 +455,27 @@ this.addProductForm = new FormGroup({
               )
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
-                  debugger
+                  
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
                   this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
                   debugger
-                  if(this.dropdowns != []){
-                    this.sellerDetail = false
-                  }
+                  (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
+
                 },
                 error => {
                 }
               )
-              this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
-                (success:any) => {
-                  debugger
-                  this.autocompleteItemsAsObjects = success.data;
-                },
-                error => {
-                }
-              )
+              debugger
+              // this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
+              //   (success:any) => {
+              //     debugger
+              //     this.autocompleteItemsAsObjects = success.data;
+              //     console.log("api data" ,this.autocompleteItemsAsObjects)
+
+              //   },
+              //   error => {
+              //   }
+              // )
               this.commonService.getCountryLanguage(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -491,8 +513,10 @@ this.addProductForm = new FormGroup({
                 "video" : this.product.video,
                 "walletPrice" : this.product.walletPrice,
                 "warranty" : this.product.warranty,
-                "isQuantityDiscount":this.product.isQuantityDiscount
+                "isQuantityDiscount":this.product.isQuantityDiscount,
+                //  "relatedItem" : this.product.productsRelated
              })
+            this.selected_catelogue = this.product.catelogue
             this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
             this.dynamicSeller= this.product.sellerId;
@@ -505,11 +529,15 @@ this.addProductForm = new FormGroup({
             this.dynamicArray = this.product.productVariants
             this.dynamicSeller = this.product.sellerProducts
             this.dynamicQuantity = this.product.quantityDiscounts
+            this.autocompleteItemsAsObjects = this.product.productsRelated
+            console.log("edit data" ,this.autocompleteItemsAsObjects)
             debugger
            if(this.product.isPackage == true){
                 this.isVariant = true;
            }
-         
+           if(this.product.isSale == true){
+            this.disableSale = false
+          }
            if(this.product.isQuantityDiscount == true){
             this.isQuantityDiscount = true;
           }
@@ -523,7 +551,7 @@ this.addProductForm = new FormGroup({
     
   getdropdown1(event:any){
     this.selectedCountryId = event.value
-   this.PNCDE_Check(this.PNCDE_value)
+   this.PNCDE_Check()
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
@@ -606,9 +634,7 @@ this.addProductForm = new FormGroup({
         this.sellerLists = success.data
         this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
         debugger
-        if(this.dropdowns != []){
-          this.sellerDetail = false
-        }
+        (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
       },
       error => {
       }
@@ -624,14 +650,20 @@ this.addProductForm = new FormGroup({
     )
   }
   filterRelatedProducts(e){
-    this.searchRelatedItem = e
+    debugger
+    this.searchRelatedItem = e;
+    if(this.editMode){
+      this.selectedLanguageId = this.product.languageId
+    }
     this.getRelatedProducts()
   }
   getRelatedProducts(){
     this.commonService.getRelatedProducts(this.selectedLanguageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.autocompleteItemsAsObjects = success.data;
+        console.log("add data" ,this.autocompleteItemsAsObjects)
+
       },
       error => {
       }
@@ -665,13 +697,25 @@ this.addProductForm = new FormGroup({
   }
     return newArray;
   }
-  dataFormat(arr: any[]) {
+  productsRelated(arr: any[]) {
     const newArray = [];
     if (arr != null) {
     arr.forEach(element => {
       newArray.push({
         relatedId: element.id,
         itemName : element.itemname
+      });
+    });
+  }
+    return newArray;
+  }
+  productsRelatedEdit(arr: any[]) {
+    const newArray = [];
+    if (arr != null) {
+    arr.forEach(element => {
+      newArray.push({
+        relatedId: element.id,
+        itemName : element.itemName
       });
     });
   }
@@ -728,11 +772,11 @@ deleteRow(index) {
   }
 }
 Varient_PNCDE(e){
-  debugger
+  
   for(let i= 1 ; i<=(this.dynamicArray.length) ; i++){
     var destination = this.dynamicArray;
     const found = destination.find(el => el.PNCDE == e);
-    debugger
+    
     if (found) {
       this.toastr.error("PN CDE can not be same", 'warning');
     }

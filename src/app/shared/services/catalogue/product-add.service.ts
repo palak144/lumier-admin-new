@@ -65,7 +65,7 @@ export class ProductService {
       dataForm.append('categoryId', data['categoryId']); 
       // dataForm.append('currency', data['currency']); 
       dataForm.append('code', data['PNCDE']); 
-       dataForm.append('desciption', data['description']);
+       dataForm.append('description', data['description']);
       dataForm.append('features', data['features']); 
       dataForm.append('isQuote', data['isQuote']); 
       dataForm.append('isSale', data['isSale']); 
