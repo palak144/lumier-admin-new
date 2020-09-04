@@ -160,9 +160,11 @@ for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
       jsonData.Sheet1[i].elemID = counter
         tempArr.push(jsonData.Sheet1[i])
     }
+    jsonData.Sheet1[i].rowNumber = i+1
 }
 debugger
   const dataString = JSON.stringify(jsonData.Sheet1);
+  debugger
   console.log(dataString)
 }
 reader.readAsBinaryString(file);

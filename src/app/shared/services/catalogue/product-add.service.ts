@@ -21,7 +21,6 @@ export class ProductService {
   addProduct(data ) {
     console.log("dataForm" , data)
     const dataForm = new FormData();
-    const dataFormFile = new FormData();
 
       if(data.id != null){
         dataForm.append('id', data['id']);
@@ -29,14 +28,11 @@ export class ProductService {
       if(data.file != ""){
         this.files = []
         for(let i=0 ; i < data.file.length ; i++){
-          debugger
-          var file = JSON.stringify(data.file[i])
-          dataFormFile.append('file[]',file)
-          this.files.push(dataFormFile)
+          dataForm.append('file[]',data.file[i])
         }
-        dataForm.append('file[]',this.files)
       }
       debugger
+      console.log(dataForm.getAll('name'))
       if(data.catelogue != ""){
         dataForm.append('catelogue', data['catelogue']);
       }
@@ -108,6 +104,15 @@ debugger
       { params: params }).pipe(
         catchError(this.errorHandler.handleError)
       );
+}
+copyProductInfo(PNCDE?) 
+{
+  debugger
+  const params = {  PNCDE: PNCDE }
+  return this.http.get(this.baseUrl + 'admin/copyProduct',
+    { params: params }).pipe(
+      catchError(this.errorHandler.handleError)
+    );
 }
 getProductDetails(id) {
     return this.http.get(this.baseUrl + 'admin/product/' + id)

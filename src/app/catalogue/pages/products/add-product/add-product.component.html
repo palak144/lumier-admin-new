@@ -9,43 +9,27 @@
           {{productTitle}}
         </li>
     </ul>
-    <div class="content-header text-left">Add New Product</div>
+    <div class="content-header text-left">Add New Product </div>
+   
   </div>
   <div class="copy-data">
       <form class="form">
       <div class="row">
-          <div class="col-md-3">
-              <div class="form-group">
-                  <label>Enter Product Id</label><span class="asterick">*</span> 
-                  <input type="text" class="form-control border-primary" placeholder="Enter Product Id"> 
-              </div>
+        <div class="col-lg-6">
+        <label>Enter Product Id</label><span class="asterick">*</span> 
+        <div class="input-group">
+          <input type="text" class="form-control border-primary" placeholder="Enter Product Id"
+          [(ngModel)]="PNSKU_id" [ngModelOptions]="{standalone: true}">         
+            <div class="input-group-append">
+            <button type="button"  (click)="load_data()" class="btn btn-raised btn-primary btn-darken-3">
+            Copy Product Data
+          </button>        
           </div>
-          <div class="col-md-3">
-              <button type="button" class="btn btn-raised btn-primary btn-darken-3 white copy-product">
-                  <span class="d-lg-block">Copy product data</span>
-              </button>
-          </div>
+        </div>
+      </div>
       </div>
   </form>
     </div>
-    <!-- <div class="row">
-      <div class="col-xl-6 col-lg-6 col-md-6 imp-exp-buttons">
-          <div class="text-left">
-              <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-                  <span class="d-lg-block " >English</span>
-              </button>
-          </div>
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-6 imp-exp-buttons">
-          <div class="text-right">
-              <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
-                  
-                  <a class="text" ><span class="d-lg-block " >Add Languages</span></a>
-                  
-              </button>
-          </div>
-      </div>
-    </div> -->
   
   
   <div class="row ">
@@ -53,8 +37,17 @@
           <div class="card-content">
               <div class="">
                   <form class="form" [formGroup]="addProductForm" (ngSubmit)="onSubmitAddProductForm()">
-                      <div class="form-body">
-                          <h4 class="form-section"><i class="ft-user"></i> Product Region</h4>
+                  
+                    <div *ngIf="!editMode" style="float: right;">
+                      <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
+                      <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty || validatePN)">Submit</button>
+                  </div>
+                  <div *ngIf="editMode" style="float: right;">
+                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
+                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty )">Submit</button>
+                </div>
+                    <div class="form-body">
+                          <h4 class="form-section"><i class="ft-user"></i> Product Region </h4>
                           <div class="row">
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -99,16 +92,28 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                              <label>SKU/ PN CDE</label><span class="asterick">*</span> 
+                              <div class="input-group mb-0">
+                                <input type="text" [(ngModel)]="PNSKU_CDE" class="form-control border-primary" formControlName="PNCDE" placeholder="SKU/ PN CDE">
+                                <div class="input-group-append">
+                                  <button class="btn btn-raised btn-primary btn-darken-3" (click)="PNCDE_Check()" type="button">Validate PN CDE</button>
+                                </div>
+                    
+                              </div>
+                              <span id="Validations">SKU/ PN CDE must be unique</span>
+                              <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
+                                <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
+
+                            </div>
+                                <!-- <div class="form-group">
                                     <label>SKU/ PN CDE</label><span class="asterick">*</span> 
                                     <input type="text" formControlName="PNCDE" class="form-control border-primary" 
-                                    (blur)="PNCDE_Check($event)" placeholder="PN CDE" >
+                                    (blur)="PNCDE_Check($event.target.value)" placeholder="PN CDE" >
                                     <span id="Validations">SKU/ PN CDE must be unique</span>
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
                                       <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
-
-                                  </div>
-                                  </div>
+                                      </div>
+                                  </div> -->
                             </div>
                            
                           </div>
@@ -158,7 +163,7 @@
                                       <label>speciality Type</label>
                                       <div class="assign-group-dropdown">
                                       <p-dropdown [options]="specialities" formControlName="specialityId"
-                                       filter="true" placeholder="Select speciality" 
+                                       filter="true" placeholder="Select speciality" [(ngModel)]="selected_speciality"
                                        styleClass="form-control" 
                                        [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityId.errors }">
                                       </p-dropdown>
@@ -177,7 +182,7 @@
                                          [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.manufactureId.errors }">
                                       </p-dropdown>
                                       <div *ngIf="isSubmittedaddProductForm && signUpControls.manufactureId.errors" class="invalid-feedback">
-                                          <div *ngIf="signUpControls.manufactureId.errors.required">Manufacturer/ Brands is required</div>
+                                          <div *ngIf="signUpControls.manufactureId.errors.required">Manufacturer/ Brand is required</div>
                                       </div>
                                   </div>
                               </div>
@@ -220,10 +225,10 @@
                                     <label>Price</label><span class="asterick">*</span>
                                     <input type="number" min="0" formControlName="MRP" class="form-control border-primary" 
                                     placeholder="Price" value={{priceZero}} [attr.disabled]="disable ? '' : null"
-                                    numbersOnly>
+                                    numbersOnly [requiredIf]="!disable">
                                     <div *ngIf="isSubmittedaddProductForm && signUpControls.MRP.errors"  
                                     class="invalid-feedback">
-                                      <div *ngIf="signUpControls.MRP.errors.required">
+                                      <div *ngIf="signUpControls.MRP.errors.requiredIf.condition">
                                           Price is required</div>
                                   </div>
                                   </div>
@@ -235,10 +240,12 @@
                                 <div class="input-group">
                                   <div class="input-group-prepend">
                                     <span class="input-group-text" id="checkbox-addon1">
-                                      <input type="checkbox" formControlName="isSale" aria-label="Checkbox for following text input">
+                                      <input type="checkbox" formControlName="isSale" (change)='onSelectSale($event)' 
+                                       aria-label="Checkbox for following text input">
                                     </span>
                                   </div>
-                                  <input type="text" class="form-control border-primary" formControlName="sellPrice" placeholder="Compare at price"
+                                  <input type="text" class="form-control border-primary" [attr.disabled]="disableSale ? '': null"
+                                  formControlName="sellPrice" placeholder="Compare at price"
                                     aria-describedby="checkbox-addon1" />
                                 </div>
                               </fieldset>
@@ -267,30 +274,31 @@
                         </div>
                         <h4 class="form-section"><i class="ft-user"></i>Media</h4> 
                         <div class="row">
-                            <div class="col-md-3">
-                              <h4>Images *</h4>
+                            <div class="col-md-2">
+                              <h4>Images <span class="asterick"> *</span></h4>
                               <div>Multiple</div>
                               <label class="custom-file mb-3">
-                                <input type="file" ng2FileSelect [uploader]="uploader" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
+                                <input type="file" ng2FileSelect [uploader]="uploader" [requiredIf]="AllItemsRemoved" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
                                 <span class="custom-file-control"></span>
                               </label>
                               <div *ngIf="isSubmittedaddProductForm && signUpControls.file.errors" class="invalid-feedback mt-0">
-                                <div *ngIf="signUpControls.file.errors.required">Image is required</div>
+                                <div *ngIf="signUpControls.file.errors.requiredIf.condition">Image is required</div>
                             </div> 
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                               <h4>Upload queue</h4>
                               <p>Queue length: {{ uploader?.queue?.length }}</p>
                               <table class="table">
                                 <thead>
                                   <tr>
-                                    <th width="50%">Name</th>
+                                    <th width="50%">Name/ Image</th>
                                     <!-- <th>Status</th> -->
-                                    <th>Actions</th>
+                                    <th></th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr *ngFor="let item of uploader.queue">
+                                  <tr >
+                                      <div *ngFor="let item of uploader.queue">
                                     <td class="text-left"><strong>{{ item?.file?.name }}</strong></td>
                                     <!-- <td class="text-left">
                                       <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
@@ -300,10 +308,26 @@
                                       <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
                                         <span class="fa fa-ban"></span> Cancel
                                       </button> -->
-                                      <button type="button" class="btn btn-raised btn-danger btn-sm" (click)="item.remove()">
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
                                         <span class="fa fa-trash"></span> Remove
                                       </button>
-                                    </td>
+                                    </td></div>
+                                  </tr>
+                                  <tr *ngIf="editMode && checkIfImage(product) && checkIfImage(product.productImage) && product.productImage.length > 0" >
+                                  <div *ngFor="let item of product.productImage">
+                                    <td class="text-left"><a href="" (click)="newtab(item.image)">{{ item.image }}</a></td>
+                                    <!-- <td class="text-left">
+                                      <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
+                                      <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
+                                    </td> -->
+                                    <td nowrap class="text-left">
+                                      <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                        <span class="fa fa-ban"></span> Cancel
+                                      </button> -->
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
+                                        <span class="fa fa-trash"></span> Remove
+                                      </button>
+                                    </td></div>
                                   </tr>
                                 </tbody>
                               </table>
@@ -312,20 +336,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                  <label>Catelogue</label>
+                                  <label>Catalog</label>
                                   <div class="row">
                                     <div class="col-md-12">
-                                        <input  type="file" id="chooseFile" accept="application/pdf" (change)="fileChangeEvent1($event)" 
+                                        <input  type="file" id="chooseFile" accept="application/pdf" 
+                                          (change)="fileChangeEvent1($event)" 
                                           formControlName="catelogue" class="form-control border-primary">
                                         <div *ngIf="isSubmittedaddProductForm && signUpControls.catelogue.errors" class="invalid-feedback mt-0">
-                                          <div *ngIf="signUpControls.catelogue.errors.required">Catelogue is required</div>
+                                          <div *ngIf="signUpControls.catelogue.errors.required">Catalog is required</div>
                                       </div> 
                                     </div>
                                 </div>
                                 </div>
                               </div>
                         </div>
-                        <h4 class="form-section"><i class="ft-user"></i>Seller Details *</h4> 
+                        <h4 class="form-section"><i class="ft-user"></i>Seller Details <span class="asterick"> *</span></h4>
                         <div class="product-page-listing">
                             <div class="customer-wrapper">
                                 <div class="heading-wrapper">
@@ -333,37 +358,36 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr class="table-coustom-style">
-                                        <th >Name</th>
-                                        <th >Fee</th>
-                                        <th >Quantity/ Stock</th>
-                                        <th >Delivery Time(Days)</th>   
-                                        <!-- <th>Action</th> -->
+                                        <th style="width:20em;">Name<span class="asterick"> *</span></th>
+                                        <th >Fee {{sellerDetail}}<span class="asterick"> *</span></th>
+                                        <th >Quantity/ Stock {{checkSellerDetailValidation()}}<span class="asterick"> *</span></th>
+                                        <th >Delivery Time(Days) {{isSubmittedaddProductForm}}<span class="asterick"> *</span> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                      <tr *ngFor="let dynamic of dynamicSeller; let i = index;">
                                         <td>
-                                          <p-dropdown [options]="dropdowns"  filter="true"
-                                           [(ngModel)]="dynamicSeller[i].sellerId" 
-                                           [ngModelOptions]="{standalone: true}" [style]="{'width':'100%'}">
+                                          <p-dropdown [options]="dropdowns"  filter="true" [requiredIf]="sellerDetail" 
+                                           [(ngModel)]="dynamicSeller[i].sellerId" [(ngModel)] = "selected_sellerId"
+                                           [ngModelOptions]="{standalone: true}" [style]="{'width':'100%'}" required>
                                           </p-dropdown>
                                         </td>
                                         <td>
                                           <input [(ngModel)]="dynamicSeller[i].sellerFee"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
+                                      
                                         </td>
                                         <td>
-                                            <input [(ngModel)]="dynamicSeller[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0" />
-                                          </td>
+                                            <input [(ngModel)]="dynamicSeller[i].quantity" [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0" />
+                                      </td>
                                           <td>
-                                            <input [(ngModel)]="dynamicSeller[i].deliveryTime"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
-                                          </td>
-                                        <!-- <td>
-                                            <i (click)="deletesellerRow(i)" class="fa fa-trash fa-2x"></i>
-                                            <i (click)="addsellerRow(i)" class="fa fa-plus fa-2x"></i>
-                                          </td> -->
+                                            <input [(ngModel)]="dynamicSeller[i].deliveryTime" [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <div *ngIf="(isSubmittedaddProductForm && checkSellerDetailValidation()) || (isSubmittedaddProductForm && sellerDetail)" class="invalid-feedback mt-0">
+                                <div >Seller Details are required</div>
+                            </div> 
                           </div>
                         </div>
                         <h4 class="form-section"><i class="ft-user"></i>Product Description</h4> 
@@ -438,60 +462,81 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr class="table-coustom-style">
-                                    <th >Variant</th>
-                                    <th >SKU/PN Code</th>
-                                    <th >Quantity/Stock</th>
-                                    <th >Price</th>
-                                    <th>Compare at Price</th>
-                                    <th>Override Wallet Price</th>
-                                    <th>Is Quote?</th>
-                                    <th >Seller Fee</th>
-                                    <th>Delivery Time</th>
-                                    <th>Action</th>
+                                    <th style="width:10em;">Name <span class="asterick"> *</span></th>
+                                    <th style="width:8em;">SKU/PN Code</th>
+                                    <th style="width:5em;">Quantity/Stock <span class="asterick"> *</span></th>
+                                    <th style="width:10em;">Price</th>
+                                    <th style="width:13em;">Compare at Price</th>
+                                    <th style="width:5em;">Override Wallet Price</th>
+                                    <th >Is Quote?</th>
+                                    <th style="width:5em;">Seller Fee</th>
+                                    <th style="width:5em;">Delivery Time</th>
+                                    <th style="width:5em;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                  <tr *ngFor="let dynamic of dynamicArray; let i = index;">
-                                
-                                    
                                     <td>
                                       <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  (input)="Varient_PNCDE($event.target.value)" [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                     <td>
                                         <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
                                       </td>
                                       <td>
-                                        <input [(ngModel)]="dynamicArray[i].MRP"  [ngModelOptions]="{standalone: true}"  class="form-control"  type="number" numbersOnly min="0" />
+                                        <input [(ngModel)]="dynamicArray[i].MRP" value={{variantPriceZero}} [attr.disabled]="dynamicArray[i].isQuote == true ? '' : null" [ngModelOptions]="{standalone: true}"  class="form-control"  type="number" numbersOnly min="0" />
                                       </td>
                                       <td>
-                                        <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
-                                      </td>
+                                        <!-- <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/> -->
+                                        <fieldset>
+                                            <div class="input-group mb-0">
+                                              <div class="input-group-prepend">
+                                                <span class="input-group-text" id="checkbox-addon1">
+                                                  <input type="checkbox" >
+                                                </span>
+                                              </div>
+                                              <input type="number" class="form-control"  [ngModelOptions]="{standalone: true}"
+                                              [(ngModel)]="dynamicArray[i].sellPrice" placeholder="Compare at price"
+                                                aria-describedby="checkbox-addon1" numbersOnly/>
+                                            </div>
+                                          </fieldset>
+                                    </td>
                                      
                                       <td>
                                         <input [(ngModel)]="dynamicArray[i].walletPrice"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
                                       </td>  
                                       <td>
-                                          <input [(ngModel)]="dynamicArray[i].isQuote"   [ngModelOptions]="{standalone: true}" class="form-control"  type="checkbox" />
+                                           <fieldset>
+                                            <div class="input-group mb-0" style="padding-left: 7px; padding-top: 5px;">
+                                              <div class="input-group-prepend">
+                                                <span class="input-group-text" id="checkbox-addon1">
+                                                    <input [(ngModel)]="dynamicArray[i].isQuote" id="isQuote" 
+                                                      [ngModelOptions]="{standalone: true}"
+                                                    type="checkbox" /> </span>
+                                              </div>
+                                            </div>
+                                          </fieldset>
                                         </td> 
                                         <td>
-                                          <input [(ngModel)]="dynamicArray[i].sellerFee"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
+                                          <input [(ngModel)]="dynamicArray[i].sellerFee"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly />
                                         </td> 
                                         <td>
                                           <input [(ngModel)]="dynamicArray[i].deliveryTime"   [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                         </td> 
                                     <td >
                                         <i (click)="deleteRow(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
-                                        <!-- <i (click)="addRow(i)" class="fa fa-plus fa-2x"></i> -->
                                       </td>
                                    
                                 </tr>
                             </tbody>
                         </table>
+                        <div *ngIf="(isSubmittedaddProductForm && this.isVariant) || (isSubmittedaddProductForm && checkVariantValidation())" class="invalid-feedback mt-0">
+                            <div >Variant Name and Quantity required</div>
+                        </div> 
                         <div class="text-right">
-                          <button type="button" (click)="addRow(i)" class="btn btn-raised btn-primary btn-darken-3 white">
+                          <button type="button" (click)="addRow(i)" [disabled]="checkVariantValidation()" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
                         </div> 
@@ -505,10 +550,9 @@
                              <div class="col-md-6">
                                  <div class="form-group">
                                      <label>Related Products</label>
-                                     <tag-input formControlName="relatedItem" lass="form-control border-primary" [onlyFromAutocomplete]="true"
-                                    
+                                     <tag-input formControlName="relatedItem"  placeholder="Enter a Search Term"
                                      (input)="filterRelatedProducts($event.target.value)">
-                                         <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
+                                         <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" (blur)="tagInput.dropdown.hide()"
                                          [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
                                            <ng-template let-item="item" let-index="index">
                                             {{ item.itemName }}
@@ -602,20 +646,24 @@
 
                       </table>
                       <div class="text-right">
-                        <button type="button" (click)="addQuantity(i)" class="btn btn-raised btn-primary btn-darken-3 white">
+                        <button type="button" (click)="addQuantity(i)" [disabled]="checkQuantityValidation()" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
                       </div> 
                     </div>
                   </div>
                     
-                    <div class="form-actions right">
-                      <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
-                      <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addProductForm.dirty">Submit</button>
+                    <div *ngIf="!editMode" class="form-actions right">
+                      <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
+                      <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty || validatePN)">Submit</button>
                   </div>
+                  <div *ngIf="editMode" class="form-actions right">
+                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
+                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty )">Submit</button>
+                </div>
+                  
                   </form> 
               </div>
           </div>
       </div>
   </div>
-  

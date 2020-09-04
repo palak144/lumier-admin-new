@@ -7,7 +7,9 @@
 .product-page-listing {
     margin: 25px 0;
 }
-
+.invalid-feedback {
+    display : block !important
+}
 label.issale {
     padding-left: 25px;
 }
@@ -21,4 +23,7 @@ td{
 }
 span#Validations {
     font-size: 12px;
+}
+.ng-tns-c9-12.ui-dropdown.ui-widget.ui-state-default.ui-corner-all.ui-helper-clearfix {
+    height: 38px !important;
 }

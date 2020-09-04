@@ -29,7 +29,6 @@ export class AddProductComponent implements OnInit {
     isHTML5: true
   });
   
-
   languages = [];
   selectedCategoryLanguages:any;
   language: any;
@@ -59,15 +58,18 @@ export class AddProductComponent implements OnInit {
   files: Array<any> = [];
   companyFlagSize: boolean = false;
   companyLogo: any;
+  selected_catelogue : string = ""
   selected_supplyType: any;
   selected_brand:any;
+  selected_sellerId:any;
   selected_languageId:any;
   selected_country: any;
   selected_cOrigin: any;
+  selected_speciality:any;
   selected_category :any;
   addProductFormDetails: any;
   url: string | ArrayBuffer;
-  product: any;
+  product: any = [];
   sellerLists: any[];
   dropdowns: any[];
   currencies: any[];
@@ -78,12 +80,21 @@ export class AddProductComponent implements OnInit {
   countryIdData: any = "";
   productNameData: any = "";
   languageIdData: any = "";
-  selectedCriteria: any;
+  selectedCriteria: any
   priceZero: string = "";
+  variantPriceZero: string = ""
   public disable: boolean = false;
-  PNCDE_value: any = "";
+  public disableSale: boolean = true;
   searchRelatedItem: any;
- 
+  public toggleButton: boolean = false;
+  AllItemsRemoved: boolean = true;
+  sellerDetail : boolean = true;
+  PNSKU_id : string ;
+  PNSKU_CDE : string
+  load_copiedData: any;
+  isValid: boolean = false;
+  image_Links: any;
+  validatePN: boolean = true;
 
   constructor(
     private router: Router,
@@ -99,7 +110,7 @@ export class AddProductComponent implements OnInit {
     isQuote:false,deliveryTime:"",sellerFee : ""};
     this.dynamicArray.push(this.newDynamic);
     this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
-    this.dynamicSeller.push(this.newSeller);
+    this.dynamicSeller.push(this.newSeller)
     this.newQuantity = {minQuantity:"",maxQuantity:"",price: "", walletPrice: ""};
     this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
@@ -111,42 +122,167 @@ export class AddProductComponent implements OnInit {
         this.getCountry();
         this.getCountryOrigin();
         this.getSpecialities();
-      
       }
     )
-
     this.initForm()
     this.selected_country = [];
     this.selected_languageId = [];
     this.selected_cOrigin = [];
     this.selected_supplyType = [];
     this.selected_brand = [];
+    this.selected_sellerId = [];
     this.selected_category =[];
+    this.selected_speciality = [];
   }
-  PNCDE_Check(e){
+
+  checkSellerDetailValidation(){
+
+    return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
+  }
+  checkVariantValidation(){
+    
+    return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity )
+
+  }
+  checkQuantityValidation(){
+    return this.checkIfValid(this.newQuantity.minQuantity ) || this.checkIfValid(this.newQuantity.maxQuantity ) ||
+     this.checkIfValid(this.newQuantity.price ) || this.checkIfValid(this.newQuantity.walletPrice )
+  }
+  checkIfValid(dataToBeValidated){
+    if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != ''){
+      return false
+    }
+    return true
+  }
+  newtab(path){
+    window.open(path);
+  }
+  checkIfImage(dataToBeValidated){
+    if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != '' &&
+     dataToBeValidated != '' ){
+      return true
+    }
+    return false
+  }
+  
+  PNCDE_Check(){
     debugger
-    if(e != ""){
- console.log(e.target.value)
- this.PNCDE_value = e.target.value
- if(this.PNCDE_value != "" && this.selectedCountryId != undefined ){
- this.productService.onCheckPncode(this.selectedCountryId, this.PNCDE_value).subscribe(
+    if(this.PNSKU_CDE != "" && this.PNSKU_CDE != undefined){
+      debugger
+ if(this.PNSKU_CDE != "" && this.selectedCountryId != undefined ){
+ this.productService.onCheckPncode(this.selectedCountryId, this.PNSKU_CDE).subscribe(
   (success:any)=>
   {
-    document.getElementById('Validations').innerHTML = 'SKU/ PN CDE must be unique'
+    this.validatePN = false;
+    document.getElementById('Validations').innerHTML = 'Entered SKU/ PN CDE is valid'
     document.getElementById('Validations').style.color = 'black';
- debugger
+ 
 } ,
 (error)=>{
+  this.validatePN = true;
   this.addProductForm.controls['PNCDE'].setValue('');
   document.getElementById('Validations').innerHTML = 'Entered SKU/ PN CDE already exists'
-  document.getElementById('Validations').style.color = 'red';
-  debugger
+  document.getElementById('Validations').style.color = '#FF586B';
+  
 })
  }
+ else{
+  this.addProductForm.controls['PNCDE'].setValue('');
+  document.getElementById('Validations').innerHTML = 'Select Country First'
+  document.getElementById('Validations').style.color = '#FF586B'; }
+}
+else{
+  this.validatePN = true;
 }
   }
-  get signUpControls() {
+  load_data(){
     
+    if(this.PNSKU_id != undefined && this.PNSKU_id != "") {
+      this.productService.copyProductInfo(this.PNSKU_id).subscribe(
+        (success:any)=>
+        {
+          this.load_copiedData = success.data
+          this.commonService.getSupplyType(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
+            },
+            error => {
+            }
+          )
+          this.commonService.getManufacturerList(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              this.manufacturerBrands = this.arrayOfStringsToArrayOfObjects(success.data);
+            },
+            error => {
+            }
+          )
+          this.commonService.getSellerList(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              
+              this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
+              this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
+              debugger
+              (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
+
+            },
+            error => {
+            }
+          )
+          this.commonService.getCountryLanguage(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
+            },
+            error => {
+            }
+          )
+          this.commonService.getCategory(this.load_copiedData.language.id).pipe(takeUntil(this._unsubscribe)).subscribe(
+            (success:any) => {
+              
+              this.categories = this.arrayOfStringsToArrayOfObjects(success.data);
+            },
+            error => {
+            }
+          )
+          this.addProductForm.patchValue({
+            "MRP" : this.load_copiedData.MRP,
+            "PNCDE" : this.load_copiedData.PNCDE,
+            "UOM" : this.load_copiedData.UOM,
+            "shortDiscription" : this.load_copiedData.shortDesciption,
+            "isSale" : this.load_copiedData.isSale,
+             "isQuote" : this.load_copiedData.isQuote,
+            "metaDescription" : this.load_copiedData.metaDescription,
+            "description" : this.load_copiedData.description,
+            "metaKeyword" : this.load_copiedData.metaKeyword,
+            "metaTitle" : this.load_copiedData.metaTitle,
+            "productName" : this.load_copiedData.productName,
+            "sellPrice" : this.load_copiedData.sellPrice,
+            "warranty" : this.load_copiedData.warranty,
+            "features" : this.load_copiedData.features,
+
+         })
+        this.selected_speciality = this.load_copiedData.speciality
+        this.selected_country= this.load_copiedData.country.id;
+        this.dynamicSeller= this.load_copiedData.sellerDetail.id;
+        this.selected_supplyType = this.load_copiedData.supplyTypeDetail.id;
+        this.selected_category = this.load_copiedData.category.id;
+        this.selected_cOrigin = this.load_copiedData.countryOrigin.id;
+        this.selected_languageId = this.load_copiedData.language.id;
+        this.selected_brand = this.load_copiedData.manufactureDetail.id;
+        this.selected_sellerId = this.load_copiedData.sellerId
+        this.dynamicSeller = this.load_copiedData.sellerProducts
+        this.toastr.info("Change PRODUCT NAME & PN CODE before submit!", 'Note')
+
+      } ,
+      (error)=>{
+        
+        this.toastr.error(error.error.message)
+      })
+    }
+    else{
+      this.toastr.error("Please Enter Product ID")
+    }
+  }
+  get signUpControls() {
     return this.addProductForm.controls
   }
   onSelect(event) {
@@ -170,13 +306,22 @@ onSelectQuote(event){
   }
   ( event.target.checked ) ?  this.priceZero = "0.0" :  this.priceZero = ''
 }
+onSelectSale(event){
+  if(event.target.checked){
+    this.disableSale = false
+    this.addProductForm.controls['sellPrice'].setValue(0)
+  }
+  else{
+    this.disableSale = true
+  }
+}
   editorValidation(event)
   {
   }
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
-        // this.file = this.file.name
+        //this.catelogue = this.file.name
   }
   fileChangeEvent(e : any){
     (this.files.length != 0) ? this.files = [] : ''
@@ -185,7 +330,6 @@ onSelectQuote(event){
            element._file
           );
         });
-        console.log(this.files)
   }
   scrollToElement(element) {
     if (element) {
@@ -193,10 +337,10 @@ onSelectQuote(event){
     }
   }
   onSubmitAddProductForm(){
-      
-    console.log(this.dynamicSeller);
-
       event.preventDefault();
+      debugger
+      (this.editMode)? '' : this.PNCDE_Check();
+      debugger
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
         let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
@@ -207,27 +351,30 @@ onSelectQuote(event){
       this.productNameData = this.addProductForm.get('productName').value,
       this.languageIdData = this.addProductForm.get('languageId').value    
       let data=this.addProductForm.value;
-
-      data.productsRelated = this.dataFormat(this.addProductForm.get('relatedItem').value)
+       debugger
+       if (this.editMode) {
+        data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
+       }
+       else{
+        data.productsRelated = this.productsRelated(this.addProductForm.get('relatedItem').value )
+       }
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
       data.quantityDiscounts = this.dynamicQuantity
       data.file = this.files
-      // data.currency = this.select(this.addProductForm.get('currency').value , this.currencyValue)
       if (this.id ) {
-       data.id = this.id;
-      }   
-      console.log(data);
+        data.id = this.id;
+      }
       data.catelogue = this.file
       if (this.editMode) {
-        debugger
+        
         this.productService.addProduct(data).subscribe(
           data => {
           this.toastr.success("Product Edited Successfully")
             this.router.navigate(['/catalogues/products'],{relativeTo : this.activatedRoute})
           },
           error => {
-            this.toastr.error(error.message)
+            this.toastr.error(error.error.message)
           });
       }
       else{
@@ -237,7 +384,7 @@ onSelectQuote(event){
           this.router.navigate(['/catalogues/products'],{relativeTo : this.activatedRoute})
         },
         error => {
-          this.toastr.error(error.message)
+          this.toastr.error(error.error.message)
   
         });
       }
@@ -261,7 +408,6 @@ this.addProductForm = new FormGroup({
       "PNCDE": new FormControl(null, Validators.required),
       "noDiscount" : new FormControl(false),
       "isSale" : new FormControl(false),
-      
       "sellPrice" : new FormControl(sellPrice),
       "metaTitle" : new FormControl(),
       "isQuote" : new FormControl(false,),
@@ -270,7 +416,7 @@ this.addProductForm = new FormGroup({
       "metaDescription" : new FormControl(),
       "metaKeyword" : new FormControl(),
       "categoryId" : new FormControl(null, Validators.required),
-      // "ribbenText" : new FormControl(null),
+       "MRP" : new FormControl(''),
       "specialityId" : new FormControl(null),
       "countryOriginId" : new FormControl(null),
       "relatedItem": new FormControl(null),
@@ -281,30 +427,17 @@ this.addProductForm = new FormGroup({
       "features": new FormControl(),
        "video" : new FormControl(),
        "shortDiscription" : new FormControl(),
+       "catelogue" : new FormControl(catelogue),
+       "file" : new FormControl(file),
+      //  "sellerDetails" : new FormControl(null, Validators.required),
+
     });
-    if(this.priceZero != "" ){
-      debugger
-      this.addProductForm.addControl(
-        "MRP",new FormControl( MRP,),
-      );
-    }
-    else{
-      this.addProductForm.addControl(
-        "MRP",new FormControl( MRP,Validators.required),
-      );
-    }
     
-        if(this.editMode){
+    if(this.editMode){
           this.productTitle = "Edit Product"
-          this.addProductForm.addControl(
-            "file", new FormControl( file,),
-          );
-          this.addProductForm.addControl(
-            "catelogue",new FormControl( catelogue,),
-          );
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{     
-              debugger     
+                   
               this.product=success.data
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
@@ -322,12 +455,27 @@ this.addProductForm = new FormGroup({
               )
               this.commonService.getSellerList(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
+                  
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
+                  this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
+                  debugger
+                  (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
 
                 },
                 error => {
                 }
               )
+              debugger
+              // this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
+              //   (success:any) => {
+              //     debugger
+              //     this.autocompleteItemsAsObjects = success.data;
+              //     console.log("api data" ,this.autocompleteItemsAsObjects)
+
+              //   },
+              //   error => {
+              //   }
+              // )
               this.commonService.getCountryLanguage(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -348,58 +496,62 @@ this.addProductForm = new FormGroup({
                 "MRP" : this.product.MRP,
                 "PNCDE" : this.product.PNCDE,
                 "UOM" : this.product.UOM,
-                "description" : this.product.description,
+                "shortDiscription" : this.product.shortDesciption,
                 "features" : this.product.features,
-                "isVariant" : this.product.isVariant,
+                "isVariant" : this.product.isPackage,
                 "isQuote" : this.product.isQuote,
                 "isSale" : this.product.isSale,
                 "metaDescription" : this.product.metaDescription,
+                "description" : this.product.description,
                 "metaKeyword" : this.product.metaKeyword,
                 "metaTitle" : this.product.metaTitle,
                 "noDiscount" : this.product.noDiscount,
                 "packageContent" : this.product.packageContent,
                 "productName" : this.product.productName,
                 "ribbenText" : this.product.ribbenText,
-                "sellPrice" : this.product.noDiscsellPriceount,
-                "shortDiscription" : this.product.shortDiscription,
+                "sellPrice" : this.product.sellPrice,
                 "video" : this.product.video,
                 "walletPrice" : this.product.walletPrice,
                 "warranty" : this.product.warranty,
-
-                // dataForm.append('productVariants', data['productVariants']);
-                // dataForm.append('productsRelated', data['productsRelated']);
-                // dataForm.append('quantityDiscount', data['quantityDiscount']);
-                // dataForm.append('sellerProducts', data['sellerProducts']);
-                // dataForm.append('specialityId', data['specialityId']);
-               
+                "isQuantityDiscount":this.product.isQuantityDiscount,
+                //  "relatedItem" : this.product.productsRelated
              })
-            console.log(this.addProductForm.patchValue)
+            this.selected_catelogue = this.product.catelogue
+            this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
+            this.dynamicSeller= this.product.sellerId;
             this.selected_supplyType = this.product.supplyTypeId;
             this.selected_category = this.product.categoryId;
             this.selected_cOrigin = this.product.countryOriginId;
             this.selected_languageId = this.product.languageId;
             this.selected_brand = this.product.manufactureId;
-            
+            this.selected_sellerId = this.product.sellerId
+            this.dynamicArray = this.product.productVariants
+            this.dynamicSeller = this.product.sellerProducts
+            this.dynamicQuantity = this.product.quantityDiscounts
+            this.autocompleteItemsAsObjects = this.product.productsRelated
+            console.log("edit data" ,this.autocompleteItemsAsObjects)
+            debugger
+           if(this.product.isPackage == true){
+                this.isVariant = true;
+           }
+           if(this.product.isSale == true){
+            this.disableSale = false
+          }
+           if(this.product.isQuantityDiscount == true){
+            this.isQuantityDiscount = true;
+          }
           }
           ,
             error=>{          
             }
           )
           }
-          else{
-            this.addProductForm.addControl(
-              "file", new FormControl( file,Validators.required),
-            );
-            this.addProductForm.addControl(
-              "catelogue", new FormControl( catelogue),
-            );
-          }
-    
     }
+    
   getdropdown1(event:any){
     this.selectedCountryId = event.value
-   this.PNCDE_Check(this.PNCDE_value)
+   this.PNCDE_Check()
     this.getSupplyType();  
     this.getManufacturerBrands();
     this.getSellerList();
@@ -479,9 +631,10 @@ this.addProductForm = new FormGroup({
   {
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         this.sellerLists = success.data
         this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
+        debugger
+        (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
       },
       error => {
       }
@@ -497,14 +650,20 @@ this.addProductForm = new FormGroup({
     )
   }
   filterRelatedProducts(e){
-    this.searchRelatedItem = e
+    debugger
+    this.searchRelatedItem = e;
+    if(this.editMode){
+      this.selectedLanguageId = this.product.languageId
+    }
     this.getRelatedProducts()
   }
   getRelatedProducts(){
     this.commonService.getRelatedProducts(this.selectedLanguageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        debugger
+        
         this.autocompleteItemsAsObjects = success.data;
+        console.log("add data" ,this.autocompleteItemsAsObjects)
+
       },
       error => {
       }
@@ -513,7 +672,6 @@ this.addProductForm = new FormGroup({
   getSpecialities(){
     this.commonService.getSpeciality().pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         success.data.result.forEach(element => {
           this.specialities.push({
             label: element.specialityName,
@@ -528,7 +686,6 @@ this.addProductForm = new FormGroup({
     
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
-    
     const newArray = [];
     if (arr != []) {
     arr.forEach(element => {
@@ -540,13 +697,25 @@ this.addProductForm = new FormGroup({
   }
     return newArray;
   }
-  dataFormat(arr: any[]) {
-    
+  productsRelated(arr: any[]) {
     const newArray = [];
     if (arr != null) {
     arr.forEach(element => {
       newArray.push({
         relatedId: element.id,
+        itemName : element.itemname
+      });
+    });
+  }
+    return newArray;
+  }
+  productsRelatedEdit(arr: any[]) {
+    const newArray = [];
+    if (arr != null) {
+    arr.forEach(element => {
+      newArray.push({
+        relatedId: element.id,
+        itemName : element.itemName
       });
     });
   }
@@ -577,9 +746,19 @@ this.addProductForm = new FormGroup({
     return result;
   }
 addRow(index) {  
+  console.log(this.dynamicArray)
+  console.log(this.newDynamic)
+  if(this.dynamicArray.length != 1){
+    for(let i =0 ; i<(this.dynamicArray.length-1) ; i++){
+      console.log(this.dynamicArray[i].PNCDE)
+  if(this.dynamicArray[i].PNCDE == this.newDynamic.PNCDE){
+    this.toastr.error("SKU/ PN CDE  of Variant must be unique", 'Error');
+      return false;
+  }
+}
+}
   this.newDynamic ={ variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
   isQuote:false,deliveryTime:"",sellerFee : ""};
-  debugger
   this.dynamicArray.push(this.newDynamic);
   return true;
 }
@@ -589,35 +768,20 @@ deleteRow(index) {
       return false;
   } else {
       this.dynamicArray.splice(index, 1);
-      debugger
       return true;
   }
 }
 Varient_PNCDE(e){
-  debugger
-  const newa = this.dynamicArray
-  const found = this.dynamicArray.find(el => el.PNCDE == e);
-  debugger
-  if (found) {
-    this.toastr.error("PN CDE can not be same", 'Warning');
+  
+  for(let i= 1 ; i<=(this.dynamicArray.length) ; i++){
+    var destination = this.dynamicArray;
+    const found = destination.find(el => el.PNCDE == e);
+    
+    if (found) {
+      this.toastr.error("PN CDE can not be same", 'warning');
+    }
   }
 
-
-}
-addsellerRow(index) {  
-  this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
-  this.dynamicSeller.push(this.newSeller);
-  debugger
-  return true;
-}
-deletesellerRow(index) {
-  if(this.dynamicSeller.length ==1) {
-    this.toastr.error("Can't delete the row when there is only one row", 'Warning');
-      return false;
-  } else {
-      this.dynamicSeller.splice(index, 1);
-      return true;
-  }
 }
 addQuantity(index) {  
   this.newQuantity = {minQuantity:"",maxQuantity:"",price:"", walletPrice:""};
