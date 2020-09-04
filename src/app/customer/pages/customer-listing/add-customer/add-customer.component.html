@@ -205,12 +205,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pincode</label>
-                                    <input type="number" formControlName="pincode" placeholder="Pincode" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
+                                    <input type="number" formControlName="pincode" [(ngModel)]="postal_code" (keyup)="onKeyUp($event)" placeholder="Pincode" class="form-control border-primary" [ngClass]="{ 'is-invalid': isSubmittedaddCustomerForm && signUpControls.pincode.errors }">
                                     <div *ngIf="isSubmittedaddCustomerForm && signUpControls.pincode.errors" class="invalid-feedback">
                                         <div *ngIf="signUpControls.pincode.errors.required">Pincode is required</div>
                                         <div *ngIf="signUpControls.pincode.errors.pattern">Pincode must be 6 digits</div>
 
                                     </div>
+                                    <p style="color:red">{{errorMessages}}</p>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +219,7 @@
                         <div class="form-actions right">
                             <button type="button" [routerLink]="['/customer/customers']" class="btn btn-raised btn-warning mr-1"> Back
               </button>
-                            <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addCustomerForm.dirty"> Submit
+                            <button type="submit" class="btn btn-raised btn-primary"   [disabled]="ButtonDisbaled"   [disabled]="!addCustomerForm.dirty"> Submit
               </button>
                         </div>
                     </form>
