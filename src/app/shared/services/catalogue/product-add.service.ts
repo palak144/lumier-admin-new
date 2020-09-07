@@ -114,6 +114,7 @@ copyProductInfo(PNCDE?)
       catchError(this.errorHandler.handleError)
     );
 }
+
 getProductDetails(id) {
     return this.http.get(this.baseUrl + 'admin/product/' + id)
       .pipe(
@@ -121,7 +122,8 @@ getProductDetails(id) {
         catchError(this.errorHandler.handleError)
       );
   }
-  updateProductStatus(statusData: {id: Number; adminStatus: Number }){
+
+updateProductStatus(statusData: {id: Number; adminStatus: Number }){
     
     return this.http.put(this.baseUrl + 'admin/product', statusData)
       .pipe(
@@ -130,5 +132,20 @@ getProductDetails(id) {
       );
   }
 
+  defaultImage( data: {id: Number; productId: Number ; isDefault : boolean  })
+     {
+       debugger
+    return this.http.post(this.baseUrl + 'admin/setDefaultImage', data)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
+  }
 
+ removeImage(data: {id: Number; fileURL: string }){
+   debugger
+  return this.http.post(this.baseUrl + 'admin/removeProductImage', data)
+  .pipe(
+    catchError(this.errorHandler.handleError)
+  );
+ }
 }

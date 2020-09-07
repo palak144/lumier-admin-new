@@ -278,7 +278,8 @@
                               <h4>Images <span class="asterick"> *</span></h4>
                               <div>Multiple</div>
                               <label class="custom-file mb-3">
-                                <input type="file" ng2FileSelect [uploader]="uploader" [requiredIf]="AllItemsRemoved" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
+                                <input type="file" ng2FileSelect [uploader]="uploader" [requiredIf]="AllItemsRemoved" 
+                                formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
                                 <span class="custom-file-control"></span>
                               </label>
                               <div *ngIf="isSubmittedaddProductForm && signUpControls.file.errors" class="invalid-feedback mt-0">
@@ -309,13 +310,15 @@
                                         <span class="fa fa-ban"></span> Cancel
                                       </button> -->
                                       <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
-                                        <span class="fa fa-trash"></span> Remove
+                                        <span class="fa fa-trash"></span>
                                       </button>
+                                      <span class="text-blue cursor-pointer col-sm-2 pl-0" *ngIf="!item.isDefault"
+                                          (click)="setDefault(item.file)">Set as Default</span>
                                     </td></div>
                                   </tr>
                                   <tr *ngIf="editMode && checkIfImage(product) && checkIfImage(product.productImage) && product.productImage.length > 0" >
-                                  <div *ngFor="let item of product.productImage">
-                                    <td class="text-left"><a href="" (click)="newtab(item.image)">{{ item.image }}</a></td>
+                                  <div *ngFor="let item of product.productImage; let i = index;">
+                                    <td class="text-left"><a style="color: #007ad9;" (click)="newtab(item.image)">{{ item.image }}</a></td>
                                     <!-- <td class="text-left">
                                       <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
                                       <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
@@ -324,9 +327,11 @@
                                       <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
                                         <span class="fa fa-ban"></span> Cancel
                                       </button> -->
-                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
-                                        <span class="fa fa-trash"></span> Remove
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="removeImage(i,item.id, item.image)">
+                                        <span class="fa fa-trash"></span> 
                                       </button>
+                                      <span class="text-blue cursor-pointer col-sm-2 pl-0" *ngIf="!item.isDefault"
+                                (click)="setDefault1('true',item.productId,item.id)">Set as Default</span>
                                     </td></div>
                                   </tr>
                                 </tbody>
@@ -338,14 +343,20 @@
                                 <div class="form-group">
                                   <label>Catalog</label>
                                   <div class="row">
-                                    <div class="col-md-12">
+                                    <div *ngIf="selected_catelogue == 'undefined'" class="col-md-12">
                                         <input  type="file" id="chooseFile" accept="application/pdf" 
                                           (change)="fileChangeEvent1($event)" 
                                           formControlName="catelogue" class="form-control border-primary">
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.catelogue.errors" class="invalid-feedback mt-0">
-                                          <div *ngIf="signUpControls.catelogue.errors.required">Catalog is required</div>
-                                      </div> 
+                                       
                                     </div>
+                                    <div *ngIf="selected_catelogue != 'undefined'" class="col-md-10">
+                                      <input  type="text" 
+                                        value={{selected_catelogue}} class="form-control border-primary">
+                                          
+                                    </div>
+                                    <button *ngIf="selected_catelogue != 'undefined'" type="button" class="btn btn-raised btn-danger btn-sm fa fa-trash" 
+                                    (click)="selected_catelogue = 'undefined'">
+                                   </button>    
                                 </div>
                                 </div>
                               </div>
@@ -359,9 +370,9 @@
                                 <thead>
                                     <tr class="table-coustom-style">
                                         <th style="width:20em;">Name<span class="asterick"> *</span></th>
-                                        <th >Fee {{sellerDetail}}<span class="asterick"> *</span></th>
-                                        <th >Quantity/ Stock {{checkSellerDetailValidation()}}<span class="asterick"> *</span></th>
-                                        <th >Delivery Time(Days) {{isSubmittedaddProductForm}}<span class="asterick"> *</span> </th>
+                                        <th >Fee <span class="asterick"> *</span></th>
+                                        <th >Quantity/ Stock <span class="asterick"> *</span></th>
+                                        <th >Delivery Time(Days) <span class="asterick"> *</span> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -466,9 +477,9 @@
                                     <th style="width:8em;">SKU/PN Code</th>
                                     <th style="width:5em;">Quantity/Stock <span class="asterick"> *</span></th>
                                     <th style="width:10em;">Price</th>
-                                    <th style="width:13em;">Compare at Price</th>
-                                    <th style="width:5em;">Override Wallet Price</th>
-                                    <th >Is Quote?</th>
+                                    <th style="width:13em;">Compare at Price {{checkVariantValidation()}}</th>
+                                    <th style="width:5em;">Override Wallet Price {{this.isVariant}}</th>
+                                    <th >Is Quote? {{isSubmittedaddProductForm}}</th>
                                     <th style="width:5em;">Seller Fee</th>
                                     <th style="width:5em;">Delivery Time</th>
                                     <th style="width:5em;">Action</th>
@@ -480,7 +491,7 @@
                                       <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].PNCDE" (blur)="PNCDE_Varient_Check($event.target.value)" [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                     <td>
                                         <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
@@ -532,11 +543,12 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="(isSubmittedaddProductForm && this.isVariant) || (isSubmittedaddProductForm && checkVariantValidation())" class="invalid-feedback mt-0">
+                        <div *ngIf="(checkVariantValidation() && this.isVariant) || (isSubmittedaddProductForm && checkVariantValidation())" class="invalid-feedback mt-0">
                             <div >Variant Name and Quantity required</div>
                         </div> 
                         <div class="text-right">
-                          <button type="button" (click)="addRow(i)" [disabled]="checkVariantValidation()" class="btn btn-raised btn-primary btn-darken-3 white">
+                          <!-- [disabled]="checkVariantValidation()" -->
+                          <button type="button" (click)="addRow(i)" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
                         </div> 

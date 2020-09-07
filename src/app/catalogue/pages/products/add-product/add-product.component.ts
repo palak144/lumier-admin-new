@@ -58,7 +58,7 @@ export class AddProductComponent implements OnInit {
   files: Array<any> = [];
   companyFlagSize: boolean = false;
   companyLogo: any;
-  selected_catelogue : string = ""
+  selected_catelogue : string = "undefined"
   selected_supplyType: any;
   selected_brand:any;
   selected_sellerId:any;
@@ -136,14 +136,15 @@ export class AddProductComponent implements OnInit {
   }
 
   checkSellerDetailValidation(){
-
-    return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
+if(!this.editMode){
+  return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
+}
   }
+
   checkVariantValidation(){
-    
-    return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity )
-
+    return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity ) || this.checkIfValid(this.newDynamic.PNCDE )
   }
+
   checkQuantityValidation(){
     return this.checkIfValid(this.newQuantity.minQuantity ) || this.checkIfValid(this.newQuantity.maxQuantity ) ||
      this.checkIfValid(this.newQuantity.price ) || this.checkIfValid(this.newQuantity.walletPrice )
@@ -318,18 +319,29 @@ onSelectSale(event){
   editorValidation(event)
   {
   }
+  setDefault(file){
+    debugger
+    var result = this.files.map(function(el) {
+      var element = Object.assign({}, el);
+      element.isDefault = true
+    })
+    debugger
+  }
+  
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
         //this.catelogue = this.file.name
   }
   fileChangeEvent(e : any){
+    debugger
     (this.files.length != 0) ? this.files = [] : ''
         e.queue.forEach(element => {  
           this.files.push(
            element._file
           );
         });
+        debugger
   }
   scrollToElement(element) {
     if (element) {
@@ -439,6 +451,7 @@ this.addProductForm = new FormGroup({
             (success:any)=>{     
                    
               this.product=success.data
+              this.selectedCountryId = this.product.countryId
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -516,6 +529,7 @@ this.addProductForm = new FormGroup({
                 "isQuantityDiscount":this.product.isQuantityDiscount,
                 //  "relatedItem" : this.product.productsRelated
              })
+             debugger
             this.selected_catelogue = this.product.catelogue
             this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
@@ -548,7 +562,28 @@ this.addProductForm = new FormGroup({
           )
           }
     }
-    
+    PNCDE_Varient_Check(event){
+      debugger
+      if(event != "" && event != undefined){
+        debugger
+   if(event != "" && this.selectedCountryId != undefined ){
+   this.productService.onCheckPncode(this.selectedCountryId,event).subscribe(
+    (success:any)=>
+    {
+  } ,
+  (error)=>{
+    this.toastr.error("Entered SKU/ PN CDE already exists")
+  })
+   }
+   else{
+    this.toastr.error("Select Country")
+   }
+  }
+  else{
+    this.toastr.error("Enter SK/PNU CDE", 'Error');
+    return false;
+  }
+    }
   getdropdown1(event:any){
     this.selectedCountryId = event.value
    this.PNCDE_Check()
@@ -735,6 +770,7 @@ this.addProductForm = new FormGroup({
   addOtherKeysToSeller(arr: any[], countryIdData : string ,  productNameData : string , languageIdData : string ) {
     
     if (arr != []) {
+      debugger
     var result = arr.map(function(el) {
       var element = Object.assign({}, el);
       element.countryId = countryIdData,
@@ -747,14 +783,13 @@ this.addProductForm = new FormGroup({
   }
 addRow(index) {  
   console.log(this.dynamicArray)
-  console.log(this.newDynamic)
+  this.PNCDE_Varient_Check(this.newDynamic.PNCDE)
   if(this.dynamicArray.length != 1){
     for(let i =0 ; i<(this.dynamicArray.length-1) ; i++){
-      console.log(this.dynamicArray[i].PNCDE)
-  if(this.dynamicArray[i].PNCDE == this.newDynamic.PNCDE){
-    this.toastr.error("SKU/ PN CDE  of Variant must be unique", 'Error');
-      return false;
-  }
+      this.PNCDE_Varient_Check(this.newDynamic.PNCDE)
+
+   
+  
 }
 }
   this.newDynamic ={ variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
@@ -762,6 +797,23 @@ addRow(index) {
   this.dynamicArray.push(this.newDynamic);
   return true;
 }
+
+
+setDefault1(isDefault:boolean,productId,id){
+  debugger
+  var isDefault = true;
+  let defaultdata = {id, productId, isDefault}
+  this.productService.defaultImage(defaultdata).subscribe(
+    (success)=>{
+debugger  
+  },
+    (error)=>{
+debugger
+    }
+  )
+    }
+
+
 deleteRow(index) {
   if(this.dynamicArray.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');
@@ -770,6 +822,20 @@ deleteRow(index) {
       this.dynamicArray.splice(index, 1);
       return true;
   }
+}
+removeImage(index,id:number,fileURL:string){
+  this.product.productImage.splice(index, 1);
+  debugger
+  let remove = {id, fileURL}
+  this.productService.removeImage(remove).subscribe(
+    (success)=>{
+debugger  
+  },
+    (error)=>{
+debugger
+    }
+  )
+  return true;
 }
 Varient_PNCDE(e){
   
