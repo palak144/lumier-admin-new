@@ -142,7 +142,9 @@ if(!this.editMode){
   }
 
   checkVariantValidation(){
+    if(!this.editMode){
     return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity ) || this.checkIfValid(this.newDynamic.PNCDE )
+    }
   }
 
   checkQuantityValidation(){
@@ -319,15 +321,20 @@ onSelectSale(event){
   editorValidation(event)
   {
   }
-  setDefault(file){
-    debugger
-    var result = this.files.map(function(el) {
-      var element = Object.assign({}, el);
-      element.isDefault = true
-    })
-    debugger
+  removeCatalogue(){
+    var fileURL = this.selected_catelogue
+    var id = 0
+    let remove = {id , fileURL}
+    this.productService.removeImage(remove).subscribe(
+      (success)=>{
+  debugger  
+  this.selected_catelogue = "undefined"
+    },
+      (error)=>{
+  debugger
+      }
+    )
   }
-  
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
         this.addProductForm.controls['catelogue'].setValue(this.file ? this.file : '');
@@ -447,6 +454,7 @@ this.addProductForm = new FormGroup({
     
     if(this.editMode){
           this.productTitle = "Edit Product"
+          this.AllItemsRemoved = false
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{     
                    
