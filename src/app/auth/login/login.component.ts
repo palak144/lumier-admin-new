@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng5-validation';
-import { validateAllFormFields } from 'app/shared/utility/custom-validators';
-import { AuthService } from 'app/shared/services/auth.service';
-import { SharedDataService } from 'app/shared/services/shared-data.service';
+import { validateAllFormFields } from '../../shared/utility/custom-validators';
+import { AuthService } from '../../shared/services/auth.service';
+import { SharedDataService } from '../../shared/services/shared-data.service';
 import { Router } from '@angular/router';
-import { UtilityService } from 'app/shared/utility/utility.service';
+import { UtilityService } from '../../shared/utility/utility.service';
 import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login',

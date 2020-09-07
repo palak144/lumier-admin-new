@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service';
 import { validateAllFormFields, noWhitespaceValidator, blankSpaceInputNotValid } from '../../../../shared/utils/custom-validators';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { CommonServiceService } from '../../../../shared/services/common-service.service';
 interface Country {
   _id:string, 
   country:string
@@ -230,7 +230,7 @@ this.addSellerForm.controls.countryId=this.countryValue;
           this.companyLogo = this.url;        
           document.getElementById('sizeValidations').style.color = 'black';
         }
-        this.addSellerForm.controls['file'].setValue(this.file ? this.file : '');
+        this.addSellerForm.controls['file'].setValue(this.file ? this.file : '');  this.addSellerForm.controls['file'].setValue(this.file ? this.file : '');
         this.file = this.file.name
         
       }

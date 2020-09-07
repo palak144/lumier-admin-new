@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild ,  Inject,LOCALE_ID } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UtilityService } from 'app/shared/utility/utility.service'; 
+import { UtilityService } from '../../../shared/utility/utility.service'; 
 import { SellerService } from '../../../shared/services/Sellers/seller.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
-import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { ExcelServiceService } from '../../../shared/services/excel-service.service';
+import { CommonServiceService } from '../../../shared/services/common-service.service';
 import { formatDate } from '@angular/common';
 
 interface Action { 
@@ -98,6 +98,11 @@ export class SellerListingComponent implements OnInit {
     this.sellerService.getAllSellers(page).subscribe(
       (success: any) => {
         this.sellerList = success.data.results;
+        var s = success.data.results;
+        console.log(s);
+        var keys = [];
+        for(var k in s) keys.push(k);
+           console.log(k);
         this.totalCount = success.data.total;
           
         
@@ -115,11 +120,21 @@ export class SellerListingComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        
+        var s = success.data.results;
+        console.log(s);
+        var keys = [];
+        for(var k in s) keys.push(k);
+           console.log(k);
         
         if(exportAll == "true"){
-          this.sellerListExport = [];
+       
+           this.sellerListExport = [];
           this.sellerListExport = success.data.results;
+          var s = success.data.results;
+          console.log(s);
+          var keys = [];
+          for(var k in s) keys.push(k);
+             console.log(k);
           this.sellerListExport.forEach(element=>{
               this.exportAllData.push({
                 Seller_Name:element.sellerName,

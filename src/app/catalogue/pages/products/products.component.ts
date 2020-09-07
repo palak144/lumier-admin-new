@@ -3,15 +3,15 @@ import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms'
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { UtilityService } from 'app/shared/utility/utility.service'; 
+import { UtilityService } from '../../../shared/utility/utility.service'; 
 import { CategoryService } from '../../../shared/services/catalogue/category.service';
 import { ProductService } from '../../../shared/services/catalogue/product.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
-import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { ExcelServiceService } from '../../../shared/services/excel-service.service';
+import { CommonServiceService } from '../../../shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
 import { NgbModal, ModalDismissReasons, NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as XLSX from 'xlsx';
@@ -223,7 +223,7 @@ this.getAllproduct(this.page);
               console.log(element.productVariants);
                 console.log(element);
               this.variants=element.productVariants;
-           
+           console.log(this.variants.length);
               
           this.list=  this.variants.filter(x => x.productId == element.id);
           
@@ -244,7 +244,7 @@ this.getAllproduct(this.page);
                 console.log(this.valueList);
                 this.exportAllData.push({
                
-                  Sno:i,
+                  // Sno:i,
                   ProductCode : element.PNCDE,
                   ProductId:element.id,
                   Product_Name : element.productName,
@@ -264,7 +264,7 @@ this.getAllproduct(this.page);
             })
          
             console.log(this.list.length);
-             
+            console.log(this.variants.length);
         
                 
            
@@ -428,24 +428,52 @@ this.getAllproduct(this.page);
 
       if (id == 0) {
     
-    this.productList.forEach(element=>{
-    console.log( this.productList);
-      this.exportData.push({
-        Sno:element.id,
-        ProductCode : element.PNCDE,
-        ProductId:element.id,
-        Product_Name : element.productName,
-        price:element.MRP,
-        Seller : element.sellerDetail.sellerName,
-        Admin_Status : element.adminStatus,
-        Category_Name : element.category.categoryName,
-        Country : element.country.countryName,
-        isDelete : element.isDelete,
-       
-       
-    
-      })
-    })
+        this.productListExport.forEach(element=>{
+          console.log(element.productVariants);
+            console.log(element);
+          this.variants=element.productVariants;
+       console.log(this.variants.length);
+          
+      this.list=  this.variants.filter(x => x.productId == element.id);
+      
+          if(element.adminStatus=='1')
+          {
+            this.adminStatus="Active";
+          }
+          else
+
+          {
+            this.adminStatus="Inactive";
+          }
+          console.log(this.list.length);
+          for(var i=0; i<this.list.length; i++)
+          {
+            console.log(this.list[i]);
+            this.valueList=this.list[i];
+            console.log(this.valueList);
+            this.exportAllData.push({
+           
+              // Sno:i,
+              ProductCode : element.PNCDE,
+              ProductId:element.id,
+              Product_Name : element.productName,
+              price:element.MRP,
+              Brand_name:element.manufactureDetail.manufacturerName,
+              Seller : element.sellerDetail.sellerName,
+              Variant_parent:this.valueList.isSale,
+              variant_price:this.valueList.MRP,
+            Variant:this.valueList.variant,
+            Stock:this.valueList.quantity,
+            variant_Refrence:this.valueList.PNCDE,
+              Admin_Status :  this.adminStatus,
+              
+          
+            })
+          }
+        })
+     
+        console.log(this.list.length);
+        console.log(this.variants.length);
         this.excelService.exportAsExcelFile(this.exportData, 'product List')
         this.exportData = [];
     

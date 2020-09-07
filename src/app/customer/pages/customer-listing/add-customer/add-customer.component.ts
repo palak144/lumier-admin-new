@@ -27,6 +27,13 @@ export class AddCustomerComponent implements OnInit {
   password: any;
   practises: string[];
   selected_assignGroup: any
+  // pincode: { countryname: string; pincode: number; mobile: number; }[];
+  errorMessages: string;
+  ButtonDisbaled: boolean;
+  pincode: any;
+  postal: { countryname: string; pincode: number; mobile: number; }[];
+  postal_code:any;
+  code: any;
   constructor(
 
     private activatedRoute: ActivatedRoute,
@@ -38,7 +45,15 @@ export class AddCustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.postal = [
+      {'countryname':'usa',
+      'pincode':5,
+      'mobile':+41
+    },
+    {"countryname":"malaysia"
+    ,"pincode":5,
+    "mobile":+41}
+          ]
     this.customerTitle = "Add New Customers";
     this.activatedRoute.params.subscribe(
       (id: Params) => {
@@ -238,4 +253,37 @@ export class AddCustomerComponent implements OnInit {
         Validators.pattern('^(?=.*?[a-z])(?=.*?[#?!@$%^&*-]).{8,20}$')]))
     }
   }
+  onKeyUp(event : HTMLInputElement){
+    console.log(event);
+   
+  
+    console.log(this.postal_code);
+    var n = this.postal_code.toString();
+    console.log(n.length);
+    console.log(this.postal);
+    console.log(this.postal.length);
+      for(var i=0; i<=this.postal.length; i++)
+      {
+        console.log(this.postal[i].pincode);
+        console.log(n.length);
+  if(n.length==this.postal[i].pincode)
+  {
+    console.log(this.postal[i].pincode);
+    this.errorMessages='';
+    this.ButtonDisbaled = false;
+  }
+  else
+  {
+  
+    console.log(this.postal.length);
+    console.log(this.postal[i].pincode);
+  this.errorMessages="Pincode is not correct";
+  this.ButtonDisbaled = true;
+  console.log(this.errorMessages);
+  }
+      }
+  
+  }
+
+
 }
