@@ -1,0 +1,18 @@
+.hero-zone {
+    padding: 70px 0 48px 0px;
+    background-color: $white;
+    position: relative;
+    overflow: hidden;
+    // @include boxShadow(0, 4px, 15px, rgba($shadow_clr, 0.1));
+    margin-bottom: 2rem;
+    @media(max-width: $screen-xl-max) {
+        margin-bottom: -1rem;
+    }
+}
+.custom{
+    align-self: center!important;
+    text-align: justify;
+    font-size: 14px;
+    font-family: poppins;
+    font-weight: 500;
+}

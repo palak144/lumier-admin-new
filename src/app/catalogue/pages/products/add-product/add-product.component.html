@@ -297,7 +297,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr >
+                                  <tr>
                                       <div *ngFor="let item of uploader.queue">
                                     <td class="text-left"><strong>{{ item?.file?.name | slice:0:15}}</strong></td>
                                     <td nowrap class="text-left">
@@ -309,7 +309,8 @@
                                   </tr>
                                   <tr *ngIf="editMode && checkIfImage(product) && checkIfImage(product.productImage) && product.productImage.length > 0" >
                                   <div *ngFor="let item of product.productImage; let i = index;">
-                                    <td class="text-left"><a style="color: #007ad9;" (click)="newtab(item.image)">{{ (item.image.length>60)? (item.image | slice:0:60)+'..':(item.image)}}</a></td>
+                                    <!-- {{ (item.image.length>60)? (item.image | slice:0:60)+'..':(item.image)}} -->
+                                    <td class="text-left"><a style="color: #007ad9;" (click)="newtab(item.image)">Image {{i+1}}</a></td>
                                    <td nowrap class="text-right">
                                     <button type="button" *ngIf="!item.isDefault" class="btn btn-raised btn-info btn-sm"  (click)="setDefault1('true',item.productId,item.id)">
                                       Set as Default
@@ -467,15 +468,15 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr class="table-coustom-style">
-                                    <th style="width:10em;">Name <span class="asterick"> *</span></th>
+                                    <th style="width:20em;">Name <span class="asterick"> *</span></th>
                                     <th style="width:8em;">SKU/PN Code</th>
-                                    <th style="width:5em;">Quantity/Stock <span class="asterick"> *</span></th>
+                                    <th style="width:8em;">Quantity/Stock <span class="asterick"> *</span></th>
                                     <th style="width:10em;">Price</th>
                                     <th style="width:13em;">Compare at Price </th>
-                                    <th style="width:5em;">Override Wallet Price</th>
-                                    <th >Is Quote? </th>
-                                    <th style="width:5em;">Seller Fee</th>
-                                    <th style="width:5em;">Delivery Time</th>
+                                    <th style="width:10em;">Override Wallet Price</th>
+                                    <th style="width:5em;">Is Quote? </th>
+                                    <th style="width:10em;">Seller Fee</th>
+                                    <th style="width:10em;">Delivery Time</th>
                                     <th style="width:5em;">Action</th>
                                 </tr>
                             </thead>
@@ -553,30 +554,31 @@
                           <h4 class="form-section"><i class="ft-user"></i>Upsell</h4> 
                           <div class="row">
                              <div class="col-md-6">
-                                 <div class="form-group">
+                                 <div *ngIf="!editMode" class="form-group">
                                      <label>Related Products</label>
                                      <tag-input formControlName="relatedItem"  placeholder="Enter a Search Term"
                                      (input)="filterRelatedProducts($event.target.value)">
-                                         <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" (blur)="tagInput.dropdown.hide()"
+                                         <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
                                          [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
-                                           <ng-template  let-item="item" let-index="index">
+                                           <ng-template let-item="item" let-index="index">
                                             {{ item.itemName }}
                                            </ng-template>
                                          </tag-input-dropdown>
                                        </tag-input> 
                                      </div>
-                                     <!-- <div *ngIf="editMode" class="form-group">
+                                     <div *ngIf="editMode" class="form-group">
                                       <label>Related Products</label>
-                                      <tag-input formControlName="relatedItem"  placeholder="Enter a Search Term"
-                                      (input)="filterRelatedProducts($event.target.value)">
-                                          <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" (blur)="tagInput.dropdown.hide()"
+                                      <tag-input formControlName="relatedItem"
+                                       placeholder="Enter a Search Term"
+                                      (input)="filterRelatedProductsEdit($event.target.value)">
+                                          <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
                                           [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
-                                            <ng-template *ngFor="let item of autocompleteItemsAsObjects" let-index="index">
+                                            <ng-template let-item="item" let-index="index">
                                              {{ item.itemName }}
                                             </ng-template>
                                           </tag-input-dropdown>
                                         </tag-input> 
-                                      </div> -->
+                                      </div> 
                              </div> 
                           </div>
                           <h4 class="form-section"><i class="ft-user"></i>SEO</h4> 

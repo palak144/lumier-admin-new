@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12.091" height="19.542" viewBox="0 0 12.091 19.542">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:#323232;stroke:#323232;stroke-width:.3px}
+        </style>
+    </defs>
+    <g id="prefix__app" transform="translate(-119.85 -7.85)">
+        <path id="prefix__Path_42240" d="M130.4 8h-9.016A1.322 1.322 0 0 0 120 9.241V26a1.322 1.322 0 0 0 1.387 1.241h9.013A1.322 1.322 0 0 0 131.791 26V9.241A1.322 1.322 0 0 0 130.4 8zm-2.885.621l-.2.621h-2.891l-.173-.621zM131.1 26a.661.661 0 0 1-.694.621h-9.016a.661.661 0 0 1-.694-.621V9.241a.661.661 0 0 1 .694-.621h2.157l.281 1.006a.342.342 0 0 0 .336.235h3.424a.343.343 0 0 0 .334-.226l.319-1.015h2.159a.661.661 0 0 1 .694.621z" class="prefix__cls-1" data-name="Path 42240"/>
+        <path id="prefix__Path_42241" d="M154.483 456h-2.173a.31.31 0 0 0 0 .621h2.173a.31.31 0 1 0 0-.621z" class="prefix__cls-1" data-name="Path 42241" transform="translate(-27.501 -430.62)"/>
+    </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <g id="prefix__Linkedin" transform="translate(0 -.371)">
+        <g id="prefix__Rectangle_1019" fill="none" stroke="#323232" data-name="Rectangle 1019" transform="translate(0 .371)">
+            <rect width="28" height="28" stroke="none" rx="14"/>
+            <rect width="27" height="27" x=".5" y=".5" rx="13.5"/>
+        </g>
+        <g id="prefix__linkedin-2" data-name="linkedin" transform="translate(7 7)">
+            <path id="prefix__Path_94" fill="#323232" d="M81.949 86.415h2.91v-9.7h-2.91zm11.338-10.037a4.368 4.368 0 0 0-3.573 1.654v-1.35h-2.921v9.733h2.921v-5.264a2.311 2.311 0 0 1 2.3-2.2c1.276 0 1.591 1.085 1.591 2.17v5.29h2.91v-5.503c-.004-3.825-1.815-4.53-3.228-4.53zm-9.9-.633a1.457 1.457 0 1 0-1.457-1.457 1.458 1.458 0 0 0 1.46 1.456z" data-name="Path 94" transform="translate(-81.933 -72.83)"/>
+        </g>
+    </g>
+</svg>

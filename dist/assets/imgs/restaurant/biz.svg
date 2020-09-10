@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25.608" height="21.34" viewBox="0 0 25.608 21.34">
+    <defs>
+        <style>
+            .cls-1{fill:#f77e0b}
+        </style>
+    </defs>
+    <g id="Register_your_business" data-name="Register your business" transform="translate(0 -2)">
+        <path id="Path_42264" d="M15.469 6.8A1.067 1.067 0 0 1 14.4 5.735v-1.6h-4.266v1.6a1.067 1.067 0 1 1-2.134 0v-1.6A2.136 2.136 0 0 1 10.134 2H14.4a2.136 2.136 0 0 1 2.134 2.134v1.6A1.067 1.067 0 0 1 15.469 6.8z" class="cls-1" data-name="Path 42264" transform="translate(.536)"/>
+        <path id="Path_42265" d="M13.562 15.632a2.2 2.2 0 0 1-.758.128 2.338 2.338 0 0 1-.822-.149L0 11.62v8.141A2.933 2.933 0 0 0 2.934 22.7h19.74a2.933 2.933 0 0 0 2.934-2.934V11.62z" class="cls-1" data-name="Path 42265" transform="translate(0 .645)"/>
+        <path id="Path_42266" d="M25.608 7.934v2.443L13.06 14.56a.79.79 0 0 1-.512 0L0 10.378V7.934A2.933 2.933 0 0 1 2.934 5h19.74a2.933 2.933 0 0 1 2.934 2.934z" class="cls-1" data-name="Path 42266" transform="translate(0 .201)"/>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#f77e0b;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.8px}
+        </style>
+    </defs>
+    <g id="Profile" transform="translate(-319.428 -629.428)">
+        <path id="Rectangle_1909" fill="none" d="M0 0H32V32H0z" data-name="Rectangle 1909" transform="translate(319.428 629.428)"/>
+        <g id="Feed" transform="translate(323.107 631.738)">
+            <path id="Stroke_103" d="M12.321 6.156A6.16 6.16 0 1 1 6.16 0a6.158 6.158 0 0 1 6.161 6.156z" class="cls-2" data-name="Stroke 103" transform="translate(6.16)"/>
+            <path id="Stroke_104" d="M24.642 10.261H0A10.264 10.264 0 0 1 10.267 0h4.107a10.264 10.264 0 0 1 10.268 10.261z" class="cls-2" data-name="Stroke 104" transform="translate(0 17.1)"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <g id="prefix__email" transform="translate(0 -.371)">
+        <g id="prefix__Rectangle_1019" fill="none" stroke="#323232" data-name="Rectangle 1019" transform="translate(0 .371)">
+            <rect width="28" height="28" stroke="none" rx="14"/>
+            <rect width="27" height="27" x=".5" y=".5" rx="13.5"/>
+        </g>
+        <path id="prefix__email-2" fill="#323232" d="M12.724 59.882H1.316A1.324 1.324 0 0 0 0 61.21v7.967a1.324 1.324 0 0 0 1.316 1.328h11.408a1.324 1.324 0 0 0 1.316-1.328V61.21a1.324 1.324 0 0 0-1.316-1.328zm0 .885a.433.433 0 0 1 .168.034L7.02 65.936 1.148 60.8a.433.433 0 0 1 .168-.034zm0 8.852H1.316a.441.441 0 0 1-.439-.443v-7.44l5.855 5.119a.437.437 0 0 0 .575 0l5.855-5.119v7.44a.441.441 0 0 1-.438.444z" data-name="email" transform="translate(7.087 -50.91)"/>
+    </g>
+</svg>

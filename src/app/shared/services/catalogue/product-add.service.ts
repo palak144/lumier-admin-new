@@ -37,8 +37,7 @@ export class ProductService {
       if(data.catelogue != ""){
         dataForm.append('catelogue', data['catelogue']);
       }
-      
-      if(data.countryOriginId != null){
+      if(data.countryOriginId != null && data.countryOriginId.length != 0){
         dataForm.append('countryOriginId', data['countryOriginId']);
       }
       if(data.productsRelated.length != 0){

@@ -48,7 +48,7 @@ export class AddProductComponent implements OnInit {
   categories: any[];
   specialityTypes: string[];
   countries: any[];
-  autocompleteItemsAsObjects:any[]
+  autocompleteItemsAsObjects:any[] =[];
   c_origins:any[];
   private _unsubscribe = new Subject<boolean>();
   supplyTypes: any[];
@@ -88,7 +88,7 @@ export class AddProductComponent implements OnInit {
   public disable: boolean = false;
   public disableSale: boolean = true;
   public disableVariantSale: boolean = true;
-  searchRelatedItem: any;
+  searchRelatedItem: any ="";
   public toggleButton: boolean = false;
   AllItemsRemoved: boolean = true;
   sellerDetail : boolean = true;
@@ -101,6 +101,8 @@ export class AddProductComponent implements OnInit {
   varientPN: boolean = false;
   relatedIdArray: any[] = [];
   action: any;
+  items: any;
+  RelatedItems: any[] =[];
 
   constructor(
     private router: Router,
@@ -189,7 +191,7 @@ if(!this.editMode){
     return true
   }
   newtab(path){
-    window.open(path);
+    window.open(path, "_blank");
   }
   checkIfImage(dataToBeValidated){
     if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != '' &&
@@ -434,6 +436,7 @@ onSelectVariantSale(event){
       let data=this.addProductForm.value;
        
        if (this.editMode) {
+         debugger
         data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
        }
        else{
@@ -563,17 +566,7 @@ this.addProductForm = new FormGroup({
                 error => {
                 }
               )
-              this.relatedIdArray = this.productsRelatedEditArray(this.product.productsRelated)
-             this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem ,this.relatedIdArray  ).pipe(takeUntil(this._unsubscribe)).subscribe(
-                (success:any) => {
-                  
-                  this.autocompleteItemsAsObjects = success.data;
-                  console.log("api data" ,this.autocompleteItemsAsObjects)
-
-                },
-                error => {
-                }
-              )
+              this.getRelatedProductsEdit()
               this.commonService.getCountryLanguage(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -593,28 +586,28 @@ this.addProductForm = new FormGroup({
               this.addProductForm.patchValue({
                 "MRP" : this.product.MRP,
                 "PNCDE" : this.product.PNCDE,
-                "UOM" : this.product.UOM,
-                "shortDiscription" : this.product.shortDesciption,
-                "features" : this.product.features,
+                "UOM" :  (this.product.UOM == "null")?'':this.product.UOM,
+                "shortDiscription" : (this.product.shortDesciption == "null")?'':this.product.shortDesciption,
+                "features" : (this.product.features == "<p>null</p>")?'':this.product.features,
                 "isVariant" : this.product.isPackage,
                 "isQuote" : this.product.isQuote,
                 "isSale" : this.product.isSale,
-                "metaDescription" : this.product.metaDescription,
-                "description" : this.product.description,
-                "metaKeyword" : this.product.metaKeyword,
-                "metaTitle" : this.product.metaTitle,
+                "metaDescription" :(this.product.metaDescription == "null")?'':this.product.metaDescription,
+                "description" : (this.product.description == "null")?'':this.product.description,
+                "metaKeyword" :(this.product.metaKeyword == "null")?'':this.product.metaKeyword,
+                "metaTitle" :(this.product.metaTitle == "null")?'':this.product.metaTitle,
                 "noDiscount" : this.product.noDiscount,
                 "packageContent" : this.product.packageContent,
                 "productName" : this.product.productName,
                 "ribbenText" : this.product.ribbenText,
                 "sellPrice" : this.product.sellPrice,
-                "video" : this.product.video,
+                "video" :  (this.product.video == "null")?'':this.product.video,
                 "walletPrice" : this.product.walletPrice,
-                "warranty" : this.product.warranty,
+                "warranty" : (this.product.warranty == "null")?'':this.product.warranty,
                 "isQuantityDiscount":this.product.isQuantityDiscount,
-                "relatedItem" : this.product.productsRelated
+                "relatedItem" : this.productsRelatedEditDisplay(this.product.productsRelated)
              })
-             
+             debugger
             this.selected_catelogue = this.product.catelogue
             this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
@@ -628,9 +621,8 @@ this.addProductForm = new FormGroup({
             this.dynamicArray = this.product.productVariants
             this.dynamicSeller = this.product.sellerProducts
             this.dynamicQuantity = this.product.quantityDiscounts
-            this.autocompleteItemsAsObjects = this.product.productsRelated
-            console.log("edit data" ,this.autocompleteItemsAsObjects)
-            
+            // this.autocompleteItemsAsObjects = this.product.productsRelated
+            // console.log("edit data" ,this.autocompleteItemsAsObjects)
            if(this.product.isPackage == true){
                 this.isVariant = true;
            }
@@ -640,12 +632,26 @@ this.addProductForm = new FormGroup({
            if(this.product.isQuantityDiscount == true){
             this.isQuantityDiscount = true;
           }
+          (this.product.UOM == null)?'':this.product.UOM
+
           }
           ,
             error=>{          
             }
           )
           }
+    }
+    productsRelatedEditDisplay(arr: any[]) {
+      const newArray = [];
+      if (arr != null) {
+      arr.forEach(element => {
+        newArray.push(
+         element.itemName
+        );
+      });
+    }
+    debugger
+      return newArray;
     }
     productsRelatedEditArray(arr: any[]) {
       const newArray = [];
@@ -660,7 +666,6 @@ this.addProductForm = new FormGroup({
       return newArray;
     }
     PNCDE_Varient_Check(event){
-      
       if(event != "" && event != undefined){
         
    if(event != "" && this.selectedCountryId != undefined ){
@@ -677,7 +682,7 @@ this.addProductForm = new FormGroup({
   }
   else{
     this.varientPN= true;
-    this.toastr.error("Enter required fields", 'Error');
+    // this.toastr.error("Enter required fields", 'Error');
     return false;
   }
     }
@@ -782,24 +787,39 @@ this.addProductForm = new FormGroup({
     )
   }
   filterRelatedProducts(e){
-    
     this.searchRelatedItem = e;
     if(this.editMode){
       this.selectedLanguageId = this.product.languageId
     }
     this.getRelatedProducts()
   }
+  filterRelatedProductsEdit(e){
+    this.searchRelatedItem = e;
+    if(this.editMode){
+      this.selectedLanguageId = this.product.languageId
+    }
+    this.getRelatedProductsEdit()
+  }
   getRelatedProducts(){
-    this.commonService.getRelatedProducts(this.selectedLanguageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
+    this.commonService.getRelatedProducts(this.selectedLanguageId ,this.searchRelatedItem , this.relatedIdArray ).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        
         this.autocompleteItemsAsObjects = success.data;
-        console.log("add data" ,this.autocompleteItemsAsObjects)
-
+        console.log("add data" ,this.RelatedItems)
       },
       error => {
       }
     )
+  }
+  getRelatedProductsEdit(){
+    this.relatedIdArray = this.productsRelatedEditArray(this.product.productsRelated)
+    this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem ,this.relatedIdArray  ).pipe(takeUntil(this._unsubscribe)).subscribe(
+       (success:any) => {
+         this.autocompleteItemsAsObjects = success.data
+         console.log("api data" ,this.autocompleteItemsAsObjects)
+       },
+       error => {
+       }
+     )
   }
   getSpecialities(){
     this.commonService.getSpeciality().pipe(takeUntil(this._unsubscribe)).subscribe(
@@ -844,22 +864,24 @@ this.addProductForm = new FormGroup({
   }
     return newArray;
   }
+  
   productsRelated(arr: any[]) {
     const newArray = [];
     if (arr != null) {
     arr.forEach(element => {
       newArray.push({
         relatedId: element.id,
-        itemName : element.itemname
+        itemName : element.itemName
       });
     });
   }
     return newArray;
   }
   productsRelatedEdit(arr: any[]) {
+    let result = arr.filter(e => typeof e === 'object');
     const newArray = [];
-    if (arr != null) {
-    arr.forEach(element => {
+    if (result != null) {
+      result.forEach(element => {
       newArray.push({
         relatedId: element.id,
         itemName : element.itemName

@@ -61,21 +61,22 @@ export class CommonServiceService {
   }
   getRelatedProducts(languageId?, searchKey? , relatedId?)
   {
+    debugger
     if(relatedId == undefined){
       this.relatedParams = { languageId: languageId , searchKey:searchKey}
     }
     else{
-      this.relatedParams = { languageId: languageId , searchKey:searchKey , relatedId:relatedId}
+      this.relatedParams = { languageId: languageId , searchKey:searchKey , relatedId : JSON.stringify(relatedId)}
     }
     console.log(relatedId)
-    
-    return this.http.get(this.baseUrl + 'admin/productList' ,{ params: this.relatedParams })
+    console.log("param",this.relatedParams)
+    return this.http.get(this.baseUrl + 'admin/productList' , { params: this.relatedParams })
     .pipe(
       catchError(this.errorHandler.handleError)
     );
   }
+
   getSupplyType(country){
-    
     const params = { countryId: country }
     return this.http.get(this.baseUrl + 'admin/supplyTypeList',
       { params: params }).pipe(

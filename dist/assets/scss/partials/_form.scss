@@ -1,0 +1,334 @@
+.field-outer {
+    margin-bottom: 18px;
+    text-align: left;
+    position: relative;
+    label {
+        color: $white;
+        font-size: $paragraph-size;
+        margin-bottom: 8px;
+        font-family: $poppins;
+        font-weight: $regular;
+        line-height: 30px;
+    }
+    .form-control {
+        @include size(100%, 48px);
+        border-radius: 4px;
+        padding: 10px 19px;
+        background-color: $white;
+        border: 1.2px solid $black;
+        color: $black;
+        font-size: $paragraph-size;
+        background-image: none;
+        box-shadow: none;
+        &.is-invalid {
+            border-color: $red;
+        }
+        &::-webkit-input-placeholder {
+            /* Edge */
+            color: $gray;
+            font-size: 20px;
+            font-weight: $regular;
+        }
+        &:-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: $gray;
+            font-size: 20px;
+            font-weight: $regular;
+        }
+        &::placeholder {
+            color: $gray;
+            font-size: 20px;
+            font-weight: $regular;
+        }
+        &.time-field {
+            padding: 5px 5px 5px 19px;
+        }
+    }
+    i {
+        position: absolute;
+        right: 17px;
+        top: 45px;
+        color: $field_icon;
+        font-size: $font-size-xl;
+    }
+    .show-pass {
+        @include size(50px, 45px);
+        background-color: $white;
+        right: 1px;
+        top: 33px;
+        position: absolute;
+        padding: 0;
+        border: none;
+        border-radius: 5px;
+        &:hover,
+        &:focus,
+        &:active,
+        &:not(:disabled):not(.disabled):active,
+        &:not(:disabled):not(.disabled):active:focus {
+            box-shadow: none;
+            outline: none;
+        }
+        i {
+            @include center(vertical, absolute);
+            color: $field_icon;
+            font-size: $font-size-xl;
+            right: 17px; 
+        }
+    }
+
+    // field combo
+    &.field-combo {
+        label {
+            margin-bottom: 6px !important;
+        }
+        .field {
+            margin-bottom: 32px;
+            position: relative;
+            button {
+                &.add {
+                    top: 28px;
+                }
+            }
+            .label {
+                display: block;
+                font-weight: $regular;
+                margin-bottom: 4px;
+                font-family: $poppins;
+                color: $charcoal;
+            }
+        }
+    }
+}
+
+// Custom radio
+.form-outer{
+    text-align: center;
+    .radio-item {
+        display: inline-block;
+        position: relative;
+        padding: 0 18px;
+        @media (max-width: $screen-sm-max){
+            padding: 0 10px;
+        }
+        margin: 10px 0 20px 0px;
+      }
+      
+      .radio-item input[type='radio'] {
+        display: none;
+      }
+      
+      .radio-item label {
+        color: #181818;
+        font-weight: $regular;
+        font-size: $f-14;
+        line-height: 23px;
+        cursor: pointer;
+      }
+      
+      .radio-item label:before {
+        content: " ";
+        display: inline-block;
+        position: relative;
+        top: 2px;
+        margin: 0 8px 0 0;
+        @include square(14px);
+        @include border-radius(11px);
+        border: 1px solid $black;
+        background-color: transparent;
+      }
+      input[type="radio"]:checked + label::before {
+        border: 1px solid $orange;
+       }
+      .radio-item input[type=radio]:checked + label:after {
+        @include border-radius(11px);
+        @include square(6px);
+        position: absolute;
+        top: 20px;
+        left: 22px;
+        content: " ";
+        display: block;
+        border: 1px solid $orange;
+        background: $orange;
+      }
+}
+.form-color{
+    color:$login-content;
+}
+.form-block-outer{
+    width: 330px;
+    @media (max-width: $screen-sm-max){
+        @include maxWidth(calc(93% - 10px), center);
+    }
+    .form-passcode{
+        position: relative;
+
+        i.fa.fa-eye {
+            color: #cacaca;
+            position: absolute;
+            right: 0;
+            bottom: 3px;
+            font-size: $f-20;
+            cursor: pointer;
+        }
+    }
+    .forgot-password {
+        color: #cacaca;
+        font-size: 12px;
+        text-align: right;
+        line-height: 15px;
+        float: right;
+        clear: both;
+        cursor: pointer;
+    }
+    .dob{
+        position: relative;
+        i.fa.fa-info {
+            position: absolute;
+            top: 20px;
+            right: 0px;
+            color: #cacaca;
+            border: 1px solid #cacaca;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            bottom: 3px;
+            text-align: center;
+            line-height: 18px;
+            font-size: 15px;
+            border-radius: 50%;
+        }
+    }
+    .mobile-sign{
+        display: flex;
+        .country-code{
+            margin-right: 20px;
+
+            select.form-control {
+                border: none;
+                background: transparent;
+                border-bottom: 1px solid #cacacaa3;
+                height: 37px;
+                border-radius: 0px;
+                margin-top: 5px;
+                color: #cacaca;
+            }
+        }
+        .form-group2{
+            input.form-email-mobile.form-color {
+                font-size: 13px;
+                color: #cacacaa3;
+                border: 0px;
+                border-bottom: 1px solid #cacacaa3;
+                width: 244px;
+                padding-bottom: 6px;
+                height: 30px;
+                @media (max-width: $screen-sm-max){
+                    width: 100%;
+                }
+                &::placeholder{
+                    color: #cacaca;
+                }
+            }
+        }
+    }
+}
+
+// upload Images
+
+.fav-restaurant{
+    padding: 0px 55px;
+    .btn_upload {
+        cursor: pointer;
+        display: inline-block;
+        width: 59px;
+        height: 59px;
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        padding: 5px;
+        background-color: #f77e0b;
+        border-radius: 5px;
+        margin: 3px;
+        &:hover {
+            background-color: $orange;
+        }
+        &:focus {
+            background-color: $orange;
+        }
+        input {
+            cursor: pointer;
+            height: 100%;
+            position: absolute;
+            filter: alpha(opacity=1);
+            -moz-opacity: 0;
+            opacity: 0;
+            z-index: 12;
+            max-width: 100%;
+            left: -1px;
+            top: -1px;
+        }
+        // img{
+        //     width: 65px;
+        //     height: 65px;
+        // }
+        i.fa.fa-plus {
+            position: absolute;
+            top: 17px;
+            left: 19px;
+            color: #fff;
+        }
+    }
+    .yes {
+        width: 65px;
+        height: 65px;
+        border: 1px solid red;
+        border-radius: 6px;
+        max-width: 100%;
+        padding: 3px;
+        display: inline-block;
+        position: relative;
+    
+        
+    }
+    .fav-cards {
+        margin-bottom: 30px;
+    }
+    .right-pad{
+        margin-right: 60px;
+    }
+    .left-pad{
+        margin-left: 60px;
+    }
+    .it {
+        height: 100px;
+        margin-left: 10px;
+    }
+    .btn-rmv1 {
+        display: none;
+    }
+    .btn-rmv2 {
+        display: none;
+    }
+    .btn-rmv3 {
+        display: none;
+    }
+    .btn-rmv4 {
+        display: none;
+    }
+    .btn-rmv5 {
+        display: none;
+    }
+    .rmv {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 30px;
+        border: 1px solid #fff;
+        display: inline-block;
+        background: rgba(255, 0, 0, 1);
+        margin: -5px -10px;
+        &:hover {
+            background: rgba(255, 0, 0, 0.5);
+        }
+    }
+    
+}
