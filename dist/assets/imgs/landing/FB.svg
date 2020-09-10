@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
-    <g id="prefix__FB" transform="translate(0 -.371)">
-        <g id="prefix__Rectangle_102" fill="none" stroke="#323232" data-name="Rectangle 102" transform="translate(0 .371)">
-            <rect width="28" height="28" stroke="none" rx="14"/>
-            <rect width="27" height="27" x=".5" y=".5" rx="13.5"/>
-        </g>
-        <path id="prefix__Path_38" fill="#323232" fill-rule="evenodd" d="M84.744 14V7.622h2.178l.311-2.489h-2.489V3.578c0-.7.233-1.244 1.244-1.244h1.322V.078C87 .078 86.222 0 85.367 0a3 3 0 0 0-3.189 3.267v1.866H80v2.489h2.178V14z" data-name="Path 38" transform="translate(-70 7)"/>
-    </g>
-</svg>
