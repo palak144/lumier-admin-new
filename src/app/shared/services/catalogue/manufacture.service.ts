@@ -28,7 +28,7 @@ export class ManufactureService {
       if(data.file != ""){
         dataForm.append('file', data['file']);
       }
-      debugger
+      
       dataForm.append('manufacturerName', data['manufacturerName']);
       dataForm.append('walletDiscount', data['walletDiscount']);
       dataForm.append('logoName', data['logoName']);

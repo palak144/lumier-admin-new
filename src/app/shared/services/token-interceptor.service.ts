@@ -13,6 +13,7 @@ export class TokenInterceptorService {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
+ 
     const token = localStorage.getItem('token');
 
     if (token) {

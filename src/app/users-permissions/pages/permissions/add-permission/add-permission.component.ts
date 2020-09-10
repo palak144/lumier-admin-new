@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UsersPermissionsService } from 'app/shared/services/users-permissions.service';
+import { UsersPermissionsService } from '../../../../shared/services/users-permissions.service';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash'
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { CommonServiceService } from '../../../../shared/services/common-service.service';
 @Component({
   selector: 'app-add-permission',
   templateUrl: './add-permission.component.html',
@@ -104,7 +104,7 @@ export class AddPermissionComponent implements OnInit {
     return this.selectedCountryId;
   }
   multiSelectedListPermission(criteriaArray: any) {
-    debugger
+    
     this.selectedPermissionId = []
     if (criteriaArray != null){
       this.selectedPermissionId = _.chain(criteriaArray)
@@ -115,7 +115,7 @@ export class AddPermissionComponent implements OnInit {
       .value();
       
   }
-  debugger
+  
     return this.selectedPermissionId;
   }
   get signUpControls() {

@@ -20,6 +20,7 @@ export class ProductService {
   } 
   addProduct(data ) {
     console.log("dataForm" , data)
+    
     const dataForm = new FormData();
 
       if(data.id != null){
@@ -31,13 +32,13 @@ export class ProductService {
           dataForm.append('file[]',data.file[i])
         }
       }
-      debugger
+      
       console.log(dataForm.getAll('name'))
       if(data.catelogue != ""){
         dataForm.append('catelogue', data['catelogue']);
       }
-      debugger
-      if(data.countryOriginId.length != 0){
+      
+      if(data.countryOriginId != null){
         dataForm.append('countryOriginId', data['countryOriginId']);
       }
       if(data.productsRelated.length != 0){
@@ -55,7 +56,7 @@ export class ProductService {
       if(data.isVariant == false){
         productVariantsDetails = undefined
       }
-      debugger
+      
       dataForm.append('sellerId', data.sellerProducts[0].sellerId); 
       dataForm.append('MRP', data['MRP']); 
       dataForm.append('PNCDE', data['PNCDE']); 
@@ -90,7 +91,7 @@ export class ProductService {
       dataForm.append('walletPrice', data['walletPrice']); 
       dataForm.append('warranty', data['warranty']); 
 
-debugger
+
     return this.http.post(this.baseUrl + 'admin/product' , dataForm).pipe(
       
       catchError(this.errorHandler.handleError)
@@ -98,7 +99,7 @@ debugger
   }
   onCheckPncode(countryId?, PNCDE?) 
   {
-    debugger
+    
     const params = { countryId: countryId, PNCDE: PNCDE }
     return this.http.get(this.baseUrl + 'admin/checkPncode',
       { params: params }).pipe(
@@ -107,7 +108,7 @@ debugger
 }
 copyProductInfo(PNCDE?) 
 {
-  debugger
+  
   const params = {  PNCDE: PNCDE }
   return this.http.get(this.baseUrl + 'admin/copyProduct',
     { params: params }).pipe(
@@ -134,7 +135,7 @@ updateProductStatus(statusData: {id: Number; adminStatus: Number }){
 
   defaultImage( data: {id: Number; productId: Number ; isDefault : boolean  })
      {
-       debugger
+       
     return this.http.post(this.baseUrl + 'admin/setDefaultImage', data)
       .pipe(
         catchError(this.errorHandler.handleError)
@@ -142,7 +143,7 @@ updateProductStatus(statusData: {id: Number; adminStatus: Number }){
   }
 
  removeImage(data: {id: Number; fileURL: string }){
-   debugger
+   
   return this.http.post(this.baseUrl + 'admin/removeProductImage', data)
   .pipe(
     catchError(this.errorHandler.handleError)

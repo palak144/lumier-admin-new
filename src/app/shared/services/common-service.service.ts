@@ -11,6 +11,7 @@ import { retry, catchError } from 'rxjs/operators';
 export class CommonServiceService {
 
   baseUrl: string;
+  relatedParams: any;
   constructor(
     private errorHandler: ErrorHandlerService,
     private http: HttpClient,
@@ -58,11 +59,17 @@ export class CommonServiceService {
       catchError(this.errorHandler.handleError)
     );
   }
-  getRelatedProducts(languageId?, searchKey?)
+  getRelatedProducts(languageId?, searchKey? , relatedId?)
   {
-    const params = { languageId: languageId , searchKey:searchKey}
-    debugger
-    return this.http.get(this.baseUrl + 'admin/productList' ,{ params: params })
+    if(relatedId == undefined){
+      this.relatedParams = { languageId: languageId , searchKey:searchKey}
+    }
+    else{
+      this.relatedParams = { languageId: languageId , searchKey:searchKey , relatedId:relatedId}
+    }
+    console.log(relatedId)
+    
+    return this.http.get(this.baseUrl + 'admin/productList' ,{ params: this.relatedParams })
     .pipe(
       catchError(this.errorHandler.handleError)
     );
