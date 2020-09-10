@@ -219,52 +219,63 @@ this.getAllproduct(this.page);
          
             this.productListExport = success.data.results;
          console.log(this.productListExport.length);
-            this.productListExport.forEach(element=>{
-              console.log(element.productVariants);
-                console.log(element);
-              this.variants=element.productVariants;
-           console.log(this.variants.length);
-              
-          this.list=  this.variants.filter(x => x.productId == element.id);
-          
+         var i=this.productListExport.length;
+            this.productListExport.forEach((element, index) =>{
+              console.log(element);
+              console.log(index);
               if(element.adminStatus=='1')
               {
                 this.adminStatus="Active";
               }
               else
-
+  
               {
                 this.adminStatus="Inactive";
               }
-              console.log(this.list.length);
-              for(var i=0; i<this.list.length; i++)
-              {
-                console.log(this.list[i]);
-                this.valueList=this.list[i];
-                console.log(this.valueList);
+           
+            
+              
                 this.exportAllData.push({
-               
-                  // Sno:i,
+                  Tag:"product",
+                 S_No:index,
                   ProductCode : element.PNCDE,
                   ProductId:element.id,
                   Product_Name : element.productName,
                   price:element.MRP,
                   Brand_name:element.manufactureDetail.manufacturerName,
                   Seller : element.sellerDetail.sellerName,
-                  Variant_parent:this.valueList.isSale,
-                  variant_price:this.valueList.MRP,
-                Variant:this.valueList.variant,
-                Stock:this.valueList.quantity,
-                variant_Refrence:this.valueList.PNCDE,
+                  Is_Variant:element.isPackage,
                   Admin_Status :  this.adminStatus,
                   
               
                 })
-              }
+         console.log(element.productVariants)
+         this.variantlist=element.productVariants;
+          console.log(this.variantlist);
+          for(var j=0; j<this.variantlist.length; j++)
+          {
+            console.log(this.variantlist[j])
+            if(element.id==this.variantlist[j].productId)
+            {
+              console.log(this.variantlist[j].productId);
+              this.exportAllData.push({
+                Tag:"variant",
+                ProductID:this.variantlist[j].productId,
+                varainID:this.variantlist[j].id,
+                varaintName:this.variantlist[j].variant,
+                Stock:this.variantlist[j].quantity,
+                variant_price:this.variantlist[j].MRP,
+                Variant_Refrence:this.variantlist[j].isQuote
+              })
+
+            }
+           
+          }
+             
+              
             })
          
-            console.log(this.list.length);
-            console.log(this.variants.length);
+   
         
                 
            
@@ -428,14 +439,9 @@ this.getAllproduct(this.page);
 
       if (id == 0) {
     
-        this.productListExport.forEach(element=>{
-          console.log(element.productVariants);
-            console.log(element);
-          this.variants=element.productVariants;
-       console.log(this.variants.length);
+        this.productList.forEach(element=>{
+         
           
-      this.list=  this.variants.filter(x => x.productId == element.id);
-      
           if(element.adminStatus=='1')
           {
             this.adminStatus="Active";
@@ -445,38 +451,35 @@ this.getAllproduct(this.page);
           {
             this.adminStatus="Inactive";
           }
-          console.log(this.list.length);
-          for(var i=0; i<this.list.length; i++)
-          {
-            console.log(this.list[i]);
-            this.valueList=this.list[i];
+       
+        
             console.log(this.valueList);
-            this.exportAllData.push({
+            this.exportData.push({
            
-              // Sno:i,
+             S_No:element.id,
               ProductCode : element.PNCDE,
               ProductId:element.id,
               Product_Name : element.productName,
               price:element.MRP,
               Brand_name:element.manufactureDetail.manufacturerName,
               Seller : element.sellerDetail.sellerName,
-              Variant_parent:this.valueList.isSale,
-              variant_price:this.valueList.MRP,
-            Variant:this.valueList.variant,
-            Stock:this.valueList.quantity,
-            variant_Refrence:this.valueList.PNCDE,
+              Is_Variant:element.isPackage,
               Admin_Status :  this.adminStatus,
               
           
             })
-          }
+          
         })
      
-        console.log(this.list.length);
-        console.log(this.variants.length);
-        this.excelService.exportAsExcelFile(this.exportData, 'product List')
-        this.exportData = [];
+
     
+            
+       
+       
+        this.excelService.exportAsExcelFile(this.exportData, 'Product List')
+     
+        this.exportData = [];
+      
       }
       else {
     
