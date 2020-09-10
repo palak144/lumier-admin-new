@@ -262,7 +262,7 @@ this.getAllproduct(this.page);
                 Tag:"variant",
                 // ProductID:this.variantlist[j].productId,
                 varainID:this.variantlist[j].id,
-                // varaintName:this.variantlist[j].variant,
+                varaintName:this.variantlist[j].variant,
                 Stock:this.variantlist[j].quantity,
                 variant_price:this.variantlist[j].MRP,
                 Variant_Refrence:this.variantlist[j].isQuote
@@ -455,7 +455,7 @@ this.getAllproduct(this.page);
        
         
           
-            this.exportAllData.push({
+            this.exportData.push({
               Tag:"product",
              S_No:index,
               ProductCode : element.PNCDE,
@@ -478,11 +478,11 @@ this.getAllproduct(this.page);
         if(element.id==this.variantlist[j].productId)
         {
           console.log(this.variantlist[j].productId);
-          this.exportAllData.push({
+          this.exportData.push({
             Tag:"variant",
             // ProductID:this.variantlist[j].productId,
             varainID:this.variantlist[j].id,
-            // varaintName:this.variantlist[j].variant,
+            varaintName:this.variantlist[j].variant,
             Stock:this.variantlist[j].quantity,
             variant_price:this.variantlist[j].MRP,
             Variant_Refrence:this.variantlist[j].isQuote
