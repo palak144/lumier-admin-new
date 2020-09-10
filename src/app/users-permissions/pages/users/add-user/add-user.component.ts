@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UsersPermissionsService } from 'app/shared/services/users-permissions.service';
+import { UsersPermissionsService } from '../../../../shared/services/users-permissions.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

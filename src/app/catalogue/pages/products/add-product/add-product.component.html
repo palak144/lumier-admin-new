@@ -10,7 +10,6 @@
         </li>
     </ul>
     <div class="content-header text-left">Add New Product </div>
-   
   </div>
   <div class="copy-data">
       <form class="form">
@@ -100,7 +99,7 @@
                                 </div>
                     
                               </div>
-                              <span id="Validations">SKU/ PN CDE must be unique</span>
+                              <span id="Validations">Validate SKU/ PN CDE </span>
                               <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
                                 <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
 
@@ -274,60 +273,60 @@
                         </div>
                         <h4 class="form-section"><i class="ft-user"></i>Media</h4> 
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <h4>Images <span class="asterick"> *</span></h4>
                               <div>Multiple</div>
                               <label class="custom-file mb-3">
-                                <input type="file" ng2FileSelect [uploader]="uploader" [requiredIf]="AllItemsRemoved" formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
+                                <input type="file" ng2FileSelect [uploader]="uploader" [requiredIf]="AllItemsRemoved" 
+                                formControlName="file" multiple (change)="fileChangeEvent(uploader)" >
                                 <span class="custom-file-control"></span>
                               </label>
                               <div *ngIf="isSubmittedaddProductForm && signUpControls.file.errors" class="invalid-feedback mt-0">
                                 <div *ngIf="signUpControls.file.errors.requiredIf.condition">Image is required</div>
                             </div> 
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                               <h4>Upload queue</h4>
                               <p>Queue length: {{ uploader?.queue?.length }}</p>
                               <table class="table">
                                 <thead>
                                   <tr>
-                                    <th width="50%">Name/ Image</th>
-                                    <!-- <th>Status</th> -->
+                                    <th >Name/ Image</th>
+                                    <th></th>
                                     <th></th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr >
                                       <div *ngFor="let item of uploader.queue">
-                                    <td class="text-left"><strong>{{ item?.file?.name }}</strong></td>
-                                    <!-- <td class="text-left">
-                                      <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
-                                      <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
-                                    </td> -->
+                                    <td class="text-left"><strong>{{ item?.file?.name | slice:0:15}}</strong></td>
                                     <td nowrap class="text-left">
-                                      <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
-                                        <span class="fa fa-ban"></span> Cancel
-                                      </button> -->
                                       <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
-                                        <span class="fa fa-trash"></span> Remove
+                                        <span class="fa fa-trash"></span>
                                       </button>
-                                    </td></div>
+                                    </td>
+                                   </div>
                                   </tr>
                                   <tr *ngIf="editMode && checkIfImage(product) && checkIfImage(product.productImage) && product.productImage.length > 0" >
-                                  <div *ngFor="let item of product.productImage">
-                                    <td class="text-left"><a href="" (click)="newtab(item.image)">{{ item.image }}</a></td>
-                                    <!-- <td class="text-left">
-                                      <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
-                                      <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
-                                    </td> -->
+                                  <div *ngFor="let item of product.productImage; let i = index;">
+                                    <td class="text-left"><a style="color: #007ad9;" (click)="newtab(item.image)">{{ (item.image.length>60)? (item.image | slice:0:60)+'..':(item.image)}}</a></td>
+                                   <td nowrap class="text-right">
+                                    <button type="button" *ngIf="!item.isDefault" class="btn btn-raised btn-info btn-sm"  (click)="setDefault1('true',item.productId,item.id)">
+                                      Set as Default
+                                    </button>
+                                    <button type="button"  *ngIf="item.isDefault" class="btn btn-raised btn-success btn-sm"  >
+                                      Default
+                                    </button>
+                                          <!-- <span class="text-blue cursor-pointer col-sm-2 pl-0" *ngIf="!item.isDefault"
+                                          (click)="setDefault1('true',item.productId,item.id)">Set as Default</span>
+                                          <span class="text-blue col-sm-2 pl-0" *ngIf="item.isDefault">Default</span> -->
+                                    </td>
                                     <td nowrap class="text-left">
-                                      <!-- <button type="button" class="btn btn-raised btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
-                                        <span class="fa fa-ban"></span> Cancel
-                                      </button> -->
-                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
-                                        <span class="fa fa-trash"></span> Remove
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="removeImage(i,item.id, item.image)">
+                                        <span class="fa fa-trash"></span> 
                                       </button>
-                                    </td></div>
+                                    </td>
+                                  </div>
                                   </tr>
                                 </tbody>
                               </table>
@@ -338,20 +337,26 @@
                                 <div class="form-group">
                                   <label>Catalog</label>
                                   <div class="row">
-                                    <div class="col-md-12">
+                                    <div *ngIf="selected_catelogue == 'undefined'" class="col-md-12">
                                         <input  type="file" id="chooseFile" accept="application/pdf" 
                                           (change)="fileChangeEvent1($event)" 
                                           formControlName="catelogue" class="form-control border-primary">
-                                        <div *ngIf="isSubmittedaddProductForm && signUpControls.catelogue.errors" class="invalid-feedback mt-0">
-                                          <div *ngIf="signUpControls.catelogue.errors.required">Catalog is required</div>
-                                      </div> 
+                                       
                                     </div>
+                                    <div *ngIf="selected_catelogue != 'undefined'" class="col-md-10">
+                                      <input  type="text" 
+                                        value={{selected_catelogue}} class="form-control border-primary">
+                                          
+                                    </div>
+                                    <button *ngIf="selected_catelogue != 'undefined'" type="button" class="btn btn-raised btn-danger btn-sm fa fa-trash" 
+                                    (click)=removeCatalogue()>
+                                   </button>    
                                 </div>
                                 </div>
                               </div>
                         </div>
                         <h4 class="form-section"><i class="ft-user"></i>Seller Details <span class="asterick"> *</span></h4>
-                        <div class="product-page-listing">
+                        <div class="product-page-listing" id="seller">
                             <div class="customer-wrapper">
                                 <div class="heading-wrapper">
                                 </div>
@@ -359,9 +364,9 @@
                                 <thead>
                                     <tr class="table-coustom-style">
                                         <th style="width:20em;">Name<span class="asterick"> *</span></th>
-                                        <th >Fee {{sellerDetail}}<span class="asterick"> *</span></th>
-                                        <th >Quantity/ Stock {{checkSellerDetailValidation()}}<span class="asterick"> *</span></th>
-                                        <th >Delivery Time(Days) {{isSubmittedaddProductForm}}<span class="asterick"> *</span> </th>
+                                        <th >Fee <span class="asterick"> *</span></th>
+                                        <th >Quantity/ Stock <span class="asterick"> *</span></th>
+                                        <th >Delivery Time(Days) <span class="asterick"> *</span> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -448,8 +453,8 @@
                             <div class="form-group">
                                 <div class="issale-check">
                                     <input class="form-check-input" (change)='onSelect($event)' formControlName="isVariant"
-                                    type="checkbox" >
-                                    <label class="isSale ml-3" >
+                                    type="checkbox">
+                                    <label class="isSale ml-3">
                                         This product has multiple options
                                     </label>
                                   </div>                                   </div>
@@ -466,9 +471,9 @@
                                     <th style="width:8em;">SKU/PN Code</th>
                                     <th style="width:5em;">Quantity/Stock <span class="asterick"> *</span></th>
                                     <th style="width:10em;">Price</th>
-                                    <th style="width:13em;">Compare at Price</th>
+                                    <th style="width:13em;">Compare at Price </th>
                                     <th style="width:5em;">Override Wallet Price</th>
-                                    <th >Is Quote?</th>
+                                    <th >Is Quote? </th>
                                     <th style="width:5em;">Seller Fee</th>
                                     <th style="width:5em;">Delivery Time</th>
                                     <th style="width:5em;">Action</th>
@@ -480,7 +485,7 @@
                                       <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].PNCDE"  [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
+                                      <input [(ngModel)]="dynamicArray[i].PNCDE" (blur)="PNCDE_Varient_Check($event.target.value)" [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
                                     </td>
                                     <td>
                                         <input [(ngModel)]="dynamicArray[i].quantity"  [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
@@ -494,16 +499,16 @@
                                             <div class="input-group mb-0">
                                               <div class="input-group-prepend">
                                                 <span class="input-group-text" id="checkbox-addon1">
-                                                  <input type="checkbox" >
+                                                  <input type="checkbox" [ngModelOptions]="{standalone: true}"
+                                                  [(ngModel)]="dynamicArray[i].isSale" (change)='onSelectVariantSale($event)' >
                                                 </span>
                                               </div>
-                                              <input type="number" class="form-control"  [ngModelOptions]="{standalone: true}"
-                                              [(ngModel)]="dynamicArray[i].sellPrice" placeholder="Compare at price"
+                                              <input type="number" class="form-control"
+                                              [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" placeholder="Compare at price" [attr.disabled]="dynamicArray[i].isSale != true ? '' : null"
                                                 aria-describedby="checkbox-addon1" numbersOnly/>
                                             </div>
                                           </fieldset>
                                     </td>
-                                     
                                       <td>
                                         <input [(ngModel)]="dynamicArray[i].walletPrice"   [ngModelOptions]="{standalone: true}" class="form-control"  type="number" numbersOnly min="0"/>
                                       </td>  
@@ -528,15 +533,15 @@
                                     <td >
                                         <i (click)="deleteRow(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
                                       </td>
-                                   
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="(isSubmittedaddProductForm && this.isVariant) || (isSubmittedaddProductForm && checkVariantValidation())" class="invalid-feedback mt-0">
-                            <div >Variant Name and Quantity required</div>
-                        </div> 
+                        <!-- <div *ngIf="(checkVariantValidation() && isSubmittedaddProductForm) || (isSubmittedaddProductForm && varientPN)" class="invalid-feedback mt-0">
+                            <div>Variant Name, PNCDE and Quantity required</div>
+                        </div>  -->
                         <div class="text-right">
-                          <button type="button" (click)="addRow(i)" [disabled]="checkVariantValidation()" class="btn btn-raised btn-primary btn-darken-3 white">
+                          <!-- [disabled]="checkVariantValidation() || varientPN" -->
+                          <button type="button" (click)="addRow(i)" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
                         </div> 
@@ -554,13 +559,25 @@
                                      (input)="filterRelatedProducts($event.target.value)">
                                          <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" (blur)="tagInput.dropdown.hide()"
                                          [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
-                                           <ng-template let-item="item" let-index="index">
+                                           <ng-template  let-item="item" let-index="index">
                                             {{ item.itemName }}
                                            </ng-template>
                                          </tag-input-dropdown>
                                        </tag-input> 
                                      </div>
-                             </div>
+                                     <!-- <div *ngIf="editMode" class="form-group">
+                                      <label>Related Products</label>
+                                      <tag-input formControlName="relatedItem"  placeholder="Enter a Search Term"
+                                      (input)="filterRelatedProducts($event.target.value)">
+                                          <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" (blur)="tagInput.dropdown.hide()"
+                                          [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
+                                            <ng-template *ngFor="let item of autocompleteItemsAsObjects" let-index="index">
+                                             {{ item.itemName }}
+                                            </ng-template>
+                                          </tag-input-dropdown>
+                                        </tag-input> 
+                                      </div> -->
+                             </div> 
                           </div>
                           <h4 class="form-section"><i class="ft-user"></i>SEO</h4> 
                             <div class="row">
@@ -588,11 +605,8 @@
                           </div>
                           </div>
                       
-                  
-                   
-               
                     <div class="product-page-listing">
-                      <h4 class="form-section">  Quantity Based Discount</h4>
+                      <h4 class="form-section">Quantity Based Discount</h4>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -611,18 +625,16 @@
                       <table class="table table-striped table-bordered">
                           <thead>
                               <tr class="table-coustom-style">
-                                  <th>Minimum Quantity</th>
-                                  <th>Maximum Quantity</th>
-                                  <th>Price</th> 
-                                  <th>Wallet Price</th> 
+                                  <th>Minimum Quantity<span class="asterick"> *</span></th>
+                                  <th>Maximum Quantity<span class="asterick"> *</span></th>
+                                  <th>Price<span class="asterick"> *</span></th> 
+                                  <th>Wallet Price<span class="asterick"> *</span></th> 
                                   <th>Action</th>
                               </tr>
                           </thead>
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicQuantity; let i = index;">
-                              
-                                 
-                                  <td>
+                                 <td>
                                     <input [(ngModel)]="dynamicQuantity[i].minQuantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
                                   </td>
                                   <td>
@@ -634,20 +646,19 @@
                                     <td>
                                       <input [(ngModel)]="dynamicQuantity[i].walletPrice"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0"/>
                                     </td>
-                                 
                                   <td >
                                       <i (click)="deleteQuantity(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
                                       <!-- <i (click)="addQuantity(i)" class="fa fa-plus fa-2x"></i> -->
                                     </td>
-                                 
                               </tr>
                              
                           </tbody>
 
                       </table>
+                      <!-- [disabled]="(checkQuantityValidation())" -->
                       <div class="text-right">
-                        <button type="button" (click)="addQuantity(i)" [disabled]="checkQuantityValidation()" class="btn btn-raised btn-primary btn-darken-3 white">
-                            <span class="d-lg-block">Add another option</span>
+                        <button type="button"  (click)="addQuantity(i)" class="btn btn-raised btn-primary btn-darken-3 white">
+                            <span class="d-lg-block">Add another option{{checkQuantityValidation()}}</span>
                         </button>
                       </div> 
                     </div>

@@ -8,7 +8,9 @@ import { CommonServiceService } from '../../../../shared/services/common-service
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../../../../shared/services/catalogue/product-add.service';
 import { FileUploader } from 'ng2-file-upload';
-import { DynamicGrid } from '../../../../grid.model';
+import { DynamicGrid } from './model/grid.model';
+import { QuantityGrid } from './model/quantityGrid.model';
+import { ConfirmationService } from 'primeng/api';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
@@ -22,7 +24,7 @@ export class AddProductComponent implements OnInit {
   newDynamic: any = {};
   dynamicSeller: Array<DynamicGrid> = [];
   newSeller: any = {};
-  dynamicQuantity: Array<DynamicGrid> = [];
+  dynamicQuantity: Array<QuantityGrid> = [];
   newQuantity: any = {};
   public uploader: FileUploader = new FileUploader({
     url: URL,
@@ -58,7 +60,7 @@ export class AddProductComponent implements OnInit {
   files: Array<any> = [];
   companyFlagSize: boolean = false;
   companyLogo: any;
-  selected_catelogue : string = ""
+  selected_catelogue : string = "undefined"
   selected_supplyType: any;
   selected_brand:any;
   selected_sellerId:any;
@@ -71,7 +73,7 @@ export class AddProductComponent implements OnInit {
   url: string | ArrayBuffer;
   product: any = [];
   sellerLists: any[];
-  dropdowns: any[];
+  dropdowns: any[] ;
   currencies: any[];
   specialities : any = [];
   editing = {};
@@ -85,6 +87,7 @@ export class AddProductComponent implements OnInit {
   variantPriceZero: string = ""
   public disable: boolean = false;
   public disableSale: boolean = true;
+  public disableVariantSale: boolean = true;
   searchRelatedItem: any;
   public toggleButton: boolean = false;
   AllItemsRemoved: boolean = true;
@@ -95,6 +98,9 @@ export class AddProductComponent implements OnInit {
   isValid: boolean = false;
   image_Links: any;
   validatePN: boolean = true;
+  varientPN: boolean = false;
+  relatedIdArray: any[] = [];
+  action: any;
 
   constructor(
     private router: Router,
@@ -102,16 +108,19 @@ export class AddProductComponent implements OnInit {
     private commonService: CommonServiceService,
     private toastr: ToastrService,
     private productService:ProductService,
+    private confirmationService: ConfirmationService,
+
   ) {    
     
   }
   ngOnInit() {
-    this.newDynamic = { variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
-    isQuote:false,deliveryTime:"",sellerFee : ""};
+    this.newDynamic = { variant: "",PNCDE:"",quantity: 0,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+    isQuote:false,deliveryTime:0,sellerFee : 0};
+    console.log("new add")
     this.dynamicArray.push(this.newDynamic);
-    this.newSeller = {sellerId:NaN,sellerFee:"",quantity: "", deliveryTime: ""};
+    this.newSeller = {sellerId:'',sellerFee:"",quantity: "", deliveryTime: ""};
     this.dynamicSeller.push(this.newSeller)
-    this.newQuantity = {minQuantity:"",maxQuantity:"",price: "", walletPrice: ""};
+    this.newQuantity = {minQuantity:0,maxQuantity:0,price: 0, walletPrice: 0};
     this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
@@ -136,20 +145,45 @@ export class AddProductComponent implements OnInit {
   }
 
   checkSellerDetailValidation(){
-
-    return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
+if(!this.editMode){
+  return this.checkIfValid(this.newSeller.sellerId ) || this.checkIfValid(this.newSeller.sellerFee ) || this.checkIfValid(this.newSeller.quantity ) || this.checkIfValid(this.newSeller.deliveryTime )
+}
   }
+
   checkVariantValidation(){
+    console.log("new dynamic",this.newDynamic)
+    return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity ) || this.checkIfValid(this.newDynamic.PNCDE )
     
-    return this.checkIfValid(this.newDynamic.variant ) ||  this.checkIfValid(this.newDynamic.quantity )
+  }
 
-  }
   checkQuantityValidation(){
-    return this.checkIfValid(this.newQuantity.minQuantity ) || this.checkIfValid(this.newQuantity.maxQuantity ) ||
-     this.checkIfValid(this.newQuantity.price ) || this.checkIfValid(this.newQuantity.walletPrice )
+    if(this.editMode){
+    for(let i=0; i<this.dynamicQuantity.length; i++){
+      
+      if(this.checkIfValidQuantity(this.dynamicQuantity[i].minQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].wallet ) ||
+      this.checkIfValidQuantity(this.dynamicQuantity[i].maxQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].price )){
+      }
+      else{
+        return true
+      }
+    }
   }
+  else{
+    console.log("return",this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
+    this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price ))
+
+   return this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
+      this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price )
+     }
+    }
   checkIfValid(dataToBeValidated){
     if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != ''){
+      return false
+    }
+    return true
+  }
+  checkIfValidQuantity(dataToBeValidated){
+    if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != '' && dataToBeValidated != 0){
       return false
     }
     return true
@@ -166,9 +200,9 @@ export class AddProductComponent implements OnInit {
   }
   
   PNCDE_Check(){
-    debugger
+    
     if(this.PNSKU_CDE != "" && this.PNSKU_CDE != undefined){
-      debugger
+      
  if(this.PNSKU_CDE != "" && this.selectedCountryId != undefined ){
  this.productService.onCheckPncode(this.selectedCountryId, this.PNSKU_CDE).subscribe(
   (success:any)=>
@@ -202,6 +236,7 @@ else{
         (success:any)=>
         {
           this.load_copiedData = success.data
+          this.selectedCountryId = this.load_copiedData.countryId
           this.commonService.getSupplyType(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any) => {
               this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -218,10 +253,9 @@ else{
           )
           this.commonService.getSellerList(this.load_copiedData.country.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any) => {
-              
               this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
-              this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
-              debugger
+              this.dropdowns = this.arrayOfStringsToArrayOfObjects_Seller(success.data);
+              
               (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
 
             },
@@ -315,8 +349,38 @@ onSelectSale(event){
     this.disableSale = true
   }
 }
+onSelectVariantSale(event){
+  if(event.target.checked){
+    this.disableVariantSale = false
+  }
+  else{
+    this.disableVariantSale = true
+  }
+}
   editorValidation(event)
   {
+  }
+  removeCatalogue(){
+    this.confirmationService.confirm({ 
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        var fileURL = this.selected_catelogue
+    var id = 0
+    let remove = {id , fileURL}
+    this.productService.removeImage(remove).subscribe(
+      (success)=>{
+  this.selected_catelogue = "undefined"
+    },
+      (error)=>{
+      }
+    )
+    return true;
+      },
+      reject: () => {
+        this.action = null;
+      }
+  });
+  
   }
   fileChangeEvent1(fileInput : any){
     this.file = fileInput.target.files[0];
@@ -324,12 +388,14 @@ onSelectSale(event){
         //this.catelogue = this.file.name
   }
   fileChangeEvent(e : any){
+    
     (this.files.length != 0) ? this.files = [] : ''
         e.queue.forEach(element => {  
           this.files.push(
            element._file
           );
         });
+        
   }
   scrollToElement(element) {
     if (element) {
@@ -338,20 +404,35 @@ onSelectSale(event){
   }
   onSubmitAddProductForm(){
       event.preventDefault();
-      debugger
+      
       (this.editMode)? '' : this.PNCDE_Check();
-      debugger
+      
       this.isSubmittedaddProductForm = true
       if (this.addProductForm.invalid) {
         let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
         this.scrollToElement(invalidFields[1]);
         return
       }
+      if(!this.editMode){
+        if (this.newSeller.sellerId == 0 || this.checkSellerDetailValidation() || this.newSeller.sellerId == "") {
+          this.toastr.error("Seller Details are required")
+          return
+        }
+        // if ((this.checkVariantValidation() && this.isSubmittedaddProductForm) || (this.isSubmittedaddProductForm && this.varientPN)){
+        //   this.toastr.error("Variant Name , PNCDE and Quantity required")
+        //   return
+        // }
+      //   if (this.checkQuantityValidation()){
+      //     this.toastr.error("Quantity required")
+      // return 
+      //   }
+      }
+    
       this.countryIdData = this.addProductForm.get('countryId').value,
       this.productNameData = this.addProductForm.get('productName').value,
       this.languageIdData = this.addProductForm.get('languageId').value    
       let data=this.addProductForm.value;
-       debugger
+       
        if (this.editMode) {
         data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
        }
@@ -359,8 +440,23 @@ onSelectSale(event){
         data.productsRelated = this.productsRelated(this.addProductForm.get('relatedItem').value )
        }
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
-      data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
-      data.quantityDiscounts = this.dynamicQuantity
+    
+       data.quantityDiscounts = this.dynamicQuantity
+       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
+
+    //   if(this.checkQuantityValidation()){
+    //   data.quantityDiscounts = undefined
+    //  }
+    //  else{
+    //   data.quantityDiscounts = this.dynamicQuantity
+    //  }
+    //  if(this.checkVariantValidation() && this.varientPN){
+    //   data.productVariants = undefined
+    //  }
+    //  else{
+    //   data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
+    //  }
+
       data.file = this.files
       if (this.id ) {
         data.id = this.id;
@@ -435,10 +531,12 @@ this.addProductForm = new FormGroup({
     
     if(this.editMode){
           this.productTitle = "Edit Product"
+          this.AllItemsRemoved = false
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{     
                    
               this.product=success.data
+              this.selectedCountryId = this.product.countryId
               this.commonService.getSupplyType(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.supplyTypes = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -457,25 +555,25 @@ this.addProductForm = new FormGroup({
                 (success:any) => {
                   
                   this.sellerLists = this.arrayOfStringsToArrayOfObjects(success.data);
-                  this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
-                  debugger
+                  this.dropdowns = this.arrayOfStringsToArrayOfObjects_Seller(success.data);
+                  
                   (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
 
                 },
                 error => {
                 }
               )
-              debugger
-              // this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem  ).pipe(takeUntil(this._unsubscribe)).subscribe(
-              //   (success:any) => {
-              //     debugger
-              //     this.autocompleteItemsAsObjects = success.data;
-              //     console.log("api data" ,this.autocompleteItemsAsObjects)
+              this.relatedIdArray = this.productsRelatedEditArray(this.product.productsRelated)
+             this.commonService.getRelatedProducts(this.product.languageId ,this.searchRelatedItem ,this.relatedIdArray  ).pipe(takeUntil(this._unsubscribe)).subscribe(
+                (success:any) => {
+                  
+                  this.autocompleteItemsAsObjects = success.data;
+                  console.log("api data" ,this.autocompleteItemsAsObjects)
 
-              //   },
-              //   error => {
-              //   }
-              // )
+                },
+                error => {
+                }
+              )
               this.commonService.getCountryLanguage(this.product.countryId).pipe(takeUntil(this._unsubscribe)).subscribe(
                 (success:any) => {
                   this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
@@ -514,8 +612,9 @@ this.addProductForm = new FormGroup({
                 "walletPrice" : this.product.walletPrice,
                 "warranty" : this.product.warranty,
                 "isQuantityDiscount":this.product.isQuantityDiscount,
-                //  "relatedItem" : this.product.productsRelated
+                "relatedItem" : this.product.productsRelated
              })
+             
             this.selected_catelogue = this.product.catelogue
             this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
@@ -531,7 +630,7 @@ this.addProductForm = new FormGroup({
             this.dynamicQuantity = this.product.quantityDiscounts
             this.autocompleteItemsAsObjects = this.product.productsRelated
             console.log("edit data" ,this.autocompleteItemsAsObjects)
-            debugger
+            
            if(this.product.isPackage == true){
                 this.isVariant = true;
            }
@@ -548,7 +647,40 @@ this.addProductForm = new FormGroup({
           )
           }
     }
+    productsRelatedEditArray(arr: any[]) {
+      const newArray = [];
+      if (arr != null) {
+      arr.forEach(element => {
+        newArray.push(
+         element.relatedId
+        );
+      });
+    }
     
+      return newArray;
+    }
+    PNCDE_Varient_Check(event){
+      
+      if(event != "" && event != undefined){
+        
+   if(event != "" && this.selectedCountryId != undefined ){
+   this.productService.onCheckPncode(this.selectedCountryId,event).subscribe(
+    (success:any)=>
+    {
+      this.varientPN = false;
+  } ,
+  (error)=>{
+    this.varientPN= true;
+    this.toastr.error("Entered SKU/ PN CDE already exists")
+  })
+   }
+  }
+  else{
+    this.varientPN= true;
+    this.toastr.error("Enter required fields", 'Error');
+    return false;
+  }
+    }
   getdropdown1(event:any){
     this.selectedCountryId = event.value
    this.PNCDE_Check()
@@ -632,8 +764,8 @@ this.addProductForm = new FormGroup({
     this.commonService.getSellerList(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
         this.sellerLists = success.data
-        this.dropdowns = this.arrayOfStringsToArrayOfObjects(success.data);
-        debugger
+        this.dropdowns = this.arrayOfStringsToArrayOfObjects_Seller(success.data);
+        
         (this.dropdowns.length != 0) ?  this.sellerDetail = false :  this.sellerDetail = true
       },
       error => {
@@ -650,7 +782,7 @@ this.addProductForm = new FormGroup({
     )
   }
   filterRelatedProducts(e){
-    debugger
+    
     this.searchRelatedItem = e;
     if(this.editMode){
       this.selectedLanguageId = this.product.languageId
@@ -687,6 +819,21 @@ this.addProductForm = new FormGroup({
   }
   arrayOfStringsToArrayOfObjects(arr: any[]) {
     const newArray = [];
+    if (arr != []) {
+    arr.forEach(element => {
+      newArray.push({
+        label: element.itemName,
+        value: element.id
+      });
+    });
+  }
+    return newArray;
+  }
+  arrayOfStringsToArrayOfObjects_Seller(arr: any[]) {
+    const newArray = [{
+      label : 'Select Seller Name',
+      value : 0
+    }];
     if (arr != []) {
     arr.forEach(element => {
       newArray.push({
@@ -735,6 +882,7 @@ this.addProductForm = new FormGroup({
   addOtherKeysToSeller(arr: any[], countryIdData : string ,  productNameData : string , languageIdData : string ) {
     
     if (arr != []) {
+      
     var result = arr.map(function(el) {
       var element = Object.assign({}, el);
       element.countryId = countryIdData,
@@ -747,21 +895,36 @@ this.addProductForm = new FormGroup({
   }
 addRow(index) {  
   console.log(this.dynamicArray)
-  console.log(this.newDynamic)
+  this.PNCDE_Varient_Check(this.newDynamic.PNCDE)
   if(this.dynamicArray.length != 1){
     for(let i =0 ; i<(this.dynamicArray.length-1) ; i++){
-      console.log(this.dynamicArray[i].PNCDE)
-  if(this.dynamicArray[i].PNCDE == this.newDynamic.PNCDE){
-    this.toastr.error("SKU/ PN CDE  of Variant must be unique", 'Error');
-      return false;
-  }
+      this.PNCDE_Varient_Check(this.newDynamic.PNCDE)
+
+   
+  
 }
 }
-  this.newDynamic ={ variant: "",PNCDE:"",quantity: "",sellPrice:"",MRP:"",walletPrice:"",
-  isQuote:false,deliveryTime:"",sellerFee : ""};
+  this.newDynamic ={ variant: "",PNCDE:"",quantity: 0,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+  isQuote:false,deliveryTime:0,sellerFee : 0};
   this.dynamicArray.push(this.newDynamic);
   return true;
 }
+
+setDefault1(isDefault:boolean,productId,id){
+  
+  var isDefault = true;
+  let defaultdata = {id, productId, isDefault}
+  this.productService.defaultImage(defaultdata).subscribe(
+    (success)=>{
+      this.initForm()
+    },
+    (error)=>{
+      
+    }
+  )
+    }
+
+
 deleteRow(index) {
   if(this.dynamicArray.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');
@@ -770,6 +933,26 @@ deleteRow(index) {
       this.dynamicArray.splice(index, 1);
       return true;
   }
+}
+removeImage(index,id:number,fileURL:string){
+  this.confirmationService.confirm({ 
+    message: 'Are you sure that you want to perform this action?',
+    accept: () => {
+      this.product.productImage.splice(index, 1);
+  let remove = {id, fileURL}
+  this.productService.removeImage(remove).subscribe(
+    (success)=>{
+  },
+    (error)=>{
+    }
+  )
+  return true;
+    },
+    reject: () => {
+      this.action = null;
+    }
+});
+ 
 }
 Varient_PNCDE(e){
   
@@ -784,7 +967,7 @@ Varient_PNCDE(e){
 
 }
 addQuantity(index) {  
-  this.newQuantity = {minQuantity:"",maxQuantity:"",price:"", walletPrice:""};
+  this.newQuantity = {minQuantity:0,maxQuantity:0,price:0, walletPrice:0};
   this.dynamicQuantity.push(this.newQuantity);
   return true;
 }

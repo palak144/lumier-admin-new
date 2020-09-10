@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DeliveryChargeService } from 'app/shared/services/delivery-charge.service';
+import { DeliveryChargeService } from '../../../../shared/services/delivery-charge.service';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { CommonServiceService } from '../../../../shared/services/common-service.service';
 
 interface Country {
   _id:string,

@@ -67,7 +67,7 @@
   </button>
   </div>
 </div>
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #content let-c="close" let-d="dismiss" class="modalWidth">
     <div class="modal-header">
       <h4 class="modal-title title"><b>Import</b></h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -80,14 +80,37 @@
                   <div >
               <label class="text" >Import File :</label>
               <input type="file" class="importFile pl-0" id="custom-input"  (change)="onFileChange($event)" 
-              placeholder="Upload file" accept=".xlsx">
-</div>
+              placeholder="Upload file" >
+
+              <a style="color: #007ad9;" (click)="download()">Download bulk upload macro file</a>
+             </div>
+             <div class="container pt-3 pr-0 pl-0">
+                <p-table >
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width:5em;">S. NO.</th>
+                          <th >Name</th>
+                          <th>Link</th>
+                           <th style="width:10em;">Time Stamp</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-body>
+                      <tr>
+                          <td>1</td>
+                          <td>Product 1</td>
+                          <td><a href="assets/iBulk_Upload_file_Toolv1.xlsm" >Link</a>
+                          </td>
+                          <td>08-09-2020</td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </div>  
             </ng-template>
             </ngb-panel>
             </ngb-accordion>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+      <!-- <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button> -->
       <button type="button" class="btn btn-raised btn-success">Upload</button>
     </div>
   </ng-template>

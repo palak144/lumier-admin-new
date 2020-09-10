@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "7.0.0",
     "@angular/platform-server": "7.0.0",
     "@angular/router": "7.0.0",
+    "@auth0/angular-jwt": "^5.0.1",
     "@kolkov/angular-editor": "^0.16.2",
     "@ng-bootstrap/ng-bootstrap": "4.0.0",
     "@ng-select/ng-select": "2.11.2",

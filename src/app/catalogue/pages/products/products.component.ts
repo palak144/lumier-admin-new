@@ -133,7 +133,7 @@ export class ProductsComponent implements OnInit {
       this.getCategoryList();
   }
   onFileChange(ev) {
-    debugger
+    
 let workBook = null;
 let jsonData = null;
 const reader = new FileReader();
@@ -148,7 +148,7 @@ reader.onload = (event) => {
   }, {});
   var counter = 0;
 var tempArr =[]
-debugger
+
 for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
     if (jsonData.Sheet1[i].package === 'P'){
         counter ++ 
@@ -162,9 +162,9 @@ for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
     }
     jsonData.Sheet1[i].rowNumber = i+1
 }
-debugger
+
   const dataString = JSON.stringify(jsonData.Sheet1);
-  debugger
+  
   console.log(dataString)
 }
 reader.readAsBinaryString(file);
@@ -321,7 +321,6 @@ this.getAllproduct(this.page);
             this.ProductService.deleteProduct(id).pipe(takeUntil(this._unsubscribe)).subscribe(
               (success: any) => {
                 this.getAllproduct(this.page);
-              
                 this.productList = this.productList.filter((item: any) => {
                   return id !== item.countryId
                 }) 
@@ -513,6 +512,14 @@ this.getAllproduct(this.page);
         this.getAllproductSearch(this.page, this.searchBar, this.exportAll, this.countryId, this.sellerId, this.categoryId);
       }
     }
+    exportAsXLSXMacro(){
+    //  this.excelService.exportAsExcelFile(this.exportData, 'Bulk_Upload_file_Toolv1')
+    }
+    download(){
+      
+     window.open("assets/Bulk_Upload_file_Toolv1.xlsm", "_blank")
+    }
+    
     getDropDownvariantValue1(event, id) {
       this.id=id;
 
