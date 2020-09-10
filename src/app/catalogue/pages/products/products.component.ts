@@ -262,7 +262,7 @@ this.getAllproduct(this.page);
                 Tag:"variant",
                 ProductID:this.variantlist[j].productId,
                 varainID:this.variantlist[j].id,
-                varaintName:this.variantlist[j].variant,
+                // varaintName:this.variantlist[j].variant,
                 Stock:this.variantlist[j].quantity,
                 variant_price:this.variantlist[j].MRP,
                 Variant_Refrence:this.variantlist[j].isQuote
@@ -482,7 +482,7 @@ this.getAllproduct(this.page);
             Tag:"variant",
             ProductID:this.variantlist[j].productId,
             varainID:this.variantlist[j].id,
-            varaintName:this.variantlist[j].variant,
+            // varaintName:this.variantlist[j].variant,
             Stock:this.variantlist[j].quantity,
             variant_price:this.variantlist[j].MRP,
             Variant_Refrence:this.variantlist[j].isQuote
