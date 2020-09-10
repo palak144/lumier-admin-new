@@ -439,9 +439,11 @@ this.getAllproduct(this.page);
 
       if (id == 0) {
     
-        this.productList.forEach(element=>{
+        this.productList.forEach((element,index)=>{
          
           
+          console.log(element);
+          console.log(index);
           if(element.adminStatus=='1')
           {
             this.adminStatus="Active";
@@ -453,10 +455,10 @@ this.getAllproduct(this.page);
           }
        
         
-            console.log(this.valueList);
-            this.exportData.push({
-           
-             S_No:element.id,
+          
+            this.exportAllData.push({
+              Tag:"product",
+             S_No:index,
               ProductCode : element.PNCDE,
               ProductId:element.id,
               Product_Name : element.productName,
@@ -468,10 +470,34 @@ this.getAllproduct(this.page);
               
           
             })
+     console.log(element.productVariants)
+     this.variantlist=element.productVariants;
+      console.log(this.variantlist);
+      for(var j=0; j<this.variantlist.length; j++)
+      {
+        console.log(this.variantlist[j])
+        if(element.id==this.variantlist[j].productId)
+        {
+          console.log(this.variantlist[j].productId);
+          this.exportAllData.push({
+            Tag:"variant",
+            ProductID:this.variantlist[j].productId,
+            varainID:this.variantlist[j].id,
+            varaintName:this.variantlist[j].variant,
+            Stock:this.variantlist[j].quantity,
+            variant_price:this.variantlist[j].MRP,
+            Variant_Refrence:this.variantlist[j].isQuote
+          })
+
+        }
+       
+      }
+         
           
         })
      
 
+    
     
             
        
