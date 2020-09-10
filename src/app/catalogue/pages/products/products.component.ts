@@ -260,7 +260,7 @@ this.getAllproduct(this.page);
               console.log(this.variantlist[j].productId);
               this.exportAllData.push({
                 Tag:"variant",
-                ProductID:this.variantlist[j].productId,
+                // ProductID:this.variantlist[j].productId,
                 varainID:this.variantlist[j].id,
                 // varaintName:this.variantlist[j].variant,
                 Stock:this.variantlist[j].quantity,
@@ -480,7 +480,7 @@ this.getAllproduct(this.page);
           console.log(this.variantlist[j].productId);
           this.exportAllData.push({
             Tag:"variant",
-            ProductID:this.variantlist[j].productId,
+            // ProductID:this.variantlist[j].productId,
             varainID:this.variantlist[j].id,
             // varaintName:this.variantlist[j].variant,
             Stock:this.variantlist[j].quantity,
