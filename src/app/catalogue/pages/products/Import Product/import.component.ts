@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
-
+import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { ProductService } from '../../../../shared/services/catalogue/product.service';
+import { ToastrService } from 'ngx-toastr';
+import { UtilityService } from '../../../../shared/utility/utility.service'; 
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
   styleUrls: ['./import.component.scss']
 })
 export class ImportProductComponent implements OnInit {
+  addimportForm: FormGroup;
+  isSubmittedaddImportForm:boolean=false;
+  private _unsubscribe = new Subject<boolean>();
 data = [
   {
     "productName":"Product 1",
@@ -14,10 +23,16 @@ data = [
     "time":"08-09-2020"
   }
 ]
+  datastring: string;
 
-  constructor() { }
+  constructor(  private activateRoute : ActivatedRoute,
+    private utilityService:UtilityService, private ProductService:ProductService,    private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.addimportForm = new FormGroup({
+ 
+      "file": new FormControl('', Validators.required),
+    })
   }
   download(){
       
@@ -55,9 +70,34 @@ data = [
     }
     
       const dataString = JSON.stringify(jsonData.Sheet1);
-      
+      this.datastring=dataString;
       console.log(dataString)
     }
     reader.readAsBinaryString(file);
+      }
+      onSubmitFileForm()
+      {
+        this.isSubmittedaddImportForm=true;
+        if (this.addimportForm.invalid) {
+          return
+        }
+        console.log(this.addimportForm.value);
+        const frmData = new FormData();
+     
+        frmData.append("importfile", this.datastring);
+        console.log(frmData);
+        this.ProductService.ImportFileData(frmData).pipe(takeUntil(this._unsubscribe)).subscribe(
+          (response) => {
+      console.log(response);
+      this.toastr.success('File Upload Successfully!');
+          },
+          error => {
+            console.log(error);
+            this.toastr.error('error',error.error.message);
+          }
+        )
+      }
+      get importControls() {
+        return this.addimportForm.controls;
       }
 }

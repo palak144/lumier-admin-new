@@ -71,4 +71,11 @@ getAllproduct(page)
       catchError(this.errorHandler.handleError)
     );
 }
+ImportFileData(data)
+{
+  return this.http.post(this.baseUrl + 'product/import', data).pipe(
+    
+    catchError(this.errorHandler.handleError)
+  );
+}
 }
