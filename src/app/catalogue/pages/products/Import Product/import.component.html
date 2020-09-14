@@ -1,0 +1,70 @@
+<div class="row container breadcrum-container">
+    <ul class="col-sm-12 pl-0">
+        <li>
+            <a [routerLink]="['/catalogues/products']">Products</a>
+        </li>
+        <li style="margin : 2px 9px 0 9px" class="fa fa-angle-right">
+        </li>
+        <li>
+          Import Product
+        </li>
+    </ul>
+</div>
+<div class="row ">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">File Import</h4>
+            </div>
+            <div class="card-content">
+                <div class="px-3 pt-3">
+                    <div class="card-body">
+                    	<form class="form">
+							<div class="form-body">
+		                        <div class="row">
+		                            <div class="col-lg-6 col-md-6">
+		                                <fieldset class="form-group">
+											<div class="custom-file  mx-auto d-block">
+                                                <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                class="custom-file-input" id="inputGroupFile01"  (change)="onFileChange($event)" 
+                                                placeholder="Upload file" >
+												<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                              </div>
+		                                </fieldset>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <a style="color: #007ad9;" (click)="download()">Download bulk upload macro file</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn btn-raised btn-primary" >Submit</button>
+                            </div>
+		                </form>
+                    </div>
+             <div class="container pb-3 pr-0 pl-0">
+                <p-table [value]="data">
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width:5em;">S. NO.</th>
+                          <th >Name</th>
+                          <th>Link</th>
+                           <th style="width:10em;">Time Stamp</th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-data let-i="rowIndex">
+                      <tr>
+                          <td>{{i+1}}</td>
+                          <td>{{data.productName}}</td>
+                          <td><a >{{data.productLink}}</a>
+                          </td>
+                          <td>{{data.time}}</td>
+                      </tr>
+                  </ng-template>
+              </p-table>
+          </div>  
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>

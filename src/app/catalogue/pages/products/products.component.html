@@ -47,7 +47,7 @@
   </div>
   <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
     <button type="button" class="btn btn-raised btn-primary btn-darken-3 white"
-    (click)="open(content)" >
+    [routerLink]="['/catalogues/import-product']">
       <span class="d-lg-block">Import</span>
     </button>
   
@@ -67,53 +67,7 @@
   </button>
   </div>
 </div>
-<ng-template #content let-c="close" let-d="dismiss" class="modalWidth">
-    <div class="modal-header">
-      <h4 class="modal-title title"><b>Import</b></h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-            <ngb-panel class="p-0">
-              <ng-template ngbPanelContent>
-                  <div >
-              <label class="text" >Import File :</label>
-              <input type="file" class="importFile pl-0" id="custom-input"  (change)="onFileChange($event)" 
-              placeholder="Upload file" >
 
-              <a style="color: #007ad9;" (click)="download()">Download bulk upload macro file</a>
-             </div>
-             <div class="container pt-3 pr-0 pl-0">
-                <p-table >
-                  <ng-template pTemplate="header">
-                      <tr>
-                          <th style="width:5em;">S. NO.</th>
-                          <th >Name</th>
-                          <th>Link</th>
-                           <th style="width:10em;">Time Stamp</th>
-                      </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-body>
-                      <tr>
-                          <td>1</td>
-                          <td>Product 1</td>
-                          <td><a href="assets/iBulk_Upload_file_Toolv1.xlsm" >Link</a>
-                          </td>
-                          <td>08-09-2020</td>
-                      </tr>
-                  </ng-template>
-              </p-table>
-          </div>  
-            </ng-template>
-            </ngb-panel>
-            </ngb-accordion>
-    
-    <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button> -->
-      <button type="button" class="btn btn-raised btn-success">Upload</button>
-    </div>
-  </ng-template>
 <ngb-tabset>
     <ngb-tab title="Products">
       <ng-template ngbTabContent>
@@ -123,7 +77,6 @@
             <div class="table-wrapper vehiclwrappere- ">
               <p-table [value]="productList"  dataKey="id" styleClass="table-list-wrapper" [responsive]="true" rowExpandMode="single" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  
               [totalRecords]="totalCount" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)">
-                  <!-- [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" -->
                   <ng-template pTemplate="header">
                         <tr class="table-coustom-style">
                             <th style="width: 3rem"></th>
@@ -138,12 +91,12 @@
                             <th style="width:5em;">Action</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product let-expanded="expanded" >
+                    <ng-template pTemplate="body" let-product let-i="rowIndex" let-expanded="expanded" >
                         <tr>
                             <td>
-                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <button *ngIf="product.productVariants.length != 0"  type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
-                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{product.id}}</td>
+                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                             <td><span class="ui-column-title">Product Code</span>{{product.PNCDE}}</td>
                             <td><span class="ui-column-title">Name</span>{{product.productName}}</td>
                             <td><span class="ui-column-title">Category</span>{{product.category.categoryName}}</td>
@@ -216,7 +169,7 @@
                                         </ng-template>
                                         <ng-template pTemplate="emptymessage">
                                             <tr>
-                                                <td colspan="7">There are no order for this product yet.</td>
+                                                <td colspan="7">There are no Variant for this product.</td>
                                             </tr>
                                         </ng-template>
                                     </p-table>
@@ -279,10 +232,8 @@
                     <div class="form-group">
                         <label>Wallet price</label>
                         <input type="text" class="form-control border-primary" formControlName="walletPrice" placeholder="wallet price">
-                      
                     </div>
                 </div>
-            
             </div>   
             </form>
           </div>

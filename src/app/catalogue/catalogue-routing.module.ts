@@ -12,7 +12,8 @@ import { ProductsComponent } from './pages/products/products.component';
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
 import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
-import { VariantComponent } from './pages/products/variant/variant.component';
+import { ImportProductComponent } from './pages/products/Import Product/import.component';
+
 const routes: Routes = [{
 
   path: '',
@@ -72,8 +73,8 @@ const routes: Routes = [{
           
         },
         {
-          path: 'variant',
-          component: VariantComponent,
+          path: 'import-product',
+          component: ImportProductComponent,
           
         },
         {
@@ -136,7 +137,7 @@ const routes: Routes = [{
       
         
         
-      ]
+      ],
     }
   ]
 

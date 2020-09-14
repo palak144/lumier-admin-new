@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-
+import { 
+  AuthGuardService as AuthGuard 
+} from '../shared/services/auth/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
@@ -16,11 +18,13 @@ const routes: Routes = [
   },
   {
     path: 'recover-password',
-    component: RecoverPasswordComponent
+    component: RecoverPasswordComponent,
+
   },
   {
     path: 'reset-password',
-    component: ResetPasswordComponent
+    component: ResetPasswordComponent,
+
   }
 ];
 

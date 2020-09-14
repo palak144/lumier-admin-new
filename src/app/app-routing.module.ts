@@ -4,15 +4,14 @@ import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { ContentLayoutComponent } from './layouts/content/content-layout.component';
 import { Full_ROUTES } from './shared/routes/full-layout.routes';
 import { CONTENT_ROUTES } from './shared/routes/content-layout.routes';
-import { 
-  AuthGuardService as AuthGuard 
-} from './shared/services/auth/auth-guard.service';
+
 
 const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'auth',    
-    pathMatch: 'full'
+    pathMatch: 'full',
+
   },
   {
     path: '',

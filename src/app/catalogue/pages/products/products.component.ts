@@ -14,7 +14,6 @@ import { ExcelServiceService } from '../../../shared/services/excel-service.serv
 import { CommonServiceService } from '../../../shared/services/common-service.service';
 import { trigger,state,style,transition,animate } from '@angular/animations';
 import { NgbModal, ModalDismissReasons, NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
-import * as XLSX from 'xlsx';
 
 interface Country {
   _id:string, 
@@ -132,43 +131,7 @@ export class ProductsComponent implements OnInit {
       this.getSeller();
       this.getCategoryList();
   }
-  onFileChange(ev) {
-    
-let workBook = null;
-let jsonData = null;
-const reader = new FileReader();
-const file = ev.target.files[0];
-reader.onload = (event) => {
-  const data = reader.result;
-  workBook = XLSX.read(data, { type: 'binary' });
-  jsonData = workBook.SheetNames.reduce((initial, name) => {
-    const sheet = workBook.Sheets[name];
-    initial[name] = XLSX.utils.sheet_to_json(sheet);
-    return initial;
-  }, {});
-  var counter = 0;
-var tempArr =[]
-
-for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
-    if (jsonData.Sheet1[i].package === 'P'){
-        counter ++ 
-        jsonData.Sheet1[i].elemID = counter
-        tempArr.push(jsonData.Sheet1[i])
-        
-    } 
-    else if (jsonData.Sheet1[i].package ==='V') {
-      jsonData.Sheet1[i].elemID = counter
-        tempArr.push(jsonData.Sheet1[i])
-    }
-    jsonData.Sheet1[i].rowNumber = i+1
-}
-
-  const dataString = JSON.stringify(jsonData.Sheet1);
-  
-  console.log(dataString)
-}
-reader.readAsBinaryString(file);
-  }
+ 
 
   onVariantFormSubmit()
   {
@@ -515,10 +478,7 @@ this.getAllproduct(this.page);
     exportAsXLSXMacro(){
     //  this.excelService.exportAsExcelFile(this.exportData, 'Bulk_Upload_file_Toolv1')
     }
-    download(){
-      
-     window.open("assets/Bulk_Upload_file_Toolv1.xlsm", "_blank")
-    }
+   
     
     getDropDownvariantValue1(event, id) {
       this.id=id;
@@ -578,23 +538,5 @@ console.log(id);
   this.VariantForm.controls.sellPrice.patchValue(item.sellPrice);
   this.VariantForm.controls.sellerFee.patchValue(item.sellerFee);
   this.VariantForm.controls.walletPrice.patchValue(item.walletPrice);
-  }
-  open(content ) {
-    
-    this.modalService.open(content).result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
-        
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  });
-}
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-        return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-        return 'by clicking on a backdrop';
-    } else {
-        return `with: ${reason}`;
-    }
   }
 }

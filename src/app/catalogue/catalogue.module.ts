@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'app/shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { CatalogueRoutingModule } from './catalogue-routing.module';
 import { CatalogueLayoutComponent } from './catalogue-layout/catalogue-layout.component';
 import { ManufacturingBrandComponent } from './pages/manufacturing-brand/manufacturing-brand.component';
@@ -15,7 +15,7 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
 import { CombosComponent } from './pages/products/combos/combos.component';
 import { AddCombosComponent } from './pages/products/combos/add-combos/add-combos.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { VariantComponent } from './pages/products/variant/variant.component';
+import { ImportProductComponent } from './pages/products/Import Product/import.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TableModule } from 'primeng/table';
@@ -39,6 +39,6 @@ import { TagInputModule } from 'ngx-chips';
     ButtonModule,
     FileUploadModule
   ],
-  declarations: [CatalogueLayoutComponent,RequiredIfDirective, AddRowDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, VariantComponent]
+  declarations: [CatalogueLayoutComponent,RequiredIfDirective, AddRowDirective, ManufacturingBrandComponent, AddManufacturerBrandComponent, CategoriesComponent, AddNewCategoryComponent, ParentCategoryComponent, AddParentCategoryComponent, ProductsComponent, AddProductComponent, CombosComponent, AddCombosComponent, ImportProductComponent]
 })
 export class CatalogueModule {  }
