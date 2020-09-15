@@ -61,7 +61,7 @@ export class CommonServiceService {
   }
   getRelatedProducts(languageId?, searchKey? , relatedId?)
   {
-    debugger
+    
     if(relatedId == undefined){
       this.relatedParams = { languageId: languageId , searchKey:searchKey}
     }

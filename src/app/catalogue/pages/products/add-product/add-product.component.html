@@ -9,7 +9,7 @@
           {{productTitle}}
         </li>
     </ul>
-    <div class="content-header text-left">Add New Product </div>
+    <div class="content-header text-left">{{productTitle}}</div>
 </div>
   <div class="copy-data">
       <form class="form">
@@ -163,8 +163,7 @@
                                       <div class="assign-group-dropdown">
                                       <p-dropdown [options]="specialities" formControlName="specialityId"
                                        filter="true" placeholder="Select speciality" [(ngModel)]="selected_speciality"
-                                       styleClass="form-control" 
-                                       [ngClass]="{ 'is-invalid': isSubmittedaddProductForm && signUpControls.specialityId.errors }">
+                                       styleClass="form-control">
                                       </p-dropdown>
                                       </div> 
                                   </div>
@@ -461,6 +460,7 @@
                                   </div>                                   </div>
                         </div>
                     </div>
+                    <form class="form" [formGroup]="variantForm">
                     <div *ngIf="isVariant" class="product-page-listing">
                         <div class="customer-wrapper">
                             <div class="heading-wrapper">
@@ -532,7 +532,7 @@
                                           <input [(ngModel)]="dynamicArray[i].deliveryTime"   [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                         </td> 
                                     <td >
-                                        <i (click)="deleteRow(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
+                                        <i *ngIf="i!=0" (click)="deleteRow(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
                                       </td>
                                 </tr>
                             </tbody>
@@ -551,6 +551,7 @@
                         </div>
                       </div>
                     </div>
+                    </form>
                           <h4 class="form-section"><i class="ft-user"></i>Upsell</h4> 
                           <div class="row">
                              <div class="col-md-6">
@@ -606,7 +607,7 @@
                               </div>
                           </div>
                           </div>
-                      
+                  <form class="form" [formGroup]="quantityBasedDiscountForm" (ngSubmit)="onSubmittedquantityBasedDiscountForm()">
                     <div class="product-page-listing">
                       <h4 class="form-section">Quantity Based Discount</h4>
                       <div class="row">
@@ -637,42 +638,43 @@
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicQuantity; let i = index;">
                                  <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].minQuantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0" />
+                                    <input [(ngModel)]="dynamicQuantity[i].minQuantity" formControlName="minQuantity"  class="form-control" type="number" numbersOnly min="0" />
+                                    <div *ngIf="isSubmittedquantityBasedDiscountForm && (dynamicQuantity[i].minQuantity == 0)" class="invalid-feedback">
+                                      <div *ngIf="signUpControlsQuantity.minQuantity.errors.required">Quantity is required</div>
+                                  </div>
                                   </td>
                                   <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].maxQuantity"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
+                                    <input  [(ngModel)]="dynamicQuantity[i].maxQuantity"  formControlName="maxQuantity" class="form-control" type="number" numbersOnly min="0"/>
                                   </td>
                                   <td>
-                                      <input [(ngModel)]="dynamicQuantity[i].price"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
+                                      <input  [(ngModel)]="dynamicQuantity[i].price"  formControlName="price" class="form-control" type="number" numbersOnly min="0"/>
                                     </td>
                                     <td>
-                                      <input [(ngModel)]="dynamicQuantity[i].walletPrice"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0"/>
+                                      <input  [(ngModel)]="dynamicQuantity[i].walletPrice" formControlName="walletPrice" class="form-control"type="number" numbersOnly min="0"/>
                                     </td>
                                   <td >
-                                      <i (click)="deleteQuantity(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
+                                      <i *ngIf="i!=0" (click)="deleteQuantity(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
                                       <!-- <i (click)="addQuantity(i)" class="fa fa-plus fa-2x"></i> -->
                                     </td>
                               </tr>
-                             
                           </tbody>
-
                       </table>
                       <!-- [disabled]="(checkQuantityValidation())" -->
                       <div class="text-right">
                         <button type="button"  (click)="addQuantity(i)" class="btn btn-raised btn-primary btn-darken-3 white">
-                            <span class="d-lg-block">Add another option{{checkQuantityValidation()}}</span>
+                            <span class="d-lg-block">Add another option</span>
                         </button>
                       </div> 
                     </div>
                   </div>
-                    
+                    </form>
                     <div *ngIf="!editMode" class="form-actions right">
                       <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
                       <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty || validatePN)">Submit</button>
                   </div>
                   <div *ngIf="editMode" class="form-actions right">
-                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
-                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty )">Submit</button>
+                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back   </button>
+                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty && !quantityBasedDiscountForm.dirty)">Submit</button>
                 </div>
                   
                   </form> 

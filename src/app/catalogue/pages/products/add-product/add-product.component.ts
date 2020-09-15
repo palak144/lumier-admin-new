@@ -38,7 +38,9 @@ export class AddProductComponent implements OnInit {
   selectedLanguageId: any;
   productTitle:string;
   addProductForm: FormGroup; 
+  quantityBasedDiscountForm:FormGroup;
   isSubmittedaddProductForm: boolean = false;
+  isSubmittedquantityBasedDiscountForm: boolean = false;
   permissions: any;
   closeResult: string;
   fieldArray: Array<any> = [];
@@ -103,6 +105,7 @@ export class AddProductComponent implements OnInit {
   action: any;
   items: any;
   RelatedItems: any[] =[];
+  variantForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -116,13 +119,14 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
-    this.newDynamic = { variant: "",PNCDE:"",quantity: 0,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+    this.newDynamic = { variant: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
     isQuote:false,deliveryTime:0,sellerFee : 0};
     console.log("new add")
     this.dynamicArray.push(this.newDynamic);
     this.newSeller = {sellerId:'',sellerFee:"",quantity: "", deliveryTime: ""};
     this.dynamicSeller.push(this.newSeller)
     this.newQuantity = {minQuantity:0,maxQuantity:0,price: 0, walletPrice: 0};
+    
     this.dynamicQuantity.push(this.newQuantity);
     this.productTitle = "Add New Product"
     this.dLogo = "assets/img/defaultImg.png";
@@ -158,26 +162,26 @@ if(!this.editMode){
     
   }
 
-  checkQuantityValidation(){
-    if(this.editMode){
-    for(let i=0; i<this.dynamicQuantity.length; i++){
+  // checkQuantityValidation(){
+  //   if(this.editMode){
+  //   for(let i=0; i<this.dynamicQuantity.length; i++){
       
-      if(this.checkIfValidQuantity(this.dynamicQuantity[i].minQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].wallet ) ||
-      this.checkIfValidQuantity(this.dynamicQuantity[i].maxQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].price )){
-      }
-      else{
-        return true
-      }
-    }
-  }
-  else{
-    console.log("return",this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
-    this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price ))
+  //     if(this.checkIfValidQuantity(this.dynamicQuantity[i].minQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].wallet ) ||
+  //     this.checkIfValidQuantity(this.dynamicQuantity[i].maxQuantity ) || this.checkIfValidQuantity(this.dynamicQuantity[i].price )){
+  //     }
+  //     else{
+  //       return true
+  //     }
+  //   }
+  // }
+  // else{
+  //   console.log("return",this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
+  //   this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price ))
 
-   return this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
-      this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price )
-     }
-    }
+  //  return this.checkIfValidQuantity(this.newQuantity.minQuantity ) || this.checkIfValidQuantity(this.newQuantity.wallet ) ||
+  //     this.checkIfValidQuantity(this.newQuantity.maxQuantity ) || this.checkIfValidQuantity(this.newQuantity.price )
+  //    }
+  //   }
   checkIfValid(dataToBeValidated){
     if(dataToBeValidated != null && dataToBeValidated != undefined && dataToBeValidated != ''){
       return false
@@ -321,6 +325,10 @@ else{
   get signUpControls() {
     return this.addProductForm.controls
   }
+  get signUpControlsQuantity() {
+    
+    return this.quantityBasedDiscountForm.controls
+  }
   onSelect(event) {
     
    ( event.target.checked ) ?  this.isVariant = true :  this.isVariant = false
@@ -371,9 +379,11 @@ onSelectVariantSale(event){
     let remove = {id , fileURL}
     this.productService.removeImage(remove).subscribe(
       (success)=>{
+        debugger
   this.selected_catelogue = "undefined"
     },
       (error)=>{
+        debugger
       }
     )
     return true;
@@ -404,6 +414,53 @@ onSelectVariantSale(event){
       element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
+  onSubmittedquantityBasedDiscountForm(){
+    
+    if (this.quantityBasedDiscountForm.invalid) {
+      let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
+      this.scrollToElement(invalidFields[1]);
+      return
+    }
+  }
+  checkVariantData(dynamicArray){
+    
+      for(let i= 1 ; i<=(dynamicArray.length) ; i++){
+      const found = dynamicArray.find(el => el.PNCDE == "" || el.variant == "" || el.quantity == (0 || null) ) ;
+     
+      if (found) {
+        this.toastr.error("Enter required fields of variant");
+        return true
+      }
+    }
+    var valueArr = dynamicArray.map(function(item){ return item.PNCDE });
+    var isDuplicate = valueArr.some(function(item, idx){ 
+        return valueArr.indexOf(item) != idx 
+    });
+    if(isDuplicate){
+      this.toastr.error("PN CDE must be unique of Variants");
+      return true
+    }
+    var valueArr = dynamicArray.map(function(item){ return item.variant });
+    var isDuplicateVariantName = valueArr.some(function(item, idx){ 
+        return valueArr.indexOf(item) != idx 
+    });
+    if(isDuplicateVariantName){
+      this.toastr.error("Name must be unique of Variants");
+      return true
+    }
+    console.log(isDuplicateVariantName)
+    console.log(isDuplicate);
+  }
+  checkQuantityDiscountData(dynamicQuantity){
+      for(let i= 1 ; i<=(dynamicQuantity.length) ; i++){
+      const found = dynamicQuantity.find(el => el.minQuantity == (0 || null) || el.maxQuantity ==  (0 || null)  || el.price ==  (0 || null)  || el.walletPrice ==  (0 || null) ) ;
+     
+      if (found) {
+        this.toastr.error("Enter required fields of quantity based discount");
+        return true
+      }
+    }
+  }
   onSubmitAddProductForm(){
       event.preventDefault();
       
@@ -415,6 +472,23 @@ onSelectVariantSale(event){
         this.scrollToElement(invalidFields[1]);
         return
       }
+      
+      if(this.isVariant == true){
+        if(this.checkVariantData(this.dynamicArray) == true){
+          return
+        }
+        
+     console.log(this.checkVariantData(this.dynamicArray))
+      }
+      if(this.isQuantityDiscount == true){
+        if(this.checkQuantityDiscountData(this.dynamicQuantity) == true){
+          
+          return
+        }
+        
+     console.log(this.checkQuantityDiscountData(this.dynamicQuantity))
+      }
+     
       if(!this.editMode){
         if (this.newSeller.sellerId == 0 || this.checkSellerDetailValidation() || this.newSeller.sellerId == "") {
           this.toastr.error("Seller Details are required")
@@ -434,16 +508,16 @@ onSelectVariantSale(event){
       this.productNameData = this.addProductForm.get('productName').value,
       this.languageIdData = this.addProductForm.get('languageId').value    
       let data=this.addProductForm.value;
-       
+      
        if (this.editMode) {
-         debugger
+         
         data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
        }
        else{
         data.productsRelated = this.productsRelated(this.addProductForm.get('relatedItem').value )
        }
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
-    
+      
        data.quantityDiscounts = this.dynamicQuantity
        data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
 
@@ -498,6 +572,17 @@ onSelectVariantSale(event){
      let walletPrice = 0.00
      let MRP = 0.00
 
+
+     this.quantityBasedDiscountForm = new FormGroup({
+      "minQuantity":new FormControl(null,[Validators.required]), 
+      "maxQuantity":new FormControl(null,[Validators.required]), 
+      "price":new FormControl(null,[Validators.required]), 
+      "walletPrice":new FormControl(null,[Validators.required]), 
+
+    })
+ this.variantForm = new FormGroup({
+   
+ })
 this.addProductForm = new FormGroup({
       "countryId":new FormControl(null,[Validators.required]), 
       "productName": new FormControl( productName, Validators.required), 
@@ -607,7 +692,7 @@ this.addProductForm = new FormGroup({
                 "isQuantityDiscount":this.product.isQuantityDiscount,
                 "relatedItem" : this.productsRelatedEditDisplay(this.product.productsRelated)
              })
-             debugger
+             
             this.selected_catelogue = this.product.catelogue
             this.selected_speciality = this.product.speciality
             this.selected_country= this.product.countryId;
@@ -618,19 +703,19 @@ this.addProductForm = new FormGroup({
             this.selected_languageId = this.product.languageId;
             this.selected_brand = this.product.manufactureId;
             this.selected_sellerId = this.product.sellerId
-            this.dynamicArray = this.product.productVariants
             this.dynamicSeller = this.product.sellerProducts
-            this.dynamicQuantity = this.product.quantityDiscounts
-            // this.autocompleteItemsAsObjects = this.product.productsRelated
-            // console.log("edit data" ,this.autocompleteItemsAsObjects)
+          
            if(this.product.isPackage == true){
                 this.isVariant = true;
+                this.dynamicArray = this.product.productVariants
            }
            if(this.product.isSale == true){
             this.disableSale = false
           }
            if(this.product.isQuantityDiscount == true){
             this.isQuantityDiscount = true;
+            this.dynamicQuantity = this.product.quantityDiscounts
+
           }
           (this.product.UOM == null)?'':this.product.UOM
 
@@ -650,7 +735,7 @@ this.addProductForm = new FormGroup({
         );
       });
     }
-    debugger
+    
       return newArray;
     }
     productsRelatedEditArray(arr: any[]) {
@@ -926,7 +1011,7 @@ addRow(index) {
   
 }
 }
-  this.newDynamic ={ variant: "",PNCDE:"",quantity: 0,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+  this.newDynamic ={ variant: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
   isQuote:false,deliveryTime:0,sellerFee : 0};
   this.dynamicArray.push(this.newDynamic);
   return true;
@@ -986,15 +1071,16 @@ Varient_PNCDE(e){
       this.toastr.error("PN CDE can not be same", 'warning');
     }
   }
-
 }
 addQuantity(index) {  
+  
   this.newQuantity = {minQuantity:0,maxQuantity:0,price:0, walletPrice:0};
   this.dynamicQuantity.push(this.newQuantity);
   return true;
 }
 
 deleteQuantity(index) {
+  
   if(this.dynamicQuantity.length ==1) {
     this.toastr.error("Can't delete the row when there is only one row", 'Warning');
       return false;

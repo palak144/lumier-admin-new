@@ -9,14 +9,12 @@ import * as XLSX from 'xlsx';
 export class ImportProductComponent implements OnInit {
 data = [
   {
-    "productName":"Product 1",
+    "productName":"Admin 1",
     "productLink":"assets/iBulk_Upload_file_Toolv1.xlsm",
     "time":"08-09-2020"
   }
 ]
-
   constructor() { }
-
   ngOnInit() {
   }
   download(){
@@ -41,13 +39,13 @@ data = [
     var tempArr =[]
     
     for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
-        if (jsonData.Sheet1[i].package === 'P'){
+        if (jsonData.Sheet1[i].PV === 'P'){
             counter ++ 
             jsonData.Sheet1[i].elemID = counter
             tempArr.push(jsonData.Sheet1[i])
             
         } 
-        else if (jsonData.Sheet1[i].package ==='V') {
+        else if (jsonData.Sheet1[i].PV ==='V') {
           jsonData.Sheet1[i].elemID = counter
             tempArr.push(jsonData.Sheet1[i])
         }
@@ -55,7 +53,7 @@ data = [
     }
     
       const dataString = JSON.stringify(jsonData.Sheet1);
-      
+      console.log(jsonData.Sheet1)
       console.log(dataString)
     }
     reader.readAsBinaryString(file);
