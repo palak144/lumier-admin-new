@@ -62,9 +62,9 @@
                   <th >Action</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-brand >
+          <ng-template pTemplate="body" let-brand let-i="rowIndex" >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{brand.id}}</td>
+                <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                   <td><span class="ui-column-title">Full Name</span>{{brand.manufacturerName}}</td>
                   <td><span class="ui-column-title">Supply Type</span>{{brand.supplyType.name}}</td>
                   <td><span class="ui-column-title">Country</span>{{brand.country.countryName}}</td>
