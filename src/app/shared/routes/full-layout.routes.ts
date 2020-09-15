@@ -88,15 +88,12 @@ export const Full_ROUTES: Routes = [
     path: 'event',
     // loadChildren: './event/event.module#EventModule'
     loadChildren: () => import('../../event/event.module').then(m => m.EventModule),
-    canActivate: [AuthGuard] 
 
   },
   {
     path: 'questions',
     // loadChildren: './questions/questions.module#QuestionsModule'
-
     loadChildren: () => import('../../questions/questions.module').then(m => m.QuestionsModule),
-    canActivate: [AuthGuard] 
 
   }
 ];

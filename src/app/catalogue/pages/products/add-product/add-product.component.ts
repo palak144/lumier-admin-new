@@ -376,7 +376,8 @@ onSelectVariantSale(event){
       accept: () => {
         var fileURL = this.selected_catelogue
     var id = 0
-    let remove = {id , fileURL}
+    var productId = this.id;
+    let remove = {id , productId , fileURL}
     this.productService.removeImage(remove).subscribe(
       (success)=>{
         debugger

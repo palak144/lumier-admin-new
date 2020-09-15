@@ -24,6 +24,7 @@ data = [
   }
 ]
   datastring: string;
+  file: any;
 
   constructor(  private activateRoute : ActivatedRoute,
     private utilityService:UtilityService, private ProductService:ProductService, private toastr: ToastrService) { }
@@ -40,40 +41,44 @@ data = [
    }
   onFileChange(ev) {
     
-    let workBook = null;
-    let jsonData = null;
-    const reader = new FileReader();
-    const file = ev.target.files[0];
-    reader.onload = (event) => {
-      const data = reader.result;
-      workBook = XLSX.read(data, { type: 'binary' });
-      jsonData = workBook.SheetNames.reduce((initial, name) => {
-        const sheet = workBook.Sheets[name];
-        initial[name] = XLSX.utils.sheet_to_json(sheet);
-        return initial;
-      }, {});
-      var counter = 0;
-    var tempArr =[]
-    
-    for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
-        if (jsonData.Sheet1[i].PV === 'P'){
-            counter ++ 
-            jsonData.Sheet1[i].elemID = counter
-            tempArr.push(jsonData.Sheet1[i])
-            
-        } 
-        else if (jsonData.Sheet1[i].PV ==='V') {
-          jsonData.Sheet1[i].elemID = counter
-            tempArr.push(jsonData.Sheet1[i])
+    this.file = ev.target.files[0];
+
+      }
+      convertData(){
+        let workBook = null;
+        let jsonData = null;
+        const reader = new FileReader();
+        debugger
+        reader.onload = (event) => {
+          const data = reader.result;
+          workBook = XLSX.read(data, { type: 'binary' });
+          jsonData = workBook.SheetNames.reduce((initial, name) => {
+            const sheet = workBook.Sheets[name];
+            debugger
+            initial[name] = XLSX.utils.sheet_to_json(sheet);
+            return initial;
+          }, {});
+          var counter = 0;
+        var tempArr =[]
+        
+        for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
+            if (jsonData.Sheet1[i].PV === 'P'){
+                counter ++ 
+                jsonData.Sheet1[i].elemID = counter
+                tempArr.push(jsonData.Sheet1[i])
+            } 
+            else if (jsonData.Sheet1[i].PV ==='V') {
+              jsonData.Sheet1[i].elemID = counter
+                tempArr.push(jsonData.Sheet1[i])
+            }
+            jsonData.Sheet1[i].rowNumber = i+1
         }
-        jsonData.Sheet1[i].rowNumber = i+1
-    }
-    
-      const dataString = JSON.stringify(jsonData.Sheet1);
-      this.datastring=dataString;
-      console.log(dataString)
-    }
-    reader.readAsBinaryString(file);
+        
+          const dataString = JSON.stringify(jsonData.Sheet1);
+          this.datastring = dataString;
+          console.log(dataString)
+        }
+        reader.readAsBinaryString(this.file);
       }
       onSubmitFileForm()
       {
@@ -81,12 +86,12 @@ data = [
         if (this.addimportForm.invalid) {
           return
         }
-        console.log(this.addimportForm.value);
-        const frmData = new FormData();
+        this.convertData()
+        const formData = new FormData();
      
-        frmData.append("importfile", this.datastring);
-        console.log(frmData);
-        this.ProductService.ImportFileData(frmData).pipe(takeUntil(this._unsubscribe)).subscribe(
+        formData.append("importfile", this.datastring);
+        console.log(formData);
+        this.ProductService.ImportFileData(formData).pipe(takeUntil(this._unsubscribe)).subscribe(
           (response) => {
       console.log(response);
       this.toastr.success('File Upload Successfully!');

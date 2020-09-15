@@ -1,12 +1,12 @@
 
-import { BannerService } from 'app/shared/services/website-element/banner.service';
+import { BannerService } from '../../../../shared/services/website-element/banner.service';
 import { Component, OnInit, LOCALE_ID, Inject} from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { CommonServiceService } from '../../../../shared/services/common-service.service';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -113,8 +113,8 @@ export class AddBannerComponent implements OnInit {
       if (this.addBannerForm.invalid) {
         return
       }
-
-      let noEndDate = (this.addBannerForm.get('endDate').value == true) ? this.addBannerForm.get('endDate').value : "2099/12/01"
+debugger
+      let noEndDate = (this.addBannerForm.get('noEndDate').value == true) ? "2099/12/01" :  this.addBannerForm.get('endDate').value 
 
       this.addBannerFormDetails = {
         "name": this.addBannerForm.get('name').value,

@@ -141,7 +141,7 @@ updateProductStatus(statusData: {id: Number; adminStatus: Number }){
       );
   }
 
- removeImage(data: {id: Number; fileURL: string }){
+ removeImage(data: {fileURL: string }){
    
   return this.http.post(this.baseUrl + 'admin/removeProductImage', data)
   .pipe(

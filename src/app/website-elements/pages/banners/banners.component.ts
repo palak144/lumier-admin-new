@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, startWith, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Table } from 'primeng/table';
-import { UtilityService } from 'app/shared/utility/utility.service';
-import { BannerService } from 'app/shared/services/website-element/banner.service';
+import { UtilityService } from '../../../shared/utility/utility.service';
+import { BannerService } from '../../../shared/services/website-element/banner.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 
 @Component({
