@@ -55,9 +55,9 @@
                   <th style="width: 9em;">Action</th>
               </tr>
           </ng-template> 
-          <ng-template pTemplate="body" let-category >
+          <ng-template pTemplate="body" let-category let-i="rowIndex" >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{category.id}}</td>
+                <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                   <td><span class="ui-column-title">Parent Category</span>{{category.parentCategory.categoryName}}</td>
                   <td><span class="ui-column-title">Name</span>{{category.categoryName}}</td>
                   <td><span class="ui-column-title">Country</span>{{category.country.countryName}}</td>

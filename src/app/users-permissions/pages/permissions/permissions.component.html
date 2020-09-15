@@ -32,9 +32,9 @@
                     <th style="width:6em">Action</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user>
+            <ng-template pTemplate="body" let-user let-i="rowIndex">
                 <tr>
-                    <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{user.groupId}}</td>
+                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                     <td><span class="ui-column-title">Permission Group Name</span>{{user.groupName}}</td>
                     <td ><span class="ui-column-title">Country</span>
                         <ng-container *ngFor="let country of user.countries">

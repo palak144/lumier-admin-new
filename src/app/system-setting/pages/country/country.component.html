@@ -39,9 +39,9 @@
                     <th style="width: 6em;">Edit</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-country >
+            <ng-template pTemplate="body" let-country let-i="rowIndex" >
                 <tr>
-                    <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{country.id}}</td>
+                    <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                     <td><span class="ui-column-title">Country Name</span>{{country.countryName}}</td>
                     <td><span class="ui-column-title">Currency</span>
                         <ng-container *ngFor="let currency of country.currency">

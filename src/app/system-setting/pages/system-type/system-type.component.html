@@ -51,9 +51,9 @@
                   <th style="width:8em">Edit</th>
               </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-customer >
+          <ng-template pTemplate="body" let-customer let-i="rowIndex" >
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{customer.id}}</td>
+                <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                  
                   <td><span class="ui-column-title">Country</span>{{customer.country.countryName}}</td>
                   <td><span class="ui-column-title">Supply Type</span>{{customer.name}}</td>

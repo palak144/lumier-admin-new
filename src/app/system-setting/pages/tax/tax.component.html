@@ -47,9 +47,9 @@
                   <th style="width: 7em;">Action</th> 
               </tr> 
           </ng-template>
-          <ng-template pTemplate="body" let-tax >
+          <ng-template pTemplate="body" let-tax   let-i="rowIndex">
               <tr>
-                  <td class="order-date-wrapper"><span class="ui-column-title">S. No</span>{{tax.id}}</td>
+                <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
                   <td><span class="ui-column-title">Tax Code</span>{{tax.taxCode}}</td>
                   <td><span class="ui-column-title">Rate</span>{{tax.taxRate}}</td>
                   <td><span class="ui-column-title">Country</span>{{tax.country.countryName}}</td>
