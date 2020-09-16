@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UtilityService } from 'app/shared/utility/utility.service'; 
+import { UtilityService } from '../../../shared/utility/utility.service'; 
 import { CategoryService } from '../../../shared/services/catalogue/category.service';
 import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/api';
-import { ExcelServiceService } from 'app/shared/services/excel-service.service';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { ExcelServiceService } from '../../../shared/services/excel-service.service';
+import { CommonServiceService } from '../../../shared/services/common-service.service';
 
 interface Action {
   name:string, 
@@ -62,7 +62,6 @@ export class CategoriesComponent implements OnInit {
    this.categoryService.updateCategoryStatus(statusData).subscribe(
      (success:any)=>
      {
-     console.log(success);
       this.ngOnInit()
 } )
     }
@@ -82,7 +81,6 @@ export class CategoriesComponent implements OnInit {
       switchMap((term: string) => this.categoryService.getAllCategoriesSearch(this.page, term, this.exportAll, this.countryId
       ))
     ).subscribe((success: any) => {
-      console.log(success);
       this.categoriesList = success.data.results;
       this.totalCount = success.data.total;
       this.utilityService.resetPage();
@@ -93,7 +91,6 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryService.getAllCategories(page).subscribe(
       (success: any) => {
-        console.log(success);
         
         this.categoriesList = success.data.results;
         this.totalCount = success.data.total;
@@ -158,7 +155,6 @@ export class CategoriesComponent implements OnInit {
     }
   }
   filterGlobal(searchTerm) {
-    console.log(searchTerm);
        this.primeNGTable.first = 0;
        this.page = 0; 
        this.searchTerms$.next(searchTerm);

@@ -50,11 +50,6 @@ export class AddCancelComponent implements OnInit {
         {
           this.cancelTitle = "Add New Cancel Reason";
         }
-        // if(this.id)
-        // {
-        //   this.cancelTitle = "Edit Cancel";
-        //   this.getCancelDetails(this.id);
-        // }
          this.initForm()
          this.getCountry(); 
       }
@@ -74,11 +69,9 @@ export class AddCancelComponent implements OnInit {
     if (this.addCancelForm.invalid) {
       return
     }
-    console.log(this.addCancelForm.value);
     let data=this.addCancelForm.value;
     this.CancelReasonService.addCancel(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
-        console.log(success);
         this.toastr.success('Cancel Created Successfully!');
         this.router.navigate(['/systemsetting/cancel']);
       },
@@ -116,8 +109,6 @@ getLanguage()
   this.commonService.getCountryLanguage(this.selectedCountryId).pipe(takeUntil(this._unsubscribe)).subscribe(
     (success:any) => {
       this.languages = this.arrayOfStringsToArrayOfObjects(success.data);
-      console.log(this.languages);
-      
     },
     error => {
     }
@@ -135,35 +126,11 @@ arrayOfStringsToArrayOfObjects(arr: any[]) {
 }
 getlanguage(event:any)
 {
- 
-
-  console.log(event.value);
   this.selectedLanguageId = event.value ;
-  console.log(this.selectedLanguageId);
  
 }
 getdropdown1(event:any){ 
   this.selectedCountryId = event.value
-console.log(this.selectedCountryId);
 this.getLanguage();
   }
-//   getCancelDetails(id) {
-//     this.CancelReasonService.getCancelDetails(id).pipe(takeUntil(this._unsubscribe)).subscribe(
-//       (success:any) => {
-//         console.log(success);
-//         this.cancelData = success.data;
-          
-     
-      
-//         this.patchForm(this.cancelData);
-  
-//       },
-//       error => {
-//       }
-//     )
-//   }
-//   patchForm(item)
-//   {
-// console.log(item);
-//   }
 }

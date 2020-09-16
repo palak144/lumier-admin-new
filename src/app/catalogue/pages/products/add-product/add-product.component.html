@@ -104,15 +104,6 @@
                                 <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
 
                             </div>
-                                <!-- <div class="form-group">
-                                    <label>SKU/ PN CDE</label><span class="asterick">*</span> 
-                                    <input type="text" formControlName="PNCDE" class="form-control border-primary" 
-                                    (blur)="PNCDE_Check($event.target.value)" placeholder="PN CDE" >
-                                    <span id="Validations">SKU/ PN CDE must be unique</span>
-                                    <div *ngIf="isSubmittedaddProductForm && signUpControls.PNCDE.errors" class="invalid-feedback">
-                                      <div *ngIf="signUpControls.PNCDE.errors.required">SKU/ PN CDE is required</div>
-                                      </div>
-                                  </div> -->
                             </div>
                            
                           </div>
@@ -285,9 +276,7 @@
                             </div> 
                             </div>
                             <div class="col-md-9">
-                              <h4>Upload queue</h4>
-                              <p>Queue length: {{ uploader?.queue?.length }}</p>
-                              <table class="table">
+                              <table class="table pt-2">
                                 <thead>
                                   <tr>
                                     <th >Name/ Image</th>
@@ -297,10 +286,10 @@
                                 </thead>
                                 <tbody>
                                   <tr>
-                                      <div *ngFor="let item of uploader.queue">
-                                    <td class="text-left"><strong>{{ item?.file?.name | slice:0:15}}</strong></td>
+                                      <div *ngFor="let item of uploader.queue;let i = index;">
+                                    <td class="text-left"><strong>{{ item?.file?.name}}</strong></td>
                                     <td nowrap class="text-left">
-                                      <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="item.remove()">
+                                      <button type="button" class="btn btn-raised btn-danger btn-sm" (click)="item.remove()" (click)="removeAddedImage(i)">
                                         <span class="fa fa-trash"></span>
                                       </button>
                                     </td>
@@ -308,7 +297,6 @@
                                   </tr>
                                   <tr *ngIf="editMode && checkIfImage(product) && checkIfImage(product.productImage) && product.productImage.length > 0" >
                                   <div *ngFor="let item of product.productImage; let i = index;">
-                                    <!-- {{ (item.image.length>60)? (item.image | slice:0:60)+'..':(item.image)}} -->
                                     <td class="text-left"><a style="color: #007ad9;" (click)="newtab(item.image)">Image {{i+1}}</a></td>
                                    <td nowrap class="text-right">
                                     <button type="button" *ngIf="!item.isDefault" class="btn btn-raised btn-info btn-sm"  (click)="setDefault1('true',item.productId,item.id)">
@@ -317,9 +305,6 @@
                                     <button type="button"  *ngIf="item.isDefault" class="btn btn-raised btn-success btn-sm"  >
                                       Default
                                     </button>
-                                          <!-- <span class="text-blue cursor-pointer col-sm-2 pl-0" *ngIf="!item.isDefault"
-                                          (click)="setDefault1('true',item.productId,item.id)">Set as Default</span>
-                                          <span class="text-blue col-sm-2 pl-0" *ngIf="item.isDefault">Default</span> -->
                                     </td>
                                     <td nowrap class="text-left">
                                       <button type="button" class="btn btn-raised btn-danger btn-sm"  (click)="removeImage(i,item.id, item.image)">
@@ -390,7 +375,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div *ngIf="(isSubmittedaddProductForm && checkSellerDetailValidation()) || (isSubmittedaddProductForm && sellerDetail)" class="invalid-feedback mt-0">
+                            <div *ngIf="(isSubmittedaddProductForm && sellerDetail)" class="invalid-feedback mt-0">
                                 <div >Seller Details are required</div>
                             </div> 
                           </div>
@@ -439,14 +424,6 @@
                                     </div>
                                 </div>
                         </div>
-                          <!-- <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Ribbon Text</label>
-                                    <input type="text" class="form-control border-primary" formControlName="ribbenText" placeholder="Ribbon Text"> 
-                                </div>
-                            </div>
-                          </div> -->
                           <h4 class="form-section"><i class="ft-user"></i>Variants</h4> 
                           <div class="row">
                           <div class="col-md-6">
@@ -460,7 +437,6 @@
                                   </div>                                   </div>
                         </div>
                     </div>
-                    <!-- <form class="form" [formGroup]="variantForm" (ngSubmit)="onSubmittedVariantForm()"> -->
                     <div *ngIf="isVariant" class="product-page-listing">
                         <div class="customer-wrapper">
                             <div class="heading-wrapper">
@@ -495,7 +471,6 @@
                                         <input [(ngModel)]="dynamicArray[i].MRP" value={{variantPriceZero}} [attr.disabled]="dynamicArray[i].isQuote == true ? '' : null" [ngModelOptions]="{standalone: true}"  class="form-control"  type="number" numbersOnly min="0" />
                                       </td>
                                       <td>
-                                        <!-- <input [(ngModel)]="dynamicArray[i].sellPrice"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/> -->
                                         <fieldset>
                                             <div class="input-group mb-0">
                                               <div class="input-group-prepend">
@@ -537,11 +512,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <div *ngIf="(checkVariantValidation() && isSubmittedaddProductForm) || (isSubmittedaddProductForm && varientPN)" class="invalid-feedback mt-0">
-                            <div>Variant Name, PNCDE and Quantity required</div>
-                        </div>  -->
                         <div class="text-right">
-                          <!-- [disabled]="checkVariantValidation() || varientPN" -->
                           <button type="button" (click)="addRow(i)" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
@@ -551,7 +522,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- </form> -->
                           <h4 class="form-section"><i class="ft-user"></i>Upsell</h4> 
                           <div class="row">
                              <div class="col-md-6">
@@ -571,7 +541,7 @@
                                       <label>Related Products</label>
                                       <tag-input formControlName="relatedItem"
                                        placeholder="Enter a Search Term"
-                                      (input)="filterRelatedProductsEdit($event.target.value)">
+                                      (input)="filterRelatedProducts($event.target.value)">
                                           <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" 
                                           [displayBy]="'itemName'" [identifyBy]="'id'" [autocompleteItems]="autocompleteItemsAsObjects">
                                             <ng-template let-item="item" let-index="index">
@@ -620,7 +590,6 @@
                                 </div>                                   </div>
                       </div>
                   </div>
-                  <!-- <form class="form" [formGroup]="quantityBasedDiscountForm" (ngSubmit)="onSubmittedquantityBasedDiscountForm()"> -->
                       <div *ngIf="isQuantityDiscount" class="customer-wrapper">
                           <div class="heading-wrapper">
                           </div>
@@ -653,19 +622,16 @@
                                     </td>
                                   <td >
                                       <i *ngIf="i!=0" (click)="deleteQuantity(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
-                                      <!-- <i (click)="addQuantity(i)" class="fa fa-plus fa-2x"></i> -->
                                     </td>
                               </tr>
                           </tbody>
                       </table>
-                      <!-- [disabled]="(checkQuantityValidation())" -->
                       <div class="text-right">
                         <button type="button"  (click)="addQuantity(i)" class="btn btn-raised btn-primary btn-darken-3 white">
                             <span class="d-lg-block">Add another option</span>
                         </button>
                       </div> 
                     </div>
-                    <!-- </form> -->
                     <div *ngIf="!editMode" class="form-actions right">
                       <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
                       <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty || validatePN)">Submit</button>

@@ -113,7 +113,6 @@ export class AddBannerComponent implements OnInit {
       if (this.addBannerForm.invalid) {
         return
       }
-debugger
       let noEndDate = (this.addBannerForm.get('noEndDate').value == true) ? "2099/12/01" :  this.addBannerForm.get('endDate').value 
 
       this.addBannerFormDetails = {

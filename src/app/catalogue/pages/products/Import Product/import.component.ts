@@ -44,7 +44,6 @@ data = [
     
     this.file = ev.target.files[0];
     this.fileName = this.file.name
-    debugger
       }
       convertData(){
         let workBook = null;
@@ -78,7 +77,6 @@ data = [
         
           const dataString = JSON.stringify(jsonData.Sheet1);
           this.datastring = dataString;
-          console.log(dataString)
         }
         reader.readAsBinaryString(this.file);
       }
@@ -92,14 +90,11 @@ data = [
         const formData = new FormData();
      
         formData.append("importfile", this.datastring);
-        console.log(formData);
         this.ProductService.ImportFileData(formData).pipe(takeUntil(this._unsubscribe)).subscribe(
           (response) => {
-      console.log(response);
       this.toastr.success('File Upload Successfully!');
           },
           error => {
-            console.log(error);
             this.toastr.error('error',error.error.message);
           }
         )

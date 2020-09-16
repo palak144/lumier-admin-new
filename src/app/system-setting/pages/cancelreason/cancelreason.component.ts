@@ -47,7 +47,6 @@ export class CancelreasonComponent implements OnInit {
     this.router.navigate(['../new-cancel'], { relativeTo: this.activateRoute })
   }
   filterGlobal(searchTerm) {
-    console.log(searchTerm);
     // indexing starts from 0 in primeng
     this.primeNGTable.first = 0;
     this.page = 0;
@@ -84,7 +83,6 @@ export class CancelreasonComponent implements OnInit {
 
     this.CancelReasonService.getAllCancel(page).subscribe(
       (success: any) => {
-        console.log(success)
         this.cancelList = success.data.results;
 
         this.totalCount = success.data.total;
@@ -103,7 +101,6 @@ export class CancelreasonComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe((success: any) => {
-        console.log(success);
         this.cancelList = success.data.results;
         this.totalCount = success.data.total;
         this.utilityService.resetPage();
