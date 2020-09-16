@@ -28,6 +28,8 @@ export class ImportProductComponent implements OnInit {
   data: any;
   importData: any;
 
+  fileName: any;
+
   constructor(  private activateRoute : ActivatedRoute,
     private utilityService:UtilityService, private ProductService:ProductService, private toastr: ToastrService) { }
 
@@ -45,19 +47,20 @@ export class ImportProductComponent implements OnInit {
   onFileChange(ev) {
     
     this.file = ev.target.files[0];
-
+    this.fileName = this.file.name
+    debugger
       }
       convertData(){
         let workBook = null;
         let jsonData = null;
         const reader = new FileReader();
-        debugger
+        
         reader.onload = (event) => {
           const data = reader.result;
           workBook = XLSX.read(data, { type: 'binary' });
           jsonData = workBook.SheetNames.reduce((initial, name) => {
             const sheet = workBook.Sheets[name];
-            debugger
+            
             initial[name] = XLSX.utils.sheet_to_json(sheet);
             return initial;
           }, {});

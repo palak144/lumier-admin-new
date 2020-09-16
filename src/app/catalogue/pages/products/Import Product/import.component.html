@@ -27,9 +27,11 @@
 											<div class="custom-file  mx-auto d-block">
                                                 <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                                 class="custom-file-input" id="inputGroupFile01" formControlName="file" 
-                                                 (change)="onFileChange($event)" value={{fileName}}
+                                                 (change)="onFileChange($event)"
                                                 placeholder="Upload file" [ngClass]="{ 'is-invalid': isSubmittedaddImportForm && importControls.file.errors }" >
-												<label class="custom-file-label" for="inputGroupFile01">{{fileName}}</label>
+                                                <label [hidden]="addimportForm.invalid" class="custom-file-label" for="inputGroupFile01" >{{fileName}}</label>
+                                                <label [hidden]="!addimportForm.invalid" class="custom-file-label" for="inputGroupFile01" >Choose File</label>
+
                                               </div>
                                               <div *ngIf="isSubmittedaddImportForm && importControls.file.errors" class="invalid-feedback">
                                                 <div *ngIf="importControls.file.errors.required">file is required</div>

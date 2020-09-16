@@ -416,7 +416,15 @@ onSelectVariantSale(event){
     }
   }
   onSubmittedquantityBasedDiscountForm(){
-    
+    debugger
+    if (this.quantityBasedDiscountForm.invalid) {
+      let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
+      this.scrollToElement(invalidFields[1]);
+      return
+    }
+  }
+  onSubmittedVariantForm(){
+    debugger
     if (this.quantityBasedDiscountForm.invalid) {
       let invalidFields = [].slice.call(document.getElementsByClassName('ng-invalid'));
       this.scrollToElement(invalidFields[1]);
@@ -454,7 +462,7 @@ onSelectVariantSale(event){
   }
   checkQuantityDiscountData(dynamicQuantity){
       for(let i= 1 ; i<=(dynamicQuantity.length) ; i++){
-      const found = dynamicQuantity.find(el => el.minQuantity == (0 || null) || el.maxQuantity ==  (0 || null)  || el.price ==  (0 || null)  || el.walletPrice ==  (0 || null) ) ;
+      const found = dynamicQuantity.find(el => el.minQuantity == (0 || null) || el.maxQuantity ==  (0 || null)  || el.price ==  (0 || null) ) ;
      
       if (found) {
         this.toastr.error("Enter required fields of quantity based discount");
@@ -571,19 +579,27 @@ onSelectVariantSale(event){
      let catelogue = ""
      let sellPrice = 0.00
      let walletPrice = 0.00
-     let MRP = 0.00
 
+//      this.quantityBasedDiscountForm = new FormGroup({
+//       "minQuantity":new FormControl(null,[Validators.required]), 
+//       "maxQuantity":new FormControl(null,[Validators.required]), 
+//       "price":new FormControl(null,[Validators.required]), 
+//       "walletPrice":new FormControl(null), 
 
-     this.quantityBasedDiscountForm = new FormGroup({
-      "minQuantity":new FormControl(null,[Validators.required]), 
-      "maxQuantity":new FormControl(null,[Validators.required]), 
-      "price":new FormControl(null,[Validators.required]), 
-      "walletPrice":new FormControl(null,[Validators.required]), 
+//     })
+//  this.variantForm = new FormGroup({
+//   "variant":new FormControl(null,[Validators.required]), 
+//   "PNCDE":new FormControl(null,[Validators.required]), 
+//   "quantity":new FormControl(null,[Validators.required]), 
+//   "MRP":new FormControl(null),
+//   "isSale":new FormControl(null), 
+//   "sellPrice":new FormControl(null), 
+//   "walletPrice":new FormControl(null), 
+//   "isQuote":new FormControl(null),
+//   "sellerFee":new FormControl(null), 
+//   "deliveryTime":new FormControl(null), 
+//  })
 
-    })
- this.variantForm = new FormGroup({
-   
- })
 this.addProductForm = new FormGroup({
       "countryId":new FormControl(null,[Validators.required]), 
       "productName": new FormControl( productName, Validators.required), 

@@ -460,7 +460,7 @@
                                   </div>                                   </div>
                         </div>
                     </div>
-                    <form class="form" [formGroup]="variantForm">
+                    <!-- <form class="form" [formGroup]="variantForm" (ngSubmit)="onSubmittedVariantForm()"> -->
                     <div *ngIf="isVariant" class="product-page-listing">
                         <div class="customer-wrapper">
                             <div class="heading-wrapper">
@@ -469,7 +469,7 @@
                             <thead>
                                 <tr class="table-coustom-style">
                                     <th style="width:20em;">Name <span class="asterick"> *</span></th>
-                                    <th style="width:8em;">SKU/PN Code</th>
+                                    <th style="width:8em;">SKU/PN Code <span class="asterick"> *</span></th>
                                     <th style="width:8em;">Quantity/Stock <span class="asterick"> *</span></th>
                                     <th style="width:10em;">Price</th>
                                     <th style="width:13em;">Compare at Price </th>
@@ -551,7 +551,7 @@
                         </div>
                       </div>
                     </div>
-                    </form>
+                    <!-- </form> -->
                           <h4 class="form-section"><i class="ft-user"></i>Upsell</h4> 
                           <div class="row">
                              <div class="col-md-6">
@@ -607,8 +607,6 @@
                               </div>
                           </div>
                           </div>
-                  <form class="form" [formGroup]="quantityBasedDiscountForm" (ngSubmit)="onSubmittedquantityBasedDiscountForm()">
-                    <div class="product-page-listing">
                       <h4 class="form-section">Quantity Based Discount</h4>
                       <div class="row">
                         <div class="col-md-6">
@@ -622,6 +620,7 @@
                                 </div>                                   </div>
                       </div>
                   </div>
+                  <!-- <form class="form" [formGroup]="quantityBasedDiscountForm" (ngSubmit)="onSubmittedquantityBasedDiscountForm()"> -->
                       <div *ngIf="isQuantityDiscount" class="customer-wrapper">
                           <div class="heading-wrapper">
                           </div>
@@ -631,26 +630,26 @@
                                   <th>Minimum Quantity<span class="asterick"> *</span></th>
                                   <th>Maximum Quantity<span class="asterick"> *</span></th>
                                   <th>Price<span class="asterick"> *</span></th> 
-                                  <th>Wallet Price<span class="asterick"> *</span></th> 
+                                  <th>Wallet Price</th> 
                                   <th>Action</th>
                               </tr>
                           </thead>
                           <tbody>
                                <tr *ngFor="let dynamic of dynamicQuantity; let i = index;">
                                  <td>
-                                    <input [(ngModel)]="dynamicQuantity[i].minQuantity" formControlName="minQuantity"  class="form-control" type="number" numbersOnly min="0" />
+                                    <input [(ngModel)]="dynamicQuantity[i].minQuantity"  [ngModelOptions]="{standalone: true}"  class="form-control" type="number" numbersOnly min="0" />
                                     <div *ngIf="isSubmittedquantityBasedDiscountForm && (dynamicQuantity[i].minQuantity == 0)" class="invalid-feedback">
                                       <div *ngIf="signUpControlsQuantity.minQuantity.errors.required">Quantity is required</div>
                                   </div>
                                   </td>
                                   <td>
-                                    <input  [(ngModel)]="dynamicQuantity[i].maxQuantity"  formControlName="maxQuantity" class="form-control" type="number" numbersOnly min="0"/>
+                                    <input  [(ngModel)]="dynamicQuantity[i].maxQuantity"   [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                   </td>
                                   <td>
-                                      <input  [(ngModel)]="dynamicQuantity[i].price"  formControlName="price" class="form-control" type="number" numbersOnly min="0"/>
+                                      <input  [(ngModel)]="dynamicQuantity[i].price"  [ngModelOptions]="{standalone: true}" class="form-control" type="number" numbersOnly min="0"/>
                                     </td>
                                     <td>
-                                      <input  [(ngModel)]="dynamicQuantity[i].walletPrice" formControlName="walletPrice" class="form-control"type="number" numbersOnly min="0"/>
+                                      <input  [(ngModel)]="dynamicQuantity[i].walletPrice"  [ngModelOptions]="{standalone: true}" class="form-control"type="number" numbersOnly min="0"/>
                                     </td>
                                   <td >
                                       <i *ngIf="i!=0" (click)="deleteQuantity(i)" class="ft-trash-2 ft-2x iconDelete" > </i>
@@ -666,15 +665,14 @@
                         </button>
                       </div> 
                     </div>
-                  </div>
-                    </form>
+                    <!-- </form> -->
                     <div *ngIf="!editMode" class="form-actions right">
                       <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
                       <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty || validatePN)">Submit</button>
                   </div>
                   <div *ngIf="editMode" class="form-actions right">
-                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back   </button>
-                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty && !quantityBasedDiscountForm.dirty)">Submit</button>
+                    <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
+                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty)">Submit</button>
                 </div>
                   
                   </form> 
