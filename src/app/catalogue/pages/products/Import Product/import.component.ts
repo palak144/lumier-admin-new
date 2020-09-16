@@ -16,15 +16,17 @@ export class ImportProductComponent implements OnInit {
   addimportForm: FormGroup;
   isSubmittedaddImportForm:boolean=false;
   private _unsubscribe = new Subject<boolean>();
-data = [
-  {
-    "productName":"Admin 1",
-    "productLink":"assets/iBulk_Upload_file_Toolv1.xlsm",
-    "time":"08-09-2020"
-  }
-]
+// data = [
+//   {
+//     "productName":"Admin 1",
+//     "productLink":"assets/iBulk_Upload_file_Toolv1.xlsm",
+//     "time":"08-09-2020"
+//   }
+// ]
   datastring: string;
   file: any;
+  data: any;
+  importData: any;
 
   constructor(  private activateRoute : ActivatedRoute,
     private utilityService:UtilityService, private ProductService:ProductService, private toastr: ToastrService) { }
@@ -34,6 +36,7 @@ data = [
  
       "file": new FormControl('', Validators.required),
     })
+    this.GetImportFileForm();
   }
   download(){
       
@@ -79,6 +82,23 @@ data = [
           console.log(dataString)
         }
         reader.readAsBinaryString(this.file);
+      }
+   GetImportFileForm()
+      {
+        
+        this.ProductService.GetImportFileForm().pipe(takeUntil(this._unsubscribe)).subscribe(
+          (response) => {
+      console.log(response);
+    this.importData=response;
+    console.log(this.importData);
+       this.data=this.importData.data;
+       console.log(this.data);
+          },
+          error => {
+            console.log(error);
+            this.toastr.error('error',error.error.message);
+          }
+        )
       }
       onSubmitFileForm()
       {

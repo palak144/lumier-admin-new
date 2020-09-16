@@ -59,10 +59,10 @@
                   <ng-template pTemplate="body" let-data let-i="rowIndex">
                       <tr>
                           <td>{{i+1}}</td>
-                          <td>{{data.productName}}</td>
-                          <td><a >{{data.productLink}}</a>
+                          <td>{{data.name}}</td>
+                          <td><a >{{data.file}}</a>
                           </td>
-                          <td>{{data.time}}</td>
+                          <td>{{data.created_at| date : 'mediumDate'}}</td>
                       </tr>
                   </ng-template>
               </p-table>
