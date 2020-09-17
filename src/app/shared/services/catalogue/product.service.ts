@@ -78,4 +78,13 @@ ImportFileData(data)
     catchError(this.errorHandler.handleError)
   );
 }
+
+GetImportFileForm()
+{
+  return this.http.get(this.baseUrl + 'admin/importErrorFile' )
+  .pipe(
+    
+    catchError(this.errorHandler.handleError)
+  );
+}
 }
