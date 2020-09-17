@@ -95,5 +95,11 @@ export const Full_ROUTES: Routes = [
     // loadChildren: './questions/questions.module#QuestionsModule'
     loadChildren: () => import('../../questions/questions.module').then(m => m.QuestionsModule),
 
+  },
+  {
+    path: 'sale',
+    // loadChildren: './questions/questions.module#QuestionsModule'
+    loadChildren: () => import('../../sale/sale.module').then(m => m.SaleModule ),
+
   }
 ];

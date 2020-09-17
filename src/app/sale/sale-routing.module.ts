@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SaleLayoutComponent } from '../sale/sale-layout/sale-layout.component';
-
+import { QuotationComponent } from './pages/quotation/quotation.component';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +12,10 @@ const routes: Routes = [
         redirectTo: 'sale',
         pathMatch: 'full'
       },
+      {
+        path: 'quotations',
+        component: QuotationComponent
+      }
     
     ]
   } 
@@ -21,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SystemSettingRoutingModule {}
+export class SaleRoutingModule {}

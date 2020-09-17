@@ -92,7 +92,17 @@ export const ROUTES: RouteInfo[] = [
               submenu: [
                 { path: '/website-elements/banners', title: 'Banners', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             ]},
-             
+            {
+              path: '/sale',
+              title: 'Sale',
+              icon: 'ft-users',
+              class: 'has-sub',
+              badge: '',
+              badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
+              isExternalLink: false,
+              submenu: [
+                { path: '/sale/quotations', title: 'Quotation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            ]}, 
               
 
   // {

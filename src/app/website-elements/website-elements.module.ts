@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';0
-import { SharedModule } from 'app/shared/shared.module';
+import { SharedModule } from '../../app/shared/shared.module';
 
 import { WebsiteElementsRoutingModule } from './website-elements-routing.module';
 import { WebsiteElementsLayoutComponent } from './website-elements-layout/website-elements-layout/website-elements-layout.component';
