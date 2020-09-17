@@ -59,11 +59,15 @@
                            <th style="width:10em;">Time Stamp</th>
                       </tr>
                   </ng-template>
-                  <ng-template pTemplate="body" let-data let-i="rowIndex">
+                  <ng-template pTemplate="body" let-data let-i="rowIndex ">
                       <tr>
                           <td>{{i+1}}</td>
                           <td>{{data.name}}</td>
+<<<<<<< HEAD
                           <td><a style="color: #007ad9;" (click)="newtab(data.file)">{{data.file | slice:-23}}</a>
+=======
+                          <td><a href="#">{{data.file }}</a>
+>>>>>>> c1a7708b919e6e055e725ac1e2bcf5fa72009a8c
                           </td>
                           <td>{{data.created_at| date : 'mediumDate'}}</td>
                       </tr>
@@ -75,3 +79,4 @@
     </div>
     </div>
     </div>
+  
