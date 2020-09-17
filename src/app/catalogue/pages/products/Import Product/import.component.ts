@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service'; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs';
+import { Table } from 'primeng/table';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-import',
