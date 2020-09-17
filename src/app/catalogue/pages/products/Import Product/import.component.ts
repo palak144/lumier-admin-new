@@ -84,6 +84,9 @@ export class ImportProductComponent implements OnInit {
         }
         reader.readAsBinaryString(this.file);
       }
+      newtab(path){
+        window.open(path,"_blank");
+      }
    GetImportFileForm()
       {
         

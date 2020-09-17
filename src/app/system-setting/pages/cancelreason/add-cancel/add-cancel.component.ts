@@ -6,7 +6,7 @@ import { CancelReasonService } from '../../../../shared/services/systemSetting/c
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { CommonServiceService } from 'app/shared/services/common-service.service';
+import { CommonServiceService } from '../../../../shared/services/common-service.service';
 interface Country {
   value:number, 
   label:string
@@ -134,3 +134,4 @@ getdropdown1(event:any){
 this.getLanguage();
   }
 }
+

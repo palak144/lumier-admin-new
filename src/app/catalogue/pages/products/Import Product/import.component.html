@@ -18,10 +18,10 @@
             </div>
             <div class="card-content">
                 <div class="px-3 pt-3">
-                    <div class="card-body">
-                    	<form class="form" [formGroup]="addimportForm" (ngSubmit)="onSubmitFileForm()">
+                    <div class="card-body ">
+                    	<form class="form " [formGroup]="addimportForm" (ngSubmit)="onSubmitFileForm()">
 							<div class="form-body">
-		                        <div class="row">
+		                        <div class="row ">
 		                            <div class="col-lg-6 col-md-6">
 		                                <fieldset class="form-group">
 											<div class="custom-file  mx-auto d-block">
@@ -38,14 +38,15 @@
                                             </div>
 		                                </fieldset>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-4 col-md-4">
                                         <a style="color: #007ad9;" (click)="download()">Download bulk upload macro file</a>
+                                    </div>
+                                    <div class="right">
+                                        <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addimportForm.dirty" >Submit</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-actions right">
-                                <button type="submit" class="btn btn-raised btn-primary" [disabled]="!addimportForm.dirty" >Submit</button>
-                            </div>
+                         
 		                </form>
                     </div>
              <div class="container pb-3 pr-0 pl-0">
@@ -62,7 +63,7 @@
                       <tr>
                           <td>{{i+1}}</td>
                           <td>{{data.name}}</td>
-                          <td><a >{{data.file}}</a>
+                          <td><a style="color: #007ad9;" (click)="newtab(data.file)">{{data.file | slice:-23}}</a>
                           </td>
                           <td>{{data.created_at| date : 'mediumDate'}}</td>
                       </tr>

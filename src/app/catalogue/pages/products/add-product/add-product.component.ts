@@ -383,10 +383,15 @@ onSelectVariantSale(event){
   }
   checkVariantData(dynamicArray){
       for(let i= 1 ; i<=(dynamicArray.length) ; i++){
-      const found = dynamicArray.find(el => el.PNCDE == "" || el.variant == "" || el.quantity == (0 || null) ) ;
-        
+      const found = dynamicArray.find(el => el.PNCDE == "" || el.variant == "" || el.quantity == null ) ;
+      const found1 = dynamicArray.find(el => el.quantity == 0 ) ;
+  
          if (found) {
         this.toastr.error("Enter required fields of variant");
+        return true
+      }
+      if (found1) {
+        this.toastr.error("Required fields of variant can not be 0");
         return true
       }
     }
@@ -415,9 +420,15 @@ onSelectVariantSale(event){
   }
   checkQuantityDiscountData(dynamicQuantity){
       for(let i= 1 ; i<=(dynamicQuantity.length) ; i++){
-      const found = dynamicQuantity.find(el => el.minQuantity == (0 || null) || el.maxQuantity ==  (0 || null)  || el.price ==  (0 || null) ) ;
+      const found = dynamicQuantity.find(el => el.minQuantity == null || el.maxQuantity ==  null  || el.price == null) ;
+      const found1 = dynamicQuantity.find(el => el.minQuantity == 0 || el.maxQuantity ==  0  || el.price == 0 ) ;
+
       if (found) {
         this.toastr.error("Enter required fields of quantity based discount");
+        return true
+      }
+      if (found1) {
+        this.toastr.error("Required fields of quantity based discount can not be 0");
         return true
       }
     }
