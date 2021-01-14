@@ -106,6 +106,8 @@ export class AddProductComponent implements OnInit {
   items: any;
   RelatedItems: any[] =[];
   variantForm: FormGroup;
+  specialityIData = "";
+  seller_Array: any = [];
 
   constructor(
     private router: Router,
@@ -119,7 +121,7 @@ export class AddProductComponent implements OnInit {
     
   }
   ngOnInit() {
-    this.newDynamic = { variant: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+    this.newDynamic = { productName: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
     isQuote:false,deliveryTime:0,sellerFee : 0};
     this.dynamicArray.push(this.newDynamic);
     this.newSeller = {sellerId:'',sellerFee:0,quantity: 0, deliveryTime: 0};
@@ -279,7 +281,7 @@ else{
       })
     }
     else{
-      this.toastr.error("Please Enter Product ID")
+      this.toastr.error("Please Enter SKU/PN CDE")
     }
   }
   get signUpControls() {
@@ -383,7 +385,7 @@ onSelectVariantSale(event){
   }
   checkVariantData(dynamicArray){
       for(let i= 1 ; i<=(dynamicArray.length) ; i++){
-      const found = dynamicArray.find(el => el.PNCDE == "" || el.variant == "" || el.quantity == null ) ;
+      const found = dynamicArray.find(el => el.PNCDE == "" || el.productName == "" || el.quantity == null ) ;
       const found1 = dynamicArray.find(el => el.quantity == 0 ) ;
   
          if (found) {
@@ -409,7 +411,7 @@ onSelectVariantSale(event){
       this.toastr.error("PN CDE must be unique of Variants");
       return true
     }
-    var valueArr = dynamicArray.map(function(item){ return item.variant });
+    var valueArr = dynamicArray.map(function(item){ return item.productName });
     var isDuplicateVariantName = valueArr.some(function(item, idx){ 
         return valueArr.indexOf(item) != idx 
     });
@@ -448,7 +450,6 @@ onSelectVariantSale(event){
   }
 }
   onSubmitAddProductForm(){
-      event.preventDefault();
       
       (this.editMode)? '' : this.PNCDE_Check();
       
@@ -471,9 +472,15 @@ onSelectVariantSale(event){
       if(this.checkSellerData(this.dynamicSeller) == true){
         return
       }
-      this.countryIdData = this.addProductForm.get('countryId').value,
-      this.productNameData = this.addProductForm.get('productName').value,
-      this.languageIdData = this.addProductForm.get('languageId').value    
+      this.countryIdData = this.addProductForm.get('countryId').value
+      this.productNameData = this.addProductForm.get('productName').value
+      this.languageIdData = this.addProductForm.get('languageId').value 
+      if(this.addProductForm.get('specialityId').value.length == 0){
+        this.specialityIData = ""
+      }   
+      else{
+        this.specialityIData = this.addProductForm.get('specialityId').value    
+      }
       let data=this.addProductForm.value;
        if (this.editMode) {
         data.productsRelated = this.productsRelatedEdit(this.addProductForm.get('relatedItem').value )
@@ -481,17 +488,46 @@ onSelectVariantSale(event){
        else{
         data.productsRelated = this.productsRelated(this.addProductForm.get('relatedItem').value )
        }
+       
       data.sellerProducts = this.addOtherKeysToSeller(this.dynamicSeller,this.countryIdData, this.productNameData ,this.languageIdData )
        data.quantityDiscounts = this.dynamicQuantity
-       data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData)
+          if (this.product.productVariants != null) {
+            
+            this.product.productVariants.forEach(element => {
+              if(element.id){
+                this.seller_Array.push(
+                  element.sellerProducts[0]
+              );
+              }
+              if(!element.id){
+                this.seller_Array.push(this.addedSeller(this.dynamicSeller))
 
-      data.file = this.files
+              }
+          });  
+
+        }
+        
+            if(this.seller_Array.length != 0){
+
+              data.productVariants = this.addOtherKeysToVarientEdit(this.dynamicArray,this.countryIdData ,this.languageIdData ,
+                this.seller_Array
+            ,this.addProductForm.get('manufactureId').value,this.addProductForm.get('supplyTypeId').value,
+            this.addProductForm.get('categoryId').value,this.specialityIData)  
+              }
+              else{
+                data.productVariants = this.addOtherKeysToVarient(this.dynamicArray,this.countryIdData ,this.languageIdData ,this.dynamicSeller
+                  ,this.addProductForm.get('manufactureId').value,this.addProductForm.get('supplyTypeId').value,this.addProductForm.get('categoryId').value,this.specialityIData)
+            
+             }
+     
+        data.file = this.files
       if (this.id ) {
         data.id = this.id;
       }
       data.catelogue = this.file
       if (this.editMode) {
         
+     
         this.productService.addProduct(data).subscribe(
           data => {
           this.toastr.success("Product Edited Successfully")
@@ -502,6 +538,7 @@ onSelectVariantSale(event){
           });
       }
       else{
+    
       this.productService.addProduct(data).subscribe(
         data => {
           this.toastr.success("Product Added Successfully")
@@ -514,7 +551,24 @@ onSelectVariantSale(event){
       }
     
   }
+  addedSeller(newSeller){
+    const newArray = [];
+    if (newSeller != null) {
+      newSeller.forEach(element => {
+      newArray.push({
+        deliveryTime :element.deliveryTime,
+        quantity :element.quantity,
+        sellerFee :element.sellerFee,
+        sellerId :element.sellerId,   } 
+         );
+    });
+    
+    return newArray[0];
 
+  }
+  
+
+  }
   private initForm(){
     let productName = "";
     let file ="";
@@ -557,8 +611,10 @@ this.addProductForm = new FormGroup({
     });
     
     if(this.editMode){
+
           this.productTitle = "Edit Product"
           this.AllItemsRemoved = false
+          
           this.productService.getProductDetails(this.id).pipe(takeUntil(this._unsubscribe)).subscribe(
             (success:any)=>{     
                    
@@ -646,7 +702,10 @@ this.addProductForm = new FormGroup({
            if(this.product.isPackage == true){
                 this.isVariant = true;
                 this.dynamicArray = this.product.productVariants
+              this.AddKeystoVariantEdit(this.product.productVariants)
+            
            }
+           
            if(this.product.isSale == true){
             this.disableSale = false
           }
@@ -664,6 +723,22 @@ this.addProductForm = new FormGroup({
           )
           }
     }
+  //  sellerproductIdEdit(dynamicSeller){
+  //    
+  //    for(let i= 0 ; i<(dynamicSeller.length) ; i++){
+  //    dynamicSeller[i].id = this.product.productVariants[i].sellerProducts[0].id
+  //    return dynamicSeller
+  //    }
+  //   }
+    AddKeystoVariantEdit(arr){
+      for(let i= 0 ; i<(arr.length) ; i++){
+        arr[i].quantity = this.product.productVariants[i].sellerProducts[0].quantity
+       arr[i].sellerFee = this.product.productVariants[i].sellerProducts[0].sellerFee
+       arr[i].deliveryTime = this.product.productVariants[i].sellerProducts[0].deliveryTime
+    }
+    
+    return arr
+  }
     productsRelatedEditDisplay(arr: any[]) {
       const newArray = [];
       if (arr != null) {
@@ -905,15 +980,57 @@ this.addProductForm = new FormGroup({
   }
     return newArray;
   }
-  addOtherKeysToVarient(arr: any[] ,  countryIdData : string ,  languageIdData : string) {
+  addOtherKeysToVarient(arr: any[] ,  countryIdData : string ,  languageIdData : string , sellerProducts : any[] , 
+    manufactureId : string ,  supplyTypeId : string ,  categoryId : string ,  specialityId : string , ) {
+     
+    if (arr != []) {
+    var result = arr.map(function(el) {
+      var element = Object.assign({}, el);
+      
+      element.countryId = countryIdData,
+      element.languageId = languageIdData  ,
+      element.manufactureId = manufactureId  ,
+      element.supplyTypeId = supplyTypeId  ,
+      element.categoryId = categoryId  ,
+      element.speciality = specialityId  ,
+      element.sellerProducts = sellerProducts ,
+      element.sellerProducts[0].quantity = el.quantity  ,
+      element.sellerProducts[0].sellerFee = el.sellerFee  ,
+      element.sellerProducts[0].deliveryTime = el.deliveryTime  
+      
+       return element;
+    })
+  }
+  result.forEach(function(v){ delete v.quantity });
+  result.forEach(function(v){ delete v.sellerFee });
+  result.forEach(function(v){ delete v.deliveryTime });
+
+    return result;
+  }
+  addOtherKeysToVarientEdit(arr: any[] ,  countryIdData : string ,  languageIdData : string , sellerProducts : any[] , 
+    manufactureId : string ,  supplyTypeId : string ,  categoryId : string ,  specialityId : string , ) {
+
     if (arr != []) {
     var result = arr.map(function(el) {
       var element = Object.assign({}, el);
       element.countryId = countryIdData,
-      element.languageId = languageIdData    
+      element.languageId = languageIdData  ,
+      element.manufactureId = manufactureId  ,
+      element.supplyTypeId = supplyTypeId  ,
+      element.categoryId = categoryId  ,
+
+      element.speciality = specialityId  ,
+      element.sellerProducts = sellerProducts,  
+      element.sellerProducts[0].quantity = el.quantity  ,
+      element.sellerProducts[0].sellerFee = el.sellerFee  ,
+      element.sellerProducts[0].deliveryTime = el.deliveryTime  
        return element;
     })
   }
+  result.forEach(function(v){ delete v.quantity });
+  result.forEach(function(v){ delete v.sellerFee });
+  result.forEach(function(v){ delete v.deliveryTime });
+
     return result;
   }
   addOtherKeysToSeller(arr: any[], countryIdData : string ,  productNameData : string , languageIdData : string ) {
@@ -938,7 +1055,7 @@ addRow(index) {
 
 }
 }
-  this.newDynamic ={ variant: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
+  this.newDynamic ={ productName: "",PNCDE:"",quantity: 1,isSale:false,sellPrice:0,MRP:0,walletPrice:0,
   isQuote:false,deliveryTime:0,sellerFee : 0};
   this.dynamicArray.push(this.newDynamic);
   return true;
@@ -957,7 +1074,6 @@ setDefault1(isDefault:boolean,productId,id){
     }
   )
     }
-
 
 deleteRow(index) {
   if(this.dynamicArray.length ==1) {

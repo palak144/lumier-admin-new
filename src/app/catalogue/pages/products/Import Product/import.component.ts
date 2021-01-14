@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UtilityService } from '../../../../shared/utility/utility.service'; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs';
+import { Table } from 'primeng/table';
 import { takeUntil, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-import',
@@ -44,6 +45,7 @@ export class ImportProductComponent implements OnInit {
       
     window.open("assets/Bulk_Upload_file_Toolv1.xlsm", "_blank")
    }
+
   onFileChange(ev) {
     
     this.file = ev.target.files[0];
@@ -67,12 +69,13 @@ export class ImportProductComponent implements OnInit {
         var tempArr =[]
         
         for (var i = 0; i < jsonData.Sheet1.length ; i ++) {
-            if (jsonData.Sheet1[i].PV === 'P'){
+            if (jsonData.Sheet1[i].package === 'P'){
                 counter ++ 
+                debugger
                 jsonData.Sheet1[i].elemID = counter
                 tempArr.push(jsonData.Sheet1[i])
             } 
-            else if (jsonData.Sheet1[i].PV ==='V') {
+            else if (jsonData.Sheet1[i].package ==='V') {
               jsonData.Sheet1[i].elemID = counter
                 tempArr.push(jsonData.Sheet1[i])
             }
@@ -81,6 +84,8 @@ export class ImportProductComponent implements OnInit {
         
           const dataString = JSON.stringify(jsonData.Sheet1);
           this.datastring = dataString;
+          console.log(dataString)
+          debugger
         }
         reader.readAsBinaryString(this.file);
       }

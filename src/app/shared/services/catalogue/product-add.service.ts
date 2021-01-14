@@ -19,8 +19,7 @@ export class ProductService {
     this.baseUrl = this.baseService.baseUrl;
   } 
   addProduct(data ) {
-    console.log("dataForm" , data)
-    
+    debugger    
     const dataForm = new FormData();
 
       if(data.id != null){
@@ -55,7 +54,7 @@ export class ProductService {
       if(data.isVariant == false){
         productVariantsDetails = undefined
       }
-      
+      debugger
       dataForm.append('sellerId', data.sellerProducts[0].sellerId); 
       dataForm.append('MRP', data['MRP']); 
       dataForm.append('PNCDE', data['PNCDE']); 

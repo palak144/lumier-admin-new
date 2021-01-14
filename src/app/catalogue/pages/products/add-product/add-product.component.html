@@ -15,9 +15,9 @@
       <form class="form">
       <div class="row">
         <div class="col-lg-6">
-        <label>Enter Product Id</label><span class="asterick">*</span> 
+        <label>Enter SKU/PN CDE</label><span class="asterick">*</span> 
         <div class="input-group">
-          <input type="text" class="form-control border-primary" placeholder="Enter Product Id"
+          <input type="text" class="form-control border-primary" placeholder="Enter SKU/PN CDE"
           [(ngModel)]="PNSKU_id" [ngModelOptions]="{standalone: true}">         
             <div class="input-group-append">
             <button type="button"  (click)="load_data()" class="btn btn-raised btn-primary btn-darken-3">
@@ -43,7 +43,7 @@
                   </div>
                   <div *ngIf="editMode" style="float: right;">
                     <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back </button>
-                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty )">Submit</button>
+                    <button type="submit" class="btn btn-raised btn-primary" >Submit</button>
                 </div>
                     <div class="form-body">
                           <h4 class="form-section"><i class="ft-user"></i> Product Region </h4>
@@ -459,7 +459,7 @@
                             <tbody>
                                  <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                                     <td>
-                                      <input [(ngModel)]="dynamicArray[i].variant"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
+                                      <input [(ngModel)]="dynamicArray[i].productName"  [ngModelOptions]="{standalone: true}" class="form-control" type="text" />
                                     </td>
                                     <td>
                                       <input [(ngModel)]="dynamicArray[i].PNCDE" (blur)="PNCDE_Varient_Check($event.target.value)" [ngModelOptions]="{standalone: true}" class="form-control" type="text"/>
@@ -638,7 +638,7 @@
                   </div>
                   <div *ngIf="editMode" class="form-actions right">
                     <button type="button" [routerLink]="['/catalogues/products']" class="btn btn-raised btn-warning mr-1"> Back</button>
-                    <button type="submit" class="btn btn-raised btn-primary" [disabled]="(!addProductForm.dirty)">Submit</button>
+                    <button type="submit" class="btn btn-raised btn-primary" >Submit</button>
                 </div>
                   
                   </form> 

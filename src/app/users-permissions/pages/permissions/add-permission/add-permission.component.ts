@@ -113,11 +113,10 @@ export class AddPermissionComponent implements OnInit {
         ({menuName: key,childMenu:value})
       )
       .value();
-      
   }
-  
     return this.selectedPermissionId;
   }
+
   get signUpControls() {
     return this.addPerGroupForm.controls;
   }

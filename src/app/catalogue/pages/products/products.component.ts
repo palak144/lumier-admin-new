@@ -135,10 +135,12 @@ export class ProductsComponent implements OnInit {
 
   onVariantFormSubmit()
   {
+    console.log(this.VariantForm.value);
     let data=  this.VariantForm.value;
     data.id=this.id;
     this.ProductService.updateVariant(data).pipe(takeUntil(this._unsubscribe)).subscribe(
       (success:any) => {
+     console.log(success);
         this.toastr.success('Variant Updated Successfully!');
         this.router.navigate(['/catalogues/products']);
 this.display=false;
@@ -158,6 +160,7 @@ this.getAllproduct(this.page);
         switchMap((term: string) => this.ProductService.getAllproductSearch(this.page, term, this.exportAll, this.countryId , this.sellerId, this.categoryId
         ))
       ).subscribe((success: any) => {
+        console.log(success);
         this.productList = success.data.results;
 
         this.totalCount = success.data.total;
@@ -166,18 +169,23 @@ this.getAllproduct(this.page);
     }
     getAllproductSearch(page, searchBar , exportAll,countryId,sellerId,categoryId) {
     
+      console.log(page,searchBar,exportAll,countryId);
       this.ProductService.getAllproductSearch(page, searchBar , exportAll ,countryId ,sellerId,categoryId)
         .pipe(
           takeUntil(this._unsubscribe)
         )
         .subscribe((success: any) => {  
+          console.log(success);
         
           if(exportAll == "true"){
             this.productListExport = [];
          
             this.productListExport = success.data.results;
+         console.log(this.productListExport.length);
          var i=this.productListExport.length;
             this.productListExport.forEach((element, index) =>{
+              console.log(element);
+              console.log(index);
               if(element.adminStatus=='1')
               {
                 this.adminStatus="Active";
@@ -204,11 +212,15 @@ this.getAllproduct(this.page);
                   
               
                 })
+         console.log(element.productVariants)
          this.variantlist=element.productVariants;
+          console.log(this.variantlist);
           for(var j=0; j<this.variantlist.length; j++)
           {
+            console.log(this.variantlist[j])
             if(element.id==this.variantlist[j].productId)
             {
+              console.log(this.variantlist[j].productId);
               this.exportAllData.push({
                 Tag:"variant",
                 // ProductID:this.variantlist[j].productId,
@@ -226,6 +238,11 @@ this.getAllproduct(this.page);
               
             })
          
+   
+        
+                
+           
+           
             this.excelService.exportAsExcelFile(this.exportAllData, 'Product List')
             this.exportAll = "false"
             this.exportAllData = [];
@@ -246,6 +263,8 @@ this.getAllproduct(this.page);
       this.ProductService.getAllproduct(page).subscribe(
         (success: any) => {
       
+          console.log(success);
+    
           this.productList = success.data.results;
             
       

@@ -1,244 +1,244 @@
 <div class="row container">
-  <div class="content-header text-left">Products</div>
-  <p class="content-sub-header"></p> 
-</div>
-<div class="row paddingSearch">
-  <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
-      <div class="position-relative has-icon-right">
-          <input [ngModelOptions]="{standalone: true}"  
-          type="text" class="form-control round searchBtn"
-           pInputText placeholder="Search Name/Code" 
-           [(ngModel)]="searchBar" 
-            (input)="filterGlobal($event.target.value)"/>
-          <div class="form-control-position">
-              <i class="ft-search"></i>
-          </div>
-      </div>
-  </form>
-</div>
-
-<div class="row">
-    <div class="col-xl-2 col-lg-6 col-md-12">
-        <fieldset class="form-group">
-            <label for="basicSelect">Country</label>
-            <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
-                 <option value=null>All</option>
-                <option *ngFor="let countries of countries" [value]="countries.id" >{{countries.itemName}}</option> 
-            </select>
-        </fieldset>    
-    </div>
-    <div class="col-xl-2 col-lg-6 col-md-12">
-        <fieldset class="form-group">
-            <label for="basicSelect">Category</label>
-            <select class="form-control" id="basicSelect"  (change)="onChangecategory($event.target.value)" >
-                 <option value=null>All</option>
-                <option *ngFor="let CategoryListdata of CategoryListdata" [value]="CategoryListdata.id">{{CategoryListdata.itemName}}</option> 
-            </select>
-        </fieldset>    
-    </div>
-    <div class="col-xl-2 col-lg-6 col-md-12">
-      <fieldset class="form-group">
-          <label for="basicSelect">Seller</label>
-          <select class="form-control" id="basicSelect"  (change)="onChangeseller($event.target.value)">
-               <option value=null>All</option>
-              <option *ngFor="let sellerList of sellerList" [value]="sellerList.id">{{sellerList.itemName}}</option> 
-          </select>
-      </fieldset>    
+    <div class="content-header text-left">Products</div>
+    <p class="content-sub-header"></p> 
   </div>
-  <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
-    <button type="button" class="btn btn-raised btn-primary btn-darken-3 white"
-    [routerLink]="['/catalogues/import-product']">
-      <span class="d-lg-block">Import</span>
-    </button>
+  <div class="row paddingSearch">
+    <form class="col-4 navbar-form navbar-right text-left mt-1" role="search">
+        <div class="position-relative has-icon-right">
+            <input [ngModelOptions]="{standalone: true}"  
+            type="text" class="form-control round searchBtn"
+             pInputText placeholder="Search Name/Code" 
+             [(ngModel)]="searchBar" 
+              (input)="filterGlobal($event.target.value)"/>
+            <div class="form-control-position">
+                <i class="ft-search"></i>
+            </div>
+        </div>
+    </form>
+  </div>
   
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
-
-    <div class="dropdown">
-        <a class="d-lg-block  dropdown-toggle" data-toggle="dropdown" >Export</a>
-        <ul class="dropdown-menu" role="menu">
-            <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
-            <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
-        </ul>
+  <div class="row">
+      <div class="col-xl-2 col-lg-6 col-md-12">
+          <fieldset class="form-group">
+              <label for="basicSelect">Country</label>
+              <select class="form-control" id="basicSelect" (change)="onChange($event.target.value)">
+                   <option value=null>All</option>
+                  <option *ngFor="let countries of countries" [value]="countries.id" >{{countries.itemName}}</option> 
+              </select>
+          </fieldset>    
+      </div>
+      <div class="col-xl-2 col-lg-6 col-md-12">
+          <fieldset class="fForm-group">
+              <label for="basicSelect">Category</label>
+              <select class="form-control" id="basicSelect"  (change)="onChangecategory($event.target.value)" >
+                   <option value=null>All</option>
+                  <option *ngFor="let CategoryListdata of CategoryListdata" [value]="CategoryListdata.id">{{CategoryListdata.itemName}}</option> 
+              </select>
+          </fieldset>    
+      </div>
+      <div class="col-xl-2 col-lg-6 col-md-12">
+        <fieldset class="form-group">
+            <label for="basicSelect">Seller</label>
+            <select class="form-control" id="basicSelect"  (change)="onChangeseller($event.target.value)">
+                 <option value=null>All</option>
+                <option *ngFor="let sellerList of sellerList" [value]="sellerList.id">{{sellerList.itemName}}</option> 
+            </select>
+        </fieldset>    
     </div>
-  </button>
-      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+    <div class="col-xl-6 col-lg-6 col-md-12 imp-exp-buttons text-right">
+      <button type="button" class="btn btn-raised btn-primary btn-darken-3 white"
+      [routerLink]="['/catalogues/import-product']">
+        <span class="d-lg-block">Import</span>
+      </button>
     
-    <span class="d-lg-block " >Add New</span>
-  </button>
+        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white">
+  
+      <div class="dropdown">
+          <a class="d-lg-block  dropdown-toggle" data-toggle="dropdown" >Export</a>
+          <ul class="dropdown-menu" role="menu">
+              <li><a (click)="exportAsXLSX(0)" >Current Data</a></li>
+              <li><a (click)="exportAsXLSX(1)" >All Data</a></li>
+          </ul>
+      </div>
+    </button>
+        <button type="button" class="btn btn-raised btn-primary btn-darken-3 white" [routerLink]="['/catalogues/new-product']">
+      
+      <span class="d-lg-block " >Add New</span>
+    </button>
+    </div>
   </div>
-</div>
-
-<ngb-tabset>
-    <ngb-tab title="Products">
-      <ng-template ngbTabContent>
-        <div class="customer-wrapper">
-            <div class="heading-wrapper">
+  
+  <ngb-tabset>
+      <ngb-tab title="Products">
+        <ng-template ngbTabContent>
+          <div class="customer-wrapper">
+              <div class="heading-wrapper">
+              </div>
+              <div class="table-wrapper vehiclwrappere- ">
+                <p-table [value]="productList"  dataKey="id" styleClass="table-list-wrapper" [responsive]="true" rowExpandMode="single" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  
+                [totalRecords]="totalCount" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)">
+                    <ng-template pTemplate="header">
+                          <tr class="table-coustom-style">
+                              <th style="width: 3rem"></th>
+                              <th style="width:4em;">S No.</th>
+                              <th>Product Code</th>
+                              <th>Name</th>
+                              <th>Category</th> 
+                              <th>Seller</th>
+                              <th>Country</th> 
+                              <th style="width:10em;">Manufacturer</th>
+                              <th style="width:7em;">Status</th>
+                              <th style="width:5em;">Action</th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-product let-i="rowIndex" let-expanded="expanded" >
+                          <tr>
+                              <td>
+                  <button *ngIf="product.productVariants.length != 0"  type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+              </td>
+                              <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
+                              <td><span class="ui-column-title">Product Code</span>{{product?.PNCDE}}</td>
+                              <td><span class="ui-column-title">Name</span>{{product?.productName}}</td>
+                              <td><span class="ui-column-title">Category</span>{{product?.category?.categoryName}}</td>
+                              <td><span class="ui-column-title">Seller</span>{{product?.sellerDetail?.sellerName}}</td>
+                              <td><span class="ui-column-title">Country</span>{{product?.country?.countryName}}</td>
+                              <td><span class="ui-column-title">Manufacture</span>{{product?.manufactureDetail?.manufacturerName}}</td>
+                               <td >
+                                  <span class="ui-column-title ">Status</span> 
+                                  
+                                  <div class="dropdown">
+                                  <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': product.adminStatus === 1 , 'badge-danger': product.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(product.adminStatus === 1) ? 'Active' : 'Inactive'}}
+            
+                                  </a>
+                                      <ul class="dropdown-menu">
+                                          <li [hidden]="product.adminStatus == 1"><a (click)="setStatus(product.id ,1, $event)">Active</a></li>
+                                          <li [hidden]="product.adminStatus == 0"><a (click)="setStatus(product.id,0, $event)">Inactive</a></li>
+                                      </ul>
+                                  </div>
+                                                        
+                              </td> 
+                              <td>
+                                   <span class="ui-column-title">Action</span>
+                              
+                                  <div class="dropdown">
+                                      <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
+            
+                                      </a>
+                                      <ul class="dropdown-menu" role="menu">
+                                          <li><a (click)="getDropDownValue($event,product.id)">Edit</a></li>
+                                          <li><a (click)="getDropDownValue($event,product.id)">Delete</a></li>
+            
+                                      </ul>
+                                  </div>
+                              </td>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="rowexpansion" let-product>
+                          <tr >
+                              <td colspan="9">
+                                  <div class="p-p-3">
+                                      <p-table [value]="product.productVariants"  dataKey="id">
+                                          <ng-template pTemplate="header">
+                                              <tr>
+                                                  <th>S No.</th>
+                                                  <th>Variant</th>
+                                                  <th>Quantity </th>
+                                                  <th>Sale Price </th>
+                                                  <th >price</th>
+                                                  <th >Wallet Price</th>
+                                                  <!-- <th>Status</th>-->
+                                                   <th>Action</th>
+                                              </tr>
+                                          </ng-template>
+                                          <ng-template pTemplate="body" let-productVariants >
+                                              <tr *ngIf="product.id==productVariants.parentId">
+                                                  <td>{{productVariants?.id}}</td>
+                                                  <td>{{productVariants?.productName}}</td>
+                                            
+                                                  <td>{{productVariants?.sellerProducts[0]?.quantity}}</td>
+                                                  <td>{{productVariants?.sellPrice}}</td>
+                                                  <td>{{productVariants?.sellerProducts[0]?.price}}</td>
+                                                  <td>{{productVariants?.walletPrice}}</td>
+                                                 
+                                                  <td>
+                                                      <span class="ui-column-title">Action</span>
+                                                      <i (click)="getDropDownvariantValue2($event,productVariants.id)" style="cursor: pointer;" class="fa fa-pencil " aria-hidden="true"></i>
+                                                      <i (click)="getDropDownvariantValue1($event,productVariants.id)"style="cursor: pointer;"  class="fa fa-trash spaceDelete" aria-hidden="true"></i>
+                                                                                                     </td>
+                                              </tr>
+                                          </ng-template>
+                                          <ng-template pTemplate="emptymessage">
+                                              <tr>
+                                                  <td colspan="7">There are no Variant for this product.</td>
+                                              </tr>
+                                          </ng-template>
+                                      </p-table>
+                                  </div>
+                              </td>
+                          </tr>
+                      </ng-template>
+                  </p-table>
+              </div>
             </div>
-            <div class="table-wrapper vehiclwrappere- ">
-              <p-table [value]="productList"  dataKey="id" styleClass="table-list-wrapper" [responsive]="true" rowExpandMode="single" [paginator]="true" [alwaysShowPaginator]="false" [rows]="10"  
-              [totalRecords]="totalCount" [lazy]="true" (onLazyLoad)="loadDataLazy($event)" [lazy]="true" (onLazyLoad)="loadDataLazy($event)">
-                  <ng-template pTemplate="header">
-                        <tr class="table-coustom-style">
-                            <th style="width: 3rem"></th>
-                            <th style="width:4em;">S No.</th>
-                            <th>Product Code</th>
-                            <th>Name</th>
-                            <th>Category</th> 
-                            <th>Seller</th>
-                            <th>Country</th> 
-                            <th style="width:10em;">Manufacturer</th>
-                            <th style="width:7em;">Status</th>
-                            <th style="width:5em;">Action</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-product let-i="rowIndex" let-expanded="expanded" >
-                        <tr>
-                            <td>
-                <button *ngIf="product.productVariants.length != 0"  type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-            </td>
-                            <td class="order-date-wrapper"><span class="ui-column-title">S No</span>{{i + 1}}</td>
-                            <td><span class="ui-column-title">Product Code</span>{{product.PNCDE}}</td>
-                            <td><span class="ui-column-title">Name</span>{{product.productName}}</td>
-                            <td><span class="ui-column-title">Category</span>{{product.category.categoryName}}</td>
-                            <td><span class="ui-column-title">Seller</span>{{product.sellerDetail.sellerName}}</td>
-                            <td><span class="ui-column-title">Country</span>{{product.country.countryName}}</td>
-                            <td><span class="ui-column-title">Manufacture</span>{{product.manufactureDetail.manufacturerName}}</td>
-                             <td >
-                                <span class="ui-column-title ">Status</span> 
-                                
-                                <div class="dropdown">
-                                <a class="dropdown-toggle badge colorStatus" [ngClass]="{ 'badge-primary': product.adminStatus === 1 , 'badge-danger': product.adminStatus === 0 }" type="button" data-toggle="dropdown">{{(product.adminStatus === 1) ? 'Active' : 'Inactive'}}
-          
-                                </a>
-                                    <ul class="dropdown-menu">
-                                        <li [hidden]="product.adminStatus == 1"><a (click)="setStatus(product.id ,1, $event)">Active</a></li>
-                                        <li [hidden]="product.adminStatus == 0"><a (click)="setStatus(product.id,0, $event)">Inactive</a></li>
-                                    </ul>
-                                </div>
-                                                      
-                            </td> 
-                            <td>
-                                 <span class="ui-column-title">Action</span>
-                            
-                                <div class="dropdown">
-                                    <a class="glyphicon glyphicon-cog dropdown-toggle" type="button" data-toggle="dropdown">
-          
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a (click)="getDropDownValue($event,product.id)">Edit</a></li>
-                                        <li><a (click)="getDropDownValue($event,product.id)">Delete</a></li>
-          
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="rowexpansion" let-product>
-                        <tr >
-                            <td colspan="9">
-                                <div class="p-p-3">
-                                    <p-table [value]="product.productVariants"  dataKey="id">
-                                        <ng-template pTemplate="header">
-                                            <tr>
-                                                <th>S No.</th>
-                                                <th>Variant</th>
-                                                <th>Quantity </th>
-                                                <th>Sale Price </th>
-                                                <th >price</th>
-                                                <th >Wallet Price</th>
-                                                <!-- <th>Status</th>-->
-                                                 <th>Action</th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-productVariants >
-                                            <tr *ngIf="product.id==productVariants.productId">
-                                                <td>{{productVariants.id}}</td>
-                                                <td>{{productVariants.variant}}</td>
-                                          
-                                                <td>{{productVariants.quantity}}</td>
-                                                <td>{{productVariants.sellPrice}}</td>
-                                                <td>{{productVariants.sellerFee}}</td>
-                                                <td>{{productVariants.walletPrice}}</td>
-                                               
-                                                <td>
-                                                    <span class="ui-column-title">Action</span>
-                                                    <i (click)="getDropDownvariantValue2($event,productVariants.id)" style="cursor: pointer;" class="fa fa-pencil " aria-hidden="true"></i>
-                                                    <i (click)="getDropDownvariantValue1($event,productVariants.id)"style="cursor: pointer;"  class="fa fa-trash spaceDelete" aria-hidden="true"></i>
-                                                                                                   </td>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="emptymessage">
-                                            <tr>
-                                                <td colspan="7">There are no Variant for this product.</td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </div>
-          </div>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab>
-        <ng-template ngbTabTitle>
-        <a class="btn-link" [routerLink]="['/catalogues/combos']">Combos</a>
         </ng-template>
-        </ngb-tab>
-    <!-- <ngb-tab title="Combos" ngbTabContent routerLink="/catalogues/new-product">
-       <ng-template ngbTabContent>
-        <p>Because default values have been customized.</p>
-      </ng-template> 
-    </ngb-tab> -->
-  </ngb-tabset>
-<p-dialog header="Variant Edit" [(visible)]="display" [style]="{width: '50vw',top:'0'}" draggable="false" appendTo="body" [baseZIndex]="10000">
-    <div class="modal-form mw-75">
-         <form [formGroup]="VariantForm" (ngSubmit)="onVariantFormSubmit()">
-       
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Variant</label>
-                        <input type="text" class="form-control border-primary" formControlName="variant" placeholder="variant">
-                      
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="text" formControlName="quantity" placeholder="quantity" class="form-control border-primary" >
-                    </div>
-                </div>
-            </div> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Sale Price</label>
-                        <input type="text" class="form-control border-primary" formControlName="sellPrice" placeholder="sale price">
-                      
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>price</label>
-                        <input type="text" formControlName="sellerFee" placeholder="price" class="form-control border-primary" >
-                    </div>
-                </div>
+      </ngb-tab>
+      <ngb-tab>
+          <ng-template ngbTabTitle>
+          <a class="btn-link" [routerLink]="['/catalogues/combos']">Combos</a>
+          </ng-template>
+          </ngb-tab>
+      <!-- <ngb-tab title="Combos" ngbTabContent routerLink="/catalogues/new-product">
+         <ng-template ngbTabContent>
+          <p>Because default values have been customized.</p>
+        </ng-template> 
+      </ngb-tab> -->
+    </ngb-tabset>
+  <p-dialog header="Variant Edit" [(visible)]="display" [style]="{width: '50vw',top:'0'}" draggable="false" appendTo="body" [baseZIndex]="10000">
+      <div class="modal-form mw-75">
+           <form [formGroup]="VariantForm" (ngSubmit)="onVariantFormSubmit()">
+         
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>Variant</label>
+                          <input type="text" class="form-control border-primary" formControlName="variant" placeholder="variant">
+                        
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>Quantity</label>
+                          <input type="text" formControlName="quantity" placeholder="quantity" class="form-control border-primary" >
+                      </div>
+                  </div>
+              </div> 
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>Sale Price</label>
+                          <input type="text" class="form-control border-primary" formControlName="sellPrice" placeholder="sale price">
+                        
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>price</label>
+                          <input type="text" formControlName="sellerFee" placeholder="price" class="form-control border-primary" >
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label>Wallet price</label>
+                          <input type="text" class="form-control border-primary" formControlName="walletPrice" placeholder="wallet price">
+                      </div>
+                  </div>
+              </div>   
+              </form>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Wallet price</label>
-                        <input type="text" class="form-control border-primary" formControlName="walletPrice" placeholder="wallet price">
-                    </div>
-                </div>
-            </div>   
-            </form>
-          </div>
-          <p-footer>
-            <button type="button" pButton (click)="display=false" label="Close" class="ui-button-secondary"></button>
-            <button type="submit" pButton (click)="onVariantFormSubmit()" label="Submit"></button>
-          </p-footer>
-  </p-dialog>
+            <p-footer>
+              <button type="button" pButton (click)="display=false" label="Close" class="ui-button-secondary"></button>
+              <button type="submit" pButton (click)="onVariantFormSubmit()" label="Submit"></button>
+            </p-footer>
+    </p-dialog>

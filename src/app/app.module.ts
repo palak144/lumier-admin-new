@@ -23,7 +23,6 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { DatePipe } from '@angular/common';
 
 
-
 // import { CustomFormsModule } from 'ng5-validation';
 @NgModule({
   declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent],
